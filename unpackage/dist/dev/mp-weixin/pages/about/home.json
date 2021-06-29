@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "img-cache": "/components/img-cache/img-cache"
+  },
+  "component": true
+}

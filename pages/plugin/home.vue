@@ -1,0 +1,238 @@
+<template name="components">
+	<view>
+		<scroll-view scroll-x class="bg-white nav-sm hometop0" scroll-with-animation :scroll-left="scrollLeft">
+			<view class="cu-item" :class="index==TabCur?'text-green cur':''" v-for="(item,index) in 7" :key="index"
+				@tap="tabSelect" :data-id="index">
+				{{tabname[index]}}
+			</view>
+		</scroll-view>
+		
+			<swiper class="swiper-box" :style="{height:swiperheight+'px'}" :current="TabCur" @change="tabChange">
+				<swiper-item key="1">
+					<scroll-view class="list">
+						<view v-if="1 > 0">
+							<!-- 	图文列表
+							<block v-for="(item,index1) in items.list" :key="index1">
+								<view>{{item}}</view>
+							</block> -->
+						</view>
+					</scroll-view>
+				</swiper-item>
+			</swiper>
+			
+			<swiper-item key="2">
+				<scroll-view class="list">
+					<swiper class="screen-swiper square-dot hometop3" :indicator-dots="true" :circular="true"
+						:autoplay="true" interval="5000" duration="500">
+						<swiper-item v-for="(item,index) in swiperList" :key="index" @tap="tourl(item.url)">
+							<image :src="item.img" mode="aspectFill"></image>
+						</swiper-item>
+					</swiper>
+					<view v-if="toplist.length > 0">
+						<block v-for="(item,index1) in toplist" :key="index1">
+							<view class="solid-bottom text-df" style="padding-top: 10upx; padding-bottom: 10upx;">
+								<view>
+									<text class="text-black text-cut" style="width: 100%;">{{item.subject}}</text>
+								</view>
+								<view> <text class="text-sm text-red padding-sm">置顶</text> <text
+										class="text-sm text-gray padding-sm">{{item.author}}&nbsp&nbsp{{item.replies}}评</text>
+								</view>
+							</view>
+						</block>
+					</view>
+					<view v-if="tuijiantie.length > 0">
+						<block v-for="(item,index2) in tuijiantie" :key="index2" @tap="tourl(item.url)">
+							<view class="cu-card article no-card">
+								<view class="cu-item shadow">
+									<view class="title">
+										<view class="text-cut">{{item.title}}</view>
+									</view>
+									<view class="content">
+										<image :src="item.img" mode="aspectFill"></image>
+										<view class="desc">
+											<view class="text-content">
+												{{item.summary}}
+											</view>
+											<view>
+												<view class="cu-tag bg-red light sm round">{{item.author}}</view>
+												<view class="cu-tag bg-green light sm round">{{item.replies}}评
+												</view>
+											</view>
+										</view>
+									</view>
+								</view>
+							</view>
+						</block>
+						<block>
+						<view class="padding-xs flex align-center bg-gray"
+							:style="{'height': iStatusBarHeight+'px'}">
+							<view class="flex-sub text-center">
+								<view class="text-xs padding">
+									<text class="text-white">终点论坛 @2021</text>
+								</view>
+							</view>
+						</view>
+						</block>
+					</view>
+				</scroll-view>
+			</swiper-item>
+	</view>
+</template>
+
+<script>
+	export default {
+		name: "basics",
+		data() {
+			return {
+				scrollLeft: 0,
+				iStatusBarHeight: 0,
+				swiperList: [],
+				toplist: [],
+				tuijiantie: [],
+				tabname: ["关注", "推荐", "热榜", "讨论", "攻略", "美图", "喇叭"],
+				avatarimgLoaded: false,
+				TabCur: 1,
+				swiperheight: 1500, //高度
+			};
+		},
+		methods: {
+			InputFocus(e) {
+				this.InputBottom = e.detail.height
+			},
+			InputBlur(e) {
+				this.InputBottom = 0
+			},
+			onSuccessImg() {
+				this.avatarimgLoaded = true;
+			},
+			tabSelect(e) {
+				this.TabCur = e.currentTarget.dataset.id;
+				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60;
+				console.log(this.swiperheight)
+			},
+			tabChange(e) {
+				this.TabCur = e.detail.current;
+				var that = this;
+				if (this.TabCur == 1) {
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:zhidingtie', //获取轮播列表
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							uni.setStorage({
+								key: 'lunbolist',
+								data: res.data.data,
+								success: function() {
+									that.toplist = res.data;
+									//console.log(that.toplist);
+								}
+							});
+						}
+					});
+				}
+			},
+			tourl(e) {
+				console.log(this.swiperheight)
+			}
+		},
+		created() {
+			this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight;
+			//plus.navigator.setStatusBarStyle('light');//改变系统标题颜色
+			var that = this;
+			uni.getStorage({
+				key: 'lunbolist',
+				success: function(res) {
+					that.swiperList = res.data.data;
+					//console.log(that.swiperList);
+				}
+			});
+			uni.request({
+				url: getApp().globalData.zddomain + 'api.php?mod=app&bid=158', //获取轮播列表
+				method: 'GET',
+				timeout: 10000,
+				header: {
+					'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+				},
+				success: (res) => {
+					uni.setStorage({
+						key: 'lunbolist',
+						data: res.data.data,
+						success: function() {
+							that.swiperList = res.data.data;
+							//console.log(that.swiperList);
+						}
+					});
+				}
+			});
+			uni.request({
+				url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:zhidingtie', //获取置顶帖子
+				method: 'GET',
+				timeout: 10000,
+				data: {
+					token: that.$token,
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+				},
+				success: (res) => {
+					uni.setStorage({
+						key: 'lunbolist',
+						data: res.data.data,
+						success: function() {
+							that.toplist = res.data;
+							//console.log(that.toplist);
+						}
+					});
+				}
+			});
+			uni.request({
+				url: getApp().globalData.zddomain + 'api.php?mod=app&bid=407', //获取推荐帖子
+				method: 'GET',
+				timeout: 10000,
+				header: {
+					'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+				},
+				success: (res) => {
+					that.tuijiantie = res.data.data;
+					console.log(that.tuijiantie);
+				}
+			});
+		},
+		mounted() {
+			uni.getSystemInfo({
+				success: (res) => {
+					let height = res.windowHeight + uni.upx2px(100) + uni.getSystemInfoSync().statusBarHeight
+					this.swiperheight = height;
+				}
+			})
+		}
+	}
+</script>
+
+<style>
+	.page {
+		height: 100vh;
+	}
+
+	.nav-sm {
+		white-space: nowrap;
+	}
+
+	.nav-sm .cu-item.cur {
+		border-bottom: 2px solid;
+	}
+
+	.nav-sm .cu-item {
+		height: 30px;
+		display: inline-block;
+		line-height: 30px;
+		margin: 0 5px;
+		padding: 0 11px;
+	}
+</style>

@@ -1,0 +1,47 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/captcha/index",
+    "pages/basics/layout",
+    "pages/basics/background",
+    "pages/basics/text",
+    "pages/basics/icon",
+    "pages/basics/button",
+    "pages/basics/design",
+    "pages/basics/tag",
+    "pages/basics/avatar",
+    "pages/basics/progress",
+    "pages/basics/shadow",
+    "pages/basics/loading",
+    "pages/component/bar",
+    "pages/component/nav",
+    "pages/component/list",
+    "pages/component/card",
+    "pages/component/form",
+    "pages/component/timeline",
+    "pages/component/chat",
+    "pages/component/swiper",
+    "pages/component/modal",
+    "pages/component/steps",
+    "pages/plugin/indexes",
+    "pages/plugin/animation",
+    "pages/plugin/drawer",
+    "pages/plugin/verticalnav",
+    "components/ay-login/login-password"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarBackgroundColor": "#0081ff",
+    "navigationBarTitleText": "ColorUi for UniApp",
+    "navigationStyle": "custom",
+    "navigationBarTextStyle": "white"
+  },
+  "usingComponents": {
+    "basics": "/pages/basics/home",
+    "components": "/pages/component/home",
+    "plugin": "/pages/plugin/home",
+    "about": "/pages/about/home",
+    "login": "/components/ay-login/login-password",
+    "cu-custom": "/colorui/components/cu-custom"
+  }
+}

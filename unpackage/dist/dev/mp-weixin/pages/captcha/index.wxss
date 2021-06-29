@@ -1,0 +1,19 @@
+
+.content {
+  margin: 40rpx;
+}
+.popbox {
+  border-radius: 4rpx;
+  padding: 12rpx;
+  box-sizing: border-box;
+  background-color: #fff;
+  margin: 0 auto;
+  font-size: 14px;
+}
+.content button {
+  margin-top: 20rpx;
+}
+.ticket {
+  word-break: break-all;
+}
+

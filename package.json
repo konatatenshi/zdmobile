@@ -1,0 +1,13 @@
+{
+    "id": "img-cache",
+    "name": "imgcache 图片缓存",
+    "version": "2.0.8",
+    "description": "缓存网络图片在本地，缓存后无需二次请求网络地址",
+    "keywords": [
+        "image",
+        "cache",
+        "图片",
+        "缓存",
+        "加载"
+    ]
+}
