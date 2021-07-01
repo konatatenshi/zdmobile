@@ -63,36 +63,36 @@
 				<text>提醒</text>
 			</view>
 			<view class="cu-item" @click="messageclick">
-				<view class="cuIcon-markfill text-yellow">
+				<view class="cuIcon-squarecheckfill text-yellow">
 					<view class="cu-tag badge" v-if="this.mynewpm!=0">
 						<block v-if="this.mynewpm!=1">{{this.mynewpm>99?'99+':this.mynewpm}}</block>
 					</view>
 				</view>
-				<text>留言</text>
+				<text>签到</text>
 			</view>
 			<view class="cu-item" @click="messageclick">
-				<view class="cuIcon-creativefill text-green">
+				<view class="cuIcon-questionfill text-green">
 					<view class="cu-tag badge" v-if="this.mynewpm!=0">
 						<block v-if="this.mynewpm!=1">{{this.mynewpm>99?'99+':this.mynewpm}}</block>
 					</view>
 				</view>
-				<text>@我</text>
+				<text>答题</text>
 			</view>
 			<view class="cu-item" @click="messageclick">
-				<view class="cuIcon-friendaddfill text-cyan">
+				<view class="cuIcon-presentfill text-blue">
 					<view class="cu-tag badge" v-if="this.mynewpm!=0">
 						<block v-if="this.mynewpm!=1">{{this.mynewpm>99?'99+':this.mynewpm}}</block>
 					</view>
 				</view>
-				<text>招呼</text>
+				<text>摇摇</text>
 			</view>
 			<view class="cu-item" @click="messageclick">
-				<view class="cuIcon-servicefill text-blue">
+				<view class="cuIcon-upstagefill text-cyan">
 					<view class="cu-tag badge" v-if="this.mynewpm!=0">
 						<block v-if="this.mynewpm!=1">{{this.mynewpm>99?'99+':this.mynewpm}}</block>
 					</view>
 				</view>
-				<text>举报</text>
+				<text>排行</text>
 			</view>
 		</view>
 

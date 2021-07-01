@@ -1,6 +1,6 @@
 <template>
 	<view class="bg-gray">
-		<basics v-if="PageCur=='basics'"></basics>
+		<basics v-if="PageCur=='basics'" ref="basics"></basics>
 		<components v-if="PageCur=='component'"></components>
 		<plugin v-if="PageCur=='plugin'"></plugin>
 		<about v-if="PageCur=='about'" @returnDat='returnDate'></about>
@@ -12,7 +12,7 @@
 			</view>
 			<view :class="PageCur=='component'?'action text-green':'action text-gray'" @click="NavChange"
 				data-cur="component">
-				<view class="cuIcon-similar"></view> 分类
+				<view class="cuIcon-similar"></view> 板块
 			</view>
 			<view class="action text-gray add-action">
 				<button class="cu-btn cuIcon-add bg-green shadow"></button>
@@ -94,6 +94,12 @@
 						});
 					}
 				});
+			}
+		},
+		onReachBottom(){
+			//console.log("到底了");
+			if(this.PageCur=="basics"){
+				this.$refs.basics.tothebottom();
 			}
 		},
 		methods: {
