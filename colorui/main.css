@@ -15,6 +15,10 @@ body {
 	padding-bottom: 100upx;
 }
 
+.statustop {
+	padding-top: var(--status-bar-height);
+}
+
 view,
 scroll-view,
 swiper,

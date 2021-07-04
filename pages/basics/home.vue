@@ -109,6 +109,13 @@
 							</view>
 							<view>
 								<block>
+									<view class="padding-xs flex align-center bg-gray">
+										<view class="flex-sub text-center">
+											<view class="text-xs padding">
+												<text class="text-black">{{loading}}</text>
+											</view>
+										</view>
+									</view>
 									<view class="padding-xs flex align-center bg-gray"
 										:style="{'height': iStatusBarHeight+'px'}">
 										<view class="flex-sub text-center">
@@ -141,6 +148,7 @@
 				tabname: ["关注", "推荐", "热榜", "资讯", "讨论", "美图", "喇叭"],
 				avatarimgLoaded: false,
 				TabCur: 1,
+				loading: "载入中……",
 				swiperheight: 1000, //高度
 			};
 		},
@@ -152,9 +160,9 @@
 				var query = uni.createSelectorQuery();
 				query.select('.' + e).boundingClientRect(rect => {
 					if (rect) {
-						console.log(e + ".height = " + rect.height)
+						//console.log(e + ".height = " + rect.height)
 						this.swiperheight = rect.height + uni.getSystemInfoSync().statusBarHeight + 50; //页面可见区域 - 头部高度
-						console.log("this.height = " + this.swiperheight)
+						//console.log("this.height = " + this.swiperheight)
 					}
 				}).exec();
 

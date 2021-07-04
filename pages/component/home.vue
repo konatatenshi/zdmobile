@@ -23,8 +23,12 @@
 			 :scroll-into-view="'main-'+mainCur" @scroll="VerticalMain">
 				<view class="padding-top padding-lr" v-for="(item,index) in list" :key="index" :id="'main-'+index">
 					<view class="cu-bar solid-bottom bg-white">
-						<view class="action">
-							<text class="cuIcon-title text-green"></text> {{item.name}}</view>
+						<view class="action" v-if="item.name == null">
+							<text class="cuIcon-title text-green"></text> 版块列表
+						</view>
+						<view class="action" v-else>
+							<text class="cuIcon-title text-green"></text> {{item.name}}
+						</view>
 					</view>
 					<view class="cu-list menu-avatar" v-for="(item,index2) in fuplist[index]" :key="index2">
 						<view class="cu-item" v-if="item.name == null">
@@ -105,6 +109,15 @@
 				mask: true
 			});
 			var that = this;
+			uni.getStorage({
+				key: 'bankuailist',
+				success: function(res) {
+					that.forumdata = res.data.data;
+					that.listNumber = res.data.number;
+					that.forummount();
+					//console.log(that.forumdata);
+				}
+			});
 			uni.request({
 				url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:bankuailist', //获取置顶帖子
 				method: 'GET',
@@ -116,13 +129,18 @@
 					'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 				},
 				success: (res) => {
-					//console.log(res.data.data);
-					if(res.data.code == 404){
-						that.modalName = "needlogin";
-					}
-					that.forumdata = res.data.data;
-					that.listNumber = res.data.number;
-					that.forummount();
+					uni.setStorage({
+						key: 'bankuailist',
+						data: res.data,
+						success: function() {
+							if(res.data.code == 404){
+								that.modalName = "needlogin";
+							}
+							that.forumdata = res.data.data;
+							that.listNumber = res.data.number;
+							that.forummount();
+						}
+					});
 				}
 			});
 		},
@@ -213,7 +231,7 @@
 					fuplist[i] = this.getforum(this.list[i].fid);
 				}
 				this.fuplist = fuplist;
-				console.log(this.fuplist);
+				//console.log(this.fuplist);
 				uni.hideLoading();
 			},
 			TabSelect(e) {

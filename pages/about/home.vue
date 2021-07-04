@@ -244,6 +244,7 @@
 				myagree: 0,
 				myfans: 0,
 				mylike: 0,
+				websocketmessage: [],
 				listTouchDirection: null,
 			};
 		},
@@ -299,6 +300,7 @@
 						getApp().globalData.mynewpm = res.data.newpm;
 						getApp().globalData.mynewprompt = res.data.newprompt;
 						getApp().globalData.myfreeze = res.data.freeze;
+						getApp().globalData.onlyacceptfriendpm = res.data.onlyacceptfriendpm;
 						getApp().globalData.myinfoprompt = parseInt(res.data.newpm) + parseInt(res.data
 							.newprompt);
 						that.mynewpm = getApp().globalData.mynewpm;
@@ -310,7 +312,7 @@
 						Vue.prototype.$username = getApp().globalData.myusername;
 					}
 				});
-			}
+			};
 		},
 		onshow: function() {}
 	}

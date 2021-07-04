@@ -1,13 +1,25 @@
 <template name="components">
 	<view>
-		<scroll-view scroll-x class="bg-white nav-sm hometop0" scroll-with-animation :scroll-left="scrollLeft">
-			<view class="cu-item" :class="index==TabCur?'text-green cur':''" v-for="(item,index) in 7" :key="index"
+		<view class="cu-bar bg-white hometop">
+			<view class="action">
+				<text class="cuIcon-homefill text-gray"></text> 首页
+			</view>
+			<view class="content text-bold" style="margin-bottom: 3px;">
+				消息列表
+			</view>
+			<view class="action">
+				<text class="cuIcon-peoplefill text-grey"></text>
+			</view>
+		</view>
+		<scroll-view scroll-x class="bg-white nav-sm hometop1" scroll-with-animation :scroll-left="scrollLeft">
+			<view class="cu-item" :class="index==TabCur?'text-green cur':''" v-for="(item,index) in 4" :key="index"
 				@tap="tabSelect" :data-id="index">
-				{{tabname[index]}}
+				<text class="cuIcon-title text-orange" v-if="index<2"></text>{{tabname[index]}}
 			</view>
 		</scroll-view>
-		
-			<swiper class="swiper-box" :style="{height:swiperheight+'px'}" :current="TabCur" @change="tabChange">
+
+		<view class="view_head">
+			<swiper class="swiper-box" :style="'height: ' + swiperheight +'px;'" :current="TabCur" @change="tabChange">
 				<swiper-item key="1">
 					<scroll-view class="list">
 						<view v-if="1 > 0">
@@ -18,64 +30,181 @@
 						</view>
 					</scroll-view>
 				</swiper-item>
-			</swiper>
-			
-			<swiper-item key="2">
-				<scroll-view class="list">
-					<swiper class="screen-swiper square-dot hometop3" :indicator-dots="true" :circular="true"
-						:autoplay="true" interval="5000" duration="500">
-						<swiper-item v-for="(item,index) in swiperList" :key="index" @tap="tourl(item.url)">
-							<image :src="item.img" mode="aspectFill"></image>
-						</swiper-item>
-					</swiper>
-					<view v-if="toplist.length > 0">
-						<block v-for="(item,index1) in toplist" :key="index1">
-							<view class="solid-bottom text-df" style="padding-top: 10upx; padding-bottom: 10upx;">
-								<view>
-									<text class="text-black text-cut" style="width: 100%;">{{item.subject}}</text>
-								</view>
-								<view> <text class="text-sm text-red padding-sm">置顶</text> <text
-										class="text-sm text-gray padding-sm">{{item.author}}&nbsp&nbsp{{item.replies}}评</text>
+
+				<swiper-item key="2">
+					<scroll-view class="list">
+						<view class="view_listnow">
+							<view class="cu-bar bg-white solid-bottom margin-top hometop3">
+								<view class="action">
+									群组消息
 								</view>
 							</view>
-						</block>
-					</view>
-					<view v-if="tuijiantie.length > 0">
-						<block v-for="(item,index2) in tuijiantie" :key="index2" @tap="tourl(item.url)">
-							<view class="cu-card article no-card">
-								<view class="cu-item shadow">
-									<view class="title">
-										<view class="text-cut">{{item.title}}</view>
+							<view class="cu-list menu-avatar" @click="gonggongqunzu()">
+								<view class="cu-item">
+									<view class="cu-avatar round lg"
+										style="background-image:url(../../static/group.png);">
 									</view>
 									<view class="content">
-										<image :src="item.img" mode="aspectFill"></image>
-										<view class="desc">
-											<view class="text-content">
-												{{item.summary}}
-											</view>
-											<view>
-												<view class="cu-tag bg-red light sm round">{{item.author}}</view>
-												<view class="cu-tag bg-green light sm round">{{item.replies}}评
-												</view>
+										<view>
+											<view class="text-cut">公共群组</view>
+											<view class="cu-tag round bg-orange sm">{{chatonline}}人</view>
+										</view>
+										<view class="text-gray text-sm flex">
+											<view class="text-cut">
+												{{chatmessage}}
 											</view>
 										</view>
 									</view>
+									<view class="action">
+										<view class="text-grey text-xs">{{chattime}}</view>
+										<view class="cu-tag round bg-red sm" v-if="switchB">{{chatnumber}}
+										</view>
+										<view class="cuIcon-notice_forbid_fill text-gray" v-else></view>
+									</view>
 								</view>
 							</view>
-						</block>
-						<block>
-						<view class="padding-xs flex align-center bg-gray"
-							:style="{'height': iStatusBarHeight+'px'}">
-							<view class="flex-sub text-center">
-								<view class="text-xs padding">
-									<text class="text-white">终点论坛 @2021</text>
+							<view class="cu-bar bg-white solid-bottom margin-top">
+								<view class="action">
+									系统消息
+								</view>
+							</view>
+							<view class="cu-list menu-avatar">
+								<view class="cu-item">
+									<view class="cu-avatar round lg"
+										style="background-image:url(https://ossweb-img.qq.com/images/lol/img/champion/Taric.png);">
+									</view>
+									<view class="content">
+										<view class="text-grey">
+											<view class="text-cut">瓦洛兰之盾-塔里克</view>
+											<view class="cu-tag round bg-orange sm">战士</view>
+										</view>
+										<view class="text-gray text-sm flex">
+											<view class="text-cut">
+												塔里克是保护者星灵，用超乎寻常的力量守护着符文之地的生命、仁爱以及万物之美。塔里克由于渎职而被放逐，离开了祖国德玛西亚，前去攀登巨神峰寻找救赎，但他找到的却是来自星界的更高层的召唤。现在的塔里克与古代巨神族的神力相融合，以瓦洛兰之盾的身份，永不疲倦地警惕着阴险狡诈的虚空腐化之力。
+											</view>
+										</view>
+									</view>
+									<view class="action">
+										<view class="text-grey text-xs">22:20</view>
+										<view class="cuIcon-notice_forbid_fill text-gray"></view>
+									</view>
+								</view>
+								<view class="cu-item ">
+									<view class="cu-avatar radius lg"
+										style="background-image:url(https://ossweb-img.qq.com/images/lol/img/champion/Morgana.png);">
+									</view>
+									<view class="content">
+										<view class="text-pink">
+											<view class="text-cut">莫甘娜</view>
+										</view>
+										<view class="text-gray text-sm flex">
+											<view class="text-cut">凯尔，你被自己的光芒变的盲目！</view>
+										</view>
+									</view>
+									<view class="action">
+										<view class="text-grey text-xs">22:20</view>
+										<view class="cu-tag round bg-red sm">5</view>
+									</view>
+								</view>
+								<view class="cu-item grayscale">
+									<view class="cu-avatar radius lg"
+										style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big81007.jpg);">
+									</view>
+									<view class="content">
+										<view>
+											<view class="text-cut">伊泽瑞尔</view>
+											<view class="cu-tag round bg-orange sm">断开连接...</view>
+										</view>
+										<view class="text-gray text-sm flex">
+											<view class="text-cut"> 等我回来一个打十个</view>
+										</view>
+									</view>
+									<view class="action">
+										<view class="text-grey text-xs">22:20</view>
+										<view class="cu-tag round bg-red sm">5</view>
+									</view>
+								</view>
+								<view class="cu-item cur">
+									<view class="cu-avatar radius lg"
+										style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big81020.jpg);">
+										<view class="cu-tag badge"></view>
+									</view>
+									<view class="content">
+										<view>
+											<view class="text-cut">瓦罗兰大陆-睡衣守护者-新手保护营</view>
+											<view class="cu-tag round bg-orange sm">6人</view>
+										</view>
+										<view class="text-gray text-sm flex">
+											<view class="text-cut"> 伊泽瑞尔：<text
+													class="cuIcon-locationfill text-orange margin-right-xs"></text>
+												传送中...
+											</view>
+										</view>
+									</view>
+									<view class="action">
+										<view class="text-grey text-xs">22:20</view>
+										<view class="cuIcon-notice_forbid_fill text-gray"></view>
+									</view>
 								</view>
 							</view>
 						</view>
-						</block>
+					</scroll-view>
+				</swiper-item>
+				<swiper-item key="3">
+					<scroll-view class="list">
+						<view>
+							<view class="cu-form-group margin-top hometop3">
+								<view class="title">陌生人消息不接收</view>
+								<switch @change="SwitchA" :class="switchA?'checked':''" :checked="switchA?true:false">
+								</switch>
+							</view>
+							<view class="cu-form-group">
+								<view class="title">公共群组消息开关</view>
+								<switch class='cyan' @change="SwitchB" :class="switchB?'checked':''"
+									:checked="switchB?true:false"></switch>
+							</view>
+						</view>
+					</scroll-view>
+				</swiper-item>
+			</swiper>
+		</view>
+		<view class="cu-modal" :class="modalName=='modify'?'show':''">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">修改成功</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
 					</view>
-				</scroll-view>
-			</swiper-item>
+				</view>
+				<view class="padding-xl">
+					修改成功，点击确定关闭。
+				</view>
+				<view class="cu-bar bg-white justify-end">
+					<view class="action">
+						<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="cu-modal" :class="modalName=='needlogin'?'show':''">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">需要登录</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl">
+					你需要登录才可以使用此功能。
+				</view>
+				<view class="cu-bar bg-white justify-end">
+					<view class="action">
+						<button class="cu-btn line-green text-green" @tap="hideModal">取消</button>
+						<button class="cu-btn bg-green margin-left" @tap="tologin">确定</button>
+					</view>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -86,16 +215,35 @@
 			return {
 				scrollLeft: 0,
 				iStatusBarHeight: 0,
+				chatonline: 0,
+				switchvalue: 0,
+				switchbvalue: 0,
+				chatnumber: 0,
 				swiperList: [],
 				toplist: [],
 				tuijiantie: [],
-				tabname: ["关注", "推荐", "热榜", "讨论", "攻略", "美图", "喇叭"],
+				modalName: "",
+				chatmessage: "",
+				chattime: "00:00",
+				tabname: ["私人消息", "公共消息", "消息设置", "发送消息"],
 				avatarimgLoaded: false,
+				modalName: null,
 				TabCur: 1,
-				swiperheight: 1500, //高度
+				radio: 'A',
+				switchA: false,
+				switchB: true,
+				swiperheight: 1000, //高度
 			};
 		},
 		methods: {
+			hideModal(e) {
+				this.modalName = null
+			},
+			tologin(e) {
+				uni.navigateTo({
+					url: '../../components/ay-login/login-password'
+				});
+			},
 			InputFocus(e) {
 				this.InputBottom = e.detail.height
 			},
@@ -105,6 +253,63 @@
 			onSuccessImg() {
 				this.avatarimgLoaded = true;
 			},
+			groupchatupdate(e) {
+				this.chatonline = e;
+			},
+			chatmessageupdate(e) {
+				this.chattime = e.timestamp.substr(0, e.timestamp.length - 3);
+				this.chatmessage = e.username + ":" + e.content;
+			},
+			gonggongqunzu() {
+				//console.log(e);
+				uni.navigateTo({
+					url: '../component/chat'
+				});
+			},
+			SwitchA(e) {
+				this.switchA = e.detail.value
+				if (e.detail.value) {
+					this.switchvalue = 1;
+				} else {
+					this.switchvalue = 2;
+				}
+				let that = this;
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:moshengrenxiaoxi', //获取设置
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token,
+						switch: that.switchvalue,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						if (res.data.code == 200) {
+							getApp().globalData.onlyacceptfriendpm = that.switchvalue;
+							this.modalName = "modify";
+						}
+					}
+				});
+			},
+			SwitchB(e) {
+				this.switchB = e.detail.value
+				if (e.detail.value) {
+					this.switchbvalue = 0;
+				} else {
+					this.switchbvalue = 1;
+				}
+				let that = this;
+				uni.setStorage({
+					key: 'chatswitch',
+					data: that.switchbvalue,
+					success: function() {
+						Vue.prototype.$switchbvalue = that.switchbvalue
+						console.log(Vue.prototype.$switchbvalue);
+					}
+				});
+			},
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;
 				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60;
@@ -113,94 +318,79 @@
 			tabChange(e) {
 				this.TabCur = e.detail.current;
 				var that = this;
-				if (this.TabCur == 1) {
-					uni.request({
-						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:zhidingtie', //获取轮播列表
-						method: 'GET',
-						timeout: 10000,
-						data: {
-							token: that.$token,
-						},
-						header: {
-							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
-						},
-						success: (res) => {
+				if (this.TabCur == 1) {}
+			},
+			getchatmessage(e) {
+				var that = this;
+				uni.request({
+					url: 'https://lt.zdfx.net:8089/index.php?m=im&a=chatlog&from=bbs.zdfx.net&id=-1&type=group', //获取轮播列表
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						uid: that.$uid,
+						page: 0,
+						auth: that.$htauth
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						let chatmess = JSON.parse(res.data.substr(1, (res.data.length - 2)));
+						console.log(that.$chatid);
+						if(that.$chatid == 0){
 							uni.setStorage({
-								key: 'lunbolist',
-								data: res.data.data,
+								key: 'chatchannel',
+								data: chatmess[4].cid,
 								success: function() {
-									that.toplist = res.data;
-									//console.log(that.toplist);
+									Vue.prototype.$chatid = chatmess[4].cid
+									//console.log(Vue.prototype.$switchbvalue);
 								}
 							});
+						}else{
+							that.chatnumber =  chatmess[4].cid - that.$chatid;
+							if(that.chatnumber > 99){that.chatnumber = "99+";}
+							that.chatmessage = chatmess[4].username + ":" + chatmess[4].content
+							that.chattime = chatmess[4].timestamp.substr(0, chatmess[4].timestamp.length - 3);
 						}
-					});
-				}
+						//console.log(that.$htauth);
+						//console.log(that.$uid);
+					}
+				});
 			},
 			tourl(e) {
 				console.log(this.swiperheight)
 			}
 		},
 		created() {
+			if (this.$token == "") {
+				this.modalName = "needlogin";
+			}
 			this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight;
+			this.getchatmessage();
+			let data = {
+				"cmd": "onlinecheck",
+				"type": "group",
+				"id": -1
+			};
+			this.$socket.send(JSON.stringify(data));
+			if (getApp().globalData.onlyacceptfriendpm == 1) {
+				this.switchA = true;
+			};
 			//plus.navigator.setStatusBarStyle('light');//改变系统标题颜色
 			var that = this;
+			uni.getStorage({
+				key: 'chatswitch',
+				success: function(res) {
+					if (res.data == 1) {
+						that.switchB = false;
+					}
+				}
+			});
 			uni.getStorage({
 				key: 'lunbolist',
 				success: function(res) {
 					that.swiperList = res.data.data;
 					//console.log(that.swiperList);
-				}
-			});
-			uni.request({
-				url: getApp().globalData.zddomain + 'api.php?mod=app&bid=158', //获取轮播列表
-				method: 'GET',
-				timeout: 10000,
-				header: {
-					'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
-				},
-				success: (res) => {
-					uni.setStorage({
-						key: 'lunbolist',
-						data: res.data.data,
-						success: function() {
-							that.swiperList = res.data.data;
-							//console.log(that.swiperList);
-						}
-					});
-				}
-			});
-			uni.request({
-				url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:zhidingtie', //获取置顶帖子
-				method: 'GET',
-				timeout: 10000,
-				data: {
-					token: that.$token,
-				},
-				header: {
-					'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
-				},
-				success: (res) => {
-					uni.setStorage({
-						key: 'lunbolist',
-						data: res.data.data,
-						success: function() {
-							that.toplist = res.data;
-							//console.log(that.toplist);
-						}
-					});
-				}
-			});
-			uni.request({
-				url: getApp().globalData.zddomain + 'api.php?mod=app&bid=407', //获取推荐帖子
-				method: 'GET',
-				timeout: 10000,
-				header: {
-					'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
-				},
-				success: (res) => {
-					that.tuijiantie = res.data.data;
-					console.log(that.tuijiantie);
 				}
 			});
 		},

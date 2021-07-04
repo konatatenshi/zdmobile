@@ -2,7 +2,7 @@
 	<view class="bg-gray">
 		<basics v-if="PageCur=='basics'" ref="basics"></basics>
 		<components v-if="PageCur=='component'"></components>
-		<plugin v-if="PageCur=='plugin'"></plugin>
+		<plugin v-if="PageCur=='plugin'" ref="message"></plugin>
 		<about v-if="PageCur=='about'" @returnDat='returnDate'></about>
 		<login v-if="PageCur=='login'" @returnDat='returnDate'></login>
 		<view v-else class="status_bar cu-bar tabbar bg-white shadow foot">
@@ -12,7 +12,7 @@
 			</view>
 			<view :class="PageCur=='component'?'action text-green':'action text-gray'" @click="NavChange"
 				data-cur="component">
-				<view class="cuIcon-similar"></view> 板块
+				<view class="cuIcon-similar"></view> 版块
 			</view>
 			<view class="action text-gray add-action">
 				<button class="cu-btn cuIcon-add bg-green shadow"></button>
@@ -36,7 +36,8 @@
 </template>
 
 <script>
-	import Vue from 'vue'
+	import Vue from 'vue';
+	import wsRequest from '../../js_sdk/websocket.js';
 	export default {
 		data() {
 			return {
@@ -46,9 +47,34 @@
 			}
 		},
 		onLoad: function() {
+			let websocket = new wsRequest("wss://lt.zdfx.net:8586/", 10000);
+			Vue.prototype.$socket = websocket;
 			if (this.$token == '') {
 				//this.PageCur = 'login';
-			}
+			};
+			uni.$on('websocketmessage',(websocketmessage)=>{  
+			    this.websocketmessage = websocketmessage;
+				var jsonget = JSON.parse(this.websocketmessage.data)
+				console.log(jsonget);
+				if(jsonget.cmd == "onlinecheck" && jsonget.type == "group"){
+					if(this.PageCur == "plugin"){
+						this.$refs.message.groupchatupdate(jsonget.status);
+					}
+				}else if(jsonget.cmd =="chat"){
+					if(this.PageCur == "plugin"){
+						this.$refs.message.chatmessageupdate(jsonget);
+					}
+				}
+			})  
+			uni.$on('onsocket',(onsocket)=>{  
+			    this.loginchat();
+			})  
+		},
+		onUnload() {  
+		    // 移除监听事件  
+		    uni.$off('onsocket');  
+		    uni.$off('websocketmessage');  
+			console.log("移除监听");
 		},
 		onShow: function() {
 			if (Vue.prototype.$token != '') {
@@ -85,7 +111,9 @@
 								getApp().globalData.mynewpm = res.data.newpm;
 								getApp().globalData.mynewprompt = res.data.newprompt;
 								getApp().globalData.myfreeze = res.data.freeze;
-								getApp().globalData.myinfoprompt = parseInt(res.data.newpm) + parseInt(res.data.newprompt);
+								getApp().globalData.onlyacceptfriendpm = res.data.onlyacceptfriendpm;
+								getApp().globalData.myinfoprompt = parseInt(res.data.newpm) +
+									parseInt(res.data.newprompt);
 								that.mynewpm = getApp().globalData.mynewpm;
 								that.myinfoprompt = getApp().globalData.myinfoprompt;
 								//console.log(that.mynewpm);
@@ -96,26 +124,45 @@
 				});
 			}
 		},
-		onReachBottom(){
+		onReachBottom() {
 			//console.log("到底了");
-			if(this.PageCur=="basics"){
+			if (this.PageCur == "basics") {
 				this.$refs.basics.tothebottom();
-			}
+			};
 		},
 		methods: {
-			returnDate(val){
+			returnDate(val) {
 				this.PageCur = val;
 				console.log(val);
 			},
 			NavChange: function(e) {
-				this.PageCur = e.currentTarget.dataset.cur
+				this.PageCur = e.currentTarget.dataset.cur;
+			},
+			loginchat(){
+				let data = {
+					"from": "bbs.zdfx.net",
+					"id": this.$uid,
+					"username": this.$myusername,
+					"sign": "",
+					"avatar": "https://zd.tiangal.com/uc_server/avatar.php?uid=" + this.$uid + "&size=small&ts=1",
+					"allowmoney": 0,
+					"adminid": this.$adminid,
+					"groupids": [],
+					"admingroupids": [],
+					"anonymous": 0,
+					"anonymous_group": "0",
+					"auth": this.$auth,
+					"cmd": "login"
+				};
+				console.log(data);
+				this.$socket.send(JSON.stringify(data));
 			}
 		}
 	}
 </script>
 
 <style>
-	.hometop{
+	.hometop {
 		z-index: 999;
 		/* #ifdef APP-PLUS */
 		position: fixed;
@@ -126,7 +173,8 @@
 		padding-bottom: 10upx;
 		/* #endif */
 	}
-	.hometop0{
+
+	.hometop0 {
 		z-index: 998;
 		/* #ifdef APP-PLUS */
 		position: fixed;
@@ -135,12 +183,24 @@
 		top: calc(var(--status-bar-height) + 40px);
 		/* #endif */
 	}
-	.hometop2{
+
+	.hometop1 {
+		z-index: 998;
+		/* #ifdef APP-PLUS */
+		position: fixed;
+		left: 0;
+		right: 0;
+		top: calc(var(--status-bar-height) + 25px);
+		/* #endif */
+	}
+
+	.hometop2 {
 		/* #ifdef APP-PLUS */
 		margin-top: calc(var(--status-bar-height) + 25px);
 		/* #endif */
 	}
-	.hometop3{
+
+	.hometop3 {
 		/* #ifdef APP-PLUS */
 		margin-top: calc(var(--status-bar-height) + 71px);
 		/* #endif */
