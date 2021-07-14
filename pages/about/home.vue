@@ -309,6 +309,7 @@
 						that.mycredits = getApp().globalData.mycredits;
 						console.log(that.mynewpm);
 						console.log(that.myinfoprompt);
+						console.log(that.$token);
 						Vue.prototype.$username = getApp().globalData.myusername;
 					}
 				});

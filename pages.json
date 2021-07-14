@@ -14,6 +14,10 @@
 			"style": {}
 		},
 		{
+			"path": "pages/basics/forum",
+			"style": {}
+		},
+		{
 			"path": "pages/basics/layout",
 			"style": {}
 		},

@@ -40,7 +40,7 @@
 								</view>
 							</view>
 						</view>
-						<view class="cu-item" v-else>
+						<view class="cu-item" v-else @tap="toforum(item.fid)">
 							<view class="cu-avatar radius lg" :style="{'background-image': 'url(' +item.icon+')'}">
 								<view class="cu-tag badge">{{item.todayposts}}</view>
 							</view>
@@ -153,6 +153,11 @@
 			tologin(e) {
 				uni.navigateTo({
 					url: '../../components/ay-login/login-password'
+				});
+			},
+			toforum(e) {
+				uni.navigateTo({
+					url: '../basics/forum?forumid=' + e
 				});
 			},
 			gettime(createtime){

@@ -90,7 +90,7 @@
 												<view class="text-cut">{{item.title}}</view>
 											</view>
 											<view class="content">
-												<image :src="item.img" mode="aspectFill"></image>
+												<image v-if="item.img != 'static/image/common/nophoto.gif'" :src="item.img" mode="aspectFill"></image>
 												<view class="desc">
 													<view class="text-content">
 														{{item.summary}}
@@ -113,14 +113,6 @@
 										<view class="flex-sub text-center">
 											<view class="text-xs padding">
 												<text class="text-black">{{loading}}</text>
-											</view>
-										</view>
-									</view>
-									<view class="padding-xs flex align-center bg-gray"
-										:style="{'height': iStatusBarHeight+'px'}">
-										<view class="flex-sub text-center">
-											<view class="text-xs padding">
-												<text class="text-white">终点论坛 @2021</text>
 											</view>
 										</view>
 									</view>

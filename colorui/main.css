@@ -1301,8 +1301,6 @@ button.cuIcon.lg {
 	box-sizing: border-box;
 	width: 200%;
 	height: 200%;
-	border-bottom: 1upx solid #ddd;
-	border-radius: inherit;
 	content: " ";
 	transform: scale(.5);
 	transform-origin: 0 0;
@@ -2102,7 +2100,7 @@ button.cuIcon.lg {
 	font-size: 24upx;
 	color: #8799a3;
 	width: calc(100% - 320upx);
-	bottom: 20upx;
+	top: -15upx;
 	left: 160upx;
 }
 
@@ -2152,6 +2150,11 @@ button.cuIcon.lg {
 .cu-chat .cu-item>.main .content:not([class*="bg-"])::before {
 	background-color: #333333;
 	opacity: 0.1;
+}
+
+.cu-chat .cu-item{
+	word-break:break-all;
+	word-wrap:break-word;
 }
 
 .cu-chat .cu-item.self>.main .content::before {

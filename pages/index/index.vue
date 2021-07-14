@@ -52,28 +52,28 @@
 			if (this.$token == '') {
 				//this.PageCur = 'login';
 			};
-			uni.$on('websocketmessage',(websocketmessage)=>{  
-			    this.websocketmessage = websocketmessage;
+			uni.$on('websocketmessage', (websocketmessage) => {
+				this.websocketmessage = websocketmessage;
 				var jsonget = JSON.parse(this.websocketmessage.data)
 				console.log(jsonget);
-				if(jsonget.cmd == "onlinecheck" && jsonget.type == "group"){
-					if(this.PageCur == "plugin"){
+				if (jsonget.cmd == "onlinecheck" && jsonget.type == "group") {
+					if (this.PageCur == "plugin") {
 						this.$refs.message.groupchatupdate(jsonget.status);
 					}
-				}else if(jsonget.cmd =="chat"){
-					if(this.PageCur == "plugin"){
+				} else if (jsonget.cmd == "chat") {
+					if (this.PageCur == "plugin") {
 						this.$refs.message.chatmessageupdate(jsonget);
 					}
 				}
-			})  
-			uni.$on('onsocket',(onsocket)=>{  
-			    this.loginchat();
-			})  
+			})
+			uni.$on('onsocket', (onsocket) => {
+				this.loginchat();
+			})
 		},
-		onUnload() {  
-		    // 移除监听事件  
-		    uni.$off('onsocket');  
-		    uni.$off('websocketmessage');  
+		onUnload() {
+			// 移除监听事件  
+			uni.$off('onsocket');
+			uni.$off('websocketmessage');
 			console.log("移除监听");
 		},
 		onShow: function() {
@@ -111,7 +111,8 @@
 								getApp().globalData.mynewpm = res.data.newpm;
 								getApp().globalData.mynewprompt = res.data.newprompt;
 								getApp().globalData.myfreeze = res.data.freeze;
-								getApp().globalData.onlyacceptfriendpm = res.data.onlyacceptfriendpm;
+								getApp().globalData.onlyacceptfriendpm = res.data
+									.onlyacceptfriendpm;
 								getApp().globalData.myinfoprompt = parseInt(res.data.newpm) +
 									parseInt(res.data.newprompt);
 								that.mynewpm = getApp().globalData.mynewpm;
@@ -122,7 +123,22 @@
 						});
 					}
 				});
-			}
+			};
+			let data = {
+				"cmd": "onlinecheck",
+				"type": "group",
+				"id": -1
+			};
+			if (this.$socket == undefined) {
+				let websocket = new wsRequest("wss://lt.zdfx.net:8586/", 10000);
+				Vue.prototype.$socket = websocket;
+			};
+			setTimeout(() => {
+				this.$socket.reconnect();
+				this.loginchat();
+				this.$socket.send(JSON.stringify(data));
+				console.log("断线重连")
+			}, 4000)
 		},
 		onReachBottom() {
 			//console.log("到底了");
@@ -138,11 +154,11 @@
 			NavChange: function(e) {
 				this.PageCur = e.currentTarget.dataset.cur;
 			},
-			loginchat(){
+			loginchat() {
 				let data = {
 					"from": "bbs.zdfx.net",
 					"id": this.$uid,
-					"username": this.$myusername,
+					"username": this.$username,
 					"sign": "",
 					"avatar": "https://zd.tiangal.com/uc_server/avatar.php?uid=" + this.$uid + "&size=small&ts=1",
 					"allowmoney": 0,

@@ -355,7 +355,7 @@
 								key: 'userlogininfo',
 								data: res.data.data,
 								success: function() {
-									console.log('success');
+									console.log(res.data.data);
 								}
 							});
 							uni.getStorage({
