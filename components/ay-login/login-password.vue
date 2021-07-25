@@ -255,6 +255,13 @@
 				this.index = e.detail.value
 			},
 			visitor(e) {
+				var that = this;
+					uni.removeStorage({
+						key: 'userlogininfo',
+						success: function(res) {
+							that.$emit("returnDat","login")//传递的值
+						}
+					});
 				this.$emit("returnDat","basics")//传递的值
 				uni.navigateTo({
 					url: '../../pages/index/index'
@@ -340,6 +347,9 @@
 							} else if (res.data.result == 'error0013') {
 								this.error.reason = '验证问题错误';
 								this.modalName = 'yanzhenghuida';
+							} else if (res.data.result == 'error016') {
+								this.error.reason = '服务过期';
+								this.modalName = 'loginerror';
 							} else if (res.data.result == 'error06:username') {
 								this.error.reason = '您还未输入用户名';
 								this.modalName = 'loginerror';

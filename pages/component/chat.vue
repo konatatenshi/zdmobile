@@ -364,7 +364,7 @@
 		},
 		onLoad: function() {
 			if (this.$token == '') {
-				uni.navigateTo({
+				uni.redirectTo({
 					url: '../../components/ay-login/login-password'
 				});
 			};

@@ -255,6 +255,7 @@
 			},
 			cleanlogin() {
 			var that = this;
+			this.$token = '';
 				uni.removeStorage({
 					key: 'userlogininfo',
 					success: function(res) {

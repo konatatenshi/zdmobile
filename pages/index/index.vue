@@ -102,21 +102,28 @@
 						uni.getStorage({
 							key: 'myuserinfo',
 							success: function(res) {
-								getApp().globalData.myusername = res.data.username;
-								getApp().globalData.myadminid = res.data.adminid;
-								getApp().globalData.mygroupid = res.data.groupid;
-								getApp().globalData.mygroupexpiry = res.data.groupexpiry;
-								getApp().globalData.myregdate = res.data.regdate;
-								getApp().globalData.mycredits = res.data.credits;
-								getApp().globalData.mynewpm = res.data.newpm;
-								getApp().globalData.mynewprompt = res.data.newprompt;
-								getApp().globalData.myfreeze = res.data.freeze;
-								getApp().globalData.onlyacceptfriendpm = res.data
-									.onlyacceptfriendpm;
-								getApp().globalData.myinfoprompt = parseInt(res.data.newpm) +
-									parseInt(res.data.newprompt);
-								that.mynewpm = getApp().globalData.mynewpm;
-								that.myinfoprompt = getApp().globalData.myinfoprompt;
+								console.log(res);
+								if(res.data.status==0&&res.data.freeze==0){
+									getApp().globalData.myusername = res.data.username;
+									getApp().globalData.myadminid = res.data.adminid;
+									getApp().globalData.mygroupid = res.data.groupid;
+									getApp().globalData.mygroupexpiry = res.data.groupexpiry;
+									getApp().globalData.myregdate = res.data.regdate;
+									getApp().globalData.mycredits = res.data.credits;
+									getApp().globalData.mynewpm = res.data.newpm;
+									getApp().globalData.mynewprompt = res.data.newprompt;
+									getApp().globalData.myfreeze = res.data.freeze;
+									getApp().globalData.onlyacceptfriendpm = res.data
+										.onlyacceptfriendpm;
+									getApp().globalData.myinfoprompt = parseInt(res.data.newpm) +
+										parseInt(res.data.newprompt);
+									that.mynewpm = getApp().globalData.mynewpm;
+									that.myinfoprompt = getApp().globalData.myinfoprompt;
+								}else{
+									uni.redirectTo({
+										url: '../../components/ay-login/login-password'
+									});
+								}
 								//console.log(that.mynewpm);
 								//console.log(that.myinfoprompt);
 							}

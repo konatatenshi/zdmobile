@@ -151,7 +151,7 @@
 				this.modalName = null
 			},
 			tologin(e) {
-				uni.navigateTo({
+				uni.redirectTo({
 					url: '../../components/ay-login/login-password'
 				});
 			},

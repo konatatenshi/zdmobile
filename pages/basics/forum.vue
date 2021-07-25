@@ -27,10 +27,10 @@
 					<scroll-view class="list">
 						<view class="view_listnow">
 							<view v-if="threadlist.length > 0">
-								<block v-for="(item,index2) in threadlist" :key="index2" @tap="tourl(item.tid)">
+								<block v-for="(item,index2) in threadlist" :key="index2">
 									<view class="solid-bottom text-df"
 										style="padding-top: 10upx; padding-bottom: 10upx;" v-if="item.displayorder>0">
-										<view>
+										<view  @tap="topost(item.tid)">
 											<text class="text-black text-cut"
 												style="width: 100%;">{{item.subject}}</text>
 										</view>
@@ -43,7 +43,10 @@
 											<view class="cu-item shadow">
 												<view class="cu-list menu-avatar">
 													<view class="cu-item">
-														<view class="cu-avatar round lg" :style="[{ backgroundImage:'url(' + item.userinfo.avatarlist + ')' }]"></view>
+														<view class="cu-avatar round lg" :style="[{ backgroundImage:'url(' + item.userinfo.avatarlist + ')' }]">
+															<view v-show="item.userinfo.sex==1" class="cu-tag badge cuIcon-male bg-blue"></view>
+															<view v-show="item.userinfo.sex==2" class="cu-tag badge cuIcon-female bg-pink"></view>
+														</view>
 														<view class="content flex-sub">
 															<view>{{item.author}}</view>
 															<view class="text-gray text-sm flex justify-between">
@@ -52,26 +55,26 @@
 														</view>
 													</view>
 												</view>
-												<view class="forumtitle text-cut">{{item.subject}}</view>
-												<view class="text-content">
+												<view class="forumtitle text-cut" @tap="topost(item.tid)">{{item.subject}}</view>
+												<view class="text-content" @tap="topost(item.tid)">
 														{{item.summary}}
 												</view>
-												<view v-if="item.attachment==2 && item.attachinfo.length == 1" class="grid flex-sub padding-lr col-1">
-													<view class="bg-img only-img" :style="[{ backgroundImage:'url(' + item.attachlist[0].attachment + ')' }]">
+												<view v-if="item.attachment==3" class="grid flex-sub padding-lr col-1">
+													<view v-if="item.attachlist[0].attachment!=null" @click="imgMap(item.attachlist[0].attachment)" class="bg-img only-img" :style="[{ backgroundImage:'url(' + item.attachlist[0].attachment + ')' }]">
 													</view>
 												</view>
-												<view v-else-if="item.attachment==2 && item.attachinfo.length == 2" class="grid flex-sub padding-lr col-3 grid-square">
-													<view class="bg-img" :style="[{ backgroundImage:'url(' + item.attachlist[0].attachment + ')' }]">
+												<view v-else-if="item.attachment==4" class="grid flex-sub padding-lr col-3 grid-square">
+													<view v-if="item.attachlist[0].attachment!=null" @click="imgMap(item.attachlist[0].attachment)" class="bg-img" :style="[{ backgroundImage:'url(' + item.attachlist[0].attachment + ')' }]">
 													</view>
-													<view class="bg-img" :style="[{ backgroundImage:'url(' + item.attachlist[1].attachment + ')' }]">
+													<view v-if="item.attachlist[1].attachment!=null" @click="imgMap(item.attachlist[1].attachment)" class="bg-img" :style="[{ backgroundImage:'url(' + item.attachlist[1].attachment + ')' }]">
 													</view>
 												</view>
-												<view v-else-if="item.attachment==2 && item.attachinfo.length > 2" class="grid flex-sub padding-lr col-3 grid-square">
-													<view class="bg-img" :style="[{ backgroundImage:'url(' + item.attachlist[0].attachment + ')' }]">
+												<view v-else-if="item.attachment>4" class="grid flex-sub padding-lr col-3 grid-square">
+													<view v-if="item.attachlist[0].attachment!=null" @click="imgMap(item.attachlist[0].attachment)" class="bg-img" :style="[{ backgroundImage:'url(' + item.attachlist[0].attachment + ')' }]">
 													</view>
-													<view class="bg-img" :style="[{ backgroundImage:'url(' + item.attachlist[1].attachment + ')' }]">
+													<view v-if="item.attachlist[1].attachment!=null" @click="imgMap(item.attachlist[1].attachment)" class="bg-img" :style="[{ backgroundImage:'url(' + item.attachlist[1].attachment + ')' }]">
 													</view>
-													<view class="bg-img" :style="[{ backgroundImage:'url(' + item.attachlist[2].attachment + ')' }]">
+													<view v-if="item.attachlist[2].attachment!=null" @click="imgMap(item.attachlist[2].attachment)" class="bg-img" :style="[{ backgroundImage:'url(' + item.attachlist[2].attachment + ')' }]">
 													</view>
 												</view>
 												<view class="text-gray text-sm text-right padding">
@@ -195,17 +198,22 @@
 				this.modalName = null
 			},
 			tologin(e) {
-				uni.navigateTo({
+				uni.redirectTo({
 					url: '../../components/ay-login/login-password'
 				});
 			},
-			tourl(e) {
+			topost(e) {
 				uni.navigateTo({
-					url: '../../components/ay-login/login-password'
+					url: '../component/card?tid=' + e
 				});
 			},
 			tothebottom() {
 				console.log("到底了");
+			},
+			imgMap(url) {
+				uni.previewImage({
+					urls: [url], //这里一定是数组，不然就报错
+				});
 			},
 			setHeight(e) {
 				var query = uni.createSelectorQuery();
@@ -255,7 +263,7 @@
 							that.threadlist = res.data.post;
 							that.threadlisttitle = res.data.postinfo;
 							that.forumname = res.data.foruminfo1.name;
-							console.log(that.threadlist);
+							//console.log(that.threadlist);
 							setTimeout(function() {
 								that.setHeight("view_listnow");
 							}, 100)
