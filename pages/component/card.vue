@@ -19,7 +19,7 @@
 					</view>
 				</view>
 				<view class="text-content2">
-					<rich-text :nodes="content"></rich-text>
+					<mp-html :content="content" />
 				</view>
 				<view class="cu-list menu-avatar comment solids-top">
 					<view class="cu-item">
@@ -74,7 +74,11 @@
 </template>
 
 <script>
+	import mpHtml from '@/components/mp-html/mp-html'
 	export default {
+		components: {
+		 mpHtml
+		},
 		data() {
 			return {
 				isCard: false,
@@ -90,6 +94,14 @@
 		methods: {
 			IsCard(e) {
 				this.isCard = e.detail.value
+			},
+			cb(e){
+			    if (e.target.nodeName === 'A') {
+			        // 获取触发事件对象的属性
+					this.$emit('cb');
+			        var url = e.target.getAttribute('href');
+			        console.log(url);
+			    }
 			},
 			setHeight(e) {
 				var query = uni.createSelectorQuery();
