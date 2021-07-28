@@ -43,7 +43,11 @@
             "sdkConfigs" : {
                 "ad" : {}
             }
-        }
+        },
+        "uniStatistics" : {
+            "enable" : true
+        },
+        "nativePlugins" : {}
     },
     /* SDK配置 */
     "quickapp" : {},

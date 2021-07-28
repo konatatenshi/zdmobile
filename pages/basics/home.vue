@@ -47,7 +47,7 @@
 							<view v-if="toplist.length > 0">
 								<block v-for="(item,index1) in toplist" :key="index1">
 									<view class="solid-bottom text-df"
-										style="padding-top: 10upx; padding-bottom: 10upx;">
+										style="padding-top: 10upx; padding-bottom: 10upx;" @tap="tourl(item.url)">
 										<view>
 											<text class="text-black text-cut" style="width: 100%;">{{item.title}}</text>
 										</view>
@@ -58,8 +58,8 @@
 								</block>
 							</view>
 							<view v-if="tuijiantie.length > 0">
-								<block v-for="(item,index2) in tuijiantie" :key="index2" @tap="tourl(item.url)">
-									<view class="solid-bottom cu-card article no-card">
+								<block v-for="(item,index2) in tuijiantie" :key="index2">
+									<view class="solid-bottom cu-card article no-card" @tap="tourl(item.url)">
 										<view class="cu-item shadow">
 											<view class="title">
 												<view class="text-cut">{{item.title}}</view>
@@ -202,12 +202,14 @@
 				}
 			},
 			tourl(e) {
-				console.log(this.swiperheight)
+				uni.navigateTo({
+					url: '../component/card?tid=' + e
+				});
 			}
 		},
 		created() {
 			this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight;
-			//plus.navigator.setStatusBarStyle('light');//改变系统标题颜色
+			plus.navigator.setStatusBarStyle('light');//改变系统标题颜色
 			var that = this;
 			uni.getStorage({
 				key: 'lunbolist',

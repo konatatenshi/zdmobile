@@ -77,6 +77,7 @@
 			console.log("移除监听");
 		},
 		onShow: function() {
+			console.log(this.$socket)
 			if (Vue.prototype.$token != '') {
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=xinxiu_network:user', //获取用户基本信息。
@@ -140,6 +141,10 @@
 				let websocket = new wsRequest("wss://lt.zdfx.net:8586/", 10000);
 				Vue.prototype.$socket = websocket;
 			};
+			if (this.$socket.is_open_socket == false) {
+				let websocket = new wsRequest("wss://lt.zdfx.net:8586/", 10000);
+				Vue.prototype.$socket = websocket;
+			};
 			setTimeout(() => {
 				this.$socket.reconnect();
 				this.loginchat();
@@ -162,6 +167,9 @@
 				this.PageCur = e.currentTarget.dataset.cur;
 			},
 			loginchat() {
+				if(this.$uid>0 && this.$username == '游客'){
+					plus.runtime.restart();
+				}
 				let data = {
 					"from": "bbs.zdfx.net",
 					"id": this.$uid,

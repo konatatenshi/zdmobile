@@ -38,7 +38,7 @@
 							:class="formsub?'cuIcon-loading2 cuIconfont-spin':''"></text>登录</button>
 				</view>
 				<view class="padding-top">
-					<button  class="grid margin-bottom text-center col-1 cu-btn line-green lg shadow"
+					<button class="grid margin-bottom text-center col-1 cu-btn line-green lg shadow"
 						@click="visitor"></text>游客浏览</button>
 				</view>
 			</form>
@@ -111,12 +111,14 @@
 					</view>
 					<view class="cu-form-group">
 						<view class="title">验证码</view>
-						<input type="number" placeholder="输入验证码" name="yanzhengma" maxlength="6" v-model="yanzhengma" value=""
-							@input="shuruyanzhengma"></input>
-						<button class='cu-btn bg-green shadow' @click="showCaptcha" :disabled="codeFlag?false:true"
+						<input type="number" placeholder="输入验证码" name="yanzhengma" maxlength="6" v-model="yanzhengma"
+							value="" @input="shuruyanzhengma"></input>
+						<button class='cu-btn bg-green shadow' @click="yzm" :disabled="codeFlag?false:true"
 							:class="{activeCode:codeFlag}"><text
-							:class="formsub3?'cuIcon-loading2 cuIconfont-spin':''"></text>{{codeTxt}}</button>
+								:class="formsub3?'cuIcon-loading2 cuIconfont-spin':''"></text>{{codeTxt}}</button>
 					</view>
+					<xlg-slideCode :session_id="session_id" v-if="slideCode_show" @close="slideCode_show = false"
+						@success="slideCode_success"></xlg-slideCode>
 					<view class="cu-form-group">
 						<view class="title">设置新密码</view>
 						<input placeholder="请输入新密码" type="password" name="newpasswd" v-model="newpasswd" value=""
@@ -124,7 +126,7 @@
 					</view>
 					<view class="padding flex flex-direction">
 						<button class="cu-btn bg-blue" @tap="verifycode" :disabled="yzFlag?false:true"><text
-							:class="formsub4?'cuIcon-loading2 cuIconfont-spin':''"></text>验证并重置</button>
+								:class="formsub4?'cuIcon-loading2 cuIconfont-spin':''"></text>验证并重置</button>
 					</view>
 				</view>
 			</view>
@@ -138,7 +140,7 @@
 					</view>
 				</view>
 				<view class="padding-xl">
-					您已成功修改密码，新密码是：<br/><text class="text-black text-bold">{{displaynewpass}}</text>。
+					您已成功修改密码，新密码是：<br /><text class="text-black text-bold">{{displaynewpass}}</text>。
 				</view>
 				<view class="cu-bar bg-white justify-end">
 					<view class="action">
@@ -195,11 +197,15 @@
 				newpasswd: '',
 				codeTxt: '获取验证码',
 				codeFlag: true, // 控制按钮是否可点击
-				yzFlag: true, 
+				yzFlag: true,
 				result: {},
 				checkResult: {},
 				modalName: '',
-				error: Array
+				error: Array,
+				slideCode_show: false, //图形验证码是否显示
+				slideCode_yanzheng: false, //图形验证码是否验证通过
+				slideCode_x: 10, //图形验证码的水平偏移值
+				session_id: Math.floor(Math.random() *9999999999) //这里有人可能会好奇，为什么会自己定义一个session的Id，php的session不是会自己生成id，然后通过cookie的方式进行传递吗？   答案就是：很多小程序在网络访问时是不支持传递cookie的。所以这里就实现通过get方式进行传递
 			}
 		},
 		mounted() {
@@ -216,7 +222,7 @@
 				if (this.codeFlag == false) {
 					return
 				}
-				if(!(/^1[3456789]\d{9}$/.test(this.phonenumber)) && this.addressData.countrycode == 86){ 
+				if (!(/^1[3456789]\d{9}$/.test(this.phonenumber)) && this.addressData.countrycode == 86) {
 					this.error.reasoncode = 'error0201';
 					this.modalName = 'loginerror';
 					this.error.reason = '你输入的手机号错误';
@@ -238,6 +244,128 @@
 					throw new Error(error);
 				}
 			},
+			yzm: function() {
+				if (this.phonenumber == 0) {
+					this.error.reasoncode = 'error0200';
+					this.modalName = 'loginerror';
+					this.error.reason = '你还未输入手机号';
+					return;
+				}
+				if (this.codeFlag == false) {
+					return
+				}
+				if (!(/^1[3456789]\d{9}$/.test(this.phonenumber)) && this.addressData.countrycode == 86) {
+					this.error.reasoncode = 'error0201';
+					this.modalName = 'loginerror';
+					this.error.reason = '你输入的手机号错误';
+					return;
+				}
+				if (this.slideCode_yanzheng === true) { //图形滑块是否验证通过
+					//这里你就可以自由的发送验证码了【下方代码仅做参考】
+					console.log(this.addressData.countrycode);
+					console.log(this.phonenumber);
+					uni.request({
+						method: 'get',
+						dataType: 'json',
+						url: getApp().globalData.zddomain + 'plugin.php?id=tencentcloud_center:sendsms',
+						data: {
+							gh: this.addressData.countrycode,
+							phone: this.phonenumber,
+							session_id: this.session_id,
+							x: this.slideCode_x
+						},
+						success: (res) => {
+							console.log(res.data);
+							if (res.data.code === 2001) { //发送成功
+								this.formsub3 = false;
+								let time = 60
+								this.codeTxt = '重新获取' + time
+								let timer = setInterval(() => {
+									this.codeTxt = '获取验证码'
+									if (time == 1) {
+										this.codeFlag = true;
+										clearInterval(timer)
+									} else {
+										time--
+										this.codeTxt = '重新获取' + time
+									}
+
+								}, 1000)
+							} else if (res.data.code == 2007) {
+								this.slideCode_yanzheng = false
+								this.error.reasoncode = 'error0203';
+								this.modalName = 'loginerror';
+								this.error.reason = '号码错误，请重新输入';
+								this.formsub3 = false;
+								this.codeFlag = true;
+								this.phonenumber = '';
+								this.yanzhengma = '';
+								this.newpasswd = ''
+							} else if (res.data.code == 404) {
+								this.slideCode_yanzheng = false
+								this.error.reasoncode = 'error0204';
+								this.modalName = 'loginerror';
+								this.error.reason = '号码不存在，无法找回';
+								this.formsub3 = false;
+								this.codeFlag = true;
+								this.phonenumber = '';
+								this.yanzhengma = '';
+								this.newpasswd = ''
+							} else if (res.data.code == 401) {
+								this.slideCode_yanzheng = false
+								this.error.reasoncode = 'error0205';
+								this.modalName = 'loginerror';
+								this.error.reason = '号码违规，请重新输入';
+								this.formsub3 = false;
+								this.codeFlag = true;
+								this.phonenumber = '';
+								this.yanzhengma = '';
+								this.newpasswd = ''
+							} else if (res.data.code == 403) {
+								this.slideCode_yanzheng = false
+								this.error.reasoncode = 'error0206';
+								this.modalName = 'loginerror';
+								this.error.reason = '你已经在1个月内修改过密码超过3次，请稍后再修改';
+								this.formsub3 = false;
+								this.codeFlag = true;
+								this.phonenumber = '';
+								this.yanzhengma = '';
+								this.newpasswd = ''
+							} else { //发送失败
+								if (res.data.msg ===
+									'请先生成图形验证码') { //大概率就是生成一次验证码了，所以前一次图形验证码就失效了【所以重新再进行图片滑块验证】
+									this.slideCode_yanzheng = false
+									this.error.reasoncode = 'error0207';
+									this.modalName = 'loginerror';
+									this.error.reason = res.data.msg;
+									this.formsub3 = false;
+									this.codeFlag = true;
+									this.phonenumber = '';
+									this.yanzhengma = '';
+									this.newpasswd = ''
+								}else{
+									this.slideCode_yanzheng = false
+									this.error.reasoncode = 'error0208';
+									this.modalName = 'loginerror';
+									this.error.reason = res.data.msg;
+									this.formsub3 = false;
+									this.codeFlag = true;
+									this.phonenumber = '';
+									this.yanzhengma = '';
+									this.newpasswd = ''
+								}
+							}
+						}
+					});
+				} else { //到这里说明没有验证或者没有验证通过。调起“图片滑块验证码”
+					this.slideCode_show = true
+				}
+			},
+			slideCode_success: function(x) { //验证通过了
+				this.slideCode_yanzheng = true //验证通过
+				this.slideCode_x = x //偏移值
+				this.yzm() //获取验证码
+			},
 			getJob() {
 				let countrydata = require('../../json/countrycode.json')
 				this.countryListId = countrydata;
@@ -256,13 +384,13 @@
 			},
 			visitor(e) {
 				var that = this;
-					uni.removeStorage({
-						key: 'userlogininfo',
-						success: function(res) {
-							that.$emit("returnDat","login")//传递的值
-						}
-					});
-				this.$emit("returnDat","basics")//传递的值
+				uni.removeStorage({
+					key: 'userlogininfo',
+					success: function(res) {
+						that.$emit("returnDat", "login") //传递的值
+					}
+				});
+				this.$emit("returnDat", "basics") //传递的值
 				uni.navigateTo({
 					url: '../../pages/index/index'
 				});
@@ -278,7 +406,7 @@
 			},
 			shezhinewpass(e) {
 				this.newpasswd = e.detail.value;
-				if(this.randstrnew!= ''&& this.newpasswd!= ''){
+				if (this.randstrnew != '' && this.newpasswd != '') {
 					this.yzFlag = true;
 				}
 			},
@@ -355,7 +483,7 @@
 								this.modalName = 'loginerror';
 							}
 							this.formsub = false;
-						console.log(this.modalName);
+							console.log(this.modalName);
 						} else if (status == 1) {
 							this.error.reason = '您的账号被禁止登入';
 							this.modalName = 'loginerror';
@@ -424,7 +552,7 @@
 			verifycode(e) {
 				this.formsub4 = true;
 				this.yzFlag = false;
-				if (this.newpasswd.length<7) {
+				if (this.newpasswd.length < 7) {
 					this.error.reasoncode = 'error0214';
 					this.modalName = 'loginerror';
 					this.error.reason = '新密码少于7位，请重新输入';
@@ -435,7 +563,7 @@
 					this.yzFlag = true;
 					return;
 				}
-				if (this.yanzhengma.length<6) {
+				if (this.yanzhengma.length < 6) {
 					this.error.reasoncode = 'error0215';
 					this.modalName = 'loginerror';
 					this.error.reason = '验证码少于6位，请重新输入';
@@ -446,7 +574,7 @@
 					this.yzFlag = true;
 					return;
 				}
-				if (this.phonenumber.length<8) {
+				if (this.phonenumber.length < 8) {
 					this.error.reasoncode = 'error0216';
 					this.modalName = 'loginerror';
 					this.error.reason = '手机号少于8位，请重新输入';
@@ -493,7 +621,7 @@
 							this.phonenumber = '';
 							this.yanzhengma = '';
 							this.newpasswd = ''
-						}else if (res.data.code == 301) {
+						} else if (res.data.code == 301) {
 							this.error.reasoncode = 'error0211';
 							this.modalName = 'loginerror';
 							this.error.reason = '修改后的密码与修改前一样，密码无变动';
@@ -501,7 +629,7 @@
 							this.phonenumber = '';
 							this.yanzhengma = '';
 							this.newpasswd = ''
-						}else if (res.data.code == 403) {
+						} else if (res.data.code == 403) {
 							this.error.reasoncode = 'error0212';
 							this.modalName = 'loginerror';
 							this.error.reason = '验证码验证错误，验证失败，请重新获取短信并重新输入';
@@ -509,7 +637,7 @@
 							this.phonenumber = '';
 							this.yanzhengma = '';
 							this.newpasswd = ''
-						}else if (res.data.code == 404) {
+						} else if (res.data.code == 404) {
 							this.error.reasoncode = 'error0212';
 							this.modalName = 'loginerror';
 							this.error.reason = '没有验证信息，你得先获取验证码';
@@ -517,7 +645,7 @@
 							this.phonenumber = '';
 							this.yanzhengma = '';
 							this.newpasswd = ''
-						}else if (res.data.code == 500) {
+						} else if (res.data.code == 500) {
 							this.error.reasoncode = 'error0213';
 							this.modalName = 'loginerror';
 							this.error.reason = '修改密码失败，无法获取数据库的值，你需要联系管理员';
@@ -571,7 +699,7 @@
 								}
 
 							}, 1000)
-						}else if (res.data.code == 2007) {
+						} else if (res.data.code == 2007) {
 							this.error.reasoncode = 'error0203';
 							this.modalName = 'loginerror';
 							this.error.reason = '号码错误，请重新输入';
@@ -580,7 +708,7 @@
 							this.phonenumber = '';
 							this.yanzhengma = '';
 							this.newpasswd = ''
-						}else if (res.data.code == 404) {
+						} else if (res.data.code == 404) {
 							this.error.reasoncode = 'error0204';
 							this.modalName = 'loginerror';
 							this.error.reason = '号码不存在，无法找回';
@@ -589,7 +717,7 @@
 							this.phonenumber = '';
 							this.yanzhengma = '';
 							this.newpasswd = ''
-						}else if (res.data.code == 401) {
+						} else if (res.data.code == 401) {
 							this.error.reasoncode = 'error0205';
 							this.modalName = 'loginerror';
 							this.error.reason = '号码违规，请重新输入';
@@ -598,7 +726,7 @@
 							this.phonenumber = '';
 							this.yanzhengma = '';
 							this.newpasswd = ''
-						}else if (res.data.code == 403) {
+						} else if (res.data.code == 403) {
 							this.error.reasoncode = 'error0206';
 							this.modalName = 'loginerror';
 							this.error.reason = '你已经在1个月内修改过密码超过3次，请稍后再修改';
@@ -607,7 +735,7 @@
 							this.phonenumber = '';
 							this.yanzhengma = '';
 							this.newpasswd = ''
-						}else{
+						} else {
 							this.error.reasoncode = 'error0207';
 							this.modalName = 'loginerror';
 							this.error.reason = res.data.text;
@@ -729,10 +857,12 @@
 	.owl-login.password .arms .arm.arm-r {
 		transform: translateY(-40px) translateX(-40px) scaleX(-1);
 	}
+
 	uni-button[disabled].cu-btn.bg-green.shadow {
-	    background-color: #39b54a;
-	    color: white;
+		background-color: #39b54a;
+		color: white;
 	}
+
 	uni-button[disabled].cu-btn.bg-blue {
 		background-color: #0081ff;
 		color: #ffffff;

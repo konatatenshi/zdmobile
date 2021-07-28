@@ -76,11 +76,16 @@ class websocketUtil {
 	//开启心跳检测
 	start(){
 		this.heartbeatInterval = setTimeout(()=>{
+			if(timenow < Math.round(new Date() +10000)){
+				return;
+			}
 			this.data=[{cmd:"ping"}]
 			console.log(this.data)
 			this.send(JSON.stringify(this.data));
 			clearTimeout(this.heartbeatInterval);
 			this.start();
+			var timenow = Math.round(new Date());
+			console.log(timenow)
 		},10000)
 	}
 	//重新连接

@@ -7,7 +7,7 @@
 			<view class="action">
 				<text class="cuIcon-scan text-black"></text>
 				<text class="cuIcon-mobile text-black"></text>
-				<text class="cuIcon-settings text-black"></text>
+				<text class="cuIcon-settings text-black" @tap="settingselect" ></text>
 			</view>
 		</view>
 		<view class="cu-bar bg-gray search hometop2">
@@ -36,7 +36,7 @@
 					<text :class="3==TabCur?'text-red':'text-gray'"> <text class="cuIcon-newshotfill"></text>粉丝</text><br/>{{myfans}}
 				</view>
 				<view class="cu-item flex-sub noline" :class="4==TabCur?'text-red cur':''" @tap="tabSelect" data-id="4">
-					<text :class="4==TabCur?'text-red':'text-gray'""><text class="cuIcon-favorfill"></text>关注</text><br/>{{mylike}}
+					<text :class="4==TabCur?'text-red':'text-gray'"><text class="cuIcon-favorfill"></text>关注</text><br/>{{mylike}}
 				</view>
 			</view>
 		</scroll-view>
@@ -282,6 +282,12 @@
 					url: '../basics/home'
 				});
 			},
+			settingselect(e) {
+				this.switchA = e.detail.value;
+				uni.navigateTo({
+					url: '../basics/design'
+				});
+			},
 		},
 		created() {
             this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight;
@@ -308,7 +314,7 @@
 						that.mynewprompt = getApp().globalData.newprompt;
 						that.myinfoprompt = getApp().globalData.myinfoprompt;
 						that.mycredits = getApp().globalData.mycredits;
-						console.log(that.mynewpm);
+						//console.log(that.mynewpm);
 						console.log(that.myinfoprompt);
 						console.log(that.$token);
 						Vue.prototype.$username = getApp().globalData.myusername;
@@ -316,7 +322,8 @@
 				});
 			};
 		},
-		onshow: function() {}
+		onshow: function() {
+		}
 	}
 </script>
 

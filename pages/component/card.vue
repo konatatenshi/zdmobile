@@ -68,6 +68,44 @@
 						</view>
 					</view>
 				</view>
+				<view class="cu-modal" :class="modalName=='needlogin'?'show':''">
+					<view class="cu-dialog">
+						<view class="cu-bar bg-white justify-end">
+							<view class="content">需要登录</view>
+							<view class="action" @tap="hideModal">
+								<text class="cuIcon-close text-red"></text>
+							</view>
+						</view>
+						<view class="padding-xl">
+							你需要登录才可以使用此功能。
+						</view>
+						<view class="cu-bar bg-white justify-end">
+							<view class="action">
+								<button class="cu-btn line-green text-green" @tap="hideModal">取消</button>
+								<button class="cu-btn bg-green margin-left" @tap="tologin">确定</button>
+							</view>
+						</view>
+					</view>
+				</view>
+				<view class="cu-modal" :class="modalName=='cantview'?'show':''">
+					<view class="cu-dialog">
+						<view class="cu-bar bg-white justify-end">
+							<view class="content">权限不足</view>
+							<view class="action" @tap="hideModal">
+								<text class="cuIcon-close text-red"></text>
+							</view>
+						</view>
+						<view class="padding-xl">
+							无法进入帖子，错误提示：{{cantviewmessage}}
+						</view>
+						<view class="cu-bar bg-white justify-end">
+							<view class="action">
+								<button class="cu-btn line-green text-green" @tap="hideModal">取消</button>
+								<button class="cu-btn bg-green margin-left" @tap="tologin">确定</button>
+							</view>
+						</view>
+					</view>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -83,15 +121,33 @@
 			return {
 				isCard: false,
 				postname: '加载中',
-				content: '加载中',
+				content: '<span style="font-size:28rpx;line-height:1px;">⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢀⣴⣴⣶⣶⣶⣶⣄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣠⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣤⣤⡀⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⡧⣼⣿⡟⢛⠋⠐⠂⠰⠂⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣰⣯⣟⣿⣻⣿⣿⣿⣿⣿⣿⣥⠨⠭⣯⡾⢡⠄⠄⠄⡐⠁⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡶⣦⠌⢝⢢⡔⠈⠠⠁⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢻⣿⣿⢻⣿⣿⡏⡿⣿⣿⣿⣿⣿⣻⣧⣿⣿⣟⠁⠄⣠⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠊⣯⢿⡏⠛⠛⠚⣿⣿⡟⡿⠉⢻⣽⣒⣿⣏⠄⢣⡄⣃⡀⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣿⠄⠄⠄⠄⠄⠈⠉⠄⣇⣰⣿⣿⣿⣿⣿⡔⠄⠁⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣿⢦⡀⠄⠄⠄⠄⠄⢰⣿⣿⣿⣿⣿⢿⡟⠚⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠟⣸⡿⣷⢶⣤⠤⠄⣞⣿⣿⣿⣟⡟⡛⠣⡠⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠘⢕⣶⡜⠛⢀⣥⣾⣿⣿⣿⣿⣿⣿⣄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⡀⢼⢃⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⡁⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠠⠄⠄⣿⣿⣫⣷⣯⣿⣷⣿⣿⣽⣿⣿⣿⣿⣿⣿⡇⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⢀⣰⡇⠄⠄⣿⠄⠄⠄⠄⠄⠄⠈⠄⠄⢸⣿⣿⣿⣿⣿⣿⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⢀⣾⣿⡇⠄⠄⣿⠄⠄⠄⠄⣀⣀⣀⣢⣄⣺⣿⣿⣿⣿⣿⣿⠘⠄⢄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⣼⣿⣿⣧⢀⣤⡿⠛⠛⠛⠋⠉⠛⠋⠋⢿⢿⣿⣿⣿⣿⣿⣿⠄⠄⠄⠐⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⣿⣿⣿⣿⣿⣿⠁⠄⠄⠄⠄⠄⠄⠄⠄⢀⣾⣿⣿⣿⣿⣿⣿⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⣿⣿⣿⣿⣿⣿⣶⣶⣾⡿⡷⡞⣟⣿⣽⣿⣿⣿⣿⣿⣿⣿⡇⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⢠⣿⣿⣿⣿⣿⡿⣿⣿⣷⣷⣷⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠄⠄⠄⠄⠄⠄⠄⠄⡀⠄⠄<br>⠄⠄⠄⠄⠄⢸⣿⣿⣿⣿⣿⣹⣿⣿⣿⠟⠋⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠄⠄⠄⠠⣤⠄⡤⠤⠄⠄⠄<br>⠄⠄⠄⠄⠄⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠄⠄⠄⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣀⣀⣸⡜⠓⠆⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⣿⣿⣿⣿⣿⣿⣿⣿⣿⡈⠄⢠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡄⢀⠄⠄⠄⠄⠄⠄</span><br><span style="font-size:30rpx;line-height:1px;">⠄⠄⠄⠄⠄⠄⠄⠄帖子正在载入中，请稍候⠄⠄⠄⠄⠄⠄⠄⠄</span>',
 				postup: '加载中',
 				nowdate: '加载中',
+				cantviewmessage: '',
 				iStatusBarHeight: 0,
 				sex: 0,
+				modalName: null,
 				avatarlist: '../../static/avatar.jpg',
 			};
 		},
 		methods: {
+			hideModal(e) {
+				this.modalName = null
+			},
+			tologin(e) {
+				uni.redirectTo({
+					url: '../../components/ay-login/login-password'
+				});
+			},
+			topost(e) {
+				uni.navigateTo({
+					url: '../component/card?tid=' + e
+				});
+			},
+			tothebottom() {
+				console.log("到底了");
+			},
 			IsCard(e) {
 				this.isCard = e.detail.value
 			},
@@ -116,6 +172,11 @@
 			},
 			loadthread(tid, page, orderby, dateline, filter, typeid) {
 				let that = this;
+				if(this.$imageswitch){
+					var isImage = 0;
+				}else{
+					var isImage = 1;
+				}
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:post', //获取置顶帖子
 					method: 'GET',
@@ -127,7 +188,7 @@
 						orderby: orderby,
 						dateline: dateline,
 						filter: filter,
-						typeid: typeid
+						isimage: isImage,
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息

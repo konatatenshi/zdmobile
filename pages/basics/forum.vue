@@ -59,17 +59,17 @@
 												<view class="text-content" @tap="topost(item.tid)">
 														{{item.summary}}
 												</view>
-												<view v-if="item.attachment==3" class="grid flex-sub padding-lr col-1">
+												<view v-if="item.attachment==3&&isImage" class="grid flex-sub padding-lr col-1">
 													<view v-if="item.attachlist[0].attachment!=null" @click="imgMap(item.attachlist[0].attachment)" class="bg-img only-img" :style="[{ backgroundImage:'url(' + item.attachlist[0].attachment + ')' }]">
 													</view>
 												</view>
-												<view v-else-if="item.attachment==4" class="grid flex-sub padding-lr col-3 grid-square">
+												<view v-else-if="item.attachment==4&&isImage" class="grid flex-sub padding-lr col-3 grid-square">
 													<view v-if="item.attachlist[0].attachment!=null" @click="imgMap(item.attachlist[0].attachment)" class="bg-img" :style="[{ backgroundImage:'url(' + item.attachlist[0].attachment + ')' }]">
 													</view>
 													<view v-if="item.attachlist[1].attachment!=null" @click="imgMap(item.attachlist[1].attachment)" class="bg-img" :style="[{ backgroundImage:'url(' + item.attachlist[1].attachment + ')' }]">
 													</view>
 												</view>
-												<view v-else-if="item.attachment>4" class="grid flex-sub padding-lr col-3 grid-square">
+												<view v-else-if="item.attachment>4&&isImage" class="grid flex-sub padding-lr col-3 grid-square">
 													<view v-if="item.attachlist[0].attachment!=null" @click="imgMap(item.attachlist[0].attachment)" class="bg-img" :style="[{ backgroundImage:'url(' + item.attachlist[0].attachment + ')' }]">
 													</view>
 													<view v-if="item.attachlist[1].attachment!=null" @click="imgMap(item.attachlist[1].attachment)" class="bg-img" :style="[{ backgroundImage:'url(' + item.attachlist[1].attachment + ')' }]">
@@ -179,6 +179,7 @@
 				forumname: "载入中……",
 				cantviewmessage: "unknown",
 				iStatusBarHeight: 0,
+				isImage: 1,
 				swiperList: [],
 				threadlist: [],
 				threadlisttitle: [],
@@ -237,6 +238,11 @@
 			},
 			loadthread(forumid, page, orderby, dateline, filter, typeid) {
 				let that = this;
+				if(this.$imageswitch){
+					this.isImage = 0;
+				}else{
+					this.isImage = 1;
+				}
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取置顶帖子
 					method: 'GET',
