@@ -19,7 +19,7 @@
 					</view>
 				</view>
 				<view class="text-content2">
-					<mp-html :content="content" />
+					<mp-html :content="content" @linktap="linktap" />
 				</view>
 				<view class="cu-list menu-avatar comment solids-top">
 					<view class="cu-item">
@@ -135,6 +135,14 @@
 			hideModal(e) {
 				this.modalName = null
 			},
+			linktap (e) {
+				console.log(e);
+				if(e.target=='app'){
+				uni.navigateTo({
+					url: '../component/card?tid=' + e.apphref
+				});
+				}
+			},
 			tologin(e) {
 				uni.redirectTo({
 					url: '../../components/ay-login/login-password'
@@ -172,7 +180,7 @@
 			},
 			loadthread(tid, page, orderby, dateline, filter, typeid) {
 				let that = this;
-				if(this.$imageswitch){
+				if(this.$imageswitch&&this.$wifi==0){
 					var isImage = 0;
 				}else{
 					var isImage = 1;

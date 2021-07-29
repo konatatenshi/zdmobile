@@ -190,6 +190,7 @@
 				modalName: null,
 				TabCur: 1,
 				forumid: 2,
+				Wifi: 0,
 				loading: "上拉可加载更多帖子",
 				swiperheight: 1000, //高度
 			};
@@ -238,7 +239,7 @@
 			},
 			loadthread(forumid, page, orderby, dateline, filter, typeid) {
 				let that = this;
-				if(this.$imageswitch){
+				if(this.$imageswitch&&this.$wifi==0){
 					this.isImage = 0;
 				}else{
 					this.isImage = 1;

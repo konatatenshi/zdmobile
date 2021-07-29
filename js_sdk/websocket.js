@@ -85,7 +85,7 @@ class websocketUtil {
 			clearTimeout(this.heartbeatInterval);
 			this.start();
 			var timenow = Math.round(new Date());
-			console.log(timenow)
+			//console.log(timenow)
 		},10000)
 	}
 	//重新连接

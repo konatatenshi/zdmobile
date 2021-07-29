@@ -77,7 +77,7 @@
 			console.log("移除监听");
 		},
 		onShow: function() {
-			console.log(this.$socket)
+			//console.log(this.$socket)
 			if (Vue.prototype.$token != '') {
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=xinxiu_network:user', //获取用户基本信息。

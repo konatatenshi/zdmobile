@@ -5,7 +5,7 @@
 			<block slot="content"> 设置</block>
 		</cu-custom>
 		<view class="cu-form-group">
-			<view class="title">省流量模式（不显示帖内图片）</view>
+			<view class="title">省流量模式（非Wifi不显示图片）</view>
 			<switch @change="Setimage" class="blue" :class="image?'checked':''" :checked="image?true:false"></switch>
 		</view>
 		<view class="cu-form-group">

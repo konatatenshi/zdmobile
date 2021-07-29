@@ -5,7 +5,7 @@
 				<text class="cuIcon-home text-black" @tap="backhome"></text>
 			</view>
 			<view class="action">
-				<text class="cuIcon-scan text-black"></text>
+				<text class="cuIcon-scan text-black" @tap="scantologin"></text>
 				<text class="cuIcon-mobile text-black"></text>
 				<text class="cuIcon-settings text-black" @tap="settingselect" ></text>
 			</view>
@@ -265,6 +265,23 @@
 			},
 			messageclick(index) {
 				console.log(index)
+			},
+			tologin(e) {
+				uni.navigateTo({
+					url: '../basics/button?sessionid=' +e
+				});
+			},
+			scantologin(){
+				uni.scanCode({
+				    success: function (res) {
+				        //console.log('条码类型：' + res.scanType);
+				        console.log('条码内容：' + res.result);
+						var sessionid = res.result;
+						uni.navigateTo({
+							url: '../basics/button?sessionid=' +sessionid
+						});
+				    }
+				});
 			},
 			onSuccessImg() {
 				this.avatarimgLoaded = true;
