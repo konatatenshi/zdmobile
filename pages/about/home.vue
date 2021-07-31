@@ -203,7 +203,7 @@
 				</button>
 			</view>
 			<view class="cu-item" :class="menuArrow?'arrow':''">
-				<button class="cu-btn content" open-type="contact" @tap="checkupdate">
+				<button class="cu-btn content" open-type="contact" @tap="bbxx">
 					<text class="cuIcon-info text-olive"></text>
 					<text class="text-grey">版本信息</text>
 				</button>
@@ -213,6 +213,19 @@
 					<view class="text-xs padding">
 						<text class="text-white">终点论坛 @2021</text>
 					</view>
+				</view>
+			</view>
+		</view>
+		<view class="cu-modal" :class="modalName=='update'?'show':''">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">版本信息</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl">
+					目前版本号：{{version}}
 				</view>
 			</view>
 		</view>
@@ -226,6 +239,7 @@
 			return {
                 iStatusBarHeight:0,
 				TabCur: 0,
+				version: '',
 				scrollLeft: 0,
 				switchA: false,
 				avatarimgLoaded: false,
@@ -249,6 +263,13 @@
 			};
 		},
 		methods: {
+			hideModal(e) {
+				this.modalName = null
+			},
+			bbxx(e) {
+				this.modalName = 'update';
+				this.checkupdate();
+			},
 			backhome(){      
 				this.$emit("returnDat","basics")//传递的值
 				 //returnDate接收的方法名  
@@ -275,11 +296,13 @@
 				uni.scanCode({
 				    success: function (res) {
 				        //console.log('条码类型：' + res.scanType);
-				        console.log('条码内容：' + res.result);
-						var sessionid = res.result;
-						uni.navigateTo({
-							url: '../basics/button?sessionid=' +sessionid
-						});
+						var scantxt = JSON.parse(res.result);
+				        console.log(scantxt);
+						if(scantxt.code==200&&scantxt.method=='scantologin'){
+							uni.navigateTo({
+								url: '../basics/button?sessionid=' +scantxt.session
+							});
+						}
 				    }
 				});
 			},
@@ -305,9 +328,44 @@
 					url: '../basics/design'
 				});
 			},
+			checkupdate(){
+				plus.runtime.getProperty(plus.runtime.appid, function(widgetInfo) {  
+				    uni.request({  
+				        url: getApp().globalData.zddomain + 'api/update.php', //升级地址
+				        data: {  
+				            version: widgetInfo.version,  
+				            name: widgetInfo.name  
+				        },  
+				        success: (result) => {  
+				            var data = result.data;  
+				            if (data.update && data.wgtUrl) {  
+				                uni.downloadFile({  
+				                    url: data.wgtUrl,  
+				                    success: (downloadResult) => {  
+				                        if (downloadResult.statusCode === 200) {  
+				                            plus.runtime.install(downloadResult.tempFilePath, {  
+				                                force: false  
+				                            }, function() {  
+				                                console.log('install success...');  
+				                                plus.runtime.restart();  
+				                            }, function(e) {  
+				                                console.error('install fail...');  
+				                            });  
+				                        }  
+				                    }  
+				                });  
+				            }  
+				        }  
+				    });  
+				});  
+			}
 		},
 		created() {
             this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight;
+			this.version = plus.runtime.version;
+			plus.runtime.getProperty(plus.runtime.appid, function(wgtinfo){  
+			    console.log(wgtinfo.version);  
+			});
 			plus.navigator.setStatusBarStyle('dark');
 			console.log(this.iStatusBarHeight);
 			if (Vue.prototype.$token != '') {

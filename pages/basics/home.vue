@@ -260,7 +260,7 @@
 		},
 		mounted() {
 			//this.setHeight();
-		}
+		},
 	}
 </script>
 

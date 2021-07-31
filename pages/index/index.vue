@@ -44,6 +44,7 @@
 				PageCur: 'basics',
 				mynewpm: 0,
 				myinfoprompt: 0,
+				chatnumber: 0,
 			}
 		},
 		onLoad: function() {
@@ -59,6 +60,7 @@
 				if (jsonget.cmd == "onlinecheck" && jsonget.type == "group") {
 					if (this.PageCur == "plugin") {
 						this.$refs.message.groupchatupdate(jsonget.status);
+						this.chatnumber = jsonget.status;
 					}
 				} else if (jsonget.cmd == "chat") {
 					if (this.PageCur == "plugin") {
@@ -151,6 +153,11 @@
 				this.$socket.send(JSON.stringify(data));
 				console.log("断线重连")
 			}, 4000)
+			setTimeout(() => {
+				if(this.chatnumber == 0 && this.PageCur == "plugin"){
+					this.$refs.message.chonglian();
+				}
+			}, 10000)
 		},
 		onReachBottom() {
 			//console.log("到底了");

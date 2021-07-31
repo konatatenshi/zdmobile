@@ -128,6 +128,25 @@
 				</view>
 			</view>
 		</view>
+		<view class="cu-modal" :class="modalName=='dxcl'?'show':''">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">断线重连</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl">
+					您似乎已经和聊天服务器断开连接，是否重连？
+				</view>
+				<view class="cu-bar bg-white justify-end">
+					<view class="action">
+						<button class="cu-btn line-green text-green" @tap="hideModal">取消</button>
+						<button class="cu-btn bg-green margin-left" @tap="restart">确定</button>
+					</view>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -161,6 +180,12 @@
 		methods: {
 			hideModal(e) {
 				this.modalName = null
+			},
+			chonglian(e) {
+				this.modalName = 'dxcl';
+			},
+			restart(e) {
+				plus.runtime.restart();
 			},
 			tologin(e) {
 				uni.redirectTo({

@@ -191,6 +191,8 @@
 				TabCur: 1,
 				forumid: 2,
 				Wifi: 0,
+				mainpage: 0,
+				InputBottom: 0,
 				loading: "上拉可加载更多帖子",
 				swiperheight: 1000, //高度
 			};
@@ -210,6 +212,7 @@
 				});
 			},
 			tothebottom() {
+				this.loadthread(this.forumid,this.mainpage);
 				console.log("到底了");
 			},
 			imgMap(url) {
@@ -267,8 +270,18 @@
 							that.modalName = "cantview";
 							that.cantviewmessage = res.data.message;
 						} else {
-							that.threadlist = res.data.post;
-							that.threadlisttitle = res.data.postinfo;
+							if (that.mainpage == 0) {
+								that.threadlist = res.data.post;
+								that.threadlisttitle = res.data.postinfo;
+							}else{
+								for (let i = 0; i < res.data.post.length; ++i) {
+									that.threadlist.push(res.data.post[i]);
+								}
+								if (res.data.post.length < 30) {
+									that.loading = '到底了。';
+								}
+							}
+							that.mainpage++;
 							that.forumname = res.data.foruminfo1.name;
 							//console.log(that.threadlist);
 							setTimeout(function() {
@@ -301,6 +314,9 @@
 		},
 		mounted() {
 			//this.setHeight();
+		},
+		onReachBottom() {
+			this.tothebottom();
 		}
 	}
 </script>
