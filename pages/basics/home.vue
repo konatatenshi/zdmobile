@@ -83,14 +83,15 @@
 								</block>
 							</view>
 							<view v-if="newpost.length > 0">
-								<block v-for="(item,index3) in newpost" :key="index3" @tap="tourl(item.url)">
-									<view class="solid-bottom cu-card article no-card">
+								<block v-for="(item,index3) in newpost" :key="index3">
+									<view class="solid-bottom cu-card article no-card" @tap="tourl(item.url)">
 										<view class="cu-item shadow">
 											<view class="title">
 												<view class="text-cut">{{item.title}}</view>
 											</view>
 											<view class="content">
-												<image v-if="item.img != 'static/image/common/nophoto.gif'" :src="item.img" mode="aspectFill"></image>
+												<image v-if="item.img != 'static/image/common/nophoto.gif'"
+													:src="item.img" mode="aspectFill"></image>
 												<view class="desc">
 													<view class="text-content">
 														{{item.summary}}
@@ -133,6 +134,14 @@
 			return {
 				scrollLeft: 0,
 				iStatusBarHeight: 0,
+				page: 0,
+				tab0enabled: 0,
+				tab1enabled: 0,
+				tab2enabled: 0,
+				tab3enabled: 0,
+				tab4enabled: 0,
+				tab5enabled: 0,
+				tab6enabled: 0,
 				swiperList: [],
 				toplist: [],
 				tuijiantie: [],
@@ -145,7 +154,38 @@
 			};
 		},
 		methods: {
-			tothebottom(){
+			tothebottom(push) {
+				var that = this;
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取轮播列表
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token,
+						typeid: 1,
+						page: that.page,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(that.page);
+						push = res.data.post;
+						console.log(push);
+						if (push.length >0) {
+							for (let i = 0; i < push.length; ++i) {
+								that.newpost.push(push[i]);
+							}
+						}
+						if (res.data.length < 30) {
+							that.loading='竟然到底了！';
+						}
+						that.page++;
+						setTimeout(function() {
+							that.setHeight("view_listnow");
+						}, 100)
+					}
+				});
 				console.log("到底了");
 			},
 			setHeight(e) {
@@ -153,7 +193,8 @@
 				query.select('.' + e).boundingClientRect(rect => {
 					if (rect) {
 						//console.log(e + ".height = " + rect.height)
-						this.swiperheight = rect.height + uni.getSystemInfoSync().statusBarHeight + 50; //页面可见区域 - 头部高度
+						this.swiperheight = rect.height + uni.getSystemInfoSync().statusBarHeight +
+						50; //页面可见区域 - 头部高度
 						//console.log("this.height = " + this.swiperheight)
 					}
 				}).exec();
@@ -178,7 +219,7 @@
 				this.currentIndex = e.detail.current;
 				this.TabCur = e.detail.current;
 				var that = this;
-				if (this.TabCur == 1) {
+				if (this.TabCur == 1 && this.tab1enabled == 0) {
 					uni.request({
 						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:zhidingtie', //获取置顶帖子
 						method: 'GET',
@@ -194,9 +235,10 @@
 							that.toplist = res.data.toplist.data;
 							that.newpost = res.data.newpost.data;
 							console.log(that.tuijiantie);
-							setTimeout(function(){
+							setTimeout(function() {
 								that.setHeight("view_listnow");
-							},100)
+							}, 100)
+							that.tab1enabled = 1;
 						}
 					});
 				}
@@ -209,7 +251,7 @@
 		},
 		created() {
 			this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight;
-			plus.navigator.setStatusBarStyle('light');//改变系统标题颜色
+			plus.navigator.setStatusBarStyle('light'); //改变系统标题颜色
 			var that = this;
 			uni.getStorage({
 				key: 'lunbolist',
@@ -252,9 +294,10 @@
 					that.toplist = res.data.toplist.data;
 					that.newpost = res.data.newpost.data;
 					console.log(that.tuijiantie);
-					setTimeout(function(){
+					setTimeout(function() {
 						that.setHeight("view_listnow");
-					},100)
+					}, 100)
+					that.tab1enabled = 1;
 				}
 			});
 		},

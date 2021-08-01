@@ -197,7 +197,7 @@
 				</view>
 			</view>
 			<view class="cu-item" :class="menuArrow?'arrow':''">
-				<button class="cu-btn content" open-type="contact" @tap="cleanlogin">
+				<button class="cu-btn content" open-type="contact" @tap="cleanbefore">
 					<text class="cuIcon-footprint text-olive"></text>
 					<text class="text-grey">注销登录</text>
 				</button>
@@ -225,7 +225,26 @@
 					</view>
 				</view>
 				<view class="padding-xl">
-					目前版本号：{{version}}
+					目前版本号：{{version}}{{update}}
+				</view>
+			</view>
+		</view>
+		<view class="cu-modal" :class="modalName=='logout'?'show':''">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">确认注销</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl">
+					你确认注销此前登录的账号吗？
+				</view>
+				<view class="cu-bar bg-white justify-end">
+					<view class="action">
+						<button class="cu-btn line-green text-green" @tap="hideModal">取消</button>
+						<button class="cu-btn bg-green margin-left" @tap="cleanlogin">确定</button>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -258,6 +277,7 @@
 				myagree: 0,
 				myfans: 0,
 				mylike: 0,
+				update: '',
 				websocketmessage: [],
 				listTouchDirection: null,
 			};
@@ -273,6 +293,9 @@
 			backhome(){      
 				this.$emit("returnDat","basics")//传递的值
 				 //returnDate接收的方法名  
+			},
+			cleanbefore(e) {
+				this.modalName = 'logout';
 			},
 			cleanlogin() {
 			var that = this;
@@ -329,7 +352,10 @@
 				});
 			},
 			checkupdate(){
+				var that=this;
 				plus.runtime.getProperty(plus.runtime.appid, function(widgetInfo) {  
+					console.log(widgetInfo.version);
+					console.log(widgetInfo.name);
 				    uni.request({  
 				        url: getApp().globalData.zddomain + 'api/update.php', //升级地址
 				        data: {  
@@ -338,10 +364,12 @@
 				        },  
 				        success: (result) => {  
 				            var data = result.data;  
-				            if (data.update && data.wgtUrl) {  
+							console.log(data);
+				            if (data.update == 200 && data.wgtUrl) {  
 				                uni.downloadFile({  
 				                    url: data.wgtUrl,  
 				                    success: (downloadResult) => {  
+										console.log(downloadResult);
 				                        if (downloadResult.statusCode === 200) {  
 				                            plus.runtime.install(downloadResult.tempFilePath, {  
 				                                force: false  
@@ -351,10 +379,14 @@
 				                            }, function(e) {  
 				                                console.error('install fail...');  
 				                            });  
-				                        }  
+				                        }
 				                    }  
 				                });  
-				            }  
+				            } else if (data.update === 201) {
+								that.update = '(最新版)';
+							} else if (data.update === 202) {
+								that.update = '(请去市场更新)';
+							}
 				        }  
 				    });  
 				});  

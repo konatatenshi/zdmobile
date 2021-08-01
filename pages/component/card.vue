@@ -172,7 +172,7 @@
 				<text class="cuIcon-emojifill text-grey" @tap="togglePicker(200, 'emoji')"></text>
 				<text class="cuIcon-roundadd text-grey" @tap="togglePicker(100, 'file')"></text>
 			</view>
-			<button @tap="sendmessage" class="cu-btn bg-green shadow">发送</button>
+			<button @tap="sendmessage" class="cu-btn bg-green shadow"><text class="cuIconfont-spin" :class="fasong?'cuIcon-loading2':''"></text>发送</button>
 		</view>
 		<!--表情-->
 		<!--附件-->
@@ -217,6 +217,7 @@
 				tid: 0,
 				fid: 0,
 				page: 0,
+				fasong: false,
 				floorpage: [],
 				jiazai :0,
 				jiazaiwanbi: [],
@@ -336,32 +337,35 @@
 			},
 			sendmessage() {
 				var that=this;
-				var message = encodeURI(that.contenthuifu);
-				console.log(this.contenthuifu);
-				uni.request({
-					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:huitie', //获取置顶帖子
-					method: 'POST',
-					timeout: 10000,
-					data: {
-						token: that.$token,
-						tid: that.tid,
-						message: message,
-						platform: that.platform
-					},
-					header: {
-						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
-					},
-					success: (res) => {
-						if (res.data.code == 404) {
-							that.modalName = "needlogin";
-						} else if (res.data.code == 401) {
-							that.modalName = "cantview";
-							that.cantviewmessage = res.data.message;
-						} else {
-							that.refresh();
+				if(!this.fasong){
+					that.fasong=true;
+					var message = encodeURI(that.contenthuifu);
+					console.log(this.contenthuifu);
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:huitie', //获取置顶帖子
+						method: 'POST',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							tid: that.tid,
+							message: message,
+							platform: that.platform
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							if (res.data.code == 404) {
+								that.modalName = "needlogin";
+							} else if (res.data.code == 401) {
+								that.modalName = "cantview";
+								that.cantviewmessage = res.data.message;
+							} else {
+								that.refresh(message);
+							}
 						}
-					}
-				});
+					});
+				}
 			},
 			tologin(e) {
 				uni.redirectTo({
@@ -369,9 +373,22 @@
 				});
 			},
 			refresh(e) {
+				var fasonginfo = new Array();
+				fasonginfo.author = this.$username;
+				fasonginfo.authorid = this.$uid;
+				fasonginfo.avatarlist = 'https://zd.tiangal.com/uc_server/avatar.php?uid='+ this.$uid +'&size=small';
+				fasonginfo.dateline = '刚刚';
+				fasonginfo.groupid = 0;
+				fasonginfo.html = decodeURI(e);
+				fasonginfo.pid = 0;
+				fasonginfo.position = 0;
+				fasonginfo.reply = 0;
+				fasonginfo.status = 0;
+				this.huifulist.unshift(fasonginfo);
 				this.modalName = null
 				this.contenthuifu = '';
 				this.loadthread(this.tid);
+				this.fasong = false;
 				uni.pageScrollTo({
 					scrollTop: 0,
 					duration: 300
