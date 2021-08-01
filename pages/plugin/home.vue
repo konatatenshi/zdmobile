@@ -350,6 +350,13 @@
 					this.swiperheight = height;
 				}
 			})
+			var that=this;
+			setTimeout(function() {
+				console.log(that.chatonline);
+				if(that.chatonline==0){
+					that.chonglian();
+				}
+			}, 2000)
 		}
 	}
 </script>

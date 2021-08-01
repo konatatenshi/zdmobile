@@ -118,8 +118,25 @@
 						</view>
 						<view class="cu-bar bg-white justify-end">
 							<view class="action">
-								<button class="cu-btn line-green text-green" @tap="hideModal">取消</button>
-								<button class="cu-btn bg-green margin-left" @tap="tologin">确定</button>
+								<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
+							</view>
+						</view>
+					</view>
+				</view>
+				<view class="cu-modal" :class="modalName=='cantpost'?'show':''">
+					<view class="cu-dialog">
+						<view class="cu-bar bg-white justify-end">
+							<view class="content">回帖错误</view>
+							<view class="action" @tap="hideModal">
+								<text class="cuIcon-close text-red"></text>
+							</view>
+						</view>
+						<view class="padding-xl">
+							无法回帖，错误提示：{{cantpostmessage}}
+						</view>
+						<view class="cu-bar bg-white justify-end">
+							<view class="action">
+								<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
 							</view>
 						</view>
 					</view>
@@ -165,7 +182,9 @@
 				</view>
 			</view>
 		</view>
-		<view class="cu-bar foot input button__box" :style="[{bottom:InputBottom+'px'}]">
+		<view v-if="InputBottom!=0" class="overlayer" @touchmove.stop.prevent = "doNothing">
+		</view>
+		<view class="cu-bar foot input button__box" :style="[{bottom:InputBottom+'px'}]" @touchmove.stop.prevent = "doNothing">
 			<input class="solid-bottom" :adjust-position="false" :focus="false" maxlength="300" cursor-spacing="10"
 				@focus="InputFocus" @blur="InputBlur" v-model="contenthuifu"></input>
 			<view class="action">
@@ -212,6 +231,7 @@
 				nowdate: '加载中',
 				pingbi: '<div style=\"overflow: hidden;border: 1px dashed #FF9A9A;margin: 8px 0;padding: 10px;zoom: 1;\">此帖因违规被屏蔽，不可见。</div>',
 				cantviewmessage: '',
+				cantpostmessage: '',
 				iStatusBarHeight: 0,
 				sex: 0,
 				tid: 0,
@@ -263,6 +283,9 @@
 					this.floorpage[e] = 0;
 				}
 				this.loadfloors(e, this.floorpage[e]);
+			},
+			doNothing:function(){
+				
 			},
 			linktap(e) {
 				console.log(e);
@@ -337,6 +360,13 @@
 			},
 			sendmessage() {
 				var that=this;
+				console.log(that.contenthuifu.length);
+				if(that.contenthuifu.length<5){
+					that.modalName = "cantpost";
+					that.cantpostmessage = '请输入大于4个字的回复内容。';
+					this.fasong = false;
+					return;
+				}
 				if(!this.fasong){
 					that.fasong=true;
 					var message = encodeURI(that.contenthuifu);
@@ -358,8 +388,9 @@
 							if (res.data.code == 404) {
 								that.modalName = "needlogin";
 							} else if (res.data.code == 401) {
-								that.modalName = "cantview";
-								that.cantviewmessage = res.data.message;
+								that.modalName = "cantpost";
+								that.cantpostmessage = res.data.message;
+								this.fasong = false;
 							} else {
 								that.refresh(message);
 							}
@@ -389,10 +420,13 @@
 				this.contenthuifu = '';
 				this.loadthread(this.tid);
 				this.fasong = false;
-				uni.pageScrollTo({
-					scrollTop: 0,
-					duration: 300
-				})
+				const query = uni.createSelectorQuery().in(this);
+				query.select('.text-content2').boundingClientRect(data => {
+					uni.pageScrollTo({
+						scrollTop: data.height + 120,
+						duration: 300
+					})
+				}).exec();
 			},
 			topost(e) {
 				uni.navigateTo({
@@ -689,5 +723,13 @@
 	}
 	.solids-top::after {
 		border-top: 1px solid #eee!important;
+	}
+	.overlayer{
+	    position:fixed;
+	    left:0;
+	    top:0;
+	    width:100%;
+	    height:100%;
+	    z-index:10;
 	}
 </style>

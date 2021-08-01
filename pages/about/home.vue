@@ -366,6 +366,7 @@
 				            var data = result.data;  
 							console.log(data);
 				            if (data.update == 200 && data.wgtUrl) {  
+								that.update = '(有更新)';
 				                uni.downloadFile({  
 				                    url: data.wgtUrl,  
 				                    success: (downloadResult) => {  
