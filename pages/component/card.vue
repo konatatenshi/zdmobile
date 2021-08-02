@@ -58,18 +58,16 @@
 							<view v-if="item.reply>0" class="bg-gray padding-sm radius margin-top-sm  text-sm">
 								<view class="flex" v-for="(rpitem,rpindex) in item.floor" :key="'b' + rpindex"
 									:data-id="rpindex">
-									<view class="text-blue">{{rpitem.username}}：</view>
-									<view class="flex-sub"><rich-text :nodes="rpitem.content" @linktap="linktap"></rich-text></view>
+									<rich-text class="flex-sub" :nodes="rpitem.content" @tap="lzlpo(rpitem.uid,item.pid)"></rich-text>
 								</view>
-								<view class="flex" v-for="(rpxitem,rpxindex) in rplist[item.pid]" :key="'c' + rpxindex"
+								<view class="flex" v-for="(rpxitem,rpxindex) in rplist[index]" :key="'c' + rpxindex"
 									:data-id="rpxindex">
-									<view class="text-blue">{{rpxitem.username}}：</view>
-									<view class="flex-sub"><mp-html class="flex-sub" :content="rpxitem.content" @linktap="linktap" /></view>
+									<rich-text class="flex-sub" :nodes="rpxitem.content" @tap="lzlpo(rpitem.uid,item.pid)" /></rich-text>
 								</view>
-								<view class="flex text-blue" v-if="item.reply>5&&jiazaiwanbi[item.pid]!=1&&jiazai==0" @tap="loadfloor(item.pid)">共
+								<view class="flex text-blue" v-if="item.reply>5&&jiazaiwanbi[index]!=1&&jiazai==0" @tap="loadfloor(item.pid,index)">共
 									{{item.reply}} 条回复<text class="cuIcon-right"></text>
 								</view>
-								<view class="flex text-blue" v-else-if="item.reply>5&&jiazaiwanbi[item.pid]!=1&&jiazai==1">加载中<text class="cuIcon-right"></text>
+								<view class="flex text-blue" v-else-if="item.reply>5&&jiazaiwanbi[index]!=1&&jiazai==1">加载中<text class="cuIcon-right"></text>
 								</view>
 							</view>
 						</view>
@@ -278,14 +276,18 @@
 				console.log(e);
 				console.log(this.isfloat[e]);
 			},
-			loadfloor(e) {
-				if(this.floorpage[e] == undefined){
-					this.floorpage[e] = 0;
+			loadfloor(e,j) {
+				if(this.floorpage[j] == undefined){
+					this.floorpage[j] = 0;
 				}
-				this.loadfloors(e, this.floorpage[e]);
+				this.loadfloors(e, this.floorpage[j],0,0,0,j);
 			},
 			doNothing:function(){
 				
+			},
+			lzlpo(e,f) {
+				console.log(e);
+				console.log(f);
 			},
 			linktap(e) {
 				console.log(e);
@@ -507,7 +509,7 @@
 					}
 				});
 			},
-			loadfloors(pid, page, orderby, dateline, filter) {
+			loadfloors(pid, page, orderby, dateline, filter,index) {
 				let that = this;
 				this.jiazai = 1;
 				if (this.$imageswitch && this.$wifi == 0) {
@@ -535,18 +537,18 @@
 					success: (res) => {
 							console.log(page);
 							if (page == 0) {
-								Vue.set(that.rplist, pid, res.data);
+								Vue.set(that.rplist, index, res.data);
 							} else {
 								for (let i = 0; i < res.data.length; ++i) {
-									that.rplist[pid].push(res.data[i]);
+									that.rplist[index].push(res.data[i]);
 								}
 							}
 							if (res.data.length < 30) {
-								that.jiazaiwanbi[pid] = 1;
-								Vue.set(that.jiazaiwanbi, pid, 1);
+								that.jiazaiwanbi[index] = 1;
+								Vue.set(that.jiazaiwanbi, index, 1);
 							}
 							console.log(res.data);
-							that.floorpage[pid]++;
+							that.floorpage[index]++;
 							that.jiazai=0;
 					}
 				});
