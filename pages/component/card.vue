@@ -49,7 +49,7 @@
 							<view class="margin-top-sm flex justify-between">
 								<view>
 									<text class="cuIcon-appreciatefill" :class="item.zan?'text-red':'text-gray'"></text>
-									<text class="cuIcon-messagefill text-gray margin-left-sm"></text>
+									<text class="cuIcon-messagefill text-gray margin-left-sm" @tap="lzpo(item.pid,index)"></text>
 								</view>
 								<view>
 									<text class="cuIcon-more text-gray margin-right-sm"></text>
@@ -58,11 +58,11 @@
 							<view v-if="item.reply>0" class="bg-gray padding-sm radius margin-top-sm  text-sm">
 								<view class="flex" v-for="(rpitem,rpindex) in item.floor" :key="'b' + rpindex"
 									:data-id="rpindex">
-									<rich-text class="flex-sub" :nodes="rpitem.content" @tap="lzlpo(rpitem.uid,item.pid)"></rich-text>
+									<rich-text class="flex-sub" :nodes="rpitem.content" @tap="lzlpo(rpitem.uid,item.pid,index)"></rich-text>
 								</view>
 								<view class="flex" v-for="(rpxitem,rpxindex) in rplist[index]" :key="'c' + rpxindex"
 									:data-id="rpxindex">
-									<rich-text class="flex-sub" :nodes="rpxitem.content" @tap="lzlpo(rpitem.uid,item.pid)" /></rich-text>
+									<rich-text class="flex-sub" :nodes="rpxitem.content" @tap="lzlpo(rpxitem.uid,item.pid,index)" /></rich-text>
 								</view>
 								<view class="flex text-blue" v-if="item.reply>5&&jiazaiwanbi[index]!=1&&jiazai==0" @tap="loadfloor(item.pid,index)">共
 									{{item.reply}} 条回复<text class="cuIcon-right"></text>
@@ -116,7 +116,7 @@
 						</view>
 						<view class="cu-bar bg-white justify-end">
 							<view class="action">
-								<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
+								<button class="cu-btn bg-green margin-left" @tap="back">确定</button>
 							</view>
 						</view>
 					</view>
@@ -135,6 +135,27 @@
 						<view class="cu-bar bg-white justify-end">
 							<view class="action">
 								<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
+							</view>
+						</view>
+					</view>
+				</view>
+				<view class="cu-modal" :class="modalName=='floorpost'?'show':''">
+					<view class="cu-dialog">
+						<view class="cu-bar bg-white justify-end">
+							<view class="content">楼中楼回复</view>
+							<view class="action" @tap="hideModal">
+								<text class="cuIcon-close text-red"></text>
+							</view>
+						</view>
+						<view class="padding-xl">
+							<view class="cu-form-group align-start">
+								<textarea maxlength="-1" v-model="floorhuifu" placeholder="请在此输入想要说的话"></textarea>
+								<text class="cuIcon-emojifill text-grey" @tap="togglePicker(200, 'emoji')"></text>
+							</view>
+						</view>
+						<view class="cu-bar bg-white justify-end">
+							<view class="action">
+								<button class="cu-btn bg-green margin-left" @tap="sendfloor">发送</button>
 							</view>
 						</view>
 					</view>
@@ -168,7 +189,7 @@
 						</view>
 						<view class="padding-xl emoji">
 							<view class="list">
-								<view class="item" @tap="contenthuifu += item" v-for="(item, index) in emojis"
+								<view class="item" @tap="floorhuif(item)" v-for="(item, index) in emojis"
 									:key="index">
 									<img-cache class="icon"
 										:src="'https://bbs.zdfx.net/static/image/smiley/tieba/' + index + '.png'">
@@ -183,7 +204,7 @@
 		<view v-if="InputBottom!=0" class="overlayer" @touchmove.stop.prevent = "doNothing">
 		</view>
 		<view class="cu-bar foot input button__box" :style="[{bottom:InputBottom+'px'}]" @touchmove.stop.prevent = "doNothing">
-			<input class="solid-bottom" :adjust-position="false" :focus="false" maxlength="300" cursor-spacing="10"
+			<input class="solid-bottom" :adjust-position="false" :focus="false" maxlength="1000" cursor-spacing="10"
 				@focus="InputFocus" @blur="InputBlur" v-model="contenthuifu"></input>
 			<view class="action">
 				<text class="cuIcon-emojifill text-grey" @tap="togglePicker(200, 'emoji')"></text>
@@ -224,6 +245,7 @@
 				isCard: false,
 				postname: '加载中',
 				contenthuifu: '',
+				floorhuifu: '',
 				content: '<span style="font-size:28rpx;line-height:1px;">⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢀⣴⣴⣶⣶⣶⣶⣄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣠⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣤⣤⡀⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⡧⣼⣿⡟⢛⠋⠐⠂⠰⠂⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣰⣯⣟⣿⣻⣿⣿⣿⣿⣿⣿⣥⠨⠭⣯⡾⢡⠄⠄⠄⡐⠁⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡶⣦⠌⢝⢢⡔⠈⠠⠁⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢻⣿⣿⢻⣿⣿⡏⡿⣿⣿⣿⣿⣿⣻⣧⣿⣿⣟⠁⠄⣠⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠊⣯⢿⡏⠛⠛⠚⣿⣿⡟⡿⠉⢻⣽⣒⣿⣏⠄⢣⡄⣃⡀⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣿⠄⠄⠄⠄⠄⠈⠉⠄⣇⣰⣿⣿⣿⣿⣿⡔⠄⠁⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣿⢦⡀⠄⠄⠄⠄⠄⢰⣿⣿⣿⣿⣿⢿⡟⠚⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠟⣸⡿⣷⢶⣤⠤⠄⣞⣿⣿⣿⣟⡟⡛⠣⡠⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠘⢕⣶⡜⠛⢀⣥⣾⣿⣿⣿⣿⣿⣿⣄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⡀⢼⢃⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⡁⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠠⠄⠄⣿⣿⣫⣷⣯⣿⣷⣿⣿⣽⣿⣿⣿⣿⣿⣿⡇⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⢀⣰⡇⠄⠄⣿⠄⠄⠄⠄⠄⠄⠈⠄⠄⢸⣿⣿⣿⣿⣿⣿⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⢀⣾⣿⡇⠄⠄⣿⠄⠄⠄⠄⣀⣀⣀⣢⣄⣺⣿⣿⣿⣿⣿⣿⠘⠄⢄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⣼⣿⣿⣧⢀⣤⡿⠛⠛⠛⠋⠉⠛⠋⠋⢿⢿⣿⣿⣿⣿⣿⣿⠄⠄⠄⠐⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⣿⣿⣿⣿⣿⣿⠁⠄⠄⠄⠄⠄⠄⠄⠄⢀⣾⣿⣿⣿⣿⣿⣿⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⣿⣿⣿⣿⣿⣿⣶⣶⣾⡿⡷⡞⣟⣿⣽⣿⣿⣿⣿⣿⣿⣿⡇⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⢠⣿⣿⣿⣿⣿⡿⣿⣿⣷⣷⣷⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠄⠄⠄⠄⠄⠄⠄⠄⡀⠄⠄<br>⠄⠄⠄⠄⠄⢸⣿⣿⣿⣿⣿⣹⣿⣿⣿⠟⠋⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠄⠄⠄⠠⣤⠄⡤⠤⠄⠄⠄<br>⠄⠄⠄⠄⠄⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠄⠄⠄⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣀⣀⣸⡜⠓⠆⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⣿⣿⣿⣿⣿⣿⣿⣿⣿⡈⠄⢠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡄⢀⠄⠄⠄⠄⠄⠄</span><br><span style="font-size:30rpx;line-height:1px;">⠄⠄⠄⠄⠄⠄⠄⠄帖子正在载入中，请稍候⠄⠄⠄⠄⠄⠄⠄⠄</span>',
 				postup: '加载中',
 				nowdate: '加载中',
@@ -235,7 +257,11 @@
 				tid: 0,
 				fid: 0,
 				page: 0,
+				toUID: 0,
+				toPID: 0,
+				index: 0,
 				fasong: false,
+				floorfasong: false,
 				floorpage: [],
 				jiazai :0,
 				jiazaiwanbi: [],
@@ -271,6 +297,9 @@
 			closeemoji(e) {
 				this.showEmoji = false
 			},
+			back(){
+				uni.navigateBack();
+			},
 			loadmore(e) {
 				Vue.set(this.isfloat, e, true);
 				console.log(e);
@@ -285,9 +314,29 @@
 			doNothing:function(){
 				
 			},
-			lzlpo(e,f) {
+			lzlpo(e,f,g) {
 				console.log(e);
 				console.log(f);
+				this.toUID = e;
+				this.toPID = f;
+				this.modalName='floorpost';
+				this.index = g;
+			},
+			lzpo(f) {
+				console.log(f);
+				this.toUID = 0;
+				this.toPID = f;
+				this.index = g;
+				this.modalName='floorpost';
+			},
+			floorhuif(e){
+				if(this.modalName =='floorpost'){
+					this.floorhuifu += e;
+					this.showEmoji = false;
+				}else{
+					this.contenthuifu += e;
+					this.showEmoji = false;
+				}
 			},
 			linktap(e) {
 				console.log(e);
@@ -372,7 +421,7 @@
 				if(!this.fasong){
 					that.fasong=true;
 					var message = encodeURI(that.contenthuifu);
-					console.log(this.contenthuifu);
+					console.log(that.contenthuifu);
 					uni.request({
 						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:huitie', //获取置顶帖子
 						method: 'POST',
@@ -395,6 +444,48 @@
 								this.fasong = false;
 							} else {
 								that.refresh(message);
+							}
+						}
+					});
+				}
+			},
+			sendfloor() {
+				var that=this;
+				console.log(that.floorhuifu.length);
+				if(that.floorhuifu.length<5){
+					that.modalName = "cantpost";
+					that.cantpostmessage = '请输入大于4个字的回复内容。';
+					this.floorfasong = false;
+					return;
+				}
+				if(!this.floorfasong){
+					that.floorfasong=true;
+					var message = encodeURI(that.floorhuifu);
+					console.log(that.floorhuifu);
+					console.log(that.toUID);
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:huifloor', //获取置顶帖子
+						method: 'POST',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							pid: that.toPID,
+							message: message,
+							touid: that.toUID
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data)
+							if (res.data.code == 404) {
+								that.modalName = "needlogin";
+							} else if (res.data.code == 401) {
+								that.modalName = "cantpost";
+								that.cantpostmessage = res.data.message;
+								this.floorfasong = false;
+							} else {
+								that.refreshfloor(message);
 							}
 						}
 					});
@@ -429,6 +520,18 @@
 						duration: 300
 					})
 				}).exec();
+			},
+			refreshfloor(e) {
+				console.log(this.index)
+				var fasongf = new Array();
+				fasongf.username = this.$username;
+				fasongf.uid = this.$uid;
+				fasongf.floor = 0;
+				fasongf.dateline = '刚刚';
+				fasongf.content = '<span style="color:#0081ff;">' + this.$username + '</span>:' + decodeURI(e);
+				this.modalName = null
+				this.floorhuifu = '';
+				this.floorfasong = false;
 			},
 			topost(e) {
 				uni.navigateTo({

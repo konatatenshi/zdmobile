@@ -9,6 +9,10 @@
 			<switch @change="Setimage" class="blue" :class="image?'checked':''" :checked="image?true:false"></switch>
 		</view>
 		<view class="cu-form-group">
+			<view class="title">不在新窗口展开楼中楼（省流量）</view>
+			<switch @change="Setfloor" class="blue" :class="newfloor?'checked':''" :checked="newfloor?true:false"></switch>
+		</view>
+		<view class="cu-form-group">
 			<view class="title">选择尺寸</view>
 			<radio-group @change="SetShadow">
 				<label class="margin-left-sm">
@@ -35,6 +39,7 @@
 			return {
 				modalName: '',
 				image: false,
+				newfloor: false,
 				size: '',
 				color: 'red',
 				shadow: false,
@@ -55,6 +60,18 @@
 					}
 				});
 			},
+			Setfloor(e) {
+				var that = this;
+				uni.setStorage({
+					key: 'floorswitch',
+					data: e.detail.value,
+					success: function() {
+						that.newfloor = e.detail.value
+						Vue.prototype.$floorswitch = e.detail.value
+						//console.log(that.swiperList);
+					}
+				});
+			},
 			SetShadow(e) {
 				this.shadow = e.detail.value
 			},
@@ -65,6 +82,13 @@
 				key: 'imageswitch',
 				success: function(res) {
 					that.image = res.data;
+					//console.log(that.swiperList);
+				}
+			});
+			uni.getStorage({
+				key: 'floorswitch',
+				success: function(res) {
+					that.newfloor = res.data;
 					//console.log(that.swiperList);
 				}
 			});

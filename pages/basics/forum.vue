@@ -56,7 +56,10 @@
 													</view>
 												</view>
 												<view class="forumtitle text-cut" @tap="topost(item.tid)">{{item.subject}}</view>
-												<view class="text-content" @tap="topost(item.tid)">
+												<view class="text-content text-red flex justify-center" v-if="item.readperm>0" @tap="topost(item.tid)">
+														====阅读权限：{{item.readperm}}====
+												</view>
+												<view v-else class="text-content" @tap="topost(item.tid)">
 														{{item.summary}}
 												</view>
 												<view v-if="item.attachment==3&&isImage" class="grid flex-sub padding-lr col-1">
@@ -98,7 +101,10 @@
 												<image v-if="item.img != 'static/image/common/nophoto.gif'"
 													:src="item.img" mode="aspectFill"></image>
 												<view class="desc">
-													<view class="text-content">
+													<view class="text-content text-red flex justify-center" v-if="item.readperm>0" @tap="topost(item.tid)">
+															====阅读权限：{{item.readperm}}====
+													</view>
+													<view v-else class="text-content">
 														{{item.summary}}
 													</view>
 													<view>
