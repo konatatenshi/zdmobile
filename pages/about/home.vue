@@ -216,19 +216,6 @@
 				</view>
 			</view>
 		</view>
-		<view class="cu-modal" :class="modalName=='update'?'show':''">
-			<view class="cu-dialog">
-				<view class="cu-bar bg-white justify-end">
-					<view class="content">版本信息</view>
-					<view class="action" @tap="hideModal">
-						<text class="cuIcon-close text-red"></text>
-					</view>
-				</view>
-				<view class="padding-xl">
-					目前版本号：{{version}}{{update}}
-				</view>
-			</view>
-		</view>
 		<view class="cu-modal" :class="modalName=='logout'?'show':''">
 			<view class="cu-dialog">
 				<view class="cu-bar bg-white justify-end">
@@ -248,6 +235,60 @@
 				</view>
 			</view>
 		</view>
+		<view class="cu-modal" :class="modalName=='update'?'show':''">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">版本信息</view>
+					<view v-if="isupdate==1" class="action" @tap="cancelupdate">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+					<view v-else class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl">
+					{{version}}{{update}}
+				</view>
+				<view v-if="isupdate==1" class="padding-xl">
+					目前服务器有新版本，确认进行更新吗？
+				</view>
+				<view class="padding-xl">
+					<view v-if="progress>0" class="cu-progress">
+						<view class="bg-blue" :style="[{ width:progress>0?progress + '%':''}]">{{progress}}%</view>
+					</view>
+				</view>
+				<view v-if="progress>0" class="padding-xl">
+					{{bite}} / {{zongbite}}
+				</view>
+				<view v-if="progress>0" class="padding-xl">
+					如果遇到进度条100，但是APP没有正常重启，说明安装失败，版本差距过大，请去市场更新。
+				</view>
+				<view class="cu-bar bg-white justify-end">
+					<view v-if="isupdate==1" class="action">
+						<button class="cu-btn line-green text-green" @tap="cancelupdate">取消</button>
+						<button v-if="bite==0" class="cu-btn bg-green margin-left" @tap="updatequery">确定</button>
+					</view>
+				</view>
+			</view>
+			<view class="cu-modal" :class="modalName=='installfail'?'show':''">
+				<view class="cu-dialog">
+					<view class="cu-bar bg-white justify-end">
+						<view class="content">安装失败</view>
+						<view class="action" @tap="hideModal">
+							<text class="cuIcon-close text-red"></text>
+						</view>
+					</view>
+					<view class="padding-xl">
+						安装失败。可能因为版本不对。请联系管理员。
+					</view>
+					<view class="cu-bar bg-white justify-end">
+						<view class="action">
+							<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -259,6 +300,7 @@
                 iStatusBarHeight:0,
 				TabCur: 0,
 				version: '',
+				downfile: '',
 				scrollLeft: 0,
 				switchA: false,
 				avatarimgLoaded: false,
@@ -277,6 +319,11 @@
 				myagree: 0,
 				myfans: 0,
 				mylike: 0,
+				progress: 0,
+				bite: 0,
+				zongbite: 0,
+				cancel: 0,
+				isupdate: 0,
 				update: '',
 				websocketmessage: [],
 				listTouchDirection: null,
@@ -286,9 +333,13 @@
 			hideModal(e) {
 				this.modalName = null
 			},
+			cancelupdate(e) {
+				this.modalName = null;
+				this.cancel = 1;
+			},
 			bbxx(e) {
-				this.modalName = 'update';
 				this.checkupdate();
+				this.modalName = 'update';
 			},
 			backhome(){      
 				this.$emit("returnDat","basics")//传递的值
@@ -339,12 +390,6 @@
 				this.TabCur = e.currentTarget.dataset.id;
 				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
 			},
-			checkupdate(e) {
-				this.switchA = e.detail.value;
-				uni.redirectTo({
-					url: '../basics/home'
-				});
-			},
 			settingselect(e) {
 				this.switchA = e.detail.value;
 				uni.navigateTo({
@@ -365,24 +410,10 @@
 				        success: (result) => {  
 				            var data = result.data;  
 							console.log(data);
+							that.downfile = data.wgtUrl;
 				            if (data.update == 200 && data.wgtUrl) {  
 								that.update = '(有更新)';
-				                uni.downloadFile({  
-				                    url: data.wgtUrl,  
-				                    success: (downloadResult) => {  
-										console.log(downloadResult);
-				                        if (downloadResult.statusCode === 200) {  
-				                            plus.runtime.install(downloadResult.tempFilePath, {  
-				                                force: false  
-				                            }, function() {  
-				                                console.log('install success...');  
-				                                plus.runtime.restart();  
-				                            }, function(e) {  
-				                                console.error('install fail...');  
-				                            });  
-				                        }
-				                    }  
-				                });  
+								that.isupdate = 1;
 				            } else if (data.update === 201) {
 								that.update = '(最新版)';
 							} else if (data.update === 202) {
@@ -391,6 +422,43 @@
 				        }  
 				    });  
 				});  
+			},
+			updatequery(){
+				this.bite=1;
+				this.zongbite=1;
+				console.log(this.downfile);
+				var that=this;
+				const downloadTask = uni.downloadFile({  
+				    url: that.downfile,
+				    success: (downloadResult) => {  
+						console.log(downloadResult);
+				        if (downloadResult.statusCode === 200) {  
+				            plus.runtime.install(downloadResult.tempFilePath, {  
+				                force: false  
+				            }, function() {  
+				                console.log('install success...');  
+				                plus.runtime.restart();  
+				            }, function(e) {  
+				                console.error('install fail...');  
+				            });  
+				        }
+				    }
+				});  
+				downloadTask.onProgressUpdate((res) => {
+					that.progress = res.progress;
+					that.bite = res.totalBytesWritten;
+					that.zongbite = res.totalBytesExpectedToWrite;
+					console.log('下载进度' + res.progress);
+					console.log('已经下载的数据长度' + res.totalBytesWritten);
+					console.log('预期需要下载的数据总长度' + res.totalBytesExpectedToWrite);
+					// 测试条件，取消下载任务。  
+					if (that.cancel == 1) {  
+					    downloadTask.abort();  
+						that.progress = 0;
+						that.bite = 0;
+						that.zongbite = 0;
+					}  
+				});
 			}
 		},
 		created() {

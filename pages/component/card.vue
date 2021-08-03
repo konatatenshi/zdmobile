@@ -36,7 +36,7 @@
 								<view class="text-grey text-sm">{{index+2}}楼</view>
 							</view>
 							<view class="flex justify-between">
-								<view class="text-gray text-df">{{item.dateline}}</view>
+								<view class="text-gray text-sm">{{item.dateline}}</view>
 							</view>
 							<mp-html v-if="item.status&1" class="text-content text-df float" :class="isfloat[index]?'show':'hide'"
 								:content="pingbi" @linktap="linktap" />
@@ -44,7 +44,7 @@
 								:content="jiequ(item.html)" @linktap="linktap" />
 							<mp-html v-else class="text-content text-df float" :class="isfloat[index]?'show':'hide'"
 								:content="item.html" @linktap="linktap" />
-							<view class="text-blue" v-if="item.html.length>180&&isfloat[index]!= true"
+							<view class="text-blue" v-if="Letter(item.html).length>140&&isfloat[index]!= true"
 								@tap="loadmore(index)">展开</view>
 							<view class="margin-top-sm flex justify-between">
 								<view>
@@ -292,7 +292,15 @@
 				this.modalName = null
 			},
 			jiequ(e) {
-				return e.substr(0,300);
+				return e.substr(0,200);
+			},
+			Letter(str) {
+				let result;		
+				let reg = /[a-zA-Z]+/;  //[a-zA-Z]表示匹配字母，g表示全局匹配			
+				while (result = str.match(reg)) { //判断str.match(reg)是否没有字母了			
+					str = str.replace(result[0], ''); //替换掉字母  result[0] 是 str.match(reg)匹配到的字母			
+				}			
+			  return str;			
 			},
 			closeemoji(e) {
 				this.showEmoji = false
@@ -306,23 +314,35 @@
 				console.log(this.isfloat[e]);
 			},
 			loadfloor(e,j) {
-				if(this.floorpage[j] == undefined){
-					this.floorpage[j] = 0;
+				if(this.$floorswitch){
+					if(this.floorpage[j] == undefined){
+						this.floorpage[j] = 0;
+					}
+					this.loadfloors(e, this.floorpage[j],0,0,0,j);
+				}else{
+					console.log(e);
+					this.tofloor(e);
 				}
-				this.loadfloors(e, this.floorpage[j],0,0,0,j);
 			},
 			doNothing:function(){
 				
 			},
 			lzlpo(e,f,g) {
-				console.log(e);
-				console.log(f);
-				this.toUID = e;
-				this.toPID = f;
-				this.modalName='floorpost';
-				this.index = g;
+				if(this.$floorswitch){
+					console.log(e);
+					console.log(f);
+					this.toUID = e;
+					this.toPID = f;
+					this.modalName='floorpost';
+					this.index = g;
+				}else{
+					console.log(e);
+					console.log(f);
+					console.log(g);
+					this.tofloor(f);
+				}
 			},
-			lzpo(f) {
+			lzpo(f,g) {
 				console.log(f);
 				this.toUID = 0;
 				this.toPID = f;
@@ -536,6 +556,11 @@
 			topost(e) {
 				uni.navigateTo({
 					url: '../component/card?tid=' + e
+				});
+			},
+			tofloor(e) {
+				uni.navigateTo({
+					url: '../component/form?pid=' + e
 				});
 			},
 			tobar(e) {

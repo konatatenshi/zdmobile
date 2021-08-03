@@ -1,413 +1,825 @@
 <template>
 	<view>
-		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
+		<cu-custom class="statustop" bgColor="bg-white" :isBack="true">
 			<block slot="backText">返回</block>
-			<block slot="content">表单</block>
+			<block slot="content">楼中楼详情</block>
 		</cu-custom>
-		<form>
-			<view class="cu-form-group margin-top">
-				<view class="title">邮件</view>
-				<input placeholder="两字短标题" name="input"></input>
-			</view>
-			<view class="cu-form-group">
-				<view class="title">输入框</view>
-				<input placeholder="三字标题" name="input"></input>
-			</view>
-			<view class="cu-form-group">
-				<view class="title">收货地址</view>
-				<input placeholder="统一标题的宽度" name="input"></input>
-			</view>
-			<view class="cu-form-group">
-				<view class="title">收货地址</view>
-				<input placeholder="输入框带个图标" name="input"></input>
-				<text class='cuIcon-locationfill text-orange'></text>
-			</view>
-			<view class="cu-form-group">
-				<view class="title">验证码</view>
-				<input placeholder="输入框带个按钮" name="input"></input>
-				<button class='cu-btn bg-green shadow'>验证码</button>
-			</view>
-			<view class="cu-form-group">
-				<view class="title">手机号码</view>
-				<input placeholder="输入框带标签" name="input"></input>
-				<view class="cu-capsule radius">
-					<view class='cu-tag bg-blue '>
-						+86
-					</view>
-					<view class="cu-tag line-blue">
-						中国大陆
-					</view>
+		<view class="cu-card dynamic no-card" :style="'margin-top: -' + iStatusBarHeight +'px;'">
+			<view class="cu-item shadow">
+				<view class="title">
+					<view class="text-cut">{{postname}}</view>
 				</view>
-			</view>
-			<view class="cu-form-group margin-top">
-				<view class="title">普通选择</view>
-				<picker @change="PickerChange" :value="index" :range="picker">
-					<view class="picker">
-						{{index>-1?picker[index]:'禁止换行，超出容器部分会以 ... 方式截断'}}
-					</view>
-				</picker>
-			</view>
-			<!-- #ifndef MP-ALIPAY -->
-			<view class="cu-form-group">
-				<view class="title">多列选择</view>
-				<picker mode="multiSelector" @change="MultiChange" @columnchange="MultiColumnChange" :value="multiIndex" :range="multiArray">
-					<view class="picker">
-						{{multiArray[0][multiIndex[0]]}}，{{multiArray[1][multiIndex[1]]}}，{{multiArray[2][multiIndex[2]]}}
-					</view>
-				</picker>
-			</view>
-			<!-- #endif -->
-			<view class="cu-form-group">
-				<view class="title">时间选择</view>
-				<picker mode="time" :value="time" start="09:01" end="21:01" @change="TimeChange">
-					<view class="picker">
-						{{time}}
-					</view>
-				</picker>
-			</view>
-			<view class="cu-form-group">
-				<view class="title">日期选择</view>
-				<picker mode="date" :value="date" start="2015-09-01" end="2020-09-01" @change="DateChange">
-					<view class="picker">
-						{{date}}
-					</view>
-				</picker>
-			</view>
-			<!-- #ifndef H5 || APP-PLUS || MP-ALIPAY -->
-			<view class="cu-form-group">
-				<view class="title">地址选择</view>
-				<picker mode="region" @change="RegionChange" :value="region">
-					<view class="picker">
-						{{region[0]}}，{{region[1]}}，{{region[2]}}
-					</view>
-				</picker>
-			</view>
-			<!-- #endif -->
-			<view class="cu-form-group margin-top">
-				<view class="title">开关选择</view>
-				<switch @change="SwitchA" :class="switchA?'checked':''" :checked="switchA?true:false"></switch>
-			</view>
-			<view class="cu-form-group">
-				<view class="title">定义颜色</view>
-				<!-- #ifdef MP-ALIPAY -->
-				<switch class='red' @change="SwitchB" :class="switchB?'checked':''" :checked="switchB?true:false" color="#e54d42"></switch>
-				<!-- #endif -->
-
-				<!-- #ifndef MP-ALIPAY -->
-				<switch class='red' @change="SwitchB" :class="switchB?'checked':''" :checked="switchB?true:false"></switch>
-				<!-- #endif -->
-			</view>
-			<view class="cu-form-group">
-				<view class="title">定义图标</view>
-				<switch class='switch-sex' @change="SwitchC" :class="switchC?'checked':''" :checked="switchC?true:false"></switch>
-			</view>
-			<!-- #ifndef MP-ALIPAY -->
-			<view class="cu-form-group">
-				<view class="title">方形开关</view>
-				<switch class='orange radius' @change="SwitchD" :class="switchD?'checked':''" :checked="switchD?true:false"></switch>
-			</view>
-			<!-- #endif -->
-			<radio-group class="block" @change="RadioChange">
-				<view class="cu-form-group margin-top">
-					<view class="title">单选操作(radio)</view>
-					<radio :class="radio=='A'?'checked':''" :checked="radio=='A'?true:false" value="A"></radio>
-				</view>
-				<!-- #ifndef MP-ALIPAY -->
-				<view class="cu-form-group">
-					<view class="title">定义样式</view>
-					<radio class='radio' :class="radio=='B'?'checked':''" :checked="radio=='B'?true:false" value="B"></radio>
-				</view>
-				<view class="cu-form-group">
-					<view class="title">定义颜色</view>
-					<view>
-						<radio class='blue radio' :class="radio=='C'?'checked':''" :checked="radio=='C'?true:false" value="C"></radio>
-						<radio class='red margin-left-sm' :class="radio=='D'?'checked':''" :checked="radio=='D'?true:false" value="D"></radio>
-					</view>
-				</view>
-				<!-- #endif -->
-			</radio-group>
-			<checkbox-group class="block" @change="CheckboxChange">
-				<view class="cu-form-group margin-top">
-					<view class="title">复选选操作(checkbox)</view>
-					<checkbox :class="checkbox[0].checked?'checked':''" :checked="checkbox[0].checked?true:false" value="A"></checkbox>
-				</view>
-				<!-- #ifndef MP-ALIPAY -->
-				<view class="cu-form-group">
-					<view class="title">定义形状</view>
-					<checkbox class='round' :class="checkbox[1].checked?'checked':''" :checked="checkbox[1].checked?true:false" value="B"></checkbox>
-				</view>
-				<view class="cu-form-group">
-					<view class="title">定义颜色</view>
-					<checkbox class='round blue' :class="checkbox[2].checked?'checked':''" :checked="checkbox[2].checked?true:false"
-					 value="C"></checkbox>
-				</view>
-				<!-- #endif -->
-			</checkbox-group>
-			<view class="cu-bar bg-white margin-top">
-				<view class="action">
-					图片上传
-				</view>
-				<view class="action">
-					{{imgList.length}}/4
-				</view>
-			</view>
-			<view class="cu-form-group">
-				<view class="grid col-4 grid-square flex-sub">
-					<view class="bg-img" v-for="(item,index) in imgList" :key="index" @tap="ViewImage" :data-url="imgList[index]">
-					 <image :src="imgList[index]" mode="aspectFill"></image>
-						<view class="cu-tag bg-red" @tap.stop="DelImg" :data-index="index">
-							<text class='cuIcon-close'></text>
+				<view class="cu-list menu-avatar">
+					<view class="cu-item">
+						<view class="cu-avatar round lg" :style="[{ backgroundImage:'url(' + avatarlist + ')' }]">
+							<view v-show="sex==1" class="cu-tag badge cuIcon-male bg-blue"></view>
+							<view v-show="sex==2" class="cu-tag badge cuIcon-female bg-pink"></view>
+						</view>
+						<view class="content flex-sub">
+							<view>{{postup}}</view>
+							<view class="text-gray text-sm flex justify-between">
+								{{nowdate}}
+							</view>
 						</view>
 					</view>
-					<view class="solids" @tap="ChooseImage" v-if="imgList.length<4">
-						<text class='cuIcon-cameraadd'></text>
+				</view>
+				<view class="text-content2">
+					<mp-html :content="content" @linktap="linktap" />
+					<view class="margin-top-sm flex justify-between">
+						<view>
+							<text class="cuIcon-appreciatefill" :class="zan?'text-red':'text-gray'"></text>
+							<text class="cuIcon-messagefill text-gray margin-left-sm" @tap="lzpo()"></text>
+						</view>
+						<view>
+							<text class="cuIcon-more text-gray margin-right-sm"></text>
+						</view>
+					</view>
+				</view>
+				<view class="cu-list menu-avatar comment solids-top" v-for="(item,index) in huifulist" :key="index" :data-id="index">
+					<view v-if="index==0" class="text-grey margin-left">
+						<view>共有相关评论 {{count}} 个</view>
+					</view>
+					<view class="cu-item">
+						<view class="cu-avatar round" :style="[{ backgroundImage:'url(https://zd.tiangal.com/uc_server/avatar.php?uid=41070' + item.uid + '&size=small)' }]">
+						</view>
+						<view class="content">
+							<view class="flex justify-between">
+								<view class="text-grey">{{item.username}}</view>
+								<view class="text-grey text-sm">{{index+2}}楼</view>
+							</view>
+							<view class="flex justify-between">
+								<view class="text-gray text-sm">{{item.dateline}}</view>
+							</view>
+							<mp-html v-if="!isfloat[index]" class="text-content text-df float" :class="isfloat[index]?'show':'hide'"
+								:content="jiequ(item.content)" @linktap="linktap" />
+							<mp-html v-else class="text-content text-df float" :class="isfloat[index]?'show':'hide'"
+								:content="item.content" @linktap="linktap" />
+							<view class="text-blue" v-if="Letter(item.content).length>140&&isfloat[index]!= true"
+								@tap="loadmore(index)">展开</view>
+							<view class="margin-top-sm flex justify-between">
+								<view>
+									<text class="cuIcon-appreciatefill" :class="agree(item.agree)?'text-red':'text-gray'">{{agree(item.agree)}}</text>
+									<text class="cuIcon-messagefill text-gray margin-left-sm" @tap="lzpo(item.uid)"></text>
+								</view>
+								<view>
+									<text class="cuIcon-more text-gray margin-right-sm"></text>
+								</view>
+							</view>
+						</view>
+					</view>
+				</view>
+				<view>
+					<block>
+						<view class="padding-xs flex align-center bg-gray">
+							<view class="flex-sub text-center">
+								<view class="text-xs padding">
+									<text class="text-black">{{loading}}</text>
+								</view>
+							</view>
+						</view>
+					</block>
+				</view>
+				<view class="cu-modal" :class="modalName=='needlogin'?'show':''">
+					<view class="cu-dialog">
+						<view class="cu-bar bg-white justify-end">
+							<view class="content">需要登录</view>
+							<view class="action" @tap="hideModal">
+								<text class="cuIcon-close text-red"></text>
+							</view>
+						</view>
+						<view class="padding-xl">
+							你需要登录才可以使用此功能。
+						</view>
+						<view class="cu-bar bg-white justify-end">
+							<view class="action">
+								<button class="cu-btn line-green text-green" @tap="hideModal">取消</button>
+								<button class="cu-btn bg-green margin-left" @tap="tologin">确定</button>
+							</view>
+						</view>
+					</view>
+				</view>
+				<view class="cu-modal" :class="modalName=='cantview'?'show':''">
+					<view class="cu-dialog">
+						<view class="cu-bar bg-white justify-end">
+							<view class="content">权限不足</view>
+							<view class="action" @tap="hideModal">
+								<text class="cuIcon-close text-red"></text>
+							</view>
+						</view>
+						<view class="padding-xl">
+							无法进入帖子，错误提示：{{cantviewmessage}}
+						</view>
+						<view class="cu-bar bg-white justify-end">
+							<view class="action">
+								<button class="cu-btn bg-green margin-left" @tap="back">确定</button>
+							</view>
+						</view>
+					</view>
+				</view>
+				<view class="cu-modal" :class="modalName=='cantpost'?'show':''">
+					<view class="cu-dialog">
+						<view class="cu-bar bg-white justify-end">
+							<view class="content">回帖错误</view>
+							<view class="action" @tap="hideModal">
+								<text class="cuIcon-close text-red"></text>
+							</view>
+						</view>
+						<view class="padding-xl">
+							无法回帖，错误提示：{{cantpostmessage}}
+						</view>
+						<view class="cu-bar bg-white justify-end">
+							<view class="action">
+								<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
+							</view>
+						</view>
+					</view>
+				</view>
+				<view class="cu-modal" :class="modalName=='floorpost'?'show':''">
+					<view class="cu-dialog">
+						<view class="cu-bar bg-white justify-end">
+							<view class="content">楼中楼回复</view>
+							<view class="action" @tap="hideModal">
+								<text class="cuIcon-close text-red"></text>
+							</view>
+						</view>
+						<view class="padding-xl">
+							<view class="cu-form-group align-start">
+								<textarea maxlength="-1" v-model="floorhuifu" placeholder="请在此输入想要说的话"></textarea>
+								<text class="cuIcon-emojifill text-grey" @tap="togglePicker(200, 'emoji')"></text>
+							</view>
+						</view>
+						<view class="cu-bar bg-white justify-end">
+							<view class="action">
+								<button class="cu-btn bg-green margin-left" @tap="sendfloor">发送</button>
+							</view>
+						</view>
+					</view>
+				</view>
+				<view class="cu-modal" :class="modalName=='postnew'?'show':''">
+					<view class="cu-dialog">
+						<view class="cu-bar bg-white justify-end">
+							<view class="content">发表回复成功</view>
+							<view class="action" @tap="hideModal">
+								<text class="cuIcon-close text-red"></text>
+							</view>
+						</view>
+						<view class="padding-xl">
+							发表错误成功，请点击确定刷新帖子。
+						</view>
+						<view class="cu-bar bg-white justify-end">
+							<view class="action">
+								<button class="cu-btn line-green text-green" @tap="hideModal">取消</button>
+								<button class="cu-btn bg-green margin-left" @tap="refresh">确定</button>
+							</view>
+						</view>
+					</view>
+				</view>
+				<view class="cu-modal" :class="showEmoji?'show':''" @tap.prevent.stop="">
+					<view class="cu-dialog">
+						<view class="cu-bar bg-white justify-end">
+							<view class="content">请选择表情</view>
+							<view class="action" @tap="closeemoji">
+								<text class="cuIcon-close text-red"></text>
+							</view>
+						</view>
+						<view class="padding-xl emoji">
+							<view class="list">
+								<view class="item" @tap="floorhuif(item)" v-for="(item, index) in emojis"
+									:key="index">
+									<img-cache class="icon"
+										:src="'https://bbs.zdfx.net/static/image/smiley/tieba/' + index + '.png'">
+									</img-cache>
+								</view>
+							</view>
+						</view>
 					</view>
 				</view>
 			</view>
-			<view class="cu-form-group margin-top">
-				<view class="title">头像</view>
-				<view class="cu-avatar radius bg-gray"></view>
-			</view>
-			<!-- !!!!! placeholder 在ios表现有偏移 建议使用 第一种样式 -->
-			<view class="cu-form-group margin-top">
-				<textarea maxlength="-1" :disabled="modalName!=null" @input="textareaAInput" placeholder="多行文本输入框"></textarea>
-			</view>
-			<view class="cu-form-group align-start">
-				<view class="title">文本框</view>
-				<textarea maxlength="-1" :disabled="modalName!=null" @input="textareaBInput" placeholder="多行文本输入框"></textarea>
-			</view>
-		</form>
+		</view>
 	</view>
 </template>
 
 <script>
+	import Vue from 'vue'
+	import mpHtml from '@/components/mp-html/mp-html'
 	export default {
+		components: {
+			mpHtml
+		},
 		data() {
 			return {
-				index: -1,
-				picker: ['喵喵喵', '汪汪汪', '哼唧哼唧'],
-				multiArray: [
-					['无脊柱动物', '脊柱动物'],
-					['扁性动物', '线形动物', '环节动物', '软体动物', '节肢动物'],
-					['猪肉绦虫', '吸血虫']
-				],
-				objectMultiArray: [
-					[{
-							id: 0,
-							name: '无脊柱动物'
-						},
-						{
-							id: 1,
-							name: '脊柱动物'
-						}
-					],
-					[{
-							id: 0,
-							name: '扁性动物'
-						},
-						{
-							id: 1,
-							name: '线形动物'
-						},
-						{
-							id: 2,
-							name: '环节动物'
-						},
-						{
-							id: 3,
-							name: '软体动物'
-						},
-						{
-							id: 3,
-							name: '节肢动物'
-						}
-					],
-					[{
-							id: 0,
-							name: '猪肉绦虫'
-						},
-						{
-							id: 1,
-							name: '吸血虫'
-						}
-					]
-				],
-				multiIndex: [0, 0, 0],
-				time: '12:01',
-				date: '2018-12-25',
-				region: ['广东省', '广州市', '海珠区'],
-				switchA: false,
-				switchB: true,
-				switchC: false,
-				switchD: false,
-				radio: 'A',
-				checkbox: [{
-					value: 'A',
-					checked: true
-				}, {
-					value: 'B',
-					checked: true
-				}, {
-					value: 'C',
-					checked: false
-				}],
-				imgList: [],
+				isCard: false,
+				postname: '加载中',
+				contenthuifu: '',
+				floorhuifu: '',
+				content: '<div style=\"overflow: hidden;border: 1px dashed #FF9A9A;margin: 8px 0;padding: 10px;zoom: 1;\">回复加载中</div>',
+				postup: '加载中',
+				nowdate: '加载中',
+				pingbi: '<div style=\"overflow: hidden;border: 1px dashed #FF9A9A;margin: 8px 0;padding: 10px;zoom: 1;\">此帖因违规被屏蔽，不可见。</div>',
+				cantviewmessage: '',
+				cantpostmessage: '',
+				iStatusBarHeight: 0,
+				sex: 0,
+				count: 0,
+				zan: 0,
+				tid: 0,
+				fid: 0,
+				pid: 0,
+				page: 0,
+				toUID: 0,
+				toPID: 0,
+				index: 0,
+				fasong: false,
+				floorfasong: false,
+				floorpage: [],
+				jiazai :0,
+				jiazaiwanbi: [],
+				InputBottom: 0,
+				platform: 0,
+				huifulist: [],
+				rplist: [],
+				isfloat: [],
+				isfloats: false,
 				modalName: null,
-				textareaAValue: '',
-				textareaBValue: ''
+				loading: "上拉可加载更多回复",
+				avatarlist: '../../static/avatar.jpg',
+				emojis: ["{:4_91:}","{:4_107:}", "{:4_100:}", "{:4_115:}", "{:4_104:}", "{:4_98:}", "{:4_114:}", "{:4_88:}",
+					"{:4_87:}", "{:4_135:}", "{:4_131:}", "{:4_134:}", "{:4_106:}", "{:4_99:}", "{:4_93:}",
+					"{:4_103:}", "{:4_120:}", "{:4_125:}", "{:4_108:}", "{:4_95:}", "{:4_102:}", "{:4_121:}",
+					"{:4_126:}", "{:4_129:}", "{:4_119:}", "{:4_127:}", "{:4_132:}", "{:4_133:}", "{:4_112:}",
+					"{:4_128:}", "{:4_122:}", "{:4_124:}", "{:4_130:}", "{:4_97:}", "{:4_111:}", "{:4_90:}",
+					"{:4_117:}", "{:4_94:}", "{:4_113:}", "{:4_89:}", "{:4_96:}", "{:4_109:}", "{:4_92:}", "{:4_118:}",
+					"{:4_101:}", "{:4_123:}", "{:4_116:}", "{:4_105:}"
+				],
+				showEmoji: false,
+				showFile: false,
+				showmove: false,
 			};
 		},
 		methods: {
-			PickerChange(e) {
-				this.index = e.detail.value
+			hideModal(e) {
+				this.modalName = null
 			},
-			MultiChange(e) {
-				this.multiIndex = e.detail.value
+			jiequ(e) {
+				return e.substr(0,300);
 			},
-			MultiColumnChange(e) {
-				let data = {
-					multiArray: this.multiArray,
-					multiIndex: this.multiIndex
-				};
-				data.multiIndex[e.detail.column] = e.detail.value;
-				switch (e.detail.column) {
-					case 0:
-						switch (data.multiIndex[0]) {
-							case 0:
-								data.multiArray[1] = ['扁性动物', '线形动物', '环节动物', '软体动物', '节肢动物'];
-								data.multiArray[2] = ['猪肉绦虫', '吸血虫'];
-								break;
-							case 1:
-								data.multiArray[1] = ['鱼', '两栖动物', '爬行动物'];
-								data.multiArray[2] = ['鲫鱼', '带鱼'];
-								break;
-						}
-						data.multiIndex[1] = 0;
-						data.multiIndex[2] = 0;
-						break;
-					case 1:
-						switch (data.multiIndex[0]) {
-							case 0:
-								switch (data.multiIndex[1]) {
-									case 0:
-										data.multiArray[2] = ['猪肉绦虫', '吸血虫'];
-										break;
-									case 1:
-										data.multiArray[2] = ['蛔虫'];
-										break;
-									case 2:
-										data.multiArray[2] = ['蚂蚁', '蚂蟥'];
-										break;
-									case 3:
-										data.multiArray[2] = ['河蚌', '蜗牛', '蛞蝓'];
-										break;
-									case 4:
-										data.multiArray[2] = ['昆虫', '甲壳动物', '蛛形动物', '多足动物'];
-										break;
-								}
-								break;
-							case 1:
-								switch (data.multiIndex[1]) {
-									case 0:
-										data.multiArray[2] = ['鲫鱼', '带鱼'];
-										break;
-									case 1:
-										data.multiArray[2] = ['青蛙', '娃娃鱼'];
-										break;
-									case 2:
-										data.multiArray[2] = ['蜥蜴', '龟', '壁虎'];
-										break;
-								}
-								break;
-						}
-						data.multiIndex[2] = 0;
-						break;
+			agree(e) {
+				if(e>0){
+					return e;
+				}else{
+					return '';
 				}
-				this.multiArray = data.multiArray;
-				this.multiIndex = data.multiIndex;
 			},
-			TimeChange(e) {
-				this.time = e.detail.value
+			Letter(str) {
+				let result;		
+				let reg = /[a-zA-Z]+/;  //[a-zA-Z]表示匹配字母，g表示全局匹配			
+				while (result = str.match(reg)) { //判断str.match(reg)是否没有字母了			
+					str = str.replace(result[0], ''); //替换掉字母  result[0] 是 str.match(reg)匹配到的字母			
+				}			
+			  return str;			
 			},
-			DateChange(e) {
-				this.date = e.detail.value
+			closeemoji(e) {
+				this.showEmoji = false
 			},
-			RegionChange(e) {
-				this.region = e.detail.value
+			back(){
+				uni.navigateBack();
 			},
-			SwitchA(e) {
-				this.switchA = e.detail.value
+			loadmore(e) {
+				Vue.set(this.isfloat, e, true);
+				console.log(e);
+				console.log(this.isfloat[e]);
 			},
-			SwitchB(e) {
-				this.switchB = e.detail.value
+			loadfloor(e,j) {
+				if(this.floorpage[j] == undefined){
+					this.floorpage[j] = 0;
+				}
+				this.loadfloors(e, this.floorpage[j],0,0,0,j);
 			},
-			SwitchC(e) {
-				this.switchC = e.detail.value
+			doNothing:function(){
+				
 			},
-			SwitchD(e) {
-				this.switchD = e.detail.value
+			lzlpo(e,f,g) {
+				console.log(e);
+				console.log(f);
+				this.toUID = e;
+				this.toPID = f;
+				this.modalName='floorpost';
+				this.index = g;
 			},
-			RadioChange(e) {
-				this.radio = e.detail.value
+			lzpo(f) {
+				console.log(f);
+				this.toUID = f;
+				this.toPID = this.pid;
+				this.modalName='floorpost';
 			},
-			CheckboxChange(e) {
-				var items = this.checkbox,
-					values = e.detail.value;
-				for (var i = 0, lenI = items.length; i < lenI; ++i) {
-					items[i].checked = false;
-					for (var j = 0, lenJ = values.length; j < lenJ; ++j) {
-						if (items[i].value == values[j]) {
-							items[i].checked = true;
-							break
-						}
+			floorhuif(e){
+				if(this.modalName =='floorpost'){
+					this.floorhuifu += e;
+					this.showEmoji = false;
+				}else{
+					this.contenthuifu += e;
+					this.showEmoji = false;
+				}
+			},
+			linktap(e) {
+				console.log(e);
+				if (e.target == 'app') {
+					uni.navigateTo({
+						url: '../component/card?tid=' + e.apphref
+					});
+				}
+			},
+			InputFocus(e) {
+				this.InputBottom = e.detail.height
+			},
+			InputBlur(e) {
+				this.InputBottom = 0
+			},
+			setScrollHeight(descHeight = 0) {
+				// #ifdef MP-WEIXIN
+				this.scrollHeight = `calc(100vh - 110rpx - ${descHeight}px)`
+				// #endif
+				// #ifdef APP-PLUS
+				this.scrollHeight = `calc(100vh - 110upx - ${descHeight}px)`
+				// #endif
+				// #ifdef H5
+				this.scrollHeight = `calc(100vh - 110upx - 88rpx - ${descHeight}px)`
+				// #endif
+			},
+			scrollToBottom: function() {
+				let that = this;
+				let query = uni.createSelectorQuery();
+				query.select('.cu-chat').boundingClientRect(rect => {
+					if (rect) {
+						//console.log(e + ".height = " + rect.height)
+						this.pageHeight = rect.height + uni.getSystemInfoSync().statusBarHeight +
+							200; //页面可见区域 - 头部高度
+						console.log("this.height = " + this.pageHeight)
 					}
+				}).exec();
+				setTimeout(() => {
+					that.scrollTop(that.pageHeight)
+				}, 200);
+			},
+			scrollTop(e) {
+				uni.pageScrollTo({
+					scrollTop: e,
+					duration: 300
+				});
+			},
+			togglePicker(height = 0, type = '') {
+				this.showEmoji = false
+				this.showFile = false
+				let status = height > 0 ? true : false
+
+				switch (type) {
+					case 'emoji':
+						this.showEmoji = status;
+						break
+					case 'file':
+						this.showFile = status;
+						break
+				}
+
+				this.showmove = false;
+
+				setTimeout(() => {
+					this.setScrollHeight(height);
+					this.scrollToBottom();
+					console.log(this.showmove)
+				}, 50)
+				setTimeout(() => {
+					this.showmove = true;
+				}, 1000)
+			},
+			sendmessage() {
+				var that=this;
+				console.log(that.contenthuifu.length);
+				if(that.contenthuifu.length<5){
+					that.modalName = "cantpost";
+					that.cantpostmessage = '请输入大于4个字的回复内容。';
+					this.fasong = false;
+					return;
+				}
+				if(!this.fasong){
+					that.fasong=true;
+					var message = encodeURI(that.contenthuifu);
+					console.log(that.contenthuifu);
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:huitie', //回帖API
+						method: 'POST',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							tid: that.tid,
+							message: message,
+							platform: that.platform
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							if (res.data.code == 404) {
+								that.modalName = "needlogin";
+							} else if (res.data.code == 401) {
+								that.modalName = "cantpost";
+								that.cantpostmessage = res.data.message;
+								this.fasong = false;
+							} else {
+								that.refresh(message);
+							}
+						}
+					});
 				}
 			},
-			ChooseImage() {
-				uni.chooseImage({
-					count: 4, //默认9
-					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
-					sourceType: ['album'], //从相册选择
+			sendfloor() {
+				var that=this;
+				console.log(that.floorhuifu.length);
+				if(that.floorhuifu.length<5){
+					that.modalName = "cantpost";
+					that.cantpostmessage = '请输入大于4个字的回复内容。';
+					this.floorfasong = false;
+					return;
+				}
+				if(!this.floorfasong){
+					that.floorfasong=true;
+					var message = encodeURI(that.floorhuifu);
+					console.log(that.floorhuifu);
+					console.log(that.toUID);
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:huifloor', //回楼中楼API
+						method: 'POST',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							pid: that.toPID,
+							message: message,
+							touid: that.toUID
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data)
+							if (res.data.code == 404) {
+								that.modalName = "needlogin";
+							} else if (res.data.code == 401) {
+								that.modalName = "cantpost";
+								that.cantpostmessage = res.data.message;
+								this.floorfasong = false;
+							} else {
+								that.refresh(message);
+							}
+						}
+					});
+				}
+			},
+			tologin(e) {
+				uni.redirectTo({
+					url: '../../components/ay-login/login-password'
+				});
+			},
+			refresh(e) {
+				var fasonginfo = new Array();
+				fasonginfo.author = this.$username;
+				fasonginfo.authorid = this.$uid;
+				fasonginfo.avatarlist = 'https://zd.tiangal.com/uc_server/avatar.php?uid='+ this.$uid +'&size=small';
+				fasonginfo.dateline = '刚刚';
+				fasonginfo.groupid = 0;
+				fasonginfo.html = decodeURI(e);
+				fasonginfo.pid = 0;
+				fasonginfo.position = 0;
+				fasonginfo.reply = 0;
+				fasonginfo.status = 0;
+				this.huifulist.unshift(fasonginfo);
+				this.modalName = null
+				this.contenthuifu = '';
+				this.loadthread(this.pid);
+				this.fasong = false;
+				const query = uni.createSelectorQuery().in(this);
+				query.select('.text-content2').boundingClientRect(data => {
+					uni.pageScrollTo({
+						scrollTop: data.height + 120,
+						duration: 300
+					})
+				}).exec();
+			},
+			refreshfloor(e) {
+				console.log(this.index)
+				var fasongf = new Array();
+				fasongf.username = this.$username;
+				fasongf.uid = this.$uid;
+				fasongf.floor = 0;
+				fasongf.dateline = '刚刚';
+				fasongf.content = '<span style="color:#0081ff;">' + this.$username + '</span>:' + decodeURI(e);
+				this.modalName = null
+				this.floorhuifu = '';
+				this.floorfasong = false;
+			},
+			topost(e) {
+				uni.navigateTo({
+					url: '../component/card?tid=' + e
+				});
+			},
+			tobar(e) {
+				plus.runtime.restart();
+			},
+			tothebottom() {
+				this.loadhuifu(this.tid, this.page, '', '', '', '1');
+				console.log("到底了");
+			},
+			IsCard(e) {
+				this.isCard = e.detail.value
+			},
+			cb(e) {
+				if (e.target.nodeName === 'A') {
+					// 获取触发事件对象的属性
+					this.$emit('cb');
+					var url = e.target.getAttribute('href');
+					console.log(url);
+				}
+			},
+			setHeight(e) {
+				var query = uni.createSelectorQuery();
+				query.select('.' + e).boundingClientRect(rect => {
+					if (rect) {
+						//console.log(e + ".height = " + rect.height)
+						this.swiperheight = rect.height; //页面可见区域 - 头部高度
+						//console.log("this.height = " + this.swiperheight)
+					}
+				}).exec();
+
+			},
+			loadthread(pid, page, orderby, dateline, filter, typeid) {
+				let that = this;
+				if (this.$imageswitch && this.$wifi == 0) {
+					var isImage = 0;
+				} else {
+					var isImage = 1;
+				}
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:post', //获取首帖
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token,
+						pid: pid,
+						floorpage: page,
+						orderby: orderby,
+						dateline: dateline,
+						typeid: 4,
+						isimage: isImage,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
 					success: (res) => {
-						if (this.imgList.length != 0) {
-							this.imgList = this.imgList.concat(res.tempFilePaths)
+						if (res.data.code == 404) {
+							that.modalName = "needlogin";
+						} else if (res.data.code == 401) {
+							that.modalName = "cantview";
+							that.cantviewmessage = res.data.message;
 						} else {
-							this.imgList = res.tempFilePaths
+							that.postup = res.data.author;
+							that.fid = res.data.fid;
+							that.zan = res.data.zan;
+							that.count = res.data.count;
+							that.postname = res.data.subject;
+							that.content = res.data.html;
+							that.avatarlist = res.data.userinfo.avatarlist;
+							that.nowdate = res.data.nowdate;
+							that.sex = res.data.userinfo.sex;
+							//console.log(that.threadlist);
+							setTimeout(function() {
+								that.setHeight("view_listnow");
+							}, 100)
 						}
 					}
 				});
 			},
-			ViewImage(e) {
-				uni.previewImage({
-					urls: this.imgList,
-					current: e.currentTarget.dataset.url
+			loadfloors(pid, page, orderby, dateline, filter,index) {
+				let that = this;
+				this.jiazai = 1;
+				if (this.$imageswitch && this.$wifi == 0) {
+					var isImage = 0;
+				} else {
+					var isImage = 1;
+				}
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:post', //获取置顶帖子
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token,
+						pid: pid,
+						floorpage: page,
+						orderby: orderby,
+						dateline: dateline,
+						filter: filter,
+						isimage: isImage,
+						typeid: 2
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+							console.log(page);
+							if (page == 0) {
+								Vue.set(that.rplist, index, res.data);
+							} else {
+								for (let i = 0; i < res.data.length; ++i) {
+									that.rplist[index].push(res.data[i]);
+								}
+							}
+							if (res.data.length < 30) {
+								that.jiazaiwanbi[index] = 1;
+								Vue.set(that.jiazaiwanbi, index, 1);
+							}
+							console.log(res.data);
+							that.floorpage[index]++;
+							that.jiazai=0;
+					}
 				});
 			},
-			DelImg(e) {
-				uni.showModal({
-					title: '召唤师',
-					content: '确定要删除这段回忆吗？',
-					cancelText: '再看看',
-					confirmText: '再见',
-					success: res => {
-						if (res.confirm) {
-							this.imgList.splice(e.currentTarget.dataset.index, 1)
+			loadhuifu(pid, page, orderby, dateline, filter, typeid) {
+				let that = this;
+				if (this.$imageswitch && this.$wifi == 0) {
+					var isImage = 0;
+				} else {
+					var isImage = 1;
+				}
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:post', //获取置顶帖子
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token,
+						pid: pid,
+						floorpage: page,
+						orderby: orderby,
+						dateline: dateline,
+						filter: filter,
+						typeid: typeid,
+						isimage: isImage,
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						if (res.data.code == 404) {
+							that.modalName = "needlogin";
+						} else if (res.data.code == 401) {
+							that.modalName = "cantview";
+							that.cantviewmessage = res.data.message;
+						} else {
+							if (that.page == 0) {
+								that.huifulist = res.data;
+							} else {
+								for (let i = 0; i < res.data.length; ++i) {
+									that.huifulist.push(res.data[i]);
+								}
+								if (res.data.length < 30) {
+									that.loading = '到底了。';
+								}
+							}
+							console.log(res.data);
+							that.page++;
 						}
 					}
-				})
+				});
 			},
-			textareaAInput(e) {
-				this.textareaAValue = e.detail.value
-			},
-			textareaBInput(e) {
-				this.textareaBValue = e.detail.value
+		},
+		onLoad: function(option) { //option为object类型，会序列化上个页面传递的参数 
+			this.pid = option.pid;
+			console.log(option.pid); //打印出上个页面传递的参数。
+			this.loadthread(this.pid);
+			this.loadhuifu(this.pid, this.page, '', '', '', '3');
+			this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight;
+			if(uni.getSystemInfoSync().platform=='ios'){
+				this.platform = 1;
+			}else{
+				this.platform = 2;
 			}
+		},
+		onShow: function() {},
+		onPageScroll() {
+			if (this.showmove) {
+				this.showFile = false
+				this.showEmoji = false
+				this.showmove = false;
+			}
+		},
+		onReachBottom() {
+			this.tothebottom();
 		}
 	}
 </script>
 
-<style>
-	.cu-form-group .title {
-		min-width: calc(4em + 15px);
+<style lang="scss" scoped>
+	.text-content2 {
+		padding: 0 30upx 0;
+		font-size: 30upx;
+		margin-bottom: 20upx;
+	}
+
+	.cu-item .title {
+		font-size: 40upx;
+		font-weight: 900;
+		color: #333333;
+		line-height: 100upx;
+		padding: 0 30upx;
+	}
+
+	.float {
+		display: -webkit-box;
+		word-break: break-all;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		overflow: hidden;
+	}
+
+	.hide {
+		display: -webkit-box;
+	}
+
+	.show {
+		display: block;
+	}
+
+	.status_bar,
+	.container,
+	.header,
+	.emoji,
+	.file {
+		background-color: white;
+	}
+
+	.emoji {
+		height: 400upx;
+		padding: 0 0 20upx 20upx;
+		position: relative;
+
+		.list {
+			width: 100%;
+			height: 400upx;
+			padding: 20upx 0;
+			overflow-y: auto;
+
+			.item {
+				float: left;
+				display: block;
+				height: 60upx;
+				line-height: 60upx;
+				width: calc(100% / 11);
+				margin-right: 20upx;
+			}
+		}
+	}
+
+	.file {
+		padding: 30upx 20upx;
+
+		.list {
+			overflow: hidden;
+			padding-left: 10upx;
+			justify-content: flex-start;
+		}
+
+		.item {
+			float: left;
+			width: 110upx;
+			height: 200upx;
+			border-radius: 10upx;
+			margin-right: 40upx;
+			background-color: #FFF;
+
+			.icon {
+				width: 50upx;
+			}
+
+			.text {
+				font-size: 24upx;
+				margin-top: 4upx;
+			}
+		}
+	}
+
+	.icon {
+		width: 48upx;
+		height: 48upx;
+	}
+	.cu-list{
+		margin-top: -10upx!important;
+	}
+	.solids-top::after {
+		border-top: 1px solid #eee!important;
+	}
+	.overlayer{
+	    position:fixed;
+	    left:0;
+	    top:0;
+	    width:100%;
+	    height:100%;
+	    z-index:10;
 	}
 </style>
