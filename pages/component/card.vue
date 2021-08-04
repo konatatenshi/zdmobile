@@ -180,6 +180,11 @@
 						</view>
 					</view>
 				</view>
+				<view class="cu-modal" :class="jifencaozuo!=0?'show':''">
+					<button class="cu-btn margin-sm basis-sm shadow bg-orange" :class="jifencaozuo==1?'animation-scale-up':'animation-reverse animation-scale-down'">
+						<text class="text-xl text-white text-shadow">{{jifenshuoming}}：</text><text class="text-xl text-white text-shadow">{{jifenbiangeng}}</text>
+					</button>
+				</view>
 				<view class="cu-modal" :class="showEmoji?'show':''" @tap.prevent.stop="">
 					<view class="cu-dialog">
 						<view class="cu-bar bg-white justify-end">
@@ -254,6 +259,8 @@
 				content: '',
 				postup: '加载中',
 				nowdate: '加载中',
+				jifenbiangeng: '积分名+1',
+				jifenshuoming: '积分变更',
 				pingbi: '<div style=\"overflow: hidden;border: 1px dashed #FF9A9A;margin: 8px 0;padding: 10px;zoom: 1;\">此帖因违规被屏蔽，不可见。</div>',
 				cantviewmessage: '',
 				cantpostmessage: '',
@@ -261,6 +268,7 @@
 				iStatusBarHeight: 0,
 				sex: 0,
 				loadProgress: 0,
+				jifencaozuo: 0,
 				tid: 0,
 				fid: 0,
 				page: 0,
@@ -301,6 +309,17 @@
 			},
 			jiequ(e) {
 				return e.substr(0,200);
+			},
+			jifenbiandong(e,f){
+				this.jifenshuoming=e;
+				this.jifenbiangeng=f;
+				this.jifencaozuo = 1;
+				setTimeout(()=>{
+					this.jifencaozuo= 2;
+				}, 1000)
+				setTimeout(()=>{
+					this.jifencaozuo= 0;
+				}, 2000)
 			},
 			Letter(str) {
 				let result;		
@@ -481,12 +500,14 @@
 							token: that.$token,
 							tid: that.tid,
 							message: message,
-							platform: that.platform
+							platform: that.platform,
+							replykey: that.replykey
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 						},
 						success: (res) => {
+							console.log(res.data)
 							if (res.data.code == 404) {
 								that.modalName = "needlogin";
 							} else if (res.data.code == 401) {
@@ -494,6 +515,9 @@
 								that.cantpostmessage = res.data.message;
 								this.fasong = false;
 							} else {
+								if(res.data.credit){
+									this.jifenbiandong(res.data.credit,res.data.credittxt)
+								}
 								that.refresh(message);
 							}
 						}

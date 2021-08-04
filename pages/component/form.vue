@@ -38,7 +38,7 @@
 				</view>
 				<view class="cu-list menu-avatar comment solids-top" v-for="(item,index) in huifulist" :key="index" :data-id="index">
 					<view v-if="index==0" class="text-grey margin-left">
-						<view>共有相关评论 {{count}} 个</view>
+						<view class="text-sm">共有相关评论 {{count}} 个</view>
 					</view>
 					<view class="cu-item">
 						<view class="cu-avatar round" :style="[{ backgroundImage:'url(https://zd.tiangal.com/uc_server/avatar.php?uid=41070' + item.uid + '&size=small)' }]">
