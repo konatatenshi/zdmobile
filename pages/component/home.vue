@@ -157,7 +157,9 @@
 			},
 			toforum(e) {
 				uni.navigateTo({
-					url: '../basics/forum?forumid=' + e
+					url: '../basics/forum?forumid=' + e,
+					animationType: 'pop-in',
+					animationDuration: 200
 				});
 			},
 			gettime(createtime){

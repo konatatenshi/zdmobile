@@ -55,6 +55,7 @@
 					<view class="date">&#12288;{{item.timestamp}}</view>
 				</view>
 			</view>
+			<view v-if="stopload>1" class="cu-info round" @tap="retriveload()">继续自动滚动消息</view>
 			<view>
 				<block>
 					<view class="padding-xs flex align-center bg-gray" :style="{'height': iStatusBarHeight+'px'}">
@@ -155,6 +156,7 @@
 				showmove: false,
 				loadingmore: false,
 				scrollHeight: 'auto',
+				modalName: null,
 				iStatusBarHeight: 20,
 				InputBottom: 0,
 				chattopid: 0,
@@ -162,11 +164,15 @@
 				content: '',
 				scrollViewId: '', // 滚动到最底部
 				onlinenumber: 0,
+				stopload: 0,
 				pageHeight: 0,
 				chatlist: []
 			};
 		},
 		methods: {
+			hideModal(e) {
+				this.modalName = null
+			},
 			tabSelect(e) {
 				this.InputBottom = e.detail.height
 			},
@@ -275,6 +281,9 @@
 				this.$socket.send(JSON.stringify(data));
 			},
 			scrollToBottom: function() {
+				if(this.stopload){
+					return ;
+				}
 				let that = this;
 				let query = uni.createSelectorQuery();
 				query.select('.cu-chat').boundingClientRect(rect => {
@@ -334,8 +343,12 @@
 				this.content = "";
 				console.log(this.content);
 			},
+			retriveload(e) {
+				this.stopload = 1;
+			},
 			getchatmessage(e) {
 				var that = this;
+				this.stopload++;
 				this.loadingmore = true;
 				uni.request({
 					url: 'https://lt.zdfx.net:8089/index.php?m=im&a=chatlog&from=bbs.zdfx.net&id=-1&type=group', //获取轮播列表
@@ -448,6 +461,7 @@
 			console.log(this.$username)
 		},
 		onShow: function() {
+			let that=this;
 			let data = {
 				"cmd": "onlinecheck",
 				"type": "group",

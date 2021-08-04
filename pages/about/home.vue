@@ -374,7 +374,9 @@
 				        console.log(scantxt);
 						if(scantxt.code==200&&scantxt.method=='scantologin'){
 							uni.navigateTo({
-								url: '../basics/button?sessionid=' +scantxt.session
+								url: '../basics/button?sessionid=' +scantxt.session,
+								animationType: 'pop-in',
+								animationDuration: 200
 							});
 						}
 				    }
@@ -393,7 +395,9 @@
 			settingselect(e) {
 				this.switchA = e.detail.value;
 				uni.navigateTo({
-					url: '../basics/design'
+					url: '../basics/design',
+					animationType: 'pop-in',
+					animationDuration: 200
 				});
 			},
 			checkupdate(){

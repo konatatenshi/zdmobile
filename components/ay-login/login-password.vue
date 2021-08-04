@@ -392,7 +392,9 @@
 				});
 				this.$emit("returnDat", "basics") //传递的值
 				uni.navigateTo({
-					url: '../../pages/index/index'
+					url: '../../pages/index/index',
+					animationType: 'pop-in',
+					animationDuration: 200
 				});
 			},
 			changeanswer(e) {

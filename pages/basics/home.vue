@@ -41,7 +41,8 @@
 							<swiper class="screen-swiper square-dot hometop3" :indicator-dots="true" :circular="true"
 								:autoplay="true" interval="5000" duration="500">
 								<swiper-item v-for="(item,index) in swiperList" :key="index" @tap="tourl(item.url)">
-									<image :src="item.img" mode="aspectFill"></image>
+									<image v-if="isImage" :src="item.img" mode="aspectFill"></image>
+									<image v-else src="../../static/noimg.png" mode="aspectFill"></image>
 								</swiper-item>
 							</swiper>
 							<view v-if="toplist.length > 0">
@@ -65,7 +66,7 @@
 												<view class="text-cut">{{item.title}}</view>
 											</view>
 											<view class="content">
-												<image :src="item.img" mode="aspectFill"></image>
+												<image v-if="isImage" :src="item.img" mode="aspectFill"></image>
 												<view class="desc">
 													<view class="text-content">
 														{{item.summary}}
@@ -90,7 +91,7 @@
 												<view class="text-cut">{{item.title}}</view>
 											</view>
 											<view class="content">
-												<image v-if="item.img != 'static/image/common/nophoto.gif'"
+												<image v-if="item.img != 'static/image/common/nophoto.gif'&&isImage"
 													:src="item.img" mode="aspectFill"></image>
 												<view class="desc">
 													<view class="text-content">
@@ -142,6 +143,7 @@
 				tab4enabled: 0,
 				tab5enabled: 0,
 				tab6enabled: 0,
+				isImage: 1,
 				swiperList: [],
 				toplist: [],
 				tuijiantie: [],
@@ -245,7 +247,9 @@
 			},
 			tourl(e) {
 				uni.navigateTo({
-					url: '../component/card?tid=' + e
+					url: '../component/card?tid=' + e,
+					animationType: 'pop-in',
+					animationDuration: 200
 				});
 			}
 		},
@@ -260,6 +264,11 @@
 					//console.log(that.swiperList);
 				}
 			});
+			if(this.$imageswitch&&this.$wifi==0){
+				this.isImage = 0;
+			}else{
+				this.isImage = 1;
+			}
 			uni.request({
 				url: getApp().globalData.zddomain + 'api.php?mod=app&bid=158', //获取轮播列表
 				method: 'GET',

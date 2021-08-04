@@ -24,6 +24,7 @@
 					</view>
 				</view>
 				<view class="text-content2">
+					<view v-if="content==''" class="cu-load text-gray loading"></view>
 					<mp-html :content="content" @linktap="linktap" />
 				</view>
 				<view class="cu-list menu-avatar comment solids-top" v-for="(item,index) in huifulist" :key="index" :data-id="index">
@@ -230,6 +231,10 @@
 				</view>
 			</view>
 		</view>
+		<view class="load-progress" v-show="loadProgress!=0" :style="[{top:CustomBar+'px'}]">
+			<view class="load-progress-bar bg-green" :style="[{transform: 'translate3d(-' + (100-loadProgress) + '%, 0px, 0px)'}]"></view>
+			<view class="load-progress-spinner text-green"></view>
+		</view>
 	</view>
 </template>
 
@@ -246,14 +251,16 @@
 				postname: '加载中',
 				contenthuifu: '',
 				floorhuifu: '',
-				content: '<span style="font-size:28rpx;line-height:1px;">⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢀⣴⣴⣶⣶⣶⣶⣄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣠⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣤⣤⡀⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⡧⣼⣿⡟⢛⠋⠐⠂⠰⠂⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣰⣯⣟⣿⣻⣿⣿⣿⣿⣿⣿⣥⠨⠭⣯⡾⢡⠄⠄⠄⡐⠁⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡶⣦⠌⢝⢢⡔⠈⠠⠁⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢻⣿⣿⢻⣿⣿⡏⡿⣿⣿⣿⣿⣿⣻⣧⣿⣿⣟⠁⠄⣠⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠊⣯⢿⡏⠛⠛⠚⣿⣿⡟⡿⠉⢻⣽⣒⣿⣏⠄⢣⡄⣃⡀⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣿⠄⠄⠄⠄⠄⠈⠉⠄⣇⣰⣿⣿⣿⣿⣿⡔⠄⠁⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⣿⢦⡀⠄⠄⠄⠄⠄⢰⣿⣿⣿⣿⣿⢿⡟⠚⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠟⣸⡿⣷⢶⣤⠤⠄⣞⣿⣿⣿⣟⡟⡛⠣⡠⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠘⢕⣶⡜⠛⢀⣥⣾⣿⣿⣿⣿⣿⣿⣄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⡀⢼⢃⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⡁⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⠄⠄⠠⠄⠄⣿⣿⣫⣷⣯⣿⣷⣿⣿⣽⣿⣿⣿⣿⣿⣿⡇⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⠄⢀⣰⡇⠄⠄⣿⠄⠄⠄⠄⠄⠄⠈⠄⠄⢸⣿⣿⣿⣿⣿⣿⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⢀⣾⣿⡇⠄⠄⣿⠄⠄⠄⠄⣀⣀⣀⣢⣄⣺⣿⣿⣿⣿⣿⣿⠘⠄⢄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⣼⣿⣿⣧⢀⣤⡿⠛⠛⠛⠋⠉⠛⠋⠋⢿⢿⣿⣿⣿⣿⣿⣿⠄⠄⠄⠐⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⣿⣿⣿⣿⣿⣿⠁⠄⠄⠄⠄⠄⠄⠄⠄⢀⣾⣿⣿⣿⣿⣿⣿⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⠄⣿⣿⣿⣿⣿⣿⣶⣶⣾⡿⡷⡞⣟⣿⣽⣿⣿⣿⣿⣿⣿⣿⡇⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⢠⣿⣿⣿⣿⣿⡿⣿⣿⣷⣷⣷⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠄⠄⠄⠄⠄⠄⠄⠄⡀⠄⠄<br>⠄⠄⠄⠄⠄⢸⣿⣿⣿⣿⣿⣹⣿⣿⣿⠟⠋⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠄⠄⠄⠠⣤⠄⡤⠤⠄⠄⠄<br>⠄⠄⠄⠄⠄⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠄⠄⠄⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣀⣀⣸⡜⠓⠆⠄⠄⠄⠄⠄⠄<br>⠄⠄⠄⠄⠄⣿⣿⣿⣿⣿⣿⣿⣿⣿⡈⠄⢠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡄⢀⠄⠄⠄⠄⠄⠄</span><br><span style="font-size:30rpx;line-height:1px;">⠄⠄⠄⠄⠄⠄⠄⠄帖子正在载入中，请稍候⠄⠄⠄⠄⠄⠄⠄⠄</span>',
+				content: '',
 				postup: '加载中',
 				nowdate: '加载中',
 				pingbi: '<div style=\"overflow: hidden;border: 1px dashed #FF9A9A;margin: 8px 0;padding: 10px;zoom: 1;\">此帖因违规被屏蔽，不可见。</div>',
 				cantviewmessage: '',
 				cantpostmessage: '',
+				replykey: '',
 				iStatusBarHeight: 0,
 				sex: 0,
+				loadProgress: 0,
 				tid: 0,
 				fid: 0,
 				page: 0,
@@ -267,6 +274,7 @@
 				jiazaiwanbi: [],
 				InputBottom: 0,
 				platform: 0,
+				loadwb: 0,
 				huifulist: [],
 				rplist: [],
 				isfloat: [],
@@ -307,6 +315,21 @@
 			},
 			back(){
 				uni.navigateBack();
+			},
+			LoadProgresss(e) {
+				this.loadProgress = this.loadProgress + 3;
+				if (this.loadProgress < 100) {
+					if(this.loadwb == 1){
+						this.loadProgress = 0;
+						return;
+					}
+					console.log(this.loadProgress);
+					setTimeout(() => {
+						this.LoadProgresss();
+					}, 100)
+				} else {
+					this.loadProgress = 0;
+				}
 			},
 			loadmore(e) {
 				Vue.set(this.isfloat, e, true);
@@ -362,7 +385,9 @@
 				console.log(e);
 				if (e.target == 'app') {
 					uni.navigateTo({
-						url: '../component/card?tid=' + e.apphref
+						url: '../component/card?tid=' + e.apphref,
+						animationType: 'pop-in',
+						animationDuration: 200
 					});
 				}
 			},
@@ -435,6 +460,12 @@
 				if(that.contenthuifu.length<5){
 					that.modalName = "cantpost";
 					that.cantpostmessage = '请输入大于4个字的回复内容。';
+					this.fasong = false;
+					return;
+				}
+				if (this.replykey == '') {
+					that.modalName = "cantpost";
+					that.cantpostmessage = '帖子发送参数未获取，发送失败。';
 					this.fasong = false;
 					return;
 				}
@@ -549,18 +580,23 @@
 				fasongf.floor = 0;
 				fasongf.dateline = '刚刚';
 				fasongf.content = '<span style="color:#0081ff;">' + this.$username + '</span>:' + decodeURI(e);
+				this.rplist[this.index].push(fasongf);
 				this.modalName = null
 				this.floorhuifu = '';
 				this.floorfasong = false;
 			},
 			topost(e) {
 				uni.navigateTo({
-					url: '../component/card?tid=' + e
+					url: '../component/card?tid=' + e,
+					animationType: 'pop-in',
+					animationDuration: 200
 				});
 			},
 			tofloor(e) {
 				uni.navigateTo({
-					url: '../component/form?pid=' + e
+					url: '../component/form?pid=' + e,
+					animationType: 'pop-in',
+					animationDuration: 200
 				});
 			},
 			tobar(e) {
@@ -599,6 +635,8 @@
 				} else {
 					var isImage = 1;
 				}
+				that.loadwb = 0;
+				that.LoadProgresss();
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:post', //获取置顶帖子
 					method: 'GET',
@@ -625,6 +663,7 @@
 							that.postup = res.data.author;
 							that.fid = res.data.fid;
 							that.postname = res.data.subject;
+							that.replykey = res.data.replykey;
 							that.content = res.data.html;
 							that.avatarlist = res.data.userinfo.avatarlist;
 							that.nowdate = res.data.nowdate;
@@ -632,7 +671,8 @@
 							//console.log(that.threadlist);
 							setTimeout(function() {
 								that.setHeight("view_listnow");
-							}, 100)
+							}, 100);
+							that.loadwb = 1;
 						}
 					}
 				});
@@ -645,6 +685,8 @@
 				} else {
 					var isImage = 1;
 				}
+				that.loadwb = 0;
+				that.LoadProgresss();
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:post', //获取置顶帖子
 					method: 'GET',
@@ -678,6 +720,7 @@
 							console.log(res.data);
 							that.floorpage[index]++;
 							that.jiazai=0;
+							that.loadwb = 1;
 					}
 				});
 			},
@@ -688,6 +731,8 @@
 				} else {
 					var isImage = 1;
 				}
+				that.loadwb = 0;
+				that.LoadProgresss();
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:post', //获取置顶帖子
 					method: 'GET',
@@ -724,6 +769,7 @@
 							}
 							console.log(res.data);
 							that.page++;
+							that.loadwb = 1;
 						}
 					}
 				});

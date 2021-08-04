@@ -24,6 +24,7 @@
 					</view>
 				</view>
 				<view class="text-content2">
+					<view v-if="content==''" class="cu-load text-gray loading"></view>
 					<mp-html :content="content" @linktap="linktap" />
 					<view class="margin-top-sm flex justify-between">
 						<view>
@@ -196,6 +197,10 @@
 				</view>
 			</view>
 		</view>
+		<view class="load-progress" v-show="loadProgress!=0" :style="[{top:CustomBar+'px'}]">
+			<view class="load-progress-bar bg-green" :style="[{transform: 'translate3d(-' + (100-loadProgress) + '%, 0px, 0px)'}]"></view>
+			<view class="load-progress-spinner text-green"></view>
+		</view>
 	</view>
 </template>
 
@@ -212,7 +217,7 @@
 				postname: '加载中',
 				contenthuifu: '',
 				floorhuifu: '',
-				content: '<div style=\"overflow: hidden;border: 1px dashed #FF9A9A;margin: 8px 0;padding: 10px;zoom: 1;\">回复加载中</div>',
+				content: '',
 				postup: '加载中',
 				nowdate: '加载中',
 				pingbi: '<div style=\"overflow: hidden;border: 1px dashed #FF9A9A;margin: 8px 0;padding: 10px;zoom: 1;\">此帖因违规被屏蔽，不可见。</div>',
@@ -229,6 +234,8 @@
 				toUID: 0,
 				toPID: 0,
 				index: 0,
+				loadwb: 0,
+				loadProgress: 0,
 				fasong: false,
 				floorfasong: false,
 				floorpage: [],
@@ -284,6 +291,21 @@
 			back(){
 				uni.navigateBack();
 			},
+			LoadProgresss(e) {
+				this.loadProgress = this.loadProgress + 3;
+				if (this.loadProgress < 100) {
+					if(this.loadwb == 1){
+						this.loadProgress = 0;
+						return;
+					}
+					console.log(this.loadProgress);
+					setTimeout(() => {
+						this.LoadProgresss();
+					}, 100)
+				} else {
+					this.loadProgress = 0;
+				}
+			},
 			loadmore(e) {
 				Vue.set(this.isfloat, e, true);
 				console.log(e);
@@ -325,7 +347,9 @@
 				console.log(e);
 				if (e.target == 'app') {
 					uni.navigateTo({
-						url: '../component/card?tid=' + e.apphref
+						url: '../component/card?tid=' + e.apphref,
+						animationType: 'pop-in',
+						animationDuration: 200
 					});
 				}
 			},
@@ -557,6 +581,8 @@
 				} else {
 					var isImage = 1;
 				}
+				that.loadwb = 0;
+				that.LoadProgresss();
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:post', //获取首帖
 					method: 'GET',
@@ -592,7 +618,8 @@
 							//console.log(that.threadlist);
 							setTimeout(function() {
 								that.setHeight("view_listnow");
-							}, 100)
+							}, 100);
+							that.loadwb = 1;
 						}
 					}
 				});
@@ -605,6 +632,8 @@
 				} else {
 					var isImage = 1;
 				}
+				that.loadwb = 0;
+				that.LoadProgresss();
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:post', //获取置顶帖子
 					method: 'GET',
@@ -638,6 +667,7 @@
 							console.log(res.data);
 							that.floorpage[index]++;
 							that.jiazai=0;
+							that.loadwb = 1;
 					}
 				});
 			},
@@ -648,6 +678,8 @@
 				} else {
 					var isImage = 1;
 				}
+				that.loadwb = 0;
+				that.LoadProgresss();
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:post', //获取置顶帖子
 					method: 'GET',
@@ -684,6 +716,7 @@
 							}
 							console.log(res.data);
 							that.page++;
+							that.loadwb = 1;
 						}
 					}
 				});

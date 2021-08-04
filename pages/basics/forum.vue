@@ -3,6 +3,11 @@
 		<cu-custom class="statustop" bgColor="bg-gradual-pink" :isBack="true">
 			<block slot="backText">返回</block>
 			<block slot="content">{{forumname}}</block>
+			<block slot="right">
+				<view class="action">
+					<view class="cu-load cuIcon-refresh" @tap="refresh()"></view>
+				</view>
+			</block>
 		</cu-custom>
 		<scroll-view scroll-x class="bg-white nav-sm" :style="'margin-top: -' + iStatusBarHeight +'px;'"
 			scroll-with-animation :scroll-left="scrollLeft">
@@ -30,7 +35,7 @@
 								<block v-for="(item,index2) in threadlist" :key="index2">
 									<view class="solid-bottom text-df"
 										style="padding-top: 10upx; padding-bottom: 10upx;" v-if="item.displayorder>0">
-										<view  @tap="topost(item.tid)">
+										<view @tap="topost(item.tid)">
 											<text class="text-black text-cut"
 												style="width: 100%;">{{item.subject}}</text>
 										</view>
@@ -43,9 +48,12 @@
 											<view class="cu-item shadow">
 												<view class="cu-list menu-avatar">
 													<view class="cu-item">
-														<view class="cu-avatar round lg" :style="[{ backgroundImage:'url(' + item.userinfo.avatarlist + ')' }]">
-															<view v-show="item.userinfo.sex==1" class="cu-tag badge cuIcon-male bg-blue"></view>
-															<view v-show="item.userinfo.sex==2" class="cu-tag badge cuIcon-female bg-pink"></view>
+														<view class="cu-avatar round lg"
+															:style="[{ backgroundImage:'url(' + item.userinfo.avatarlist + ')' }]">
+															<view v-show="item.userinfo.sex==1"
+																class="cu-tag badge cuIcon-male bg-blue"></view>
+															<view v-show="item.userinfo.sex==2"
+																class="cu-tag badge cuIcon-female bg-pink"></view>
 														</view>
 														<view class="content flex-sub">
 															<view>{{item.author}}</view>
@@ -55,35 +63,56 @@
 														</view>
 													</view>
 												</view>
-												<view class="forumtitle text-cut" @tap="topost(item.tid)">{{item.subject}}</view>
-												<view class="text-content text-red flex justify-center" v-if="item.readperm>0" @tap="topost(item.tid)">
-														====阅读权限：{{item.readperm}}====
+												<view class="forumtitle text-cut" @tap="topost(item.tid)">
+													{{item.subject}}</view>
+												<view class="text-content text-red flex justify-center"
+													v-if="item.readperm>0" @tap="topost(item.tid)">
+													====阅读权限：{{item.readperm}}====
 												</view>
 												<view v-else class="text-content" @tap="topost(item.tid)">
-														{{item.summary}}
+													{{item.summary}}
 												</view>
-												<view v-if="item.attachment==3&&isImage" class="grid flex-sub padding-lr col-1">
-													<view v-if="item.attachlist[0].attachment!=null" @click="imgMap(item.attachlist[0].attachment)" class="bg-img only-img" :style="[{ backgroundImage:'url(' + item.attachlist[0].attachment + ')' }]">
-													</view>
-												</view>
-												<view v-else-if="item.attachment==4&&isImage" class="grid flex-sub padding-lr col-3 grid-square">
-													<view v-if="item.attachlist[0].attachment!=null" @click="imgMap(item.attachlist[0].attachment)" class="bg-img" :style="[{ backgroundImage:'url(' + item.attachlist[0].attachment + ')' }]">
-													</view>
-													<view v-if="item.attachlist[1].attachment!=null" @click="imgMap(item.attachlist[1].attachment)" class="bg-img" :style="[{ backgroundImage:'url(' + item.attachlist[1].attachment + ')' }]">
+												<view v-if="item.attachment==3&&isImage"
+													class="grid flex-sub padding-lr col-1">
+													<view v-if="item.attachlist[0].attachment!=null"
+														@click="imgMap(item.attachlist[0].attachment)"
+														class="bg-img only-img"
+														:style="[{ backgroundImage:'url(' + item.attachlist[0].attachment + ')' }]">
 													</view>
 												</view>
-												<view v-else-if="item.attachment>4&&isImage" class="grid flex-sub padding-lr col-3 grid-square">
-													<view v-if="item.attachlist[0].attachment!=null" @click="imgMap(item.attachlist[0].attachment)" class="bg-img" :style="[{ backgroundImage:'url(' + item.attachlist[0].attachment + ')' }]">
+												<view v-else-if="item.attachment==4&&isImage"
+													class="grid flex-sub padding-lr col-3 grid-square">
+													<view v-if="item.attachlist[0].attachment!=null"
+														@click="imgMap(item.attachlist[0].attachment)" class="bg-img"
+														:style="[{ backgroundImage:'url(' + item.attachlist[0].attachment + ')' }]">
 													</view>
-													<view v-if="item.attachlist[1].attachment!=null" @click="imgMap(item.attachlist[1].attachment)" class="bg-img" :style="[{ backgroundImage:'url(' + item.attachlist[1].attachment + ')' }]">
+													<view v-if="item.attachlist[1].attachment!=null"
+														@click="imgMap(item.attachlist[1].attachment)" class="bg-img"
+														:style="[{ backgroundImage:'url(' + item.attachlist[1].attachment + ')' }]">
 													</view>
-													<view v-if="item.attachlist[2].attachment!=null" @click="imgMap(item.attachlist[2].attachment)" class="bg-img" :style="[{ backgroundImage:'url(' + item.attachlist[2].attachment + ')' }]">
+												</view>
+												<view v-else-if="item.attachment>4&&isImage"
+													class="grid flex-sub padding-lr col-3 grid-square">
+													<view v-if="item.attachlist[0].attachment!=null"
+														@click="imgMap(item.attachlist[0].attachment)" class="bg-img"
+														:style="[{ backgroundImage:'url(' + item.attachlist[0].attachment + ')' }]">
+													</view>
+													<view v-if="item.attachlist[1].attachment!=null"
+														@click="imgMap(item.attachlist[1].attachment)" class="bg-img"
+														:style="[{ backgroundImage:'url(' + item.attachlist[1].attachment + ')' }]">
+													</view>
+													<view v-if="item.attachlist[2].attachment!=null"
+														@click="imgMap(item.attachlist[2].attachment)" class="bg-img"
+														:style="[{ backgroundImage:'url(' + item.attachlist[2].attachment + ')' }]">
 													</view>
 												</view>
 												<view class="text-gray text-sm text-right padding">
-													<text class="cuIcon-attentionfill margin-lr-xs"></text> {{item.views}}
-													<text class="cuIcon-appreciatefill margin-lr-xs"></text> {{item.recommends}}
-													<text class="cuIcon-messagefill margin-lr-xs"></text> {{item.replies}}
+													<text class="cuIcon-attentionfill margin-lr-xs"></text>
+													{{item.views}}
+													<text class="cuIcon-appreciatefill margin-lr-xs"></text>
+													{{item.recommends}}
+													<text class="cuIcon-messagefill margin-lr-xs"></text>
+													{{item.replies}}
 												</view>
 											</view>
 										</view>
@@ -101,8 +130,9 @@
 												<image v-if="item.img != 'static/image/common/nophoto.gif'"
 													:src="item.img" mode="aspectFill"></image>
 												<view class="desc">
-													<view class="text-content text-red flex justify-center" v-if="item.readperm>0" @tap="topost(item.tid)">
-															====阅读权限：{{item.readperm}}====
+													<view class="text-content text-red flex justify-center"
+														v-if="item.readperm>0" @tap="topost(item.tid)">
+														====阅读权限：{{item.readperm}}====
 													</view>
 													<view v-else class="text-content">
 														{{item.summary}}
@@ -173,6 +203,11 @@
 				</view>
 			</view>
 		</view>
+		<view class="load-progress" v-show="loadProgress!=0" :style="[{top:CustomBar+'px'}]">
+			<view class="load-progress-bar bg-green"
+				:style="[{transform: 'translate3d(-' + (100-loadProgress) + '%, 0px, 0px)'}]"></view>
+			<view class="load-progress-spinner text-green"></view>
+		</view>
 	</view>
 </template>
 
@@ -199,6 +234,8 @@
 				Wifi: 0,
 				mainpage: 0,
 				InputBottom: 0,
+				loadwb: 0,
+				loadProgress: 0,
 				loading: "上拉可加载更多帖子",
 				swiperheight: 1000, //高度
 			};
@@ -212,19 +249,44 @@
 					url: '../../components/ay-login/login-password'
 				});
 			},
+			refresh(e) {
+				this.mainpage = 0;
+				this.loadthread(this.forumid);
+				uni.pageScrollTo({
+					scrollTop: 0,
+					duration: 300
+				});
+			},
 			topost(e) {
 				uni.navigateTo({
-					url: '../component/card?tid=' + e
+					url: '../component/card?tid=' + e,
+					animationType: 'pop-in',
+					animationDuration: 200
 				});
 			},
 			tothebottom() {
-				this.loadthread(this.forumid,this.mainpage);
+				this.loadthread(this.forumid, this.mainpage);
 				console.log("到底了");
 			},
 			imgMap(url) {
 				uni.previewImage({
 					urls: [url], //这里一定是数组，不然就报错
 				});
+			},
+			LoadProgresss(e) {
+				this.loadProgress = this.loadProgress + 2;
+				if (this.loadProgress < 100) {
+					if (this.loadwb == 1) {
+						this.loadProgress = 0;
+						return;
+					}
+					console.log(this.loadProgress);
+					setTimeout(() => {
+						this.LoadProgresss();
+					}, 100)
+				} else {
+					this.loadProgress = 0;
+				}
 			},
 			setHeight(e) {
 				var query = uni.createSelectorQuery();
@@ -248,11 +310,13 @@
 			},
 			loadthread(forumid, page, orderby, dateline, filter, typeid) {
 				let that = this;
-				if(this.$imageswitch&&this.$wifi==0){
+				if (this.$imageswitch && this.$wifi == 0) {
 					this.isImage = 0;
-				}else{
+				} else {
 					this.isImage = 1;
 				}
+				that.loadwb = 0;
+				that.LoadProgresss();
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取置顶帖子
 					method: 'GET',
@@ -279,7 +343,7 @@
 							if (that.mainpage == 0) {
 								that.threadlist = res.data.post;
 								that.threadlisttitle = res.data.postinfo;
-							}else{
+							} else {
 								for (let i = 0; i < res.data.post.length; ++i) {
 									that.threadlist.push(res.data.post[i]);
 								}
@@ -292,7 +356,8 @@
 							//console.log(that.threadlist);
 							setTimeout(function() {
 								that.setHeight("view_listnow");
-							}, 100)
+							}, 100);
+							that.loadwb = 1;
 						}
 					}
 				});
@@ -329,13 +394,15 @@
 
 <style>
 	.cu-card>.cu-item {
-		background-color: #f0f0f0!important;
+		background-color: #f0f0f0 !important;
 		margin: 0;
 	}
-	.cu-list.menu-avatar>.cu-item{
+
+	.cu-list.menu-avatar>.cu-item {
 		background-color: #f0f0f0;
 		height: 110upx;
 	}
+
 	.page {
 		height: 100vh;
 	}
@@ -355,12 +422,12 @@
 		margin: 0 5px;
 		padding: 0 11px;
 	}
-	
-	.forumtitle{
-	    font-size: 15px;
-	    font-weight: 900;
-	    color: #333333;
-	    line-height: 20px;
-	    padding: 0 15px;
+
+	.forumtitle {
+		font-size: 15px;
+		font-weight: 900;
+		color: #333333;
+		line-height: 20px;
+		padding: 0 15px;
 	}
 </style>

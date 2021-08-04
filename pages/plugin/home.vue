@@ -211,7 +211,9 @@
 			gonggongqunzu() {
 				//console.log(e);
 				uni.navigateTo({
-					url: '../component/chat'
+					url: '../component/chat',
+					animationType: 'pop-in',
+					animationDuration: 200
 				});
 				this.chatnumber = 0;
 			},
