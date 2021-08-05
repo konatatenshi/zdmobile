@@ -22539,6 +22539,66 @@ var render = function() {
           )
         ],
         1
+      ),
+      _c(
+        "v-uni-view",
+        {
+          staticClass: _vm._$g(63, "sc"),
+          class: _vm._$g(63, "c"),
+          attrs: { _i: 63 }
+        },
+        [
+          _c(
+            "v-uni-button",
+            {
+              staticClass: _vm._$g(64, "sc"),
+              class: _vm._$g(64, "c"),
+              attrs: { _i: 64 }
+            },
+            [
+              _c(
+                "v-uni-text",
+                { staticClass: _vm._$g(65, "sc"), attrs: { _i: 65 } },
+                [_vm._v(_vm._$g(65, "t0-0") + "：")]
+              ),
+              _c(
+                "v-uni-text",
+                { staticClass: _vm._$g(66, "sc"), attrs: { _i: 66 } },
+                [_vm._v(_vm._$g(66, "t0-0"))]
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _c(
+        "v-uni-view",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm._$g(67, "v-show"),
+              expression: "_$g(67,'v-show')"
+            }
+          ],
+          staticClass: _vm._$g(67, "sc"),
+          style: _vm._$g(67, "s"),
+          attrs: { _i: 67 }
+        },
+        [
+          _c("v-uni-view", {
+            staticClass: _vm._$g(68, "sc"),
+            style: _vm._$g(68, "s"),
+            attrs: { _i: 68 }
+          }),
+          _c("v-uni-view", {
+            staticClass: _vm._$g(69, "sc"),
+            attrs: { _i: 69 }
+          })
+        ],
+        1
       )
     ],
     1

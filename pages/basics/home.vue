@@ -125,6 +125,15 @@
 				</swiper-item>
 			</swiper>
 		</view>
+		<view class="cu-modal" :class="jifencaozuo!=0?'show':''">
+			<button class="cu-btn margin-sm basis-sm shadow bg-orange" :class="jifencaozuo==1?'animation-scale-up':'animation-reverse animation-scale-down'">
+				<text class="text-xl text-white text-shadow">{{jifenshuoming}}：</text><text class="text-xl text-white text-shadow">{{jifenbiangeng}}</text>
+			</button>
+		</view>
+		<view class="load-progress" v-show="loadProgress!=0" :style="[{top:CustomBar+'px'}]">
+			<view class="load-progress-bar bg-green" :style="[{transform: 'translate3d(-' + (100-loadProgress) + '%, 0px, 0px)'}]"></view>
+			<view class="load-progress-spinner text-green"></view>
+		</view>
 	</view>
 </template>
 
@@ -144,6 +153,9 @@
 				tab5enabled: 0,
 				tab6enabled: 0,
 				isImage: 1,
+				jifencaozuo: 0,
+				loadProgress: 0,
+				loadwb: 0,
 				swiperList: [],
 				toplist: [],
 				tuijiantie: [],
@@ -152,12 +164,16 @@
 				avatarimgLoaded: false,
 				TabCur: 1,
 				loading: "载入中……",
+				jifenbiangeng: '积分名+1',
+				jifenshuoming: '积分变更',
 				swiperheight: 1000, //高度
 			};
 		},
 		methods: {
 			tothebottom(push) {
 				var that = this;
+				that.loadwb = 0;
+				that.LoadProgresss();
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取轮播列表
 					method: 'GET',
@@ -186,6 +202,7 @@
 						setTimeout(function() {
 							that.setHeight("view_listnow");
 						}, 100)
+						that.loadwb = 1;
 					}
 				});
 				console.log("到底了");
@@ -201,6 +218,32 @@
 					}
 				}).exec();
 
+			},
+			jifenbiandong(e,f){
+				this.jifenshuoming=e;
+				this.jifenbiangeng=f;
+				this.jifencaozuo = 1;
+				setTimeout(()=>{
+					this.jifencaozuo= 2;
+				}, 1000)
+				setTimeout(()=>{
+					this.jifencaozuo= 0;
+				}, 2000)
+			},
+			LoadProgresss(e) {
+				this.loadProgress = this.loadProgress + 3;
+				if (this.loadProgress < 100) {
+					if(this.loadwb == 1){
+						this.loadProgress = 0;
+						return;
+					}
+					console.log(this.loadProgress);
+					setTimeout(() => {
+						this.LoadProgresss();
+					}, 100)
+				} else {
+					this.loadProgress = 0;
+				}
 			},
 			InputFocus(e) {
 				this.InputBottom = e.detail.height
@@ -307,6 +350,16 @@
 						that.setHeight("view_listnow");
 					}, 100)
 					that.tab1enabled = 1;
+					if(that.$nowdate != res.data.date){
+						that.jifenbiandong('每日登录','金币+1，点币+1，宠物经验+1');
+						that.$nowdate = res.data.date;
+						uni.setStorage({
+							key: 'nowdata',
+							data: res.data.date,
+							success: function() {
+							}
+						});
+					}
 				}
 			});
 		},

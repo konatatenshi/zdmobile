@@ -408,6 +408,33 @@
 						animationType: 'pop-in',
 						animationDuration: 200
 					});
+				}else if(e.target == 'hbbtn1'){
+					let that=this;
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=it618_hongbao:ajax', //获取置顶帖子
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							type: 'tie',
+							tid: that.tid,
+							hongbaocode: '',
+							ac: 'gethongbao',
+							app: 1
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data)
+							if (res.data.code == 200) {
+								that.jifenbiandong(res.data.title,res.data.message);
+								that.loadthread(that.tid);
+							} else {
+								that.jifenbiandong('领取失败',res.data);
+							}
+						}
+					});
 				}
 			},
 			InputFocus(e) {
