@@ -747,14 +747,14 @@ button.cuIcon.lg {
 	align-items: center;
 	justify-content: center;
 	box-sizing: border-box;
-	padding: 0upx 16upx;
-	height: 48upx;
+	padding: 0 0 4upx 0;
+	height: 34upx;
 	font-family: Helvetica Neue, Helvetica, sans-serif;
 	white-space: nowrap;
 }
 
 .cu-tag:not([class*="bg"]):not([class*="line"]) {
-	background-color: #f1f1f1;
+	/*background-color: #ffffff;*/
 }
 
 .cu-tag[class*="line-"]::after {
