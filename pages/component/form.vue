@@ -15,8 +15,10 @@
 							<view v-show="sex==1" class="cu-tag badge cuIcon-male bg-blue"></view>
 							<view v-show="sex==2" class="cu-tag badge cuIcon-female bg-pink"></view>
 						</view>
-						<view class="content flex-sub">
-							<view>{{postup}}</view>
+						<view class="content flex-sub hbx">
+							<view><img-cache class="touxian" :src="touxian"></img-cache></view>
+							<view>{{postup}}<text :style="[{ padding: groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text><view class="cu-tag padding-left-xs padding-right-xs" :class="loadlevelicon(groupid,1)">{{loadlevelicon(groupid)}}</view><text :style="[{ padding: groupid==51?'0 0 0 4upx':'0'}]"></text><span v-if="xunzhanglist.length>0" v-for="(xzitem,xzindex) in xunzhanglist.slice(0, 6)"><img-cache v-if="xzitem.id>0" class="cu-tag xunzhangshow" :src="xzitem.url"></img-cache></span></view>
+							<view><span v-if="xunzhanglist.length>6" v-for="(xzitem,xzindex) in xunzhanglist.slice(6, 20)"><img-cache v-if="xzitem.id>0" class="cu-tag xunzhangshow" :src="xzitem.url"></img-cache></span></view>
 							<view class="text-gray text-sm flex justify-between">
 								{{nowdate}}
 							</view>
@@ -223,6 +225,9 @@
 				pingbi: '<div style=\"overflow: hidden;border: 1px dashed #FF9A9A;margin: 8px 0;padding: 10px;zoom: 1;\">此帖因违规被屏蔽，不可见。</div>',
 				cantviewmessage: '',
 				cantpostmessage: '',
+				touxian: '',
+				lucky:-1,
+				luckymessage:'',
 				iStatusBarHeight: 0,
 				sex: 0,
 				count: 0,
@@ -235,6 +240,7 @@
 				toPID: 0,
 				index: 0,
 				loadwb: 0,
+				groupid: 0,
 				loadProgress: 0,
 				fasong: false,
 				floorfasong: false,
@@ -244,6 +250,7 @@
 				InputBottom: 0,
 				platform: 0,
 				huifulist: [],
+				xunzhanglist: [],
 				rplist: [],
 				isfloat: [],
 				isfloats: false,
@@ -352,6 +359,214 @@
 						animationDuration: 200
 					});
 				}
+			},
+			
+			loadlevelicon(e, f) {
+				if (e == 7) {
+					if (f == 1) {
+						return 'line-gray';
+					} else {
+						return '游客';
+					}
+				} else if (e == 9) {
+					if (f == 1) {
+						return 'line-gray';
+					} else {
+						return 'Lv0';
+					}
+				} else if (e == 10) {
+					if (f == 1) {
+						return 'line-gray';
+					} else {
+						return 'Lv1';
+					}
+				} else if (e == 29) {
+					if (f == 1) {
+						return 'light bg-grey';
+					} else {
+						return 'Lv2';
+					}
+				} else if (e == 30) {
+					if (f == 1) {
+						return 'light bg-olive';
+					} else {
+						return 'Lv3';
+					}
+				} else if (e == 31) {
+					if (f == 1) {
+						return 'light bg-cyan';
+					} else {
+						return 'Lv4';
+					}
+				} else if (e == 32) {
+					if (f == 1) {
+						return 'light bg-blue';
+					} else {
+						return 'Lv5';
+					}
+				} else if (e == 33) {
+					if (f == 1) {
+						return 'light bg-purple';
+					} else {
+						return 'Lv6';
+					}
+				} else if (e == 34) {
+					if (f == 1) {
+						return 'light bg-mauve';
+					} else {
+						return 'Lv7';
+					}
+				} else if (e == 35) {
+					if (f == 1) {
+						return 'light bg-pink';
+					} else {
+						return 'Lv8';
+					}
+				} else if (e == 36) {
+					if (f == 1) {
+						return 'light bg-brown';
+					} else {
+						return 'Lv9';
+					}
+				} else if (e == 37) {
+					if (f == 1) {
+						return 'light bg-yellow';
+					} else {
+						return 'Lv10';
+					}
+				} else if (e == 38) {
+					if (f == 1) {
+						return 'light bg-orange';
+					} else {
+						return 'Lv11';
+					}
+				} else if (e == 52) {
+					if (f == 1) {
+						return 'light bg-red';
+					} else {
+						return 'Lv12';
+					}
+				} else if (e == 54) {
+					if (f == 1) {
+						return 'light bg-blue';
+					} else {
+						return 'Lv13';
+					}
+				} else if (e == 4) {
+					if (f == 1) {
+						return 'light bg-grey';
+					} else {
+						return '禁言';
+					}
+				} else if (e == 5) {
+					if (f == 1) {
+						return 'light bg-grey';
+					} else {
+						return '封禁';
+					}
+				} else if (e == 6) {
+					if (f == 1) {
+						return 'light bg-grey';
+					} else {
+						return 'IP禁止';
+					}
+				} else if (e == 8) {
+					if (f == 1) {
+						return 'light bg-gray';
+					} else {
+						return 'QQ游客';
+					}
+				} else if (e == 41) {
+					if (f == 1) {
+						return 'light bg-mauve';
+					} else {
+						return '摸鱼组';
+					}
+				} else if (e == 42) {
+					if (f == 1) {
+						return 'light bg-pink';
+					} else {
+						return '宣传组';
+					}
+				} else if (e == 50) {
+					if (f == 1) {
+						return 'light bg-cyan';
+					} else {
+						return '测试组';
+					}
+				} else if (e == 44 || e == 51) {
+					if (f == 1) {
+						return 'vip';
+					} else {
+						return '';
+					}
+				} else if (e == 1) {
+					if (f == 1) {
+						return 'bg-blue';
+					} else {
+						return '管理员';
+					}
+				} else if (e == 2) {
+					if (f == 1) {
+						return 'bg-cyan';
+					} else {
+						return '超版';
+					}
+				} else if (e == 3) {
+					if (f == 1) {
+						return 'bg-green';
+					} else {
+						return '版主';
+					}
+				} else if (e == 16) {
+					if (f == 1) {
+						return 'bg-grey';
+					} else {
+						return '见习版主';
+					}
+				} else if (e == 17) {
+					if (f == 1) {
+						return 'bg-orange';
+					} else {
+						return '总编辑';
+					}
+				} else if (e == 18) {
+					if (f == 1) {
+						return 'bg-red';
+					} else {
+						return '信息监管';
+					}
+				} else if (e == 45) {
+					if (f == 1) {
+						return 'bg-olive';
+					} else {
+						return '副版主';
+					}
+				} else if (e == 19) {
+					if (f == 1) {
+						return 'bg-red';
+					} else {
+						return '审核员';
+					}
+				} else if (e == 47) {
+					if (f == 1) {
+						return 'bg-mauve';
+					} else {
+						return '元素魔法使';
+					}
+				} else if (e == 57) {
+					if (f == 1) {
+						return 'bg-yellow';
+					} else {
+						return '编辑';
+					}
+				}
+			},
+			randomcolor(){
+			     let r = Math.floor(Math.random()*200+55);
+			     let g = Math.floor(Math.random()*200+55);
+			     let b = Math.floor(Math.random()*200+55);
+			     return 'rgba('+ r +','+ g +','+ b +',0.8)';
 			},
 			InputFocus(e) {
 				this.InputBottom = e.detail.height
@@ -615,6 +830,11 @@
 							that.avatarlist = res.data.userinfo.avatarlist;
 							that.nowdate = res.data.nowdate;
 							that.sex = res.data.userinfo.sex;
+							that.groupid = res.data.userinfo.groupid;
+							that.touxian = res.data.userinfo.touxian;
+							that.xunzhanglist = res.data.userinfo.xunzhanglist;
+							that.lucky = res.data.luckypost.key;
+							that.luckymessage = res.data.luckypost.msg;
 							//console.log(that.threadlist);
 							setTimeout(function() {
 								that.setHeight("view_listnow");
@@ -854,5 +1074,41 @@
 	    width:100%;
 	    height:100%;
 	    z-index:10;
+	}
+	.vip{
+		background-image: url(../../static/vip.png);
+		background-size: 28upx 28upx;
+		height: 28upx!important;
+		width: 28upx!important;
+	}
+	.xunzhangshow{
+		max-height: 32upx!important;
+		max-width: 22upx!important;
+		padding-left: 4upx;
+	}
+	.touxian{
+		max-width: 200upx;
+		max-height: 100upx;
+		position: absolute;
+		right: 0;
+		margin-top: 50upx;
+	}
+	.touxian2{
+		max-width: 160upx;
+		max-height: 80upx;
+		position: absolute;
+		right: 0;
+		margin-top: 40upx;
+	}
+	.bhh{
+		display:inline-block;
+		word-wrap:break-word;
+		white-space:normal;
+	}
+	.hbx{
+		position: relative;
+	}
+	.ltsp{
+		line-height: 24upx;
 	}
 </style>

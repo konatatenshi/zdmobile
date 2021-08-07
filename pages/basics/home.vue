@@ -138,6 +138,7 @@
 </template>
 
 <script>
+	import Vue from 'vue'
 	export default {
 		name: "basics",
 		data() {
@@ -350,9 +351,9 @@
 						that.setHeight("view_listnow");
 					}, 100)
 					that.tab1enabled = 1;
-					if(that.$nowdate != res.data.date){
+					if(that.$nowdate != res.data.date&&that.$token != ''){
 						that.jifenbiandong('每日登录','金币+1，点币+1，宠物经验+1');
-						that.$nowdate = res.data.date;
+						Vue.prototype.$nowdate = res.data.date;
 						uni.setStorage({
 							key: 'nowdata',
 							data: res.data.date,

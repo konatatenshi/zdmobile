@@ -17,7 +17,7 @@
 						</view>
 						<view class="content flex-sub hbx">
 							<view><img-cache class="touxian" :src="touxian"></img-cache></view>
-							<view>{{postup}}<text :style="[{ padding: groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text><view class="cu-tag" :class="loadlevelicon(groupid,1)">{{loadlevelicon(groupid)}}</view><text :style="[{ padding: groupid==51?'0 0 0 4upx':'0'}]"></text><span v-if="xunzhanglist.length>0" v-for="(xzitem,xzindex) in xunzhanglist.slice(0, 6)"><img-cache v-if="xzitem.id>0" class="cu-tag xunzhangshow" :src="xzitem.url"></img-cache></span></view>
+							<view>{{postup}}<text :style="[{ padding: groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text><view class="cu-tag padding-left-xs padding-right-xs" :class="loadlevelicon(groupid,1)">{{loadlevelicon(groupid)}}</view><text :style="[{ padding: groupid==51?'0 0 0 4upx':'0'}]"></text><span v-if="xunzhanglist.length>0" v-for="(xzitem,xzindex) in xunzhanglist.slice(0, 6)"><img-cache v-if="xzitem.id>0" class="cu-tag xunzhangshow" :src="xzitem.url"></img-cache></span></view>
 							<view><span v-if="xunzhanglist.length>6" v-for="(xzitem,xzindex) in xunzhanglist.slice(6, 20)"><img-cache v-if="xzitem.id>0" class="cu-tag xunzhangshow" :src="xzitem.url"></img-cache></span></view>
 							<view class="text-gray text-sm flex justify-between">
 								{{nowdate}}
@@ -28,6 +28,10 @@
 				<view class="text-content2">
 					<view v-if="content==''" class="cu-load text-gray loading"></view>
 					<mp-html :content="content" @linktap="linktap" />
+					<view v-if="lucky>=0" class="text-center">
+						<view v-if="lucky==1" class="padding-xs radius shadow shadow-lg bg-cyan margin-top text-xs ltsp">发帖际遇：{{luckymessage}}</view>
+						<view v-else class="padding-xs radius shadow shadow-lg bg-red margin-top text-xs ltsp">发帖际遇：{{luckymessage}}</view>
+					</view>
 				</view>
 				<view class="cu-list menu-avatar comment solids-top" v-for="(item,index) in huifulist" :key="index" :data-id="index">
 					<view class="cu-item">
@@ -36,7 +40,7 @@
 						<view class="content hbx">
 							<view><img-cache class="touxian2" :src="item.touxian"></img-cache></view>
 							<view class="flex justify-between">
-								<view class="text-grey">{{item.author}}<text :style="[{ padding: item.groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text><span class="cu-tag" :class="loadlevelicon(item.groupid,1)">{{loadlevelicon(item.groupid)}}</span><text :style="[{ padding: item.groupid==51?'0 0 0 4upx':'0'}]"></text><span v-if="item.xunzhanglist.length>0" v-for="(xxzitem,xxzindex) in item.xunzhanglist.slice(0, 6)"><img-cache v-if="xxzitem.id>0" class="cu-tag xunzhangshow" :src="xxzitem.url"></img-cache></span></view>
+								<view class="text-grey">{{item.author}}<text :style="[{ padding: item.groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text><span class="cu-tag padding-left-xs padding-right-xs" :class="loadlevelicon(item.groupid,1)">{{loadlevelicon(item.groupid)}}</span><text :style="[{ padding: item.groupid==51?'0 0 0 4upx':'0'}]"></text><span v-if="item.xunzhanglist.length>0" v-for="(xxzitem,xxzindex) in item.xunzhanglist.slice(0, 6)"><img-cache v-if="xxzitem.id>0" class="cu-tag xunzhangshow" :src="xxzitem.url"></img-cache></span></view>
 								<view class="text-grey text-sm">{{index+2}}楼</view>
 							</view>
 							<view class="flex justify-between">
@@ -50,6 +54,10 @@
 								:content="item.html" @linktap="linktap" />
 							<view class="text-blue" v-if="Letter(item.html).length>70&&isfloat[index]!= true"
 								@tap="loadmore(index)">展开</view>
+							<view v-if="item.luckypost.key>=0" class="text-center">
+								<view v-if="item.luckypost.key==1" class="padding-xs radius shadow shadow-lg bg-cyan margin-top text-xs ltsp">发帖际遇：{{item.luckypost.msg}}</view>
+								<view v-else class="padding-xs radius shadow shadow-lg bg-red margin-top text-xs ltsp">发帖际遇：{{item.luckypost.msg}}</view>
+							</view>
 							<view class="margin-top-sm flex justify-between">
 								<view>
 									<text class="cuIcon-appreciatefill" :class="item.zan?'text-red':'text-gray'"></text>
@@ -269,6 +277,9 @@
 				cantpostmessage: '',
 				replykey: '',
 				touxian: '',
+				lucky:-1,
+				luckymessage:'',
+				luckyme:[],
 				iStatusBarHeight: 0,
 				sex: 0,
 				loadProgress: 0,
@@ -762,10 +773,13 @@
 							} else if (res.data.code == 401) {
 								that.modalName = "cantpost";
 								that.cantpostmessage = res.data.message;
-								this.fasong = false;
+								that.fasong = false;
 							} else {
 								if(res.data.credit){
-									this.jifenbiandong(res.data.credit,res.data.credittxt)
+									that.jifenbiandong(res.data.credit,res.data.credittxt);
+								}
+								if(res.data.luckypost.key>=0){
+									that.luckyme = res.data.luckypost;
 								}
 								that.refresh(message);
 							}
@@ -832,6 +846,9 @@
 				fasonginfo.position = 0;
 				fasonginfo.reply = 0;
 				fasonginfo.status = 0;
+				fasonginfo.xunzhanglist = [];
+				fasonginfo.touxian = '';
+				fasonginfo.luckypost = this.luckyme;
 				this.huifulist.unshift(fasonginfo);
 				this.modalName = null
 				this.contenthuifu = '';
@@ -944,6 +961,8 @@
 							that.groupid = res.data.userinfo.groupid;
 							that.touxian = res.data.userinfo.touxian;
 							that.xunzhanglist = res.data.userinfo.xunzhanglist;
+							that.lucky = res.data.luckypost.key;
+							that.luckymessage = res.data.luckypost.msg;
 							//console.log(that.threadlist);
 							setTimeout(function() {
 								that.setHeight("view_listnow");
@@ -1216,5 +1235,8 @@
 	}
 	.hbx{
 		position: relative;
+	}
+	.ltsp{
+		line-height: 24upx;
 	}
 </style>

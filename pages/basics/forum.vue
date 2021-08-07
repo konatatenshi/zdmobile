@@ -58,7 +58,7 @@
 														<view class="content flex-sub hbx">
 															<view><img-cache class="touxian" :src="item.userinfo.touxian"></img-cache></view>
 															<view class="flex justify-between">
-																<view :style="[{ color: item.userinfo.groupid==51?randomcolor():''}]"><span class="bhh">{{item.author}}<text :style="[{ padding: item.userinfo.groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text><view class="cu-tag" :class="loadlevelicon(item.userinfo.groupid,1)">{{loadlevelicon(item.userinfo.groupid)}}</view><text :style="[{ padding: item.userinfo.groupid==51?'0 0 0 4upx':'0'}]"></text><span v-if="item.userinfo.xunzhanglist.length>0" v-for="(xzitem,xzindex) in item.userinfo.xunzhanglist.slice(0, 6)"><img-cache v-if="xzitem.id>0" class="cu-tag xunzhangshow" :src="xzitem.url"></img-cache></span></span>
+																<view :style="[{ color: item.userinfo.groupid==51?randomcolor():''}]"><span class="bhh">{{item.author}}<text :style="[{ padding: item.userinfo.groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text><view class="cu-tag padding-left-xs padding-right-xs" :class="loadlevelicon(item.userinfo.groupid,1)">{{loadlevelicon(item.userinfo.groupid)}}</view><text :style="[{ padding: item.userinfo.groupid==51?'0 0 0 4upx':'0'}]"></text><span v-if="item.userinfo.xunzhanglist.length>0" v-for="(xzitem,xzindex) in item.userinfo.xunzhanglist.slice(0, 6)"><img-cache v-if="xzitem.id>0" class="cu-tag xunzhangshow" :src="xzitem.url"></img-cache></span></span>
 																	<view class="text-gray text-sm flex justify-between">
 																		{{item.nowdate}}
 																	</view>
@@ -571,9 +571,39 @@
 							that.mainpage++;
 							that.forumname = res.data.foruminfo1.name;
 							//console.log(that.threadlist);
-							setTimeout(function() {
-								that.setHeight("view_listnow");
-							}, 100);
+							if(uni.getSystemInfoSync().platform=='ios'){
+								setTimeout(function() {
+									that.setHeight("view_listnow");
+									setTimeout(function() {
+										that.setHeight("view_listnow");
+										setTimeout(function() {
+											that.setHeight("view_listnow");
+											setTimeout(function() {
+												that.setHeight("view_listnow");
+												setTimeout(function() {
+													that.setHeight("view_listnow");
+												}, 100);
+											}, 100);
+										}, 100);
+									}, 100);
+								}, 100);
+							}else{
+								setTimeout(function() {
+									that.setHeight("view_listnow");
+									setTimeout(function() {
+										that.setHeight("view_listnow");
+										setTimeout(function() {
+											that.setHeight("view_listnow");
+											setTimeout(function() {
+												that.setHeight("view_listnow");
+												setTimeout(function() {
+													that.setHeight("view_listnow");
+												}, 200);
+											}, 200);
+										}, 200);
+									}, 200);
+								}, 200);
+							}
 							that.loadwb = 1;
 						}
 					}
