@@ -19,8 +19,11 @@
 							<view><img-cache class="touxian" :src="touxian"></img-cache></view>
 							<view>{{postup}}<text :style="[{ padding: groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text><view class="cu-tag padding-left-xs padding-right-xs" :class="loadlevelicon(groupid,1)">{{loadlevelicon(groupid)}}</view><text :style="[{ padding: groupid==51?'0 0 0 4upx':'0'}]"></text><span v-if="xunzhanglist.length>0" v-for="(xzitem,xzindex) in xunzhanglist.slice(0, 6)"><img-cache v-if="xzitem.id>0" class="cu-tag xunzhangshow" :src="xzitem.url"></img-cache></span></view>
 							<view><span v-if="xunzhanglist.length>6" v-for="(xzitem,xzindex) in xunzhanglist.slice(6, 20)"><img-cache v-if="xzitem.id>0" class="cu-tag xunzhangshow" :src="xzitem.url"></img-cache></span></view>
-							<view class="text-gray text-sm flex justify-between">
+							<view class="text-gray text-sm flex justify-start">
 								{{nowdate}}
+								<view v-if="status&128&&status&8" class="text-xs text-blue cuIcon-mobile">来自iPhone客户端</view>
+								<view v-else-if="status&256&&status&8" class="text-xs text-green cuIcon-mobile">来自Android客户端</view>
+								<view v-else-if="status&8" class="text-xs text-gray cuIcon-mobile">来自手机网页版</view>
 							</view>
 						</view>
 					</view>
@@ -28,8 +31,15 @@
 				<view class="text-content2">
 					<view v-if="content==''" class="cu-load text-gray loading"></view>
 					<mp-html :content="content" @linktap="linktap" />
+					<view v-if="jiance.type>0" class="text-center" @tap="jiancequery()">
+						<view v-if="jiance.type==1" class="padding-xs radius shadow shadow-lg bg-cyan margin-top text-sm ltsp">[{{jiance.time}}]网盘检测存活，失效点此<view class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray"><view class="cu-tag line-red">{{jiance.cishu}}</view></view></view>
+						<view v-else-if="jiance.type==2" class="padding-xs radius shadow shadow-lg bg-orange margin-top text-sm ltsp">[{{jiance.time}}]百度盘失效，重检点此<view class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray"><view class="cu-tag line-red">{{jiance.cishu}}</view></view></view>
+						<view v-else-if="jiance.type==3" class="padding-xs radius shadow shadow-lg bg-yellow margin-top text-sm ltsp">[{{jiance.time}}]Google盘失效，重检点此<view class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray"><view class="cu-tag line-red">{{jiance.cishu}}</view></view></view>
+						<view v-else-if="jiance.type==4" class="padding-xs radius shadow shadow-lg bg-black margin-top text-sm ltsp">[{{jiance.time}}]百度谷歌失效，重检点此<view class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray"><view class="cu-tag line-red">{{jiance.cishu}}</view></view></view>
+						<view v-else-if="jiance.type==5" class="padding-xs radius shadow shadow-lg bg-blue margin-top text-sm ltsp">如链接失效请点此检测</view>
+					</view>
 					<view v-if="lucky>=0" class="text-center">
-						<view v-if="lucky==1" class="padding-xs radius shadow shadow-lg bg-cyan margin-top text-xs ltsp">发帖际遇：{{luckymessage}}</view>
+						<view v-if="lucky==1" class="padding-xs radius shadow shadow-lg bg-green margin-top text-xs ltsp">发帖际遇：{{luckymessage}}</view>
 						<view v-else class="padding-xs radius shadow shadow-lg bg-red margin-top text-xs ltsp">发帖际遇：{{luckymessage}}</view>
 					</view>
 				</view>
@@ -43,8 +53,11 @@
 								<view class="text-grey">{{item.author}}<text :style="[{ padding: item.groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text><span class="cu-tag padding-left-xs padding-right-xs" :class="loadlevelicon(item.groupid,1)">{{loadlevelicon(item.groupid)}}</span><text :style="[{ padding: item.groupid==51?'0 0 0 4upx':'0'}]"></text><span v-if="item.xunzhanglist.length>0" v-for="(xxzitem,xxzindex) in item.xunzhanglist.slice(0, 6)"><img-cache v-if="xxzitem.id>0" class="cu-tag xunzhangshow" :src="xxzitem.url"></img-cache></span></view>
 								<view class="text-grey text-sm">{{index+2}}楼</view>
 							</view>
-							<view class="flex justify-between">
+							<view class="flex justify-start">
 								<view class="text-gray text-sm">{{item.dateline}}</view>
+								<view v-if="item.status&128&&item.status&8" class="text-xs text-blue cuIcon-mobile">来自iPhone客户端</view>
+								<view v-else-if="item.status&256&&item.status&8" class="text-xs text-green cuIcon-mobile">来自Android客户端</view>
+								<view v-else-if="item.status&8" class="text-xs text-gray cuIcon-mobile">来自手机网页版</view>
 							</view>
 							<mp-html v-if="item.status&1" class="text-content text-df float" :class="isfloat[index]?'show':'hide'"
 								:content="pingbi" @linktap="linktap" />
@@ -55,7 +68,7 @@
 							<view class="text-blue" v-if="Letter(item.html).length>70&&isfloat[index]!= true"
 								@tap="loadmore(index)">展开</view>
 							<view v-if="item.luckypost.key>=0" class="text-center">
-								<view v-if="item.luckypost.key==1" class="padding-xs radius shadow shadow-lg bg-cyan margin-top text-xs ltsp">发帖际遇：{{item.luckypost.msg}}</view>
+								<view v-if="item.luckypost.key==1" class="padding-xs radius shadow shadow-lg bg-green margin-top text-xs ltsp">发帖际遇：{{item.luckypost.msg}}</view>
 								<view v-else class="padding-xs radius shadow shadow-lg bg-red margin-top text-xs ltsp">发帖际遇：{{item.luckypost.msg}}</view>
 							</view>
 							<view class="margin-top-sm flex justify-between">
@@ -151,6 +164,38 @@
 						</view>
 					</view>
 				</view>
+				<view class="cu-modal" :class="modalName=='testpan'?'show':''">
+					<view class="cu-dialog">
+						<view class="cu-bar bg-white justify-end">
+							<view class="content">帖子检测</view>
+							<view class="action" @tap="hideModal">
+								<text class="cuIcon-close text-red"></text>
+							</view>
+						</view>
+						<view class="padding-xl">
+							请选择你需要检测的网盘。
+						</view>
+						<view class="cu-bar bg-white justify-end">
+							<view class="action">
+								<button class="cu-btn bg-green margin-left" @tap="jiancequery2()">百度</button>
+								<button disabled class="cu-btn bg-blue margin-left" @tap="">谷歌</button>
+								<button disabled class="cu-btn bg-cyan margin-left" @tap="">测试</button>
+							</view>
+						</view>
+						<view class="cu-bar bg-white justify-end">
+							<view class="action">
+								<button disabled class="cu-btn bg-yellow margin-left" @tap="">微云</button>
+								<button disabled class="cu-btn bg-purple margin-left" @tap="">微软</button>
+								<button disabled class="cu-btn bg-pink margin-left" @tap="">直连</button>
+							</view>
+						</view>
+					</view>
+				</view>
+				<view class="cu-load load-modal" v-if="loadModal">
+					<!-- <view class="cuIcon-emojifill text-orange"></view> -->
+					<image src="/static/19.gif" style="border-radius: 50%;" mode="aspectFit"></image>
+					<view class="gray-text">检测中...</view>
+				</view>
 				<view class="cu-modal" :class="modalName=='floorpost'?'show':''">
 					<view class="cu-dialog">
 						<view class="cu-bar bg-white justify-end">
@@ -166,7 +211,7 @@
 							</view>
 						</view>
 						<view class="cu-bar bg-white justify-end">
-							<view class="action">
+							<view v-if="closed==0" class="action">
 								<button class="cu-btn bg-green margin-left" @tap="sendfloor">发送</button>
 							</view>
 						</view>
@@ -227,7 +272,7 @@
 				<text class="cuIcon-emojifill text-grey" @tap="togglePicker(200, 'emoji')"></text>
 				<text class="cuIcon-roundadd text-grey" @tap="togglePicker(100, 'file')"></text>
 			</view>
-			<button @tap="sendmessage" class="cu-btn bg-green shadow"><text class="cuIconfont-spin" :class="fasong?'cuIcon-loading2':''"></text>发送</button>
+			<button v-if="closed==0" @tap="sendmessage" class="cu-btn bg-green shadow"><text class="cuIconfont-spin" :class="fasong?'cuIcon-loading2':''"></text>发送</button>
 		</view>
 		<!--表情-->
 		<!--附件-->
@@ -280,19 +325,24 @@
 				lucky:-1,
 				luckymessage:'',
 				luckyme:[],
+				jiance:[],
 				iStatusBarHeight: 0,
 				sex: 0,
+				status: 0,
 				loadProgress: 0,
 				jifencaozuo: 0,
 				tid: 0,
 				fid: 0,
+				closed: 0,
 				groupid: 0,
+				pid: 0,
 				page: 0,
 				toUID: 0,
 				toPID: 0,
 				index: 0,
 				fasong: false,
 				floorfasong: false,
+				loadModal: false,
 				floorpage: [],
 				jiazai :0,
 				jiazaiwanbi: [],
@@ -385,6 +435,50 @@
 			},
 			doNothing:function(){
 				
+			},
+			jiancequery(){
+				this.modalName='testpan';
+			},
+			jiancequery2(){
+				let that = this;
+				console.log(this.jiance);
+				console.log(this.pid);
+				this.modalName= null;
+				this.loadModal=true;
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=iplus_ad_corner:test', //获取置顶帖子
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						uid: that.$uid,
+						url: that.jiance.data,
+						sig: that.jiance.sign,
+						pid: that.pid
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data)
+						if (res.data.code == 200) {
+							that.jifenbiandong('网盘检测','恭喜，该链接有效');
+							that.loadthread(that.tid);
+						} else if (res.data.code == 400) {
+							that.jifenbiandong('网盘检测','该链接检测已失效');
+							that.loadthread(that.tid);
+						} else if (res.data.code == 500) {
+							that.jifenbiandong('网盘检测','检测频率过快，稍后再试');
+							that.loadthread(that.tid);
+						} else if (res.data.code == 301) {
+							that.jifenbiandong('网盘检测','只能作者或管理员验证');
+							that.loadthread(that.tid);
+						} else {
+							that.jifenbiandong('网盘检测','功能错误');
+							that.loadthread(that.tid);
+						}
+						that.loadModal=false;
+					}
+				});
 			},
 			lzlpo(e,f,g) {
 				if(this.$floorswitch){
@@ -845,7 +939,11 @@
 				fasonginfo.pid = 0;
 				fasonginfo.position = 0;
 				fasonginfo.reply = 0;
-				fasonginfo.status = 0;
+				if(uni.getSystemInfoSync().platform=='ios'){
+					fasonginfo.status = 136;
+				}else{
+					fasonginfo.status = 264;
+				}
 				fasonginfo.xunzhanglist = [];
 				fasonginfo.touxian = '';
 				fasonginfo.luckypost = this.luckyme;
@@ -952,6 +1050,7 @@
 						} else {
 							that.postup = res.data.author;
 							that.fid = res.data.fid;
+							that.pid = res.data.pid;
 							that.postname = res.data.subject;
 							that.replykey = res.data.replykey;
 							that.content = res.data.html;
@@ -963,11 +1062,17 @@
 							that.xunzhanglist = res.data.userinfo.xunzhanglist;
 							that.lucky = res.data.luckypost.key;
 							that.luckymessage = res.data.luckypost.msg;
+							that.status = res.data.status;
+							that.jiance = res.data.jiance;
 							//console.log(that.threadlist);
 							setTimeout(function() {
 								that.setHeight("view_listnow");
 							}, 100);
 							that.loadwb = 1;
+							if(res.data.replykey=='closed'){
+								that.contenthuifu='回帖已关闭';
+								that.closed = 1;
+							}
 						}
 					}
 				});

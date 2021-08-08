@@ -496,7 +496,7 @@
 						this.loadProgress = 0;
 						return;
 					}
-					console.log(this.loadProgress);
+					//console.log(this.loadProgress);
 					setTimeout(() => {
 						this.LoadProgresss();
 					}, 100)

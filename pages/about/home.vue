@@ -441,9 +441,13 @@
 				                force: false  
 				            }, function() {  
 				                console.log('install success...');  
-				                plus.runtime.restart();  
+								plus.nativeUI.alert("应用资源更新完成！",function(){
+								    plus.runtime.restart();
+								});
 				            }, function(e) {  
-				                console.error('install fail...');  
+								plus.nativeUI.closeWaiting();
+								console.log("安装wgt文件失败["+e.code+"]："+e.message);
+								plus.nativeUI.alert("安装wgt文件失败["+e.code+"]："+e.message);
 				            });  
 				        }
 				    }

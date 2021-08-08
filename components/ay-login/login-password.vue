@@ -152,7 +152,7 @@
 		</view>
 		<view class="cu-load load-modal" v-if="loadModal">
 			<!-- <view class="cuIcon-emojifill text-orange"></view> -->
-			<image src="/static/logo.png" mode="aspectFit"></image>
+			<image src="/static/19.gif" style="border-radius: 50%;" mode="aspectFit"></image>
 			<view class="gray-text">登录中...</view>
 		</view>
 		<view class="flex padding justify-between foot">

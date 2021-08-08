@@ -24,13 +24,13 @@ class websocketUtil {
 		this.socketTask = uni.connectSocket({
 			url: this.url,
 			success:()=>{
-				console.log("正准备建立websocket中...");
+				//console.log("正准备建立websocket中...");
 				// 返回实例
 				return this.socketTask
 			},
 		});
 		this.socketTask.onOpen((res) => {
-			console.log("WebSocket连接正常！");
+			//console.log("WebSocket连接正常！");
 			uni.$emit('onsocket', {  
 				data: "on"
 			});
@@ -57,7 +57,7 @@ class websocketUtil {
 		// });
 		// 这里仅是事件监听【如果socket关闭了会执行】
 		this.socketTask.onClose(() => {
-			console.log("已经被关闭了")
+			//console.log("已经被关闭了")
 			this.is_open_socket = false;
 			this.reconnect();
 		})
@@ -69,7 +69,7 @@ class websocketUtil {
 		this.socketTask.send({
 			data: value,
 			async success() {
-				console.log("消息发送成功");
+				//console.log("消息发送成功");
 			},
 		});
 	}
@@ -80,7 +80,7 @@ class websocketUtil {
 				return;
 			}
 			this.data=[{cmd:"ping"}]
-			console.log(this.data)
+			//console.log(this.data)
 			this.send(JSON.stringify(this.data));
 			clearTimeout(this.heartbeatInterval);
 			this.start();
