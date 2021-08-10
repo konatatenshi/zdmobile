@@ -33,7 +33,7 @@
 						<view class="view_listnow">
 							<view v-if="threadlist.length > 0">
 								<block v-for="(item,index2) in threadlist" :key="index2">
-									<view class="solid-bottom text-df"
+									<view class="solid-bottom article text-df"
 										style="padding-top: 10upx; padding-bottom: 10upx;" v-if="item.displayorder>0">
 										<view @tap="topost(item.tid)">
 											<text class="text-black text-cut"
@@ -641,12 +641,20 @@
 
 <style>
 	.cu-card>.cu-item {
-		background-color: #f0f0f0 !important;
+		background-color: #FFFFFF !important;
+		border-radius: 4%;
+		background-position-y: 9%;
 		margin: 0;
 	}
 
+	.text-df {
+		background-color: #FFFFFF !important;
+		border-radius: 4%;
+		background-position-y: 9%;
+		margin: 0;
+	}
 	.cu-list.menu-avatar>.cu-item {
-		background-color: #f0f0f0;
+		background-color: transparent;
 		height: 110upx;
 	}
 
@@ -685,6 +693,9 @@
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 2;
 		overflow: hidden;
+	}
+	.article{
+		margin: 10upx;
 	}
 	.vip{
 		background-image: url(../../static/vip.png);

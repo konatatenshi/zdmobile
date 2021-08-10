@@ -36,11 +36,37 @@
 						<view v-else-if="jiance.type==2" class="padding-xs radius shadow shadow-lg bg-orange margin-top text-sm ltsp">[{{jiance.time}}]百度盘失效，重检点此<view class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray"><view class="cu-tag line-red">{{jiance.cishu}}</view></view></view>
 						<view v-else-if="jiance.type==3" class="padding-xs radius shadow shadow-lg bg-yellow margin-top text-sm ltsp">[{{jiance.time}}]Google盘失效，重检点此<view class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray"><view class="cu-tag line-red">{{jiance.cishu}}</view></view></view>
 						<view v-else-if="jiance.type==4" class="padding-xs radius shadow shadow-lg bg-black margin-top text-sm ltsp">[{{jiance.time}}]百度谷歌失效，重检点此<view class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray"><view class="cu-tag line-red">{{jiance.cishu}}</view></view></view>
-						<view v-else-if="jiance.type==5" class="padding-xs radius shadow shadow-lg bg-blue margin-top text-sm ltsp">如链接失效请点此检测</view>
+						<view v-else-if="jiance.type==5" class="padding-sm radius shadow shadow-lg bg-blue margin-top text-sm ltsp">如链接失效请点此检测</view>
 					</view>
 					<view v-if="lucky>=0" class="text-center">
 						<view v-if="lucky==1" class="padding-xs radius shadow shadow-lg bg-green margin-top text-xs ltsp">发帖际遇：{{luckymessage}}</view>
 						<view v-else class="padding-xs radius shadow shadow-lg bg-red margin-top text-xs ltsp">发帖际遇：{{luckymessage}}</view>
+					</view>
+					<view class="padding flex p-xs margin-bottom-sm mb-sm">
+						<view class="cu-capsule flex-sub">
+							<view class='cu-tag bg-red padding-sm'>
+								<text class='cuIcon-likefill'>收藏</text>
+							</view>
+							<view class="cu-tag line-red padding-sm">
+								{{favorite}}
+							</view>
+						</view>
+						<view class="cu-capsule flex-sub">
+							<view class='cu-tag bg-blue padding-sm'>
+								<text class='cuIcon-moneybagfill'>打赏</text>
+							</view>
+							<view class="cu-tag line-blue padding-sm">
+								{{dashang}}
+							</view>
+						</view>
+						<view class="cu-capsule flex-sub">
+							<view class='cu-tag bg-pink padding-sm'>
+								<text class='cuIcon-appreciatefill'>点赞</text>
+							</view>
+							<view class="cu-tag line-pink padding-sm">
+								{{dashang}}
+							</view>
+						</view>
 					</view>
 				</view>
 				<view class="cu-list menu-avatar comment solids-top" v-for="(item,index) in huifulist" :key="index" :data-id="index">
@@ -329,6 +355,9 @@
 				iStatusBarHeight: 0,
 				sex: 0,
 				status: 0,
+				ding: 0,
+				favorite: 0,
+				dashang: 0,
 				loadProgress: 0,
 				jifencaozuo: 0,
 				tid: 0,
@@ -1064,6 +1093,9 @@
 							that.luckymessage = res.data.luckypost.msg;
 							that.status = res.data.status;
 							that.jiance = res.data.jiance;
+							that.ding = res.data.ding;
+							that.favorite = res.data.favorite;
+							that.dashang = res.data.ratetimes;
 							//console.log(that.threadlist);
 							setTimeout(function() {
 								that.setHeight("view_listnow");

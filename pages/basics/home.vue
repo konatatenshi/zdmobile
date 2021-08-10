@@ -47,7 +47,7 @@
 							</swiper>
 							<view v-if="toplist.length > 0">
 								<block v-for="(item,index1) in toplist" :key="index1">
-									<view class="solid-bottom text-df"
+									<view class="solid-bottom text-df article"
 										style="padding-top: 10upx; padding-bottom: 10upx;" @tap="tourl(item.url)">
 										<view>
 											<text class="text-black text-cut" style="width: 100%;">{{item.title}}</text>
@@ -372,9 +372,22 @@
 
 <style>
 	.cu-card>.cu-item {
-		background-color: #f0f0f0;
+		background-color: #FFFFFF !important;
+		border-radius: 4%;
+		background-position-y: 9%;
+		margin: 0;
 	}
 
+	.text-df {
+		background-color: #FFFFFF !important;
+		border-radius: 4%;
+		background-position-y: 9%;
+		margin: 0;
+	}
+
+	.article{
+		margin: 10upx;
+	}
 	.page {
 		height: 100vh;
 	}
