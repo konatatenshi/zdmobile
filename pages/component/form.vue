@@ -43,7 +43,7 @@
 						<view class="text-sm">共有相关评论 {{count}} 个</view>
 					</view>
 					<view class="cu-item">
-						<view class="cu-avatar round" :style="[{ backgroundImage:'url(https://zd.tiangal.com/uc_server/avatar.php?uid=41070' + item.uid + '&size=small)' }]">
+						<view class="cu-avatar round" :style="[{ backgroundImage:'url(https://zd.tiangal.com/uc_server/avatar.php?uid=' + item.uid + '&size=small)' }]">
 						</view>
 						<view class="content">
 							<view class="flex justify-between">
@@ -898,6 +898,7 @@
 				} else {
 					var isImage = 1;
 				}
+				that.loading = '加载中';
 				that.loadwb = 0;
 				that.LoadProgresss();
 				uni.request({
@@ -929,6 +930,7 @@
 							} else {
 								for (let i = 0; i < res.data.length; ++i) {
 									that.huifulist.push(res.data[i]);
+									that.loading = '上拉可加载更多回复';
 								}
 								if (res.data.length < 30) {
 									that.loading = '到底了。';

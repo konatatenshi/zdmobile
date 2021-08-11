@@ -113,13 +113,27 @@
 														:style="[{ backgroundImage:'url(' + item.attachlist[2].attachment + ')' }]">
 													</view>
 												</view>
-												<view class="text-gray text-sm text-right padding">
-													<text class="cuIcon-attentionfill margin-lr-xs"></text>
-													{{item.views}}
-													<text class="cuIcon-appreciatefill margin-lr-xs"></text>
-													{{item.recommends}}
-													<text class="cuIcon-messagefill margin-lr-xs"></text>
-													{{item.replies}}
+												<view class="flex justify-between">
+													<view class="text-gray text-sm text-left padding-top2 padding-left">
+														<text v-if="item.icon==1" class="cu-tag line-red padding-left-xs padding-right-xs">新人帖</text>
+														<text v-if="item.attachment>2" class="cu-tag line-green padding-left-xs padding-right-xs">图文帖</text>
+														<text v-if="item.heats>9999" class="cu-tag line-purple padding-left-xs padding-right-xs">热度:1w+</text>
+														<text v-else-if="item.heats>999" class="cu-tag line-purple padding-left-xs padding-right-xs">热度:1k+</text>
+														<text v-else-if="item.heats>200" class="cu-tag line-purple padding-left-xs padding-right-xs">热度:{{item.heats}}</text>
+														<text v-else-if="item.heats>100" class="cu-tag line-mauve padding-left-xs padding-right-xs">热度:{{item.heats}}</text>
+														<text v-else-if="item.heats>50" class="cu-tag line-pink padding-left-xs padding-right-xs">热度:{{item.heats}}</text>
+														<text v-else-if="item.rate==1" class="cu-tag line-cyan padding-left-xs padding-right-xs">被赞赏</text>
+														<text v-else-if="item.rate==-1" class="cu-tag line-yellow padding-left-xs padding-right-xs">被扣分</text>
+														<text v-else-if="item.digest>0" class="cu-tag line-blue padding-left-xs padding-right-xs">精华帖</text>
+													</view>
+													<view class="text-gray text-sm text-right padding">
+														<text class="cuIcon-attentionfill margin-lr-xs"></text>
+														{{item.views}}
+														<text class="cuIcon-appreciatefill margin-lr-xs"></text>
+														{{item.recommends}}
+														<text class="cuIcon-messagefill margin-lr-xs"></text>
+														{{item.replies}}
+													</view>
 												</view>
 											</view>
 										</view>
@@ -531,6 +545,7 @@
 				} else {
 					this.isImage = 1;
 				}
+				that.loading = '加载中';
 				that.loadwb = 0;
 				that.LoadProgresss();
 				uni.request({
@@ -563,6 +578,7 @@
 							} else {
 								for (let i = 0; i < res.data.post.length; ++i) {
 									that.threadlist.push(res.data.post[i]);
+									that.loading = '上拉可加载更多帖子';
 								}
 								if (res.data.post.length < 30) {
 									that.loading = '到底了。';
@@ -722,5 +738,8 @@
 	}
 	.hbx{
 		position: relative;
+	}
+	.padding-top2{
+		padding-top: 26upx;
 	}
 </style>

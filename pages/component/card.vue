@@ -32,11 +32,11 @@
 					<view v-if="content==''" class="cu-load text-gray loading"></view>
 					<mp-html :content="content" @linktap="linktap" />
 					<view v-if="jiance.type>0" class="text-center" @tap="jiancequery()">
-						<view v-if="jiance.type==1" class="padding-xs radius shadow shadow-lg bg-cyan margin-top text-sm ltsp">[{{jiance.time}}]网盘检测存活，失效点此<view class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray"><view class="cu-tag line-red">{{jiance.cishu}}</view></view></view>
-						<view v-else-if="jiance.type==2" class="padding-xs radius shadow shadow-lg bg-orange margin-top text-sm ltsp">[{{jiance.time}}]百度盘失效，重检点此<view class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray"><view class="cu-tag line-red">{{jiance.cishu}}</view></view></view>
-						<view v-else-if="jiance.type==3" class="padding-xs radius shadow shadow-lg bg-yellow margin-top text-sm ltsp">[{{jiance.time}}]Google盘失效，重检点此<view class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray"><view class="cu-tag line-red">{{jiance.cishu}}</view></view></view>
-						<view v-else-if="jiance.type==4" class="padding-xs radius shadow shadow-lg bg-black margin-top text-sm ltsp">[{{jiance.time}}]百度谷歌失效，重检点此<view class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray"><view class="cu-tag line-red">{{jiance.cishu}}</view></view></view>
-						<view v-else-if="jiance.type==5" class="padding-sm radius shadow shadow-lg bg-blue margin-top text-sm ltsp">如链接失效请点此检测</view>
+						<view v-if="jiance.type==1" class="padding-xs radius shadow shadow-lg bg-cyan margin-top text-sm ltsp"><text :class="loadModal?'cuIcon-loading2 cuIconfont-spin':''"></text>[{{jiance.time}}]网盘检测存活，失效点此<view class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray"><view class="cu-tag line-red">{{jiance.cishu}}</view></view></view>
+						<view v-else-if="jiance.type==2" class="padding-xs radius shadow shadow-lg bg-orange margin-top text-sm ltsp"><text :class="loadModal?'cuIcon-loading2 cuIconfont-spin':''"></text>[{{jiance.time}}]百度盘失效，重检点此<view class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray"><view class="cu-tag line-red">{{jiance.cishu}}</view></view></view>
+						<view v-else-if="jiance.type==3" class="padding-xs radius shadow shadow-lg bg-yellow margin-top text-sm ltsp"><text :class="loadModal?'cuIcon-loading2 cuIconfont-spin':''"></text>[{{jiance.time}}]Google盘失效，重检点此<view class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray"><view class="cu-tag line-red">{{jiance.cishu}}</view></view></view>
+						<view v-else-if="jiance.type==4" class="padding-xs radius shadow shadow-lg bg-black margin-top text-sm ltsp"><text :class="loadModal?'cuIcon-loading2 cuIconfont-spin':''"></text>[{{jiance.time}}]百度谷歌失效，重检点此<view class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray"><view class="cu-tag line-red">{{jiance.cishu}}</view></view></view>
+						<view v-else-if="jiance.type==5" class="padding-sm radius shadow shadow-lg bg-blue margin-top text-sm ltsp"><text :class="loadModal?'cuIcon-loading2 cuIconfont-spin':''"></text>如链接失效请点此检测</view>
 					</view>
 					<view v-if="lucky>=0" class="text-center">
 						<view v-if="lucky==1" class="padding-xs radius shadow shadow-lg bg-green margin-top text-xs ltsp">发帖际遇：{{luckymessage}}</view>
@@ -44,11 +44,11 @@
 					</view>
 					<view class="padding flex p-xs margin-bottom-sm mb-sm">
 						<view class="cu-capsule flex-sub">
-							<view class='cu-tag bg-red padding-sm'>
-								<text class='cuIcon-likefill'>收藏</text>
+							<view class='cu-tag bg-pink padding-sm'>
+								<text class='cuIcon-appreciatefill'>点赞</text>
 							</view>
-							<view class="cu-tag line-red padding-sm">
-								{{favorite}}
+							<view class="cu-tag line-pink padding-sm">
+								{{ding}}
 							</view>
 						</view>
 						<view class="cu-capsule flex-sub">
@@ -59,12 +59,12 @@
 								{{dashang}}
 							</view>
 						</view>
-						<view class="cu-capsule flex-sub">
-							<view class='cu-tag bg-pink padding-sm'>
-								<text class='cuIcon-appreciatefill'>点赞</text>
+						<view class="cu-capsule flex-sub" @tap="shoucang()">
+							<view class='cu-tag bg-red padding-sm'>
+								<text class='cuIcon-likefill'>收藏</text>
 							</view>
-							<view class="cu-tag line-pink padding-sm">
-								{{dashang}}
+							<view class="cu-tag line-red padding-sm">
+								{{favorite}}
 							</view>
 						</view>
 					</view>
@@ -99,7 +99,7 @@
 							</view>
 							<view class="margin-top-sm flex justify-between">
 								<view>
-									<text class="cuIcon-appreciatefill" :class="item.zan?'text-red':'text-gray'"></text>
+									<text class="cuIcon-appreciatefill" :class="item.zan?'text-red':'text-gray'"><text v-if="item.support>0">{{item.support}}</text></text>
 									<text class="cuIcon-messagefill text-gray margin-left-sm" @tap="lzpo(item.pid,index)"></text>
 								</view>
 								<view>
@@ -109,11 +109,11 @@
 							<view v-if="item.reply>0" class="bg-gray padding-sm radius margin-top-sm  text-sm">
 								<view class="flex" v-for="(rpitem,rpindex) in item.floor" :key="'b' + rpindex"
 									:data-id="rpindex">
-									<rich-text class="flex-sub" :nodes="rpitem.content" @tap="lzlpo(rpitem.uid,item.pid,index)"></rich-text>
+									<rich-text class="flex-sub float2 hide" :nodes="rpitem.content" @tap="lzlpo(rpitem.uid,item.pid,index)"></rich-text>
 								</view>
 								<view class="flex" v-for="(rpxitem,rpxindex) in rplist[index]" :key="'c' + rpxindex"
 									:data-id="rpxindex">
-									<rich-text class="flex-sub" :nodes="rpxitem.content" @tap="lzlpo(rpxitem.uid,item.pid,index)" /></rich-text>
+									<rich-text class="flex-sub float2 hide" :nodes="rpxitem.content" @tap="lzlpo(rpxitem.uid,item.pid,index)" /></rich-text>
 								</view>
 								<view class="flex text-blue" v-if="item.reply>5&&jiazaiwanbi[index]!=1&&jiazai==0" @tap="loadfloor(item.pid,index)">共
 									{{item.reply}} 条回复<text class="cuIcon-right"></text>
@@ -217,7 +217,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="cu-load load-modal" v-if="loadModal">
+				<view class="cu-load load-modal" v-if="loadModal==100">
 					<!-- <view class="cuIcon-emojifill text-orange"></view> -->
 					<image src="/static/19.gif" style="border-radius: 50%;" mode="aspectFit"></image>
 					<view class="gray-text">检测中...</view>
@@ -466,6 +466,9 @@
 				
 			},
 			jiancequery(){
+				if(this.loadModal==true){
+					return;
+				}
 				this.modalName='testpan';
 			},
 			jiancequery2(){
@@ -497,14 +500,45 @@
 							that.loadthread(that.tid);
 						} else if (res.data.code == 500) {
 							that.jifenbiandong('网盘检测','检测频率过快，稍后再试');
-							that.loadthread(that.tid);
 						} else if (res.data.code == 301) {
 							that.jifenbiandong('网盘检测','只能作者或管理员验证');
-							that.loadthread(that.tid);
 						} else {
 							that.jifenbiandong('网盘检测','功能错误');
-							that.loadthread(that.tid);
 						}
+						that.loadModal=false;
+					}
+				});
+			},
+			shoucang(){
+				if(this.loadModal==true){
+					return;
+				}
+				let that = this;
+				console.log(this.tid);
+				this.modalName= null;
+				this.loadModal=true;
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:shoucang', //获取置顶帖子
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token,
+						tid: that.tid
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data)
+						if (res.data.code == 200) {
+							that.jifenbiandong('收藏成功','已经加进您的收藏夹');
+							that.loadthread(that.tid);
+						} else if (res.data.code == 404) {
+							that.jifenbiandong('收藏失败','帖子不存在');
+							that.loadthread(that.tid);
+						} else if (res.data.code == 202) {
+							that.jifenbiandong('收藏失败','您已经收藏了此文件');
+						} 
 						that.loadModal=false;
 					}
 				});
@@ -1095,7 +1129,10 @@
 							that.jiance = res.data.jiance;
 							that.ding = res.data.ding;
 							that.favorite = res.data.favorite;
-							that.dashang = res.data.ratetimes;
+							that.dashang = res.data.rate;
+							if(that.dashang>0){
+								that.dashang = "+" + that.dashang;
+							}
 							//console.log(that.threadlist);
 							setTimeout(function() {
 								that.setHeight("view_listnow");
@@ -1163,6 +1200,7 @@
 				} else {
 					var isImage = 1;
 				}
+				that.loading = '载入中';
 				that.loadwb = 0;
 				that.LoadProgresss();
 				uni.request({
@@ -1194,6 +1232,7 @@
 							} else {
 								for (let i = 0; i < res.data.length; ++i) {
 									that.huifulist.push(res.data[i]);
+									that.loading = '上拉可加载更多回复';
 								}
 								if (res.data.length < 30) {
 									that.loading = '到底了。';
@@ -1253,6 +1292,13 @@
 		word-break: break-all;
 		-webkit-box-orient: vertical;
 		-webkit-line-clamp: 3;
+		overflow: hidden;
+	}
+	.float2 {
+		display: -webkit-box;
+		word-break: break-all;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
 		overflow: hidden;
 	}
 
