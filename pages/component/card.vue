@@ -44,7 +44,7 @@
 					</view>
 					<view class="padding flex p-xs margin-bottom-sm mb-sm">
 						<view class="cu-capsule flex-sub">
-							<view class='cu-tag bg-pink padding-sm'>
+							<view class='cu-tag bg-pink padding-sm' @tap="dianzan()">
 								<text class='cuIcon-appreciatefill'>点赞</text>
 							</view>
 							<view class="cu-tag line-pink padding-sm">
@@ -52,7 +52,7 @@
 							</view>
 						</view>
 						<view class="cu-capsule flex-sub">
-							<view class='cu-tag bg-blue padding-sm'>
+							<view class='cu-tag bg-blue padding-sm' @tap="dashangadd()">
 								<text class='cuIcon-moneybagfill'>打赏</text>
 							</view>
 							<view class="cu-tag line-blue padding-sm">
@@ -77,7 +77,7 @@
 							<view><img-cache class="touxian2" :src="item.touxian"></img-cache></view>
 							<view class="flex justify-between">
 								<view class="text-grey">{{item.author}}<text :style="[{ padding: item.groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text><span class="cu-tag padding-left-xs padding-right-xs" :class="loadlevelicon(item.groupid,1)">{{loadlevelicon(item.groupid)}}</span><text :style="[{ padding: item.groupid==51?'0 0 0 4upx':'0'}]"></text><span v-if="item.xunzhanglist.length>0" v-for="(xxzitem,xxzindex) in item.xunzhanglist.slice(0, 6)"><img-cache v-if="xxzitem.id>0" class="cu-tag xunzhangshow" :src="xxzitem.url"></img-cache></span></view>
-								<view class="text-grey text-sm">{{index+2}}楼</view>
+								<view v-show="item.dateline!='刚刚'" class="text-grey text-sm">{{index+2}}楼</view>
 							</view>
 							<view class="flex justify-start">
 								<view class="text-gray text-sm">{{item.dateline}}</view>
@@ -243,6 +243,32 @@
 						</view>
 					</view>
 				</view>
+				<view class="cu-modal" :class="modalName=='dashang'?'show':''">
+					<view class="cu-dialog">
+						<view class="cu-bar bg-white justify-end">
+							<view class="content">请输入打赏金币的数目</view>
+							<view class="action" @tap="hideModal">
+								<text class="cuIcon-close text-red"></text>
+							</view>
+						</view>
+						<view class="padding-xl">
+							<view class="cu-form-group margin-top">
+								<text class='cuIcon-moneybagfill'></text>
+								<input :placeholder="tishi" v-model="dashangjinbi" name="input" type="number" ></input>
+								<picker @change="PickerChange" :value="index" :range="picker">
+									<view class="picker">
+										选择
+									</view>
+								</picker>
+							</view>
+						</view>
+						<view class="cu-bar bg-white justify-end">
+							<view v-if="closed==0" class="action">
+								<button class="cu-btn bg-green margin-left" @tap="senddashang">打赏</button>
+							</view>
+						</view>
+					</view>
+				</view>
 				<view class="cu-modal" :class="modalName=='postnew'?'show':''">
 					<view class="cu-dialog">
 						<view class="cu-bar bg-white justify-end">
@@ -339,7 +365,10 @@
 				contenthuifu: '',
 				floorhuifu: '',
 				content: '',
+				dashangjinbi: '',
+				picker: [],
 				postup: '加载中',
+				tishi: '输入金币数目',
 				nowdate: '加载中',
 				jifenbiangeng: '积分名+1',
 				jifenshuoming: '积分变更',
@@ -430,6 +459,11 @@
 			},
 			back(){
 				uni.navigateBack();
+			},
+			PickerChange(e) {
+				console.log(e.detail)
+				console.log(this.picker[e.detail.value])
+				this.dashangjinbi = this.picker[e.detail.value]
 			},
 			LoadProgresss(e) {
 				this.loadProgress = this.loadProgress + 3;
@@ -537,11 +571,83 @@
 							that.jifenbiandong('收藏失败','帖子不存在');
 							that.loadthread(that.tid);
 						} else if (res.data.code == 202) {
-							that.jifenbiandong('收藏失败','您已经收藏了此文件');
+							that.jifenbiandong('收藏失败','您已经收藏了此帖子');
 						} 
 						that.loadModal=false;
 					}
 				});
+			},
+			dianzan(){
+				if(this.loadModal==true){
+					return;
+				}
+				let that = this;
+				console.log(this.tid);
+				this.modalName= null;
+				this.loadModal=true;
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:dianzan', //获取置顶帖子
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token,
+						tid: that.tid
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data)
+						if (res.data.code == 200) {
+							that.jifenbiandong('点赞成功','此帖支持度+1');
+							that.loadthread(that.tid);
+						} else if (res.data.code == 404) {
+							that.jifenbiandong('点赞失败','帖子不存在');
+							that.loadthread(that.tid);
+						} else if (res.data.code == 202) {
+							that.jifenbiandong('点赞失败','您已经点赞了此帖子');
+						} 
+						that.loadModal=false;
+					}
+				});
+			},
+			dashangadd(){
+				if(this.loadModal==true){
+					return;
+				}
+				let that = this;
+				console.log(this.tid);
+				this.modalName= null;
+				this.loadModal=true;
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:dashang', //获取置顶帖子
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token,
+						pid: that.pid
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data)
+						if (res.data.code == 200) {
+							that.modalName = 'dashang';
+							that.picker = res.data.area[0];
+							that.tishi = res.data.tishi[0];
+						} else if (res.data.code == 400) {
+							that.jifenbiandong('打赏失败','您无权打赏');
+							that.loadthread(that.tid);
+						} else if (res.data.code == 202) {
+							that.jifenbiandong('打赏失败','您已经打赏了此帖子');
+						} 
+						that.loadModal=false;
+					}
+				});
+			},
+			senddashang(e){
+				console.log(e);
 			},
 			lzlpo(e,f,g) {
 				if(this.$floorswitch){
