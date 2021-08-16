@@ -48,7 +48,7 @@
 								<text class='cuIcon-appreciatefill'>点赞</text>
 							</view>
 							<view class="cu-tag line-pink padding-sm">
-								{{ding}}
+								<text :class="loadModal2?'cuIcon-loading2 cuIconfont-spin':''"></text>{{ding}}
 							</view>
 						</view>
 						<view class="cu-capsule flex-sub">
@@ -56,7 +56,7 @@
 								<text class='cuIcon-moneybagfill'>打赏</text>
 							</view>
 							<view class="cu-tag line-blue padding-sm">
-								{{dashang}}
+								<text :class="loadModal3?'cuIcon-loading2 cuIconfont-spin':''"></text>{{dashang}}
 							</view>
 						</view>
 						<view class="cu-capsule flex-sub" @tap="shoucang()">
@@ -64,7 +64,7 @@
 								<text class='cuIcon-likefill'>收藏</text>
 							</view>
 							<view class="cu-tag line-red padding-sm">
-								{{favorite}}
+								<text :class="loadModal1?'cuIcon-loading2 cuIconfont-spin':''"></text>{{favorite}}
 							</view>
 						</view>
 					</view>
@@ -98,8 +98,12 @@
 								<view v-else class="padding-xs radius shadow shadow-lg bg-red margin-top text-xs ltsp">发帖际遇：{{item.luckypost.msg}}</view>
 							</view>
 							<view class="margin-top-sm flex justify-between">
-								<view>
-									<text class="cuIcon-appreciatefill" :class="item.zan?'text-red':'text-gray'"><text v-if="item.support>0">{{item.support}}</text></text>
+								<view v-if="animation[index]">
+									<text class="cuIcon-appreciatefill text-red">{{dianzannumber[index]}}</text>
+									<text class="cuIcon-messagefill text-gray margin-left-sm" @tap="lzpo(item.pid,index)"></text>
+								</view>
+								<view v-else>
+									<text class="cuIcon-appreciatefill" :class="item.zan?'text-red':'text-gray'" @tap="zanpo(item.pid,index,item.support)"><text v-if="item.support>0">{{item.support}}</text></text>
 									<text class="cuIcon-messagefill text-gray margin-left-sm" @tap="lzpo(item.pid,index)"></text>
 								</view>
 								<view>
@@ -253,18 +257,25 @@
 						</view>
 						<view class="padding-xl">
 							<view class="cu-form-group margin-top">
-								<text class='cuIcon-moneybagfill'></text>
+								<text class='cuIcon-moneybagfill text-yellow'></text>
 								<input :placeholder="tishi" v-model="dashangjinbi" name="input" type="number" ></input>
 								<picker @change="PickerChange" :value="index" :range="picker">
 									<view class="picker">
-										选择
+										选择金币
 									</view>
 								</picker>
+							</view>
+							<view class="cu-form-group margin-top">
+								<input placeholder="可输入评分理由" v-model="pingfenliyou" name="liyou"></input>
+							</view>
+							<view class="cu-form-group margin-top">
+								<text class='cuIcon-notificationfill text-cyan'>通知作者</text>
+								<switch @change="sendpfnofi" :class="sendpfno?'checked':''" :checked="sendpfno?true:false"></switch>
 							</view>
 						</view>
 						<view class="cu-bar bg-white justify-end">
 							<view v-if="closed==0" class="action">
-								<button class="cu-btn bg-green margin-left" @tap="senddashang">打赏</button>
+								<button class="cu-btn bg-green margin-left" @tap="senddashang"><text :class="loadModal4?'cuIcon-loading2 cuIconfont-spin':''"></text>打赏</button>
 							</view>
 						</view>
 					</view>
@@ -361,6 +372,7 @@
 		data() {
 			return {
 				isCard: false,
+				sendpfno: false,
 				postname: '加载中',
 				contenthuifu: '',
 				floorhuifu: '',
@@ -379,6 +391,7 @@
 				touxian: '',
 				lucky:-1,
 				luckymessage:'',
+				pingfenliyou:'',
 				luckyme:[],
 				jiance:[],
 				iStatusBarHeight: 0,
@@ -398,9 +411,14 @@
 				toUID: 0,
 				toPID: 0,
 				index: 0,
+				pm: 0,
 				fasong: false,
 				floorfasong: false,
 				loadModal: false,
+				loadModal1: false,
+				loadModal2: false,
+				loadModal3: false,
+				loadModal4: false,
 				floorpage: [],
 				jiazai :0,
 				jiazaiwanbi: [],
@@ -414,6 +432,8 @@
 				isfloats: false,
 				modalName: null,
 				loading: "上拉可加载更多回复",
+				animation:[],
+				dianzannumber:[],
 				avatarlist: '../../static/avatar.jpg',
 				emojis: ["{:4_91:}","{:4_107:}", "{:4_100:}", "{:4_115:}", "{:4_104:}", "{:4_98:}", "{:4_114:}", "{:4_88:}",
 					"{:4_87:}", "{:4_135:}", "{:4_131:}", "{:4_134:}", "{:4_106:}", "{:4_99:}", "{:4_93:}",
@@ -465,6 +485,9 @@
 				console.log(this.picker[e.detail.value])
 				this.dashangjinbi = this.picker[e.detail.value]
 			},
+			sendpfnofi(e) {
+				this.sendpfno = e.detail.value
+			},
 			LoadProgresss(e) {
 				this.loadProgress = this.loadProgress + 3;
 				if (this.loadProgress < 100) {
@@ -472,7 +495,7 @@
 						this.loadProgress = 0;
 						return;
 					}
-					console.log(this.loadProgress);
+					//console.log(this.loadProgress);
 					setTimeout(() => {
 						this.LoadProgresss();
 					}, 100)
@@ -544,13 +567,13 @@
 				});
 			},
 			shoucang(){
-				if(this.loadModal==true){
+				if(this.loadModal1==true){
 					return;
 				}
 				let that = this;
 				console.log(this.tid);
 				this.modalName= null;
-				this.loadModal=true;
+				this.loadModal1=true;
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:shoucang', //获取置顶帖子
 					method: 'GET',
@@ -573,18 +596,18 @@
 						} else if (res.data.code == 202) {
 							that.jifenbiandong('收藏失败','您已经收藏了此帖子');
 						} 
-						that.loadModal=false;
+						that.loadModal1=false;
 					}
 				});
 			},
 			dianzan(){
-				if(this.loadModal==true){
+				if(this.loadModal2==true){
 					return;
 				}
 				let that = this;
 				console.log(this.tid);
 				this.modalName= null;
-				this.loadModal=true;
+				this.loadModal2=true;
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:dianzan', //获取置顶帖子
 					method: 'GET',
@@ -607,18 +630,18 @@
 						} else if (res.data.code == 202) {
 							that.jifenbiandong('点赞失败','您已经点赞了此帖子');
 						} 
-						that.loadModal=false;
+						that.loadModal2=false;
 					}
 				});
 			},
 			dashangadd(){
-				if(this.loadModal==true){
+				if(this.loadModal3==true){
 					return;
 				}
 				let that = this;
 				console.log(this.tid);
 				this.modalName= null;
-				this.loadModal=true;
+				this.loadModal3=true;
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:dashang', //获取置顶帖子
 					method: 'GET',
@@ -638,16 +661,67 @@
 							that.tishi = res.data.tishi[0];
 						} else if (res.data.code == 400) {
 							that.jifenbiandong('打赏失败','您无权打赏');
-							that.loadthread(that.tid);
-						} else if (res.data.code == 202) {
+						} else if (res.data.code == 401) {
+							that.jifenbiandong('打赏失败','此板块禁止打赏');
+						} else if (res.data.code == 410) {
+							that.jifenbiandong('打赏失败','不能给自己打赏');
+						}  else if (res.data.code == 202) {
 							that.jifenbiandong('打赏失败','您已经打赏了此帖子');
 						} 
-						that.loadModal=false;
+						that.loadModal3=false;
 					}
 				});
 			},
 			senddashang(e){
-				console.log(e);
+				if(this.loadModal4==true){
+					return;
+				}
+				let that = this;
+				if(that.sendpfno){
+					that.pm = 1
+				}else{
+					that.pm = 0
+				}
+				console.log(this.tid);
+				this.modalName= null;
+				this.loadModal4=true;
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:dashang', //获取置顶帖子
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token,
+						typeid: 1,
+						score: that.dashangjinbi,
+						pm: that.pm,
+						reason: that.pingfenliyou,
+						pid: that.pid
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data)
+						if (res.data.code == 200) {
+							that.modalName = null;
+							that.jifenbiandong('打赏成功','您将被扣除相应积分');
+							that.loadthread(that.tid);
+						} else if (res.data.code == 400) {
+							that.jifenbiandong('打赏失败','您无权打赏');
+						} else if (res.data.code == 401) {
+							that.jifenbiandong('打赏失败','此板块禁止打赏');
+						} else if (res.data.code == 410) {
+							that.jifenbiandong('打赏失败','不能给自己打赏');
+						} else if (res.data.code == 402) {
+							that.jifenbiandong('打赏失败','打赏金额不正确');
+						} else if (res.data.code == 403) {
+							that.jifenbiandong('打赏失败','所拥有的金币不足以打赏');
+						} else if (res.data.code == 202) {
+							that.jifenbiandong('打赏失败','您已经打赏了此帖子');
+						} 
+						that.loadModal4=false;
+					}
+				});
 			},
 			lzlpo(e,f,g) {
 				if(this.$floorswitch){
@@ -670,6 +744,33 @@
 				this.toPID = f;
 				this.index = g;
 				this.modalName='floorpost';
+			},
+			zanpo(f,g,h) {
+				console.log(f);
+				let that = this;
+				//this.toPID = f;
+				//this.index = g;
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:zanpo', //获取置顶帖子
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token,
+						pid: f
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data)
+					}
+				});
+				this.shake(g,parseInt(h));
+			},
+			shake(e,f) {
+				console.log(f);
+				Vue.set(this.animation, e, 1);
+				Vue.set(this.dianzannumber, e, f+1);
 			},
 			floorhuif(e){
 				if(this.modalName =='floorpost'){
@@ -1335,6 +1436,9 @@
 						} else {
 							if (that.page == 0) {
 								that.huifulist = res.data;
+								if (res.data.length == 0) {
+									that.loading = '还没有任何回复，快来抢沙发吧！';
+								}
 							} else {
 								for (let i = 0; i < res.data.length; ++i) {
 									that.huifulist.push(res.data[i]);
