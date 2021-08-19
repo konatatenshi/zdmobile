@@ -6,6 +6,8 @@
 		</cu-custom>
 		<view class="cu-card dynamic no-card" :style="'margin-top: -' + iStatusBarHeight +'px;'">
 			<view class="cu-item shadow">
+				<sliding-image-verification style="position: absolute;float:left;width: 100%;height: 141vw;z-index: 9999;" v-if="isShowVaptcha" bgImg="../../static/headPic.png" :successNumber=randomunmber
+					:allowError="3" :canvasH="10" @success="sendmessage" @refresh="refreshyzm"></sliding-image-verification>
 				<view class="title">
 					<view class="text-cut">{{postname}}</view>
 				</view>
@@ -16,13 +18,30 @@
 							<view v-show="sex==2" class="cu-tag badge cuIcon-female bg-pink"></view>
 						</view>
 						<view class="content flex-sub hbx">
-							<view><img-cache class="touxian" :src="touxian"></img-cache></view>
-							<view>{{postup}}<text :style="[{ padding: groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text><view class="cu-tag padding-left-xs padding-right-xs" :class="loadlevelicon(groupid,1)">{{loadlevelicon(groupid)}}</view><text :style="[{ padding: groupid==51?'0 0 0 4upx':'0'}]"></text><span v-if="xunzhanglist.length>0" v-for="(xzitem,xzindex) in xunzhanglist.slice(0, 6)"><img-cache v-if="xzitem.id>0" class="cu-tag xunzhangshow" :src="xzitem.url"></img-cache></span></view>
-							<view><span v-if="xunzhanglist.length>6" v-for="(xzitem,xzindex) in xunzhanglist.slice(6, 20)"><img-cache v-if="xzitem.id>0" class="cu-tag xunzhangshow" :src="xzitem.url"></img-cache></span></view>
+							<view v-if="isImage">
+								<img-cache class="touxian" :src="touxian"></img-cache>
+							</view>
+							<view>{{postup}}<text :style="[{ padding: groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text>
+								<view class="cu-tag padding-left-xs padding-right-xs" :class="loadlevelicon(groupid,1)">
+									{{loadlevelicon(groupid)}}
+								</view><text :style="[{ padding: groupid==51?'0 0 0 4upx':'0'}]"></text><span
+									v-if="xunzhanglist.length>0&&isImage"
+									v-for="(xzitem,xzindex) in xunzhanglist.slice(0, 6)">
+									<img-cache v-if="xzitem.id>0" class="cu-tag xunzhangshow" :src="xzitem.url">
+									</img-cache>
+								</span>
+							</view>
+							<view><span v-if="xunzhanglist.length>6&&isImage"
+									v-for="(xzitem,xzindex) in xunzhanglist.slice(6, 20)">
+									<img-cache v-if="xzitem.id>0" class="cu-tag xunzhangshow" :src="xzitem.url">
+									</img-cache>
+								</span></view>
 							<view class="text-gray text-sm flex justify-start">
 								{{nowdate}}
-								<view v-if="status&128&&status&8" class="text-xs text-blue cuIcon-mobile">来自iPhone客户端</view>
-								<view v-else-if="status&256&&status&8" class="text-xs text-green cuIcon-mobile">来自Android客户端</view>
+								<view v-if="status&128&&status&8" class="text-xs text-blue cuIcon-mobile">来自iPhone客户端
+								</view>
+								<view v-else-if="status&256&&status&8" class="text-xs text-green cuIcon-mobile">
+									来自Android客户端</view>
 								<view v-else-if="status&8" class="text-xs text-gray cuIcon-mobile">来自手机网页版</view>
 							</view>
 						</view>
@@ -32,15 +51,48 @@
 					<view v-if="content==''" class="cu-load text-gray loading"></view>
 					<mp-html :content="content" @linktap="linktap" />
 					<view v-if="jiance.type>0" class="text-center" @tap="jiancequery()">
-						<view v-if="jiance.type==1" class="padding-xs radius shadow shadow-lg bg-cyan margin-top text-sm ltsp"><text :class="loadModal?'cuIcon-loading2 cuIconfont-spin':''"></text>[{{jiance.time}}]网盘检测存活，失效点此<view class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray"><view class="cu-tag line-red">{{jiance.cishu}}</view></view></view>
-						<view v-else-if="jiance.type==2" class="padding-xs radius shadow shadow-lg bg-orange margin-top text-sm ltsp"><text :class="loadModal?'cuIcon-loading2 cuIconfont-spin':''"></text>[{{jiance.time}}]百度盘失效，重检点此<view class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray"><view class="cu-tag line-red">{{jiance.cishu}}</view></view></view>
-						<view v-else-if="jiance.type==3" class="padding-xs radius shadow shadow-lg bg-yellow margin-top text-sm ltsp"><text :class="loadModal?'cuIcon-loading2 cuIconfont-spin':''"></text>[{{jiance.time}}]Google盘失效，重检点此<view class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray"><view class="cu-tag line-red">{{jiance.cishu}}</view></view></view>
-						<view v-else-if="jiance.type==4" class="padding-xs radius shadow shadow-lg bg-black margin-top text-sm ltsp"><text :class="loadModal?'cuIcon-loading2 cuIconfont-spin':''"></text>[{{jiance.time}}]百度谷歌失效，重检点此<view class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray"><view class="cu-tag line-red">{{jiance.cishu}}</view></view></view>
-						<view v-else-if="jiance.type==5" class="padding-sm radius shadow shadow-lg bg-blue margin-top text-sm ltsp"><text :class="loadModal?'cuIcon-loading2 cuIconfont-spin':''"></text>如链接失效请点此检测</view>
+						<view v-if="jiance.type==1"
+							class="padding-xs radius shadow shadow-lg bg-cyan margin-top text-sm ltsp"><text
+								:class="loadModal?'cuIcon-loading2 cuIconfont-spin':''"></text>[{{jiance.time}}]网盘检测存活，失效点此
+							<view
+								class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray">
+								<view class="cu-tag line-red">{{jiance.cishu}}</view>
+							</view>
+						</view>
+						<view v-else-if="jiance.type==2"
+							class="padding-xs radius shadow shadow-lg bg-orange margin-top text-sm ltsp"><text
+								:class="loadModal?'cuIcon-loading2 cuIconfont-spin':''"></text>[{{jiance.time}}]百度盘失效，重检点此
+							<view
+								class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray">
+								<view class="cu-tag line-red">{{jiance.cishu}}</view>
+							</view>
+						</view>
+						<view v-else-if="jiance.type==3"
+							class="padding-xs radius shadow shadow-lg bg-yellow margin-top text-sm ltsp"><text
+								:class="loadModal?'cuIcon-loading2 cuIconfont-spin':''"></text>[{{jiance.time}}]Google盘失效，重检点此
+							<view
+								class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray">
+								<view class="cu-tag line-red">{{jiance.cishu}}</view>
+							</view>
+						</view>
+						<view v-else-if="jiance.type==4"
+							class="padding-xs radius shadow shadow-lg bg-black margin-top text-sm ltsp"><text
+								:class="loadModal?'cuIcon-loading2 cuIconfont-spin':''"></text>[{{jiance.time}}]百度谷歌失效，重检点此
+							<view
+								class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray">
+								<view class="cu-tag line-red">{{jiance.cishu}}</view>
+							</view>
+						</view>
+						<view v-else-if="jiance.type==5"
+							class="padding-sm radius shadow shadow-lg bg-blue margin-top text-sm ltsp"><text
+								:class="loadModal?'cuIcon-loading2 cuIconfont-spin':''"></text>如链接失效请点此检测</view>
 					</view>
 					<view v-if="lucky>=0" class="text-center">
-						<view v-if="lucky==1" class="padding-xs radius shadow shadow-lg bg-green margin-top text-xs ltsp">发帖际遇：{{luckymessage}}</view>
-						<view v-else class="padding-xs radius shadow shadow-lg bg-red margin-top text-xs ltsp">发帖际遇：{{luckymessage}}</view>
+						<view v-if="lucky==1"
+							class="padding-xs radius shadow shadow-lg bg-green margin-top text-xs ltsp">
+							发帖际遇：{{luckymessage}}</view>
+						<view v-else class="padding-xs radius shadow shadow-lg bg-red margin-top text-xs ltsp">
+							发帖际遇：{{luckymessage}}</view>
 					</view>
 					<view class="padding flex p-xs margin-bottom-sm mb-sm">
 						<view class="cu-capsule flex-sub">
@@ -69,42 +121,64 @@
 						</view>
 					</view>
 				</view>
-				<view class="cu-list menu-avatar comment solids-top" v-for="(item,index) in huifulist" :key="index" :data-id="index">
+				<view class="cu-list menu-avatar comment solids-top" v-for="(item,index) in huifulist" :key="index"
+					:data-id="index">
 					<view class="cu-item">
 						<view class="cu-avatar round" :style="[{ backgroundImage:'url(' + item.avatarlist + ')' }]">
 						</view>
 						<view class="content hbx">
-							<view><img-cache class="touxian2" :src="item.touxian"></img-cache></view>
+							<view v-if="isImage">
+								<img-cache class="touxian2" :src="item.touxian"></img-cache>
+							</view>
 							<view class="flex justify-between">
-								<view class="text-grey">{{item.author}}<text :style="[{ padding: item.groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text><span class="cu-tag padding-left-xs padding-right-xs" :class="loadlevelicon(item.groupid,1)">{{loadlevelicon(item.groupid)}}</span><text :style="[{ padding: item.groupid==51?'0 0 0 4upx':'0'}]"></text><span v-if="item.xunzhanglist.length>0" v-for="(xxzitem,xxzindex) in item.xunzhanglist.slice(0, 6)"><img-cache v-if="xxzitem.id>0" class="cu-tag xunzhangshow" :src="xxzitem.url"></img-cache></span></view>
+								<view class="text-grey">{{item.author}}<text
+										:style="[{ padding: item.groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text><span
+										class="cu-tag padding-left-xs padding-right-xs"
+										:class="loadlevelicon(item.groupid,1)">{{loadlevelicon(item.groupid)}}</span><text
+										:style="[{ padding: item.groupid==51?'0 0 0 4upx':'0'}]"></text><span
+										v-if="item.xunzhanglist.length>0&&isImage"
+										v-for="(xxzitem,xxzindex) in item.xunzhanglist.slice(0, 6)">
+										<img-cache v-if="xxzitem.id>0" class="cu-tag xunzhangshow" :src="xxzitem.url">
+										</img-cache>
+									</span></view>
 								<view v-show="item.dateline!='刚刚'" class="text-grey text-sm">{{index+2}}楼</view>
 							</view>
 							<view class="flex justify-start">
 								<view class="text-gray text-sm">{{item.dateline}}</view>
-								<view v-if="item.status&128&&item.status&8" class="text-xs text-blue cuIcon-mobile">来自iPhone客户端</view>
-								<view v-else-if="item.status&256&&item.status&8" class="text-xs text-green cuIcon-mobile">来自Android客户端</view>
+								<view v-if="item.status&128&&item.status&8" class="text-xs text-blue cuIcon-mobile">
+									来自iPhone客户端</view>
+								<view v-else-if="item.status&256&&item.status&8"
+									class="text-xs text-green cuIcon-mobile">来自Android客户端</view>
 								<view v-else-if="item.status&8" class="text-xs text-gray cuIcon-mobile">来自手机网页版</view>
 							</view>
-							<mp-html v-if="item.status&1" class="text-content text-df float" :class="isfloat[index]?'show':'hide'"
-								:content="pingbi" @linktap="linktap" />
-							<mp-html v-else-if="!isfloat[index]" class="text-content text-df float" :class="isfloat[index]?'show':'hide'"
-								:content="item.html.substr(0,140)" @linktap="linktap" />
+							<mp-html v-if="item.status&1" class="text-content text-df float"
+								:class="isfloat[index]?'show':'hide'" :content="pingbi" @linktap="linktap" />
+							<mp-html v-else-if="!isfloat[index]" class="text-content text-df float"
+								:class="isfloat[index]?'show':'hide'" :content="item.html.substr(0,140)"
+								@linktap="linktap" />
 							<mp-html v-else class="text-content text-df float" :class="isfloat[index]?'show':'hide'"
 								:content="item.html" @linktap="linktap" />
 							<view class="text-blue" v-if="Letter(item.html).length>70&&isfloat[index]!= true"
 								@tap="loadmore(index)">展开</view>
 							<view v-if="item.luckypost.key>=0" class="text-center">
-								<view v-if="item.luckypost.key==1" class="padding-xs radius shadow shadow-lg bg-green margin-top text-xs ltsp">发帖际遇：{{item.luckypost.msg}}</view>
-								<view v-else class="padding-xs radius shadow shadow-lg bg-red margin-top text-xs ltsp">发帖际遇：{{item.luckypost.msg}}</view>
+								<view v-if="item.luckypost.key==1"
+									class="padding-xs radius shadow shadow-lg bg-green margin-top text-xs ltsp">
+									发帖际遇：{{item.luckypost.msg}}</view>
+								<view v-else class="padding-xs radius shadow shadow-lg bg-red margin-top text-xs ltsp">
+									发帖际遇：{{item.luckypost.msg}}</view>
 							</view>
 							<view class="margin-top-sm flex justify-between">
 								<view v-if="animation[index]">
 									<text class="cuIcon-appreciatefill text-red">{{dianzannumber[index]}}</text>
-									<text class="cuIcon-messagefill text-gray margin-left-sm" @tap="lzpo(item.pid,index)"></text>
+									<text class="cuIcon-messagefill text-gray margin-left-sm"
+										@tap="lzpo(item.pid,index)"></text>
 								</view>
 								<view v-else>
-									<text class="cuIcon-appreciatefill" :class="item.zan?'text-red':'text-gray'" @tap="zanpo(item.pid,index,item.support)"><text v-if="item.support>0">{{item.support}}</text></text>
-									<text class="cuIcon-messagefill text-gray margin-left-sm" @tap="lzpo(item.pid,index)"></text>
+									<text class="cuIcon-appreciatefill" :class="item.zan?'text-red':'text-gray'"
+										@tap="zanpo(item.pid,index,item.support,item.zan)"><text
+											v-if="item.support>0">{{item.support}}</text></text>
+									<text class="cuIcon-messagefill text-gray margin-left-sm"
+										@tap="lzpo(item.pid,index)"></text>
 								</view>
 								<view>
 									<text class="cuIcon-more text-gray margin-right-sm"></text>
@@ -113,16 +187,21 @@
 							<view v-if="item.reply>0" class="bg-gray padding-sm radius margin-top-sm  text-sm">
 								<view class="flex" v-for="(rpitem,rpindex) in item.floor" :key="'b' + rpindex"
 									:data-id="rpindex">
-									<rich-text class="flex-sub float2 hide" :nodes="rpitem.content" @tap="lzlpo(rpitem.uid,item.pid,index)"></rich-text>
+									<rich-text class="flex-sub float2 hide" :nodes="rpitem.content"
+										@tap="lzlpo(rpitem.uid,item.pid,index)"></rich-text>
 								</view>
 								<view class="flex" v-for="(rpxitem,rpxindex) in rplist[index]" :key="'c' + rpxindex"
 									:data-id="rpxindex">
-									<rich-text class="flex-sub float2 hide" :nodes="rpxitem.content" @tap="lzlpo(rpxitem.uid,item.pid,index)" /></rich-text>
+									<rich-text class="flex-sub float2 hide" :nodes="rpxitem.content"
+										@tap="lzlpo(rpxitem.uid,item.pid,index)" />
+									</rich-text>
 								</view>
-								<view class="flex text-blue" v-if="item.reply>5&&jiazaiwanbi[index]!=1&&jiazai==0" @tap="loadfloor(item.pid,index)">共
+								<view class="flex text-blue" v-if="item.reply>5&&jiazaiwanbi[index]!=1&&jiazai==0"
+									@tap="loadfloor(item.pid,index)">共
 									{{item.reply}} 条回复<text class="cuIcon-right"></text>
 								</view>
-								<view class="flex text-blue" v-else-if="item.reply>5&&jiazaiwanbi[index]!=1&&jiazai==1">加载中<text class="cuIcon-right"></text>
+								<view class="flex text-blue" v-else-if="item.reply>5&&jiazaiwanbi[index]!=1&&jiazai==1">
+									加载中<text class="cuIcon-right"></text>
 								</view>
 							</view>
 						</view>
@@ -258,7 +337,7 @@
 						<view class="padding-xl">
 							<view class="cu-form-group margin-top">
 								<text class='cuIcon-moneybagfill text-yellow'></text>
-								<input :placeholder="tishi" v-model="dashangjinbi" name="input" type="number" ></input>
+								<input :placeholder="tishi" v-model="dashangjinbi" name="input" type="number"></input>
 								<picker @change="PickerChange" :value="index" :range="picker">
 									<view class="picker">
 										选择金币
@@ -270,12 +349,14 @@
 							</view>
 							<view class="cu-form-group margin-top">
 								<text class='cuIcon-notificationfill text-cyan'>通知作者</text>
-								<switch @change="sendpfnofi" :class="sendpfno?'checked':''" :checked="sendpfno?true:false"></switch>
+								<switch @change="sendpfnofi" :class="sendpfno?'checked':''"
+									:checked="sendpfno?true:false"></switch>
 							</view>
 						</view>
 						<view class="cu-bar bg-white justify-end">
 							<view v-if="closed==0" class="action">
-								<button class="cu-btn bg-green margin-left" @tap="senddashang"><text :class="loadModal4?'cuIcon-loading2 cuIconfont-spin':''"></text>打赏</button>
+								<button class="cu-btn bg-green margin-left" @tap="senddashang"><text
+										:class="loadModal4?'cuIcon-loading2 cuIconfont-spin':''"></text>打赏</button>
 							</view>
 						</view>
 					</view>
@@ -300,8 +381,10 @@
 					</view>
 				</view>
 				<view class="cu-modal" :class="jifencaozuo!=0?'show':''">
-					<button class="cu-btn margin-sm basis-sm shadow bg-orange" :class="jifencaozuo==1?'animation-scale-up':'animation-reverse animation-scale-down'">
-						<text class="text-xl text-white text-shadow">{{jifenshuoming}}：</text><text class="text-xl text-white text-shadow">{{jifenbiangeng}}</text>
+					<button class="cu-btn margin-sm basis-sm shadow bg-orange"
+						:class="jifencaozuo==1?'animation-scale-up':'animation-reverse animation-scale-down'">
+						<text class="text-xl text-white text-shadow">{{jifenshuoming}}：</text><text
+							class="text-xl text-white text-shadow">{{jifenbiangeng}}</text>
 					</button>
 				</view>
 				<view class="cu-modal" :class="showEmoji?'show':''" @tap.prevent.stop="">
@@ -314,8 +397,7 @@
 						</view>
 						<view class="padding-xl emoji">
 							<view class="list">
-								<view class="item" @tap="floorhuif(item)" v-for="(item, index) in emojis"
-									:key="index">
+								<view class="item" @tap="floorhuif(item)" v-for="(item, index) in emojis" :key="index">
 									<img-cache class="icon"
 										:src="'https://bbs.zdfx.net/static/image/smiley/tieba/' + index + '.png'">
 									</img-cache>
@@ -326,16 +408,20 @@
 				</view>
 			</view>
 		</view>
-		<view v-if="InputBottom!=0" class="overlayer" @touchmove.stop.prevent = "doNothing">
+		<view v-if="InputBottom!=0" class="overlayer" @touchmove.stop.prevent="doNothing">
 		</view>
-		<view class="cu-bar foot input button__box" :style="[{bottom:InputBottom+'px'}]" @touchmove.stop.prevent = "doNothing">
+		<view class="cu-bar foot input button__box" :style="[{bottom:InputBottom+'px'}]"
+			@touchmove.stop.prevent="doNothing">
 			<input class="solid-bottom" :adjust-position="false" :focus="false" maxlength="1000" cursor-spacing="10"
 				@focus="InputFocus" @blur="InputBlur" v-model="contenthuifu"></input>
 			<view class="action">
 				<text class="cuIcon-emojifill text-grey" @tap="togglePicker(200, 'emoji')"></text>
 				<text class="cuIcon-roundadd text-grey" @tap="togglePicker(100, 'file')"></text>
 			</view>
-			<button v-if="closed==0" @tap="sendmessage" class="cu-btn bg-green shadow"><text class="cuIconfont-spin" :class="fasong?'cuIcon-loading2':''"></text>发送</button>
+			<button v-if="closed==0&&yzm==1" @tap="showVaptcha" class="cu-btn bg-green shadow"><text
+					class="cuIconfont-spin" :class="fasong?'cuIcon-loading2':''"></text>发送</button>
+			<button v-else-if="closed==0" @tap="sendmessage" class="cu-btn bg-green shadow"><text
+					class="cuIconfont-spin" :class="fasong?'cuIcon-loading2':''"></text>发送</button>
 		</view>
 		<!--表情-->
 		<!--附件-->
@@ -356,7 +442,8 @@
 			</view>
 		</view>
 		<view class="load-progress" v-show="loadProgress!=0" :style="[{top:CustomBar+'px'}]">
-			<view class="load-progress-bar bg-green" :style="[{transform: 'translate3d(-' + (100-loadProgress) + '%, 0px, 0px)'}]"></view>
+			<view class="load-progress-bar bg-green"
+				:style="[{transform: 'translate3d(-' + (100-loadProgress) + '%, 0px, 0px)'}]"></view>
 			<view class="load-progress-spinner text-green"></view>
 		</view>
 	</view>
@@ -389,12 +476,14 @@
 				cantpostmessage: '',
 				replykey: '',
 				touxian: '',
-				lucky:-1,
-				luckymessage:'',
-				pingfenliyou:'',
-				luckyme:[],
-				jiance:[],
+				lucky: -1,
+				yzm: 0,
+				luckymessage: '',
+				pingfenliyou: '',
+				luckyme: [],
+				jiance: [],
 				iStatusBarHeight: 0,
+				isImage: 0,
 				sex: 0,
 				status: 0,
 				ding: 0,
@@ -420,9 +509,10 @@
 				loadModal3: false,
 				loadModal4: false,
 				floorpage: [],
-				jiazai :0,
+				jiazai: 0,
 				jiazaiwanbi: [],
 				InputBottom: 0,
+				randomunmber: 0,
 				platform: 0,
 				loadwb: 0,
 				huifulist: [],
@@ -431,11 +521,13 @@
 				xunzhanglist: [],
 				isfloats: false,
 				modalName: null,
+				isShowVaptcha: false,
 				loading: "上拉可加载更多回复",
-				animation:[],
-				dianzannumber:[],
+				animation: [],
+				dianzannumber: [],
 				avatarlist: '../../static/avatar.jpg',
-				emojis: ["{:4_91:}","{:4_107:}", "{:4_100:}", "{:4_115:}", "{:4_104:}", "{:4_98:}", "{:4_114:}", "{:4_88:}",
+				emojis: ["{:4_91:}", "{:4_107:}", "{:4_100:}", "{:4_115:}", "{:4_104:}", "{:4_98:}", "{:4_114:}",
+					"{:4_88:}",
 					"{:4_87:}", "{:4_135:}", "{:4_131:}", "{:4_134:}", "{:4_106:}", "{:4_99:}", "{:4_93:}",
 					"{:4_103:}", "{:4_120:}", "{:4_125:}", "{:4_108:}", "{:4_95:}", "{:4_102:}", "{:4_121:}",
 					"{:4_126:}", "{:4_129:}", "{:4_119:}", "{:4_127:}", "{:4_132:}", "{:4_133:}", "{:4_112:}",
@@ -453,31 +545,31 @@
 				this.modalName = null
 			},
 			jiequ(e) {
-				return e.substr(0,200);
+				return e.substr(0, 200);
 			},
-			jifenbiandong(e,f){
-				this.jifenshuoming=e;
-				this.jifenbiangeng=f;
+			jifenbiandong(e, f) {
+				this.jifenshuoming = e;
+				this.jifenbiangeng = f;
 				this.jifencaozuo = 1;
-				setTimeout(()=>{
-					this.jifencaozuo= 2;
+				setTimeout(() => {
+					this.jifencaozuo = 2;
 				}, 1000)
-				setTimeout(()=>{
-					this.jifencaozuo= 0;
+				setTimeout(() => {
+					this.jifencaozuo = 0;
 				}, 2000)
 			},
 			Letter(str) {
-				let result;		
-				let reg = /[a-zA-Z]+/;  //[a-zA-Z]表示匹配字母，g表示全局匹配			
+				let result;
+				let reg = /[a-zA-Z]+/; //[a-zA-Z]表示匹配字母，g表示全局匹配			
 				while (result = str.match(reg)) { //判断str.match(reg)是否没有字母了			
 					str = str.replace(result[0], ''); //替换掉字母  result[0] 是 str.match(reg)匹配到的字母			
-				}			
-			  return str;			
+				}
+				return str;
 			},
 			closeemoji(e) {
 				this.showEmoji = false
 			},
-			back(){
+			back() {
 				uni.navigateBack();
 			},
 			PickerChange(e) {
@@ -491,7 +583,7 @@
 			LoadProgresss(e) {
 				this.loadProgress = this.loadProgress + 3;
 				if (this.loadProgress < 100) {
-					if(this.loadwb == 1){
+					if (this.loadwb == 1) {
 						this.loadProgress = 0;
 						return;
 					}
@@ -508,32 +600,32 @@
 				console.log(e);
 				console.log(this.isfloat[e]);
 			},
-			loadfloor(e,j) {
-				if(this.$floorswitch){
-					if(this.floorpage[j] == undefined){
+			loadfloor(e, j) {
+				if (this.$floorswitch) {
+					if (this.floorpage[j] == undefined) {
 						this.floorpage[j] = 0;
 					}
-					this.loadfloors(e, this.floorpage[j],0,0,0,j);
-				}else{
+					this.loadfloors(e, this.floorpage[j], 0, 0, 0, j);
+				} else {
 					console.log(e);
 					this.tofloor(e);
 				}
 			},
-			doNothing:function(){
-				
+			doNothing: function() {
+
 			},
-			jiancequery(){
-				if(this.loadModal==true){
+			jiancequery() {
+				if (this.loadModal == true) {
 					return;
 				}
-				this.modalName='testpan';
+				this.modalName = 'testpan';
 			},
-			jiancequery2(){
+			jiancequery2() {
 				let that = this;
 				console.log(this.jiance);
 				console.log(this.pid);
-				this.modalName= null;
-				this.loadModal=true;
+				this.modalName = null;
+				this.loadModal = true;
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=iplus_ad_corner:test', //获取置顶帖子
 					method: 'GET',
@@ -550,30 +642,30 @@
 					success: (res) => {
 						console.log(res.data)
 						if (res.data.code == 200) {
-							that.jifenbiandong('网盘检测','恭喜，该链接有效');
+							that.jifenbiandong('网盘检测', '恭喜，该链接有效');
 							that.loadthread(that.tid);
 						} else if (res.data.code == 400) {
-							that.jifenbiandong('网盘检测','该链接检测已失效');
+							that.jifenbiandong('网盘检测', '该链接检测已失效');
 							that.loadthread(that.tid);
 						} else if (res.data.code == 500) {
-							that.jifenbiandong('网盘检测','检测频率过快，稍后再试');
+							that.jifenbiandong('网盘检测', '检测频率过快，稍后再试');
 						} else if (res.data.code == 301) {
-							that.jifenbiandong('网盘检测','只能作者或管理员验证');
+							that.jifenbiandong('网盘检测', '只能作者或管理员验证');
 						} else {
-							that.jifenbiandong('网盘检测','功能错误');
+							that.jifenbiandong('网盘检测', '功能错误');
 						}
-						that.loadModal=false;
+						that.loadModal = false;
 					}
 				});
 			},
-			shoucang(){
-				if(this.loadModal1==true){
+			shoucang() {
+				if (this.loadModal1 == true) {
 					return;
 				}
 				let that = this;
 				console.log(this.tid);
-				this.modalName= null;
-				this.loadModal1=true;
+				this.modalName = null;
+				this.loadModal1 = true;
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:shoucang', //获取置顶帖子
 					method: 'GET',
@@ -588,26 +680,26 @@
 					success: (res) => {
 						console.log(res.data)
 						if (res.data.code == 200) {
-							that.jifenbiandong('收藏成功','已经加进您的收藏夹');
+							that.jifenbiandong('收藏成功', '已经加进您的收藏夹');
 							that.loadthread(that.tid);
 						} else if (res.data.code == 404) {
-							that.jifenbiandong('收藏失败','帖子不存在');
+							that.jifenbiandong('收藏失败', '帖子不存在');
 							that.loadthread(that.tid);
 						} else if (res.data.code == 202) {
-							that.jifenbiandong('收藏失败','您已经收藏了此帖子');
-						} 
-						that.loadModal1=false;
+							that.jifenbiandong('收藏失败', '您已经收藏了此帖子');
+						}
+						that.loadModal1 = false;
 					}
 				});
 			},
-			dianzan(){
-				if(this.loadModal2==true){
+			dianzan() {
+				if (this.loadModal2 == true) {
 					return;
 				}
 				let that = this;
 				console.log(this.tid);
-				this.modalName= null;
-				this.loadModal2=true;
+				this.modalName = null;
+				this.loadModal2 = true;
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:dianzan', //获取置顶帖子
 					method: 'GET',
@@ -622,26 +714,26 @@
 					success: (res) => {
 						console.log(res.data)
 						if (res.data.code == 200) {
-							that.jifenbiandong('点赞成功','此帖支持度+1');
+							that.jifenbiandong('点赞成功', '此帖支持度+1');
 							that.loadthread(that.tid);
 						} else if (res.data.code == 404) {
-							that.jifenbiandong('点赞失败','帖子不存在');
+							that.jifenbiandong('点赞失败', '帖子不存在');
 							that.loadthread(that.tid);
 						} else if (res.data.code == 202) {
-							that.jifenbiandong('点赞失败','您已经点赞了此帖子');
-						} 
-						that.loadModal2=false;
+							that.jifenbiandong('点赞失败', '您已经点赞了此帖子');
+						}
+						that.loadModal2 = false;
 					}
 				});
 			},
-			dashangadd(){
-				if(this.loadModal3==true){
+			dashangadd() {
+				if (this.loadModal3 == true) {
 					return;
 				}
 				let that = this;
 				console.log(this.tid);
-				this.modalName= null;
-				this.loadModal3=true;
+				this.modalName = null;
+				this.loadModal3 = true;
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:dashang', //获取置顶帖子
 					method: 'GET',
@@ -660,31 +752,31 @@
 							that.picker = res.data.area[0];
 							that.tishi = res.data.tishi[0];
 						} else if (res.data.code == 400) {
-							that.jifenbiandong('打赏失败','您无权打赏');
+							that.jifenbiandong('打赏失败', '您无权打赏');
 						} else if (res.data.code == 401) {
-							that.jifenbiandong('打赏失败','此板块禁止打赏');
+							that.jifenbiandong('打赏失败', '此板块禁止打赏');
 						} else if (res.data.code == 410) {
-							that.jifenbiandong('打赏失败','不能给自己打赏');
-						}  else if (res.data.code == 202) {
-							that.jifenbiandong('打赏失败','您已经打赏了此帖子');
-						} 
-						that.loadModal3=false;
+							that.jifenbiandong('打赏失败', '不能给自己打赏');
+						} else if (res.data.code == 202) {
+							that.jifenbiandong('打赏失败', '您已经打赏了此帖子');
+						}
+						that.loadModal3 = false;
 					}
 				});
 			},
-			senddashang(e){
-				if(this.loadModal4==true){
+			senddashang(e) {
+				if (this.loadModal4 == true) {
 					return;
 				}
 				let that = this;
-				if(that.sendpfno){
+				if (that.sendpfno) {
 					that.pm = 1
-				}else{
+				} else {
 					that.pm = 0
 				}
 				console.log(this.tid);
-				this.modalName= null;
-				this.loadModal4=true;
+				this.modalName = null;
+				this.loadModal4 = true;
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:dashang', //获取置顶帖子
 					method: 'GET',
@@ -704,48 +796,51 @@
 						console.log(res.data)
 						if (res.data.code == 200) {
 							that.modalName = null;
-							that.jifenbiandong('打赏成功','您将被扣除相应积分');
+							that.jifenbiandong('打赏成功', '您将被扣除相应积分');
 							that.loadthread(that.tid);
 						} else if (res.data.code == 400) {
-							that.jifenbiandong('打赏失败','您无权打赏');
+							that.jifenbiandong('打赏失败', '您无权打赏');
 						} else if (res.data.code == 401) {
-							that.jifenbiandong('打赏失败','此板块禁止打赏');
+							that.jifenbiandong('打赏失败', '此板块禁止打赏');
 						} else if (res.data.code == 410) {
-							that.jifenbiandong('打赏失败','不能给自己打赏');
+							that.jifenbiandong('打赏失败', '不能给自己打赏');
 						} else if (res.data.code == 402) {
-							that.jifenbiandong('打赏失败','打赏金额不正确');
+							that.jifenbiandong('打赏失败', '打赏金额不正确');
 						} else if (res.data.code == 403) {
-							that.jifenbiandong('打赏失败','所拥有的金币不足以打赏');
+							that.jifenbiandong('打赏失败', '所拥有的金币不足以打赏');
 						} else if (res.data.code == 202) {
-							that.jifenbiandong('打赏失败','您已经打赏了此帖子');
-						} 
-						that.loadModal4=false;
+							that.jifenbiandong('打赏失败', '您已经打赏了此帖子');
+						}
+						that.loadModal4 = false;
 					}
 				});
 			},
-			lzlpo(e,f,g) {
-				if(this.$floorswitch){
+			lzlpo(e, f, g) {
+				if (this.$floorswitch) {
 					console.log(e);
 					console.log(f);
 					this.toUID = e;
 					this.toPID = f;
-					this.modalName='floorpost';
+					this.modalName = 'floorpost';
 					this.index = g;
-				}else{
+				} else {
 					console.log(e);
 					console.log(f);
 					console.log(g);
 					this.tofloor(f);
 				}
 			},
-			lzpo(f,g) {
+			lzpo(f, g) {
 				console.log(f);
 				this.toUID = 0;
 				this.toPID = f;
 				this.index = g;
-				this.modalName='floorpost';
+				this.modalName = 'floorpost';
 			},
-			zanpo(f,g,h) {
+			zanpo(f, g, h, i) {
+				if (i == 1) {
+					return;
+				}
 				console.log(f);
 				let that = this;
 				//this.toPID = f;
@@ -765,18 +860,33 @@
 						console.log(res.data)
 					}
 				});
-				this.shake(g,parseInt(h));
+				this.shake(g, parseInt(h));
 			},
-			shake(e,f) {
+			shake(e, f) {
 				console.log(f);
 				Vue.set(this.animation, e, 1);
-				Vue.set(this.dianzannumber, e, f+1);
+				Vue.set(this.dianzannumber, e, f + 1);
+				if (this.platform == 1) { //iOS自带触感反馈
+					var UIImpactFeedbackGenerator = plus.ios.importClass(
+						'UIImpactFeedbackGenerator'
+					)
+					var impact = new UIImpactFeedbackGenerator()
+					impact.prepare()
+					impact.init(1)
+					impact.impactOccurred()
+				} else { //Android只能用震动模拟
+					uni.vibrateShort({
+						success: function() {
+							console.log('success');
+						}
+					});
+				}
 			},
-			floorhuif(e){
-				if(this.modalName =='floorpost'){
+			floorhuif(e) {
+				if (this.modalName == 'floorpost') {
 					this.floorhuifu += e;
 					this.showEmoji = false;
-				}else{
+				} else {
 					this.contenthuifu += e;
 					this.showEmoji = false;
 				}
@@ -789,8 +899,14 @@
 						animationType: 'pop-in',
 						animationDuration: 200
 					});
-				}else if(e.target == 'hbbtn1'){
-					let that=this;
+				} else if (e.target == 'forum') {
+					uni.navigateTo({
+						url: '../basics/forum?forumid=' + e.apphref,
+						animationType: 'pop-in',
+						animationDuration: 200
+					});
+				} else if (e.target == 'hbbtn1') {
+					let that = this;
 					uni.request({
 						url: getApp().globalData.zddomain + 'plugin.php?id=it618_hongbao:ajax', //获取置顶帖子
 						method: 'GET',
@@ -809,10 +925,10 @@
 						success: (res) => {
 							console.log(res.data)
 							if (res.data.code == 200) {
-								that.jifenbiandong(res.data.title,res.data.message);
+								that.jifenbiandong(res.data.title, res.data.message);
 								that.loadthread(that.tid);
 							} else {
-								that.jifenbiandong('领取失败',res.data);
+								that.jifenbiandong('领取失败', res.data);
 							}
 						}
 					});
@@ -1034,11 +1150,11 @@
 					}
 				}
 			},
-			randomcolor(){
-			     let r = Math.floor(Math.random()*200+55);
-			     let g = Math.floor(Math.random()*200+55);
-			     let b = Math.floor(Math.random()*200+55);
-			     return 'rgba('+ r +','+ g +','+ b +',0.8)';
+			randomcolor() {
+				let r = Math.floor(Math.random() * 200 + 55);
+				let g = Math.floor(Math.random() * 200 + 55);
+				let b = Math.floor(Math.random() * 200 + 55);
+				return 'rgba(' + r + ',' + g + ',' + b + ',0.8)';
 			},
 			setScrollHeight(descHeight = 0) {
 				// #ifdef MP-WEIXIN
@@ -1097,10 +1213,37 @@
 					this.showmove = true;
 				}, 1000)
 			},
+			showVaptcha() {
+				this.isShowVaptcha = true;
+				this.randomunmber = Math.random()*100;
+			},
+			refreshyzm() {
+				uni.showToast({
+					icon: "none",
+					title: "重试"
+				})
+			},
+			handleMessage(res) {
+				this.isShowVaptcha = false
+				if (res.signal === 'pass') {
+					//验证通过后获取到token和server进行后续操作
+					console.log('验证通过')
+					console.log('token:' + res.data.token)
+					console.log('server:' + res.data.server)
+					this.sendmessage();
+				}
+				if (res.signal === 'cancel') {
+					console.log('取消验证')
+				}
+				if (res.signal === 'error') {
+					console.log('请求超时')
+				}
+			},
 			sendmessage() {
-				var that=this;
+				this.isShowVaptcha = false
+				var that = this;
 				console.log(that.contenthuifu.length);
-				if(that.contenthuifu.length<5){
+				if (that.contenthuifu.length < 5) {
 					that.modalName = "cantpost";
 					that.cantpostmessage = '请输入大于4个字的回复内容。';
 					this.fasong = false;
@@ -1112,8 +1255,8 @@
 					this.fasong = false;
 					return;
 				}
-				if(!this.fasong){
-					that.fasong=true;
+				if (!this.fasong) {
+					that.fasong = true;
 					var message = encodeURI(that.contenthuifu);
 					console.log(that.contenthuifu);
 					uni.request({
@@ -1139,10 +1282,10 @@
 								that.cantpostmessage = res.data.message;
 								that.fasong = false;
 							} else {
-								if(res.data.credit){
-									that.jifenbiandong(res.data.credit,res.data.credittxt);
+								if (res.data.credit) {
+									that.jifenbiandong(res.data.credit, res.data.credittxt);
 								}
-								if(res.data.luckypost.key>=0){
+								if (res.data.luckypost.key >= 0) {
 									that.luckyme = res.data.luckypost;
 								}
 								that.refresh(message);
@@ -1152,16 +1295,16 @@
 				}
 			},
 			sendfloor() {
-				var that=this;
+				var that = this;
 				console.log(that.floorhuifu.length);
-				if(that.floorhuifu.length<5){
+				if (that.floorhuifu.length < 3) {
 					that.modalName = "cantpost";
-					that.cantpostmessage = '请输入大于4个字的回复内容。';
+					that.cantpostmessage = '请输入大于2个字的回复内容。';
 					this.floorfasong = false;
 					return;
 				}
-				if(!this.floorfasong){
-					that.floorfasong=true;
+				if (!this.floorfasong) {
+					that.floorfasong = true;
 					var message = encodeURI(that.floorhuifu);
 					console.log(that.floorhuifu);
 					console.log(that.toUID);
@@ -1202,16 +1345,16 @@
 				var fasonginfo = new Array();
 				fasonginfo.author = this.$username;
 				fasonginfo.authorid = this.$uid;
-				fasonginfo.avatarlist = 'https://zd.tiangal.com/uc_server/avatar.php?uid='+ this.$uid +'&size=small';
+				fasonginfo.avatarlist = 'https://zd.tiangal.com/uc_server/avatar.php?uid=' + this.$uid + '&size=small';
 				fasonginfo.dateline = '刚刚';
 				fasonginfo.groupid = 0;
 				fasonginfo.html = decodeURI(e);
 				fasonginfo.pid = 0;
 				fasonginfo.position = 0;
 				fasonginfo.reply = 0;
-				if(uni.getSystemInfoSync().platform=='ios'){
+				if (uni.getSystemInfoSync().platform == 'ios') {
 					fasonginfo.status = 136;
-				}else{
+				} else {
 					fasonginfo.status = 264;
 				}
 				fasonginfo.xunzhanglist = [];
@@ -1290,8 +1433,10 @@
 				let that = this;
 				if (this.$imageswitch && this.$wifi == 0) {
 					var isImage = 0;
+					this.isImage = 0;
 				} else {
 					var isImage = 1;
+					this.isImage = 1;
 				}
 				that.loadwb = 0;
 				that.LoadProgresss();
@@ -1337,7 +1482,8 @@
 							that.ding = res.data.ding;
 							that.favorite = res.data.favorite;
 							that.dashang = res.data.rate;
-							if(that.dashang>0){
+							that.yzm = res.data.yzm;
+							if (that.dashang > 0) {
 								that.dashang = "+" + that.dashang;
 							}
 							//console.log(that.threadlist);
@@ -1345,15 +1491,15 @@
 								that.setHeight("view_listnow");
 							}, 100);
 							that.loadwb = 1;
-							if(res.data.replykey=='closed'){
-								that.contenthuifu='回帖已关闭';
+							if (res.data.replykey == 'closed') {
+								that.contenthuifu = '回帖已关闭';
 								that.closed = 1;
 							}
 						}
 					}
 				});
 			},
-			loadfloors(pid, page, orderby, dateline, filter,index) {
+			loadfloors(pid, page, orderby, dateline, filter, index) {
 				let that = this;
 				this.jiazai = 1;
 				if (this.$imageswitch && this.$wifi == 0) {
@@ -1381,22 +1527,22 @@
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 					},
 					success: (res) => {
-							console.log(page);
-							if (page == 0) {
-								Vue.set(that.rplist, index, res.data);
-							} else {
-								for (let i = 0; i < res.data.length; ++i) {
-									that.rplist[index].push(res.data[i]);
-								}
+						console.log(page);
+						if (page == 0) {
+							Vue.set(that.rplist, index, res.data);
+						} else {
+							for (let i = 0; i < res.data.length; ++i) {
+								that.rplist[index].push(res.data[i]);
 							}
-							if (res.data.length < 30) {
-								that.jiazaiwanbi[index] = 1;
-								Vue.set(that.jiazaiwanbi, index, 1);
-							}
-							console.log(res.data);
-							that.floorpage[index]++;
-							that.jiazai=0;
-							that.loadwb = 1;
+						}
+						if (res.data.length < 30) {
+							that.jiazaiwanbi[index] = 1;
+							Vue.set(that.jiazaiwanbi, index, 1);
+						}
+						console.log(res.data);
+						that.floorpage[index]++;
+						that.jiazai = 0;
+						that.loadwb = 1;
 					}
 				});
 			},
@@ -1462,11 +1608,12 @@
 			this.loadthread(this.tid);
 			this.loadhuifu(this.tid, this.page, '', '', '', '1');
 			this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight;
-			if(uni.getSystemInfoSync().platform=='ios'){
+			if (uni.getSystemInfoSync().platform == 'ios') {
 				this.platform = 1;
-			}else{
+			} else {
 				this.platform = 2;
 			}
+			this.randomunmber = Math.random()*100;
 		},
 		onShow: function() {},
 		onPageScroll() {
@@ -1504,6 +1651,7 @@
 		-webkit-line-clamp: 3;
 		overflow: hidden;
 	}
+
 	.float2 {
 		display: -webkit-box;
 		word-break: break-all;
@@ -1582,54 +1730,64 @@
 		width: 48upx;
 		height: 48upx;
 	}
-	.cu-list{
-		margin-top: -10upx!important;
+
+	.cu-list {
+		margin-top: -10upx !important;
 	}
+
 	.solids-top::after {
-		border-top: 1px solid #eee!important;
+		border-top: 1px solid #eee !important;
 	}
-	.overlayer{
-	    position:fixed;
-	    left:0;
-	    top:0;
-	    width:100%;
-	    height:100%;
-	    z-index:10;
+
+	.overlayer {
+		position: fixed;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 10;
 	}
-	.vip{
+
+	.vip {
 		background-image: url(../../static/vip.png);
 		background-size: 28upx 28upx;
-		height: 28upx!important;
-		width: 28upx!important;
+		height: 28upx !important;
+		width: 28upx !important;
 	}
-	.xunzhangshow{
-		max-height: 32upx!important;
-		max-width: 22upx!important;
+
+	.xunzhangshow {
+		max-height: 32upx !important;
+		max-width: 22upx !important;
 		padding-left: 4upx;
 	}
-	.touxian{
+
+	.touxian {
 		max-width: 200upx;
 		max-height: 100upx;
 		position: absolute;
 		right: 0;
 		margin-top: 50upx;
 	}
-	.touxian2{
+
+	.touxian2 {
 		max-width: 160upx;
 		max-height: 80upx;
 		position: absolute;
 		right: 0;
 		margin-top: 40upx;
 	}
-	.bhh{
-		display:inline-block;
-		word-wrap:break-word;
-		white-space:normal;
+
+	.bhh {
+		display: inline-block;
+		word-wrap: break-word;
+		white-space: normal;
 	}
-	.hbx{
+
+	.hbx {
 		position: relative;
 	}
-	.ltsp{
+
+	.ltsp {
 		line-height: 24upx;
 	}
 </style>

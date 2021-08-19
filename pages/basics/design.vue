@@ -2,8 +2,9 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
 			<block slot="backText">返回</block>
-			<block slot="content"> 设置</block>
+			<block slot="content">设置</block>
 		</cu-custom>
+		<view class="cu-info text-center"><text class="cuIcon-warnfill text-yellow"></text>所有设置重启APP后生效</view>
 		<view class="cu-form-group">
 			<view class="title">省流量模式（非Wifi不显示图片）</view>
 			<switch @change="Setimage" class="blue" :class="image?'checked':''" :checked="image?true:false"></switch>
@@ -13,7 +14,7 @@
 			<switch @change="Setfloor" class="blue" :class="newfloor?'checked':''" :checked="newfloor?true:false"></switch>
 		</view>
 		<view class="cu-form-group">
-			<view class="title">选择尺寸</view>
+			<view class="title">选择字体尺寸</view>
 			<radio-group @change="SetShadow">
 				<label class="margin-left-sm">
 					<radio class="blue radio" value="sm"></radio>

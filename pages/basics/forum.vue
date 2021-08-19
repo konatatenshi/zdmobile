@@ -5,188 +5,203 @@
 			<block slot="content">{{forumname}}</block>
 			<block slot="right">
 				<view class="action">
-					<view class="cu-load cuIcon-refresh" @tap="refresh()"></view>
+					<view class="cu-load cuIcon-roundadd" @tap="add()"></view>
+					<view class="padding-left cu-load cuIcon-refresh" @tap="refresh()"></view>
 				</view>
 			</block>
 		</cu-custom>
 		<scroll-view scroll-x class="bg-white nav-sm" :style="'margin-top: -' + iStatusBarHeight +'px;'"
 			scroll-with-animation :scroll-left="scrollLeft">
-			<view class="cu-item" :class="index==TabCur?'text-green cur':''" v-for="(item,index) in 7" :key="index"
-				@tap="tabSelect" :data-id="index">
+			<view class="cu-item" :class="index==TabCur?'text-green cur':''" v-for="(item,index) in tabarray"
+				:key="index" @tap="tabSelect" :data-id="index">
 				{{tabname[index]}}
 			</view>
 		</scroll-view>
 		<view class="view_head">
-			<swiper class="swiper-box" :style="'height: ' + swiperheight +'px;'" :current="TabCur" @change="tabChange">
-				<swiper-item key="1">
-					<scroll-view class="list">
-						<view v-if="1 > 0">
-							<!-- 	图文列表
-							<block v-for="(item,index1) in items.list" :key="index1">
-								<view>{{item}}</view>
-							</block> -->
-						</view>
-					</scroll-view>
-				</swiper-item>
-				<swiper-item key="2">
-					<scroll-view class="list">
-						<view class="view_listnow">
-							<view v-if="threadlist.length > 0">
-								<block v-for="(item,index2) in threadlist" :key="index2">
-									<view class="solid-bottom article text-df"
-										style="padding-top: 10upx; padding-bottom: 10upx;" v-if="item.displayorder>0">
-										<view @tap="topost(item.tid)">
-											<text class="text-black text-cut"
-												style="width: 100%;">{{item.subject}}</text>
-										</view>
-										<view> <text class="text-sm text-red padding-sm">置顶</text> <text
-												class="text-sm text-gray padding-sm">{{item.author}}&nbsp&nbsp{{item.replies}}评</text>
-										</view>
+			<view class="swiper-box" :style="'height: ' + swiperheight +'px;'">
+					<view class="view_listnow">
+						<view v-if="threadlist.length > 0">
+							<block v-for="(item,index2) in threadlist" :key="index2">
+								<view class="solid-bottom article text-df"
+									style="padding-top: 10upx; padding-bottom: 10upx;" v-if="item.displayorder>0">
+									<view @tap="topost(item.tid)">
+										<text class="text-black text-cut" style="width: 100%;">{{item.subject}}</text>
 									</view>
-									<view class="cu-card article no-card" v-else>
-										<view class="cu-card dynamic solid-bottom">
-											<view class="cu-item shadow">
-												<view class="cu-list menu-avatar">
-													<view class="cu-item">
-														<view class="cu-avatar round lg"
-															:style="[{ backgroundImage:'url(' + item.userinfo.avatarlist + ')' }]">
-															<view v-show="item.userinfo.sex==1"
-																class="cu-tag badge cuIcon-male bg-blue"></view>
-															<view v-show="item.userinfo.sex==2"
-																class="cu-tag badge cuIcon-female bg-pink"></view>
+									<view> <text class="text-sm text-red padding-sm">置顶</text> <text
+											class="text-sm text-gray padding-sm">{{item.author}}&nbsp&nbsp{{item.replies}}评</text>
+									</view>
+								</view>
+								<view class="cu-card article no-card" v-else>
+									<view class="cu-card dynamic solid-bottom">
+										<view class="cu-item shadow">
+											<view class="cu-list menu-avatar">
+												<view class="cu-item">
+													<view class="cu-avatar round lg"
+														:style="[{ backgroundImage:'url(' + item.userinfo.avatarlist + ')' }]">
+														<view v-show="item.userinfo.sex==1"
+															class="cu-tag badge cuIcon-male bg-blue"></view>
+														<view v-show="item.userinfo.sex==2"
+															class="cu-tag badge cuIcon-female bg-pink"></view>
+													</view>
+													<view class="content flex-sub hbx">
+														<view v-if="isImage">
+															<img-cache class="touxian" :src="item.userinfo.touxian">
+															</img-cache>
 														</view>
-														<view class="content flex-sub hbx">
-															<view><img-cache class="touxian" :src="item.userinfo.touxian"></img-cache></view>
-															<view class="flex justify-between">
-																<view :style="[{ color: item.userinfo.groupid==51?randomcolor():''}]"><span class="bhh">{{item.author}}<text :style="[{ padding: item.userinfo.groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text><view class="cu-tag padding-left-xs padding-right-xs" :class="loadlevelicon(item.userinfo.groupid,1)">{{loadlevelicon(item.userinfo.groupid)}}</view><text :style="[{ padding: item.userinfo.groupid==51?'0 0 0 4upx':'0'}]"></text><span v-if="item.userinfo.xunzhanglist.length>0" v-for="(xzitem,xzindex) in item.userinfo.xunzhanglist.slice(0, 6)"><img-cache v-if="xzitem.id>0" class="cu-tag xunzhangshow" :src="xzitem.url"></img-cache></span></span>
-																	<view class="text-gray text-sm flex justify-between">
-																		{{item.nowdate}}
-																	</view>
+														<view class="flex justify-between">
+															<view
+																:style="[{ color: item.userinfo.groupid==51?randomcolor():''}]">
+																<span class="bhh">{{item.author}}<text
+																		:style="[{ padding: item.userinfo.groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text>
+																	<view
+																		class="cu-tag padding-left-xs padding-right-xs"
+																		:class="loadlevelicon(item.userinfo.groupid,1)">
+																		{{loadlevelicon(item.userinfo.groupid)}}</view>
+																	<text
+																		:style="[{ padding: item.userinfo.groupid==51?'0 0 0 4upx':'0'}]"></text><span
+																		v-if="item.userinfo.xunzhanglist.length>0&&isImage"
+																		v-for="(xzitem,xzindex) in item.userinfo.xunzhanglist.slice(0, 6)">
+																		<img-cache v-if="xzitem.id>0"
+																			class="cu-tag xunzhangshow"
+																			:src="xzitem.url"></img-cache>
+																	</span>
+																</span>
+																<view class="text-gray text-sm flex justify-between">
+																	{{item.nowdate}}
 																</view>
 															</view>
 														</view>
 													</view>
 												</view>
-												<view class="forumtitle text-cut" @tap="topost(item.tid)">
-													{{item.subject}}
+											</view>
+											<view class="forumtitle text-cut" @tap="topost(item.tid)">
+												{{item.subject}}
+											</view>
+											<view class="text-content text-red flex justify-center float"
+												v-if="item.readperm>0" @tap="topost(item.tid)">
+												<view
+													style="overflow: hidden;border: 1px dashed #FF9A9A;margin: 8px 0;padding: 10px;zoom: 1;width: 100%;text-align: center;">
+													需要阅读权限：{{item.readperm}}</view>
+											</view>
+											<view v-else class="text-content" @tap="topost(item.tid)">
+												{{item.summary}}
+											</view>
+											<view v-if="item.attachment==3&&isImage"
+												class="grid flex-sub padding-lr col-1">
+												<view v-if="item.attachlist[0].attachment!=null"
+													@click="imgMap(item.attachlist[0].attachment)"
+													class="bg-img only-img"
+													:style="[{ backgroundImage:'url(' + item.attachlist[0].attachment + ')' }]">
 												</view>
+											</view>
+											<view v-else-if="item.attachment==4&&isImage"
+												class="grid flex-sub padding-lr col-3 grid-square">
+												<view v-if="item.attachlist[0].attachment!=null"
+													@click="imgMap(item.attachlist[0].attachment)" class="bg-img"
+													:style="[{ backgroundImage:'url(' + item.attachlist[0].attachment + ')' }]">
+												</view>
+												<view v-if="item.attachlist[1].attachment!=null"
+													@click="imgMap(item.attachlist[1].attachment)" class="bg-img"
+													:style="[{ backgroundImage:'url(' + item.attachlist[1].attachment + ')' }]">
+												</view>
+											</view>
+											<view v-else-if="item.attachment>4&&isImage"
+												class="grid flex-sub padding-lr col-3 grid-square">
+												<view v-if="item.attachlist[0].attachment!=null"
+													@click="imgMap(item.attachlist[0].attachment)" class="bg-img"
+													:style="[{ backgroundImage:'url(' + item.attachlist[0].attachment + ')' }]">
+												</view>
+												<view v-if="item.attachlist[1].attachment!=null"
+													@click="imgMap(item.attachlist[1].attachment)" class="bg-img"
+													:style="[{ backgroundImage:'url(' + item.attachlist[1].attachment + ')' }]">
+												</view>
+												<view v-if="item.attachlist[2].attachment!=null"
+													@click="imgMap(item.attachlist[2].attachment)" class="bg-img"
+													:style="[{ backgroundImage:'url(' + item.attachlist[2].attachment + ')' }]">
+												</view>
+											</view>
+											<view class="flex justify-between">
+												<view class="text-gray text-sm text-left padding-top2 padding-left">
+													<text v-if="item.icon==1"
+														class="cu-tag line-red padding-left-xs padding-right-xs">新人帖</text>
+													<text v-if="item.attachment>2"
+														class="cu-tag line-green padding-left-xs padding-right-xs">图文帖</text>
+													<text v-if="item.heats>9999"
+														class="cu-tag line-purple padding-left-xs padding-right-xs">热度:1w+</text>
+													<text v-else-if="item.heats>999"
+														class="cu-tag line-purple padding-left-xs padding-right-xs">热度:1k+</text>
+													<text v-else-if="item.heats>200"
+														class="cu-tag line-purple padding-left-xs padding-right-xs">热度:{{item.heats}}</text>
+													<text v-else-if="item.heats>100"
+														class="cu-tag line-mauve padding-left-xs padding-right-xs">热度:{{item.heats}}</text>
+													<text v-else-if="item.heats>50"
+														class="cu-tag line-pink padding-left-xs padding-right-xs">热度:{{item.heats}}</text>
+													<text v-else-if="item.rate==1"
+														class="cu-tag line-cyan padding-left-xs padding-right-xs">被赞赏</text>
+													<text v-else-if="item.rate==-1"
+														class="cu-tag line-yellow padding-left-xs padding-right-xs">被扣分</text>
+													<text v-else-if="item.digest>0"
+														class="cu-tag line-blue padding-left-xs padding-right-xs">精华帖</text>
+												</view>
+												<view class="text-gray text-sm text-right padding">
+													<text class="cuIcon-attentionfill margin-lr-xs"></text>
+													{{item.views}}
+													<text class="cuIcon-appreciatefill margin-lr-xs"></text>
+													{{item.recommends}}
+													<text class="cuIcon-messagefill margin-lr-xs"></text>
+													{{item.replies}}
+												</view>
+											</view>
+										</view>
+									</view>
+								</view>
+							</block>
+						</view>
+						<view v-if="newpost.length > 0">
+							<block v-for="(item,index3) in newpost" :key="index3" @tap="tourl(item.url)">
+								<view class="solid-bottom cu-card article no-card">
+									<view class="cu-item shadow">
+										<view class="title">
+											<view class="text-cut">{{item.title}}</view>
+										</view>
+										<view class="content">
+											<image v-if="item.img != 'static/image/common/nophoto.gif'" :src="item.img"
+												mode="aspectFill"></image>
+											<view class="desc">
 												<view class="text-content text-red flex justify-center float"
 													v-if="item.readperm>0" @tap="topost(item.tid)">
 													<view
 														style="overflow: hidden;border: 1px dashed #FF9A9A;margin: 8px 0;padding: 10px;zoom: 1;width: 100%;text-align: center;">
 														需要阅读权限：{{item.readperm}}</view>
 												</view>
-												<view v-else class="text-content" @tap="topost(item.tid)">
+												<view v-else class="text-content">
 													{{item.summary}}
 												</view>
-												<view v-if="item.attachment==3&&isImage"
-													class="grid flex-sub padding-lr col-1">
-													<view v-if="item.attachlist[0].attachment!=null"
-														@click="imgMap(item.attachlist[0].attachment)"
-														class="bg-img only-img"
-														:style="[{ backgroundImage:'url(' + item.attachlist[0].attachment + ')' }]">
+												<view>
+													<view class="cu-tag bg-red light sm round">{{item.author}}
 													</view>
-												</view>
-												<view v-else-if="item.attachment==4&&isImage"
-													class="grid flex-sub padding-lr col-3 grid-square">
-													<view v-if="item.attachlist[0].attachment!=null"
-														@click="imgMap(item.attachlist[0].attachment)" class="bg-img"
-														:style="[{ backgroundImage:'url(' + item.attachlist[0].attachment + ')' }]">
-													</view>
-													<view v-if="item.attachlist[1].attachment!=null"
-														@click="imgMap(item.attachlist[1].attachment)" class="bg-img"
-														:style="[{ backgroundImage:'url(' + item.attachlist[1].attachment + ')' }]">
-													</view>
-												</view>
-												<view v-else-if="item.attachment>4&&isImage"
-													class="grid flex-sub padding-lr col-3 grid-square">
-													<view v-if="item.attachlist[0].attachment!=null"
-														@click="imgMap(item.attachlist[0].attachment)" class="bg-img"
-														:style="[{ backgroundImage:'url(' + item.attachlist[0].attachment + ')' }]">
-													</view>
-													<view v-if="item.attachlist[1].attachment!=null"
-														@click="imgMap(item.attachlist[1].attachment)" class="bg-img"
-														:style="[{ backgroundImage:'url(' + item.attachlist[1].attachment + ')' }]">
-													</view>
-													<view v-if="item.attachlist[2].attachment!=null"
-														@click="imgMap(item.attachlist[2].attachment)" class="bg-img"
-														:style="[{ backgroundImage:'url(' + item.attachlist[2].attachment + ')' }]">
-													</view>
-												</view>
-												<view class="flex justify-between">
-													<view class="text-gray text-sm text-left padding-top2 padding-left">
-														<text v-if="item.icon==1" class="cu-tag line-red padding-left-xs padding-right-xs">新人帖</text>
-														<text v-if="item.attachment>2" class="cu-tag line-green padding-left-xs padding-right-xs">图文帖</text>
-														<text v-if="item.heats>9999" class="cu-tag line-purple padding-left-xs padding-right-xs">热度:1w+</text>
-														<text v-else-if="item.heats>999" class="cu-tag line-purple padding-left-xs padding-right-xs">热度:1k+</text>
-														<text v-else-if="item.heats>200" class="cu-tag line-purple padding-left-xs padding-right-xs">热度:{{item.heats}}</text>
-														<text v-else-if="item.heats>100" class="cu-tag line-mauve padding-left-xs padding-right-xs">热度:{{item.heats}}</text>
-														<text v-else-if="item.heats>50" class="cu-tag line-pink padding-left-xs padding-right-xs">热度:{{item.heats}}</text>
-														<text v-else-if="item.rate==1" class="cu-tag line-cyan padding-left-xs padding-right-xs">被赞赏</text>
-														<text v-else-if="item.rate==-1" class="cu-tag line-yellow padding-left-xs padding-right-xs">被扣分</text>
-														<text v-else-if="item.digest>0" class="cu-tag line-blue padding-left-xs padding-right-xs">精华帖</text>
-													</view>
-													<view class="text-gray text-sm text-right padding">
-														<text class="cuIcon-attentionfill margin-lr-xs"></text>
-														{{item.views}}
-														<text class="cuIcon-appreciatefill margin-lr-xs"></text>
-														{{item.recommends}}
-														<text class="cuIcon-messagefill margin-lr-xs"></text>
-														{{item.replies}}
+													<view class="cu-tag bg-green light sm round">{{item.replies}}评
 													</view>
 												</view>
 											</view>
 										</view>
 									</view>
-								</block>
-							</view>
-							<view v-if="newpost.length > 0">
-								<block v-for="(item,index3) in newpost" :key="index3" @tap="tourl(item.url)">
-									<view class="solid-bottom cu-card article no-card">
-										<view class="cu-item shadow">
-											<view class="title">
-												<view class="text-cut">{{item.title}}</view>
-											</view>
-											<view class="content">
-												<image v-if="item.img != 'static/image/common/nophoto.gif'"
-													:src="item.img" mode="aspectFill"></image>
-												<view class="desc">
-													<view class="text-content text-red flex justify-center float"
-														v-if="item.readperm>0" @tap="topost(item.tid)">
-														<view
-															style="overflow: hidden;border: 1px dashed #FF9A9A;margin: 8px 0;padding: 10px;zoom: 1;width: 100%;text-align: center;">
-															需要阅读权限：{{item.readperm}}</view>
-													</view>
-													<view v-else class="text-content">
-														{{item.summary}}
-													</view>
-													<view>
-														<view class="cu-tag bg-red light sm round">{{item.author}}
-														</view>
-														<view class="cu-tag bg-green light sm round">{{item.replies}}评
-														</view>
-													</view>
-												</view>
-											</view>
-										</view>
-									</view>
-								</block>
-							</view>
-							<view>
-								<block>
-									<view class="padding-xs flex align-center bg-gray">
-										<view class="flex-sub text-center">
-											<view class="text-xs padding">
-												<text class="text-black">{{loading}}</text>
-											</view>
-										</view>
-									</view>
-								</block>
-							</view>
+								</view>
+							</block>
 						</view>
-					</scroll-view>
-				</swiper-item>
-			</swiper>
+						<view>
+							<block>
+								<view class="padding-xs flex align-center bg-gray">
+									<view class="flex-sub text-center">
+										<view class="text-xs padding">
+											<text class="text-black">{{loading}}</text>
+										</view>
+									</view>
+								</view>
+							</block>
+						</view>
+					</view>
+			</view>
 		</view>
 		<view class="cu-modal" :class="modalName=='needlogin'?'show':''">
 			<view class="cu-dialog">
@@ -249,10 +264,11 @@
 				threadlisttitle: [],
 				newpost: [],
 				tabname: ["新帖", "全部", "热门", "精华"],
+				tabarray: [0, 1, 2, 3],
 				avatarimgLoaded: false,
 				iscard: false,
 				modalName: null,
-				TabCur: 1,
+				TabCur: 99,
 				forumid: 2,
 				Wifi: 0,
 				mainpage: 0,
@@ -497,11 +513,11 @@
 					}
 				}
 			},
-			randomcolor(){
-			     let r = Math.floor(Math.random()*200+55);
-			     let g = Math.floor(Math.random()*200+55);
-			     let b = Math.floor(Math.random()*200+55);
-			     return 'rgba('+ r +','+ g +','+ b +',0.8)';
+			randomcolor() {
+				let r = Math.floor(Math.random() * 200 + 55);
+				let g = Math.floor(Math.random() * 200 + 55);
+				let b = Math.floor(Math.random() * 200 + 55);
+				return 'rgba(' + r + ',' + g + ',' + b + ',0.8)';
 			},
 			LoadProgresss(e) {
 				this.loadProgress = this.loadProgress + 2;
@@ -545,6 +561,11 @@
 				} else {
 					this.isImage = 1;
 				}
+				console.log(orderby);
+				console.log(page);
+				if (page == 0) {
+					that.threadlist = [];
+				}
 				that.loading = '加载中';
 				that.loadwb = 0;
 				that.LoadProgresss();
@@ -566,6 +587,7 @@
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 					},
 					success: (res) => {
+						//console.log(res.data)
 						if (res.data.code == 404) {
 							that.modalName = "needlogin";
 						} else if (res.data.code == 401) {
@@ -586,8 +608,17 @@
 							}
 							that.mainpage++;
 							that.forumname = res.data.foruminfo1.name;
+							console.log(res.data.foruminfo2.threadtypes != false)
+							if (res.data.foruminfo2.threadtypes != false) {
+								Object.getOwnPropertyNames(res.data.foruminfo2.threadtypes.types).forEach(
+									function(key) {
+										console.log(res.data.foruminfo2.threadtypes.types[key], key)
+										that.tabname.push(res.data.foruminfo2.threadtypes.types[key]);
+										that.tabarray.push(key);
+									});
+							}
 							//console.log(that.threadlist);
-							if(uni.getSystemInfoSync().platform=='ios'){
+							if (uni.getSystemInfoSync().platform == 'ios') {
 								setTimeout(function() {
 									that.setHeight("view_listnow");
 									setTimeout(function() {
@@ -597,13 +628,15 @@
 											setTimeout(function() {
 												that.setHeight("view_listnow");
 												setTimeout(function() {
-													that.setHeight("view_listnow");
+													that.setHeight(
+														"view_listnow"
+														);
 												}, 100);
 											}, 100);
 										}, 100);
 									}, 100);
 								}, 100);
-							}else{
+							} else {
 								setTimeout(function() {
 									that.setHeight("view_listnow");
 									setTimeout(function() {
@@ -613,7 +646,9 @@
 											setTimeout(function() {
 												that.setHeight("view_listnow");
 												setTimeout(function() {
-													that.setHeight("view_listnow");
+													that.setHeight(
+														"view_listnow"
+														);
 												}, 200);
 											}, 200);
 										}, 200);
@@ -628,13 +663,26 @@
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;
 				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60;
-				console.log(this.swiperheight)
+				console.log(this.TabCur);
+				if(this.TabCur==0){
+					this.mainpage = 0;
+					this.loadthread(this.forumid, this.mainpage, 'new');
+				}else if(this.TabCur==1){
+					this.mainpage = 0;
+					this.loadthread(this.forumid, this.mainpage);
+				}
+			},
+			add() {
+				console.log(this.forumid);
+				uni.navigateTo({
+					url: '../basics/background?url=' + this.forumid
+				})
 			},
 			tabChange(e) {
 				//this.setHeight();
 				this.currentIndex = e.detail.current;
 				this.TabCur = e.detail.current;
-				this.loadthread(this.forumid);
+				//this.loadthread(this.forumid);
 			},
 			tourl(e) {
 				console.log(this.swiperheight)
@@ -643,7 +691,15 @@
 		onLoad: function(option) { //option为object类型，会序列化上个页面传递的参数 
 			this.forumid = option.forumid;
 			console.log(option.forumid); //打印出上个页面传递的参数。
-			this.loadthread(this.forumid);
+			var groups = ['88', '51', '95', '45', '61', '60', '44', '70', '2', '92', '82'];
+			if(groups.indexOf(option.forumid)>=0){
+				this.TabCur = 0;
+				this.loadthread(option.forumid, 0, 'new');
+			}else{
+				this.TabCur = 1;
+				this.loadthread(option.forumid);
+			}
+			console.log(this.TabCur)
 			this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight;
 		},
 		mounted() {
@@ -669,6 +725,7 @@
 		background-position-y: 9%;
 		margin: 0;
 	}
+
 	.cu-list.menu-avatar>.cu-item {
 		background-color: transparent;
 		height: 110upx;
@@ -710,36 +767,43 @@
 		-webkit-line-clamp: 2;
 		overflow: hidden;
 	}
-	.article{
+
+	.article {
 		margin: 10upx;
 	}
-	.vip{
+
+	.vip {
 		background-image: url(../../static/vip.png);
 		background-size: 28upx 28upx;
-		height: 28upx!important;
-		width: 28upx!important;
+		height: 28upx !important;
+		width: 28upx !important;
 	}
-	.xunzhangshow{
-		max-height: 32upx!important;
-		max-width: 22upx!important;
+
+	.xunzhangshow {
+		max-height: 32upx !important;
+		max-width: 22upx !important;
 		padding-left: 4upx;
 	}
-	.touxian{
+
+	.touxian {
 		max-width: 200upx;
 		max-height: 100upx;
 		position: absolute;
 		right: 0;
 		margin-top: 50upx;
 	}
-	.bhh{
-		display:inline-block;
-		word-wrap:break-word;
-		white-space:normal;
+
+	.bhh {
+		display: inline-block;
+		word-wrap: break-word;
+		white-space: normal;
 	}
-	.hbx{
+
+	.hbx {
 		position: relative;
 	}
-	.padding-top2{
+
+	.padding-top2 {
 		padding-top: 26upx;
 	}
 </style>

@@ -95,7 +95,7 @@
 				<view class="padding">
 					<view class="cu-form-group">
 						<view class="title">手机号</view>
-						<input type="number" placeholder="请输入手机号" name="mobilenum" v-model="phonenumber" value=""
+						<input type="tel" placeholder="请输入手机号" name="mobilenum" v-model="phonenumber" value=""
 							@input="changephonenumber"></input>
 						<picker class="shoujiquma" @change="Pickcountry" :value="addressData.countryid"
 							:range="countryList">
@@ -496,16 +496,7 @@
 								data: res.data.data,
 								success: function() {
 									console.log(res.data.data);
-								}
-							});
-							uni.getStorage({
-								key: 'userlogininfo',
-								success: function(res) {
-									Vue.prototype.$token = res.data.token;
-									Vue.prototype.$uid = res.data.uid;
-									uni.redirectTo({
-										url: '/pages/index/index'
-									});
+									plus.runtime.restart();
 								}
 							});
 						}
@@ -766,7 +757,12 @@
 	uni-picker.shoujiquma {
 		padding-right: 0px;
 	}
-
+	.cu-tag{
+		padding-top: 30upx!important;
+		padding-bottom: 30upx!important;
+		padding-left: 10upx!important;
+		padding-right: 10upx!important;
+	}
 	.login-form {
 		margin: -9px 10px 0 10px;
 		height: 280px;

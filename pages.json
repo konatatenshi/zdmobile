@@ -23,7 +23,19 @@
 		},
 		{
 			"path": "pages/basics/background",
-			"style": {}
+			"style": {  
+				"app-plus": {  
+					"navigationBarTitleText": "发帖",  
+					"titleNView": {  
+						"autoBackButton": false,  
+						"buttons": [{  
+							"float": "left",  
+							"type": "back"  
+						}]  
+					}  
+				}
+			}
+				
 		},
 		{
 			"path": "pages/basics/text",
