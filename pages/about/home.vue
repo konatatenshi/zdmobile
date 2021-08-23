@@ -62,7 +62,7 @@
 				</view>
 				<text>提醒</text>
 			</view>
-			<view class="cu-item" @click="messageclick">
+			<view class="cu-item" @click="toqiandao">
 				<view class="cuIcon-squarecheckfill text-yellow">
 					<view class="cu-tag badge" v-if="this.mynewpm!=0">
 						<block v-if="this.mynewpm!=1">{{this.mynewpm>99?'99+':this.mynewpm}}</block>
@@ -344,6 +344,11 @@
 			backhome(){      
 				this.$emit("returnDat","basics")//传递的值
 				 //returnDate接收的方法名  
+			},
+			toqiandao(){
+				uni.navigateTo({
+					url: '../basics/icon'
+				})
 			},
 			cleanbefore(e) {
 				this.modalName = 'logout';

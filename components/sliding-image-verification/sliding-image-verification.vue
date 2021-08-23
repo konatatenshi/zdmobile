@@ -1,8 +1,8 @@
 <template>
     <view class="page">
 		
-		<movable-area :style="{ width: getPersentageW(100) + 'px' , height: getPersentageH(50) + 'px'}">
-			<image class="bgc-img" :src="bgImg" :style="{ width: getPersentageW(100) + 'px' , height: getPersentageH(50) + 'px'}"
+		<movable-area :style="{ width: getPersentageW(100) + 'px' , height: getPersentageH(30) + 'px'}">
+			<image class="bgc-img" :src="bgImg" :style="{ width: getPersentageW(100) + 'px' , height: getPersentageH(30) + 'px'}"
 			mode="scaleToFill"
 			></image>
 			<movable-view 
@@ -12,7 +12,7 @@
 			:inertia="false" @change="onChange">
 				<canvas class="myCanvas"
 				:style="{top: getPersentageH(canvasH) +'px', left: slidX+'px',width: sliderBlockWidth + 'rpx', height: sliderBlockWidth +'rpx'}" 
-				style="background-color: #DD524D;"
+				style="background-color: #f8f8f8;"
 				canvas-id="myCanvas"></canvas>
 			</movable-view>
 		</movable-area>
@@ -104,7 +104,7 @@
 				/* 创建canvas实例 */
 				var ctx = uni.createCanvasContext('myCanvas')
 				/* 绘制背景图 */
-				ctx.drawImage(_self.bgImg, -1*_self.getSlideW(_self.successNumber), -1*_self.getPersentageH(_self.canvasH),this.getPersentageW(100),this.getPersentageH(50))
+				ctx.drawImage(_self.bgImg, -1*_self.getSlideW(_self.successNumber), -1*_self.getPersentageH(_self.canvasH),this.getPersentageW(100),this.getPersentageH(30))
 				ctx.save()
 				ctx.draw()
 				// 保存截图
@@ -183,7 +183,7 @@
 	.showPic {
 		margin-bottom: 10px;
 		/* 添加阴影 */
-		background-color: rgba(0,0,0,0.4);
+		background-color: rgba(255,255,255,0.3);
 		// border: 1px solid;
 		position: absolute;
 	}

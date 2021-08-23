@@ -25,7 +25,7 @@
 				var re = /\/thread-(\d*)*/i;
 				var found = thisurl.match(re);
 
-				console.log(found);
+				//console.log(found);
 				if (found) {
 					console.log(found[1]);
 					let that = this;

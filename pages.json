@@ -27,11 +27,11 @@
 				"app-plus": {  
 					"navigationBarTitleText": "发帖",  
 					"titleNView": {  
-						"autoBackButton": false,  
-						"buttons": [{  
-							"float": "left",  
-							"type": "back"  
-						}]  
+						"autoBackButton": true,  
+						"backButton": {  
+							"color" : "#ffffff",
+							"title": "返回"
+						}  
 					}  
 				}
 			}
@@ -43,7 +43,18 @@
 		},
 		{
 			"path": "pages/basics/icon",
-			"style": {}
+			"style": {  
+				"app-plus": {  
+					"navigationBarTitleText": "签到",  
+					"titleNView": {  
+						"autoBackButton": true,  
+						"backButton": {  
+							"color" : "#ffffff",
+							"title": "返回"
+						}  
+					}  
+				}
+			}
 		},
 		{
 			"path": "pages/basics/button",

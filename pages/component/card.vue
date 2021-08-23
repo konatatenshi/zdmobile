@@ -6,8 +6,6 @@
 		</cu-custom>
 		<view class="cu-card dynamic no-card" :style="'margin-top: -' + iStatusBarHeight +'px;'">
 			<view class="cu-item shadow">
-				<sliding-image-verification style="position: absolute;float:left;width: 100%;height: 141vw;z-index: 9999;" v-if="isShowVaptcha" bgImg="../../static/headPic.png" :successNumber=randomunmber
-					:allowError="3" :canvasH="10" @success="sendmessage" @refresh="refreshyzm"></sliding-image-verification>
 				<view class="title">
 					<view class="text-cut">{{postname}}</view>
 				</view>
@@ -21,7 +19,7 @@
 							<view v-if="isImage">
 								<img-cache class="touxian" :src="touxian"></img-cache>
 							</view>
-							<view>{{postup}}<text :style="[{ padding: groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text>
+							<view :style="[{ color: groupid==51?randomcolor():''}]">{{postup}}<text :style="[{ padding: groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text>
 								<view class="cu-tag padding-left-xs padding-right-xs" :class="loadlevelicon(groupid,1)">
 									{{loadlevelicon(groupid)}}
 								</view><text :style="[{ padding: groupid==51?'0 0 0 4upx':'0'}]"></text><span
@@ -131,7 +129,7 @@
 								<img-cache class="touxian2" :src="item.touxian"></img-cache>
 							</view>
 							<view class="flex justify-between">
-								<view class="text-grey">{{item.author}}<text
+								<view :style="[{ color: item.groupid==51?randomcolor():'text-gray'}]">{{item.author}}<text
 										:style="[{ padding: item.groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text><span
 										class="cu-tag padding-left-xs padding-right-xs"
 										:class="loadlevelicon(item.groupid,1)">{{loadlevelicon(item.groupid)}}</span><text
@@ -380,6 +378,17 @@
 						</view>
 					</view>
 				</view>
+				<view class="cu-modal" :class="isShowVaptcha?'show':''">
+					<view class="cu-dialog" style="width: 100%;">
+						<view>
+						<sliding-image-verification v-if="isShowVaptcha" style="width: 100%;height: 60vw;z-index: 9999;" :bgImg=bgimg :successNumber=randomunmber
+							:allowError="3" :canvasH="10" @success="sendmessage" @refresh="refreshyzm"></sliding-image-verification>
+						</view>
+						<view class="padding-xl">
+							请滑动上图的滑块来验证回复，避免回帖机器人。
+						</view>
+					</view>
+				</view>
 				<view class="cu-modal" :class="jifencaozuo!=0?'show':''">
 					<button class="cu-btn margin-sm basis-sm shadow bg-orange"
 						:class="jifencaozuo==1?'animation-scale-up':'animation-reverse animation-scale-down'">
@@ -476,6 +485,7 @@
 				cantpostmessage: '',
 				replykey: '',
 				touxian: '',
+				bgimg: '',
 				lucky: -1,
 				yzm: 0,
 				luckymessage: '',
@@ -681,7 +691,7 @@
 						console.log(res.data)
 						if (res.data.code == 200) {
 							that.jifenbiandong('收藏成功', '已经加进您的收藏夹');
-							that.loadthread(that.tid);
+							that.favorite = parseInt(that.favorite)+1;
 						} else if (res.data.code == 404) {
 							that.jifenbiandong('收藏失败', '帖子不存在');
 							that.loadthread(that.tid);
@@ -715,7 +725,7 @@
 						console.log(res.data)
 						if (res.data.code == 200) {
 							that.jifenbiandong('点赞成功', '此帖支持度+1');
-							that.loadthread(that.tid);
+							that.ding = parseInt(that.ding)+1;
 						} else if (res.data.code == 404) {
 							that.jifenbiandong('点赞失败', '帖子不存在');
 							that.loadthread(that.tid);
@@ -797,7 +807,10 @@
 						if (res.data.code == 200) {
 							that.modalName = null;
 							that.jifenbiandong('打赏成功', '您将被扣除相应积分');
-							that.loadthread(that.tid);
+							that.dashang =parseInt(that.dashang) + parseInt(that.dashangjinbi);
+							if(that.dashang>0){
+								that.dashang ="+" + that.dashang;
+							}
 						} else if (res.data.code == 400) {
 							that.jifenbiandong('打赏失败', '您无权打赏');
 						} else if (res.data.code == 401) {
@@ -1215,7 +1228,14 @@
 			},
 			showVaptcha() {
 				this.isShowVaptcha = true;
+				this.bgimg = 'http://bbs.zdfx.net/img/style/i/yzm_pic/'+ Math.floor(Math.random()*218) +'.jpg';
+				//this.bgimg = '../../static/headPic.png';
+				console.log(this.bgimg)
 				this.randomunmber = Math.random()*100;
+				// #ifdef APP-PLUS
+				var page = this.$mp.page.$getAppWebview();
+				page.setStyle({ popGesture: 'none' });
+				// #endif
 			},
 			refreshyzm() {
 				uni.showToast({
@@ -1241,11 +1261,15 @@
 			},
 			sendmessage() {
 				this.isShowVaptcha = false
+				// #ifdef APP-PLUS
+				var page = this.$mp.page.$getAppWebview();
+				page.setStyle({ popGesture: 'close' });
+				// #endif
 				var that = this;
 				console.log(that.contenthuifu.length);
-				if (that.contenthuifu.length < 5) {
+				if (that.contenthuifu.length < 4) {
 					that.modalName = "cantpost";
-					that.cantpostmessage = '请输入大于4个字的回复内容。';
+					that.cantpostmessage = '请输入大于等于4个字的回复内容。';
 					this.fasong = false;
 					return;
 				}
@@ -1297,9 +1321,9 @@
 			sendfloor() {
 				var that = this;
 				console.log(that.floorhuifu.length);
-				if (that.floorhuifu.length < 3) {
+				if (that.floorhuifu.length < 2) {
 					that.modalName = "cantpost";
-					that.cantpostmessage = '请输入大于2个字的回复内容。';
+					that.cantpostmessage = '请输入大于等于2个字的回复内容。';
 					this.floorfasong = false;
 					return;
 				}
@@ -1614,6 +1638,7 @@
 				this.platform = 2;
 			}
 			this.randomunmber = Math.random()*100;
+			this.bgimg = 'http://bbs.zdfx.net/img/style/i/yzm_pic/'+ Math.floor(Math.random()*208) +'.jpg';
 		},
 		onShow: function() {},
 		onPageScroll() {

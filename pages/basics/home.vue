@@ -12,8 +12,8 @@
 				</view>
 				<view class="search-form radius">
 					<text class="cuIcon-search"></text>
-					<input @focus="InputFocus" @blur="InputBlur" :adjust-position="false" type="text"
-						placeholder="搜索图片、文章、视频" confirm-type="search"></input>
+					<input @focus="InputFocus" @blur="InputBlur" @confirm="searchconfirm" :adjust-position="false"
+						type="text" placeholder="搜索图片、文章、视频" confirm-type="search"></input>
 				</view>
 			</view>
 		</view>
@@ -126,12 +126,15 @@
 			</swiper>
 		</view>
 		<view class="cu-modal" :class="jifencaozuo!=0?'show':''">
-			<button class="cu-btn margin-sm basis-sm shadow bg-orange" :class="jifencaozuo==1?'animation-scale-up':'animation-reverse animation-scale-down'">
-				<text class="text-xl text-white text-shadow">{{jifenshuoming}}：</text><text class="text-xl text-white text-shadow">{{jifenbiangeng}}</text>
+			<button class="cu-btn margin-sm basis-sm shadow bg-orange"
+				:class="jifencaozuo==1?'animation-scale-up':'animation-reverse animation-scale-down'">
+				<text class="text-xl text-white text-shadow">{{jifenshuoming}}：</text><text
+					class="text-xl text-white text-shadow">{{jifenbiangeng}}</text>
 			</button>
 		</view>
 		<view class="load-progress" v-show="loadProgress!=0" :style="[{top:CustomBar+'px'}]">
-			<view class="load-progress-bar bg-green" :style="[{transform: 'translate3d(-' + (100-loadProgress) + '%, 0px, 0px)'}]"></view>
+			<view class="load-progress-bar bg-green"
+				:style="[{transform: 'translate3d(-' + (100-loadProgress) + '%, 0px, 0px)'}]"></view>
 			<view class="load-progress-spinner text-green"></view>
 		</view>
 	</view>
@@ -191,13 +194,13 @@
 						console.log(that.page);
 						push = res.data.post;
 						console.log(push);
-						if (push.length >0) {
+						if (push.length > 0) {
 							for (let i = 0; i < push.length; ++i) {
 								that.newpost.push(push[i]);
 							}
 						}
 						if (res.data.length < 30) {
-							that.loading='竟然到底了！';
+							that.loading = '竟然到底了！';
 						}
 						that.page++;
 						setTimeout(function() {
@@ -214,27 +217,27 @@
 					if (rect) {
 						//console.log(e + ".height = " + rect.height)
 						this.swiperheight = rect.height + uni.getSystemInfoSync().statusBarHeight +
-						50; //页面可见区域 - 头部高度
+							50; //页面可见区域 - 头部高度
 						//console.log("this.height = " + this.swiperheight)
 					}
 				}).exec();
 
 			},
-			jifenbiandong(e,f){
-				this.jifenshuoming=e;
-				this.jifenbiangeng=f;
+			jifenbiandong(e, f) {
+				this.jifenshuoming = e;
+				this.jifenbiangeng = f;
 				this.jifencaozuo = 1;
-				setTimeout(()=>{
-					this.jifencaozuo= 2;
+				setTimeout(() => {
+					this.jifencaozuo = 2;
 				}, 1000)
-				setTimeout(()=>{
-					this.jifencaozuo= 0;
+				setTimeout(() => {
+					this.jifencaozuo = 0;
 				}, 2000)
 			},
 			LoadProgresss(e) {
 				this.loadProgress = this.loadProgress + 3;
 				if (this.loadProgress < 100) {
-					if(this.loadwb == 1){
+					if (this.loadwb == 1) {
 						this.loadProgress = 0;
 						return;
 					}
@@ -251,6 +254,14 @@
 			},
 			InputBlur(e) {
 				this.InputBottom = 0
+			},
+			searchconfirm(e) {
+				console.log(e)
+				uni.navigateTo({
+					url: '../basics/layout?s=' + encodeURIComponent(e.detail.value),
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
 			},
 			onSuccessImg() {
 				this.avatarimgLoaded = true;
@@ -308,9 +319,9 @@
 					//console.log(that.swiperList);
 				}
 			});
-			if(this.$imageswitch&&this.$wifi==0){
+			if (this.$imageswitch && this.$wifi == 0) {
 				this.isImage = 0;
-			}else{
+			} else {
 				this.isImage = 1;
 			}
 			uni.request({
@@ -351,14 +362,13 @@
 						that.setHeight("view_listnow");
 					}, 100)
 					that.tab1enabled = 1;
-					if(that.$nowdate != res.data.date&&that.$token != ''){
-						that.jifenbiandong('每日登录','金币+1，点币+1，宠物经验+1');
+					if (that.$nowdate != res.data.date && that.$token != '') {
+						that.jifenbiandong('每日登录', '金币+1，点币+1，宠物经验+1');
 						Vue.prototype.$nowdate = res.data.date;
 						uni.setStorage({
 							key: 'nowdata',
 							data: res.data.date,
-							success: function() {
-							}
+							success: function() {}
 						});
 					}
 				}
@@ -385,9 +395,10 @@
 		margin: 0;
 	}
 
-	.article{
+	.article {
 		margin: 10upx;
 	}
+
 	.page {
 		height: 100vh;
 	}
