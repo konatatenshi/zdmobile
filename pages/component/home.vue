@@ -1,3 +1,4 @@
+<!-- 板块列表页 -->
 <template name="components">
 	<view>
 		<view class="fixed">

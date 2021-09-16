@@ -1,3 +1,4 @@
+<!-- 楼中楼 -->
 <template>
 	<view>
 		<cu-custom class="statustop" bgColor="bg-white" :isBack="true">
@@ -305,7 +306,7 @@
 						this.loadProgress = 0;
 						return;
 					}
-					console.log(this.loadProgress);
+					//console.log(this.loadProgress);
 					setTimeout(() => {
 						this.LoadProgresss();
 					}, 100)
@@ -764,7 +765,7 @@
 				plus.runtime.restart();
 			},
 			tothebottom() {
-				this.loadhuifu(this.tid, this.page, '', '', '', '1');
+				this.loadhuifu(this.tid, this.page, '', '', '', '3');
 				console.log("到底了");
 			},
 			IsCard(e) {
@@ -861,7 +862,7 @@
 					data: {
 						token: that.$token,
 						pid: pid,
-						floorpage: page,
+						page: page,
 						orderby: orderby,
 						dateline: dateline,
 						filter: filter,
@@ -908,7 +909,7 @@
 					data: {
 						token: that.$token,
 						pid: pid,
-						floorpage: page,
+						page: page,
 						orderby: orderby,
 						dateline: dateline,
 						filter: filter,
@@ -919,14 +920,18 @@
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 					},
 					success: (res) => {
+						console.log(res.data);
 						if (res.data.code == 404) {
 							that.modalName = "needlogin";
 						} else if (res.data.code == 401) {
 							that.modalName = "cantview";
 							that.cantviewmessage = res.data.message;
+						} else if (res.data.code == 405) {
+							that.loading = '到底了。';
 						} else {
 							if (that.page == 0) {
 								that.huifulist = res.data;
+								that.loading = '上拉可加载更多回复';
 							} else {
 								for (let i = 0; i < res.data.length; ++i) {
 									that.huifulist.push(res.data[i]);
@@ -936,7 +941,6 @@
 									that.loading = '到底了。';
 								}
 							}
-							console.log(res.data);
 							that.page++;
 							that.loadwb = 1;
 						}

@@ -1,3 +1,4 @@
+<!-- 搜索页面 -->
 <template name="basics">
 	<view>
 		<cu-custom class="statustop" bgColor="bg-gradual-pink" :isBack="true">
@@ -55,15 +56,14 @@
 																	<view
 																		class="cu-tag padding-left-xs padding-right-xs"
 																		:class="loadlevelicon(item.userinfo.groupid,1)">
-																		{{loadlevelicon(item.userinfo.groupid)}}</view>
-																	<text
-																		:style="[{ padding: item.userinfo.groupid==51?'0 0 0 4upx':'0'}]"></text><span
-																		v-if="item.userinfo.xunzhanglist.length>0&&isImage"
-																		v-for="(xzitem,xzindex) in item.userinfo.xunzhanglist.slice(0, 6)">
-																		<img-cache v-if="xzitem.id>0"
-																			class="cu-tag xunzhangshow"
-																			:src="xzitem.url"></img-cache>
-																	</span>
+																		{{loadlevelicon(item.userinfo.groupid)}}
+																	</view>
+																	<view
+																		class="cu-tag padding-left-xs padding-right-xs"
+																		:class="loadlevelicon2(item.fid)"
+																		@tap="toforum(item.fid)">
+																		{{item.bkname}}
+																	</view>
 																</span>
 																<view class="text-gray text-sm flex justify-between">
 																	{{item.nowdate}}
@@ -235,7 +235,7 @@
 				<view class="cu-bar bg-white justify-end">
 					<view class="action">
 						<button class="cu-btn line-green text-green" @tap="hideModal">取消</button>
-						<button class="cu-btn bg-green margin-left" @tap="tologin">确定</button>
+						<button class="cu-btn bg-green margin-left" @tap="back">确定</button>
 					</view>
 				</view>
 			</view>
@@ -287,6 +287,16 @@
 				uni.redirectTo({
 					url: '../../components/ay-login/login-password'
 				});
+			},
+			toforum(e) {
+				uni.navigateTo({
+					url: '../basics/forum?forumid=' + e,
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
+			},
+			back(){
+				uni.navigateBack();
 			},
 			refresh(e) {
 				this.mainpage = 0;
@@ -513,6 +523,29 @@
 					}
 				}
 			},
+			loadlevelicon2(e) {
+				if (e.substr(e.length-1,1) == 0) {
+					return 'line-red';
+				} else if  (e.substr(e.length-1,1) == 1) {
+					return 'line-orange';
+				} else if  (e.substr(e.length-1,1) == 2) {
+					return 'line-olive';
+				} else if  (e.substr(e.length-1,1) == 3) {
+					return 'line-green';
+				} else if  (e.substr(e.length-1,1) == 4) {
+					return 'line-cyan';
+				} else if  (e.substr(e.length-1,1) == 5) {
+					return 'line-blue';
+				} else if  (e.substr(e.length-1,1) == 6) {
+					return 'line-purple';
+				} else if  (e.substr(e.length-1,1) == 7) {
+					return 'line-mauve';
+				} else if  (e.substr(e.length-1,1) == 8) {
+					return 'line-pink';
+				} else if  (e.substr(e.length-1,1) == 9) {
+					return 'line-brown';
+				}
+			},
 			randomcolor() {
 				let r = Math.floor(Math.random() * 200 + 55);
 				let g = Math.floor(Math.random() * 200 + 55);
@@ -584,7 +617,7 @@
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 					},
 					success: (res) => {
-						console.log(res.data)
+						//console.log(res.data)
 						if (res.data.code == 404) {
 							that.modalName = "needlogin";
 						} else if (res.data.code == 401) {

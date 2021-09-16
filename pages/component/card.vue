@@ -1,3 +1,4 @@
+<!-- 帖子页面 -->
 <template>
 	<view>
 		<cu-custom class="statustop" bgColor="bg-gradual-pink" :isBack="true">
@@ -1608,6 +1609,8 @@
 								that.huifulist = res.data;
 								if (res.data.length == 0) {
 									that.loading = '还没有任何回复，快来抢沙发吧！';
+								}else{
+									that.loading = '上拉可加载更多回复';
 								}
 							} else {
 								for (let i = 0; i < res.data.length; ++i) {

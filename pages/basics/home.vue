@@ -13,7 +13,7 @@
 				<view class="search-form radius">
 					<text class="cuIcon-search"></text>
 					<input @focus="InputFocus" @blur="InputBlur" @confirm="searchconfirm" :adjust-position="false"
-						type="text" placeholder="搜索图片、文章、视频" confirm-type="search"></input>
+						type="text" placeholder="搜索图片、文章、视频"></input>
 				</view>
 			</view>
 		</view>
@@ -23,6 +23,27 @@
 				{{tabname[index]}}
 			</view>
 		</scroll-view>
+		<!-- 搜索历史 -->
+		<view class="searchHistory" :style="'display: '+ searchstyle +';'">
+			<view
+				style="display:flex;justify-content: space-between;box-sizing: border-box;padding: 0px 5px;z-index: 999;"
+				:style="'margin-top:'+ iStatusBarHeight +'px;'">
+				<view>搜索历史:</view>
+
+				<view style="color: red;font-size: 28px;" @click="empty">×</view>
+			</view>
+			<view class="searchHistoryItem">
+				<view v-for="(item3, index3) in searchHistoryList" :key="index3">
+					<view
+						class="cu-tag padding-left-xs padding-right-xs"
+						:class="loadlevelicon2(index3)"
+						@tap="searchconfirm2(item3)">
+						{{item3}}
+					</view>
+				</view>
+			</view>
+		</view>
+		<!-- 搜索历史 -->
 		<view class="view_head">
 			<swiper class="swiper-box" :style="'height: ' + swiperheight +'px;'" :current="TabCur" @change="tabChange">
 				<swiper-item key="1">
@@ -168,8 +189,10 @@
 				avatarimgLoaded: false,
 				TabCur: 1,
 				loading: "载入中……",
+				searchstyle: "none",
 				jifenbiangeng: '积分名+1',
 				jifenshuoming: '积分变更',
+				searchHistoryList: [], //搜索出来的内容
 				swiperheight: 1000, //高度
 			};
 		},
@@ -250,18 +273,128 @@
 				}
 			},
 			InputFocus(e) {
+				let that = this;
 				this.InputBottom = e.detail.height
+				this.searchstyle = "inherit";
+				console.log(this.searchHistoryList);
+				//调取搜索历史记录
+				uni.getStorage({
+					key: 'searchList',
+					success: function(res) {
+						console.log(res.data);
+						that.searchHistoryList = JSON.parse(res.data);
+						console.log(that.searchHistoryList);
+						//console.log(that.forumdata);
+					}
+				});
 			},
 			InputBlur(e) {
-				this.InputBottom = 0
+				this.InputBottom = 0;
+				this.searchstyle = "none";
 			},
 			searchconfirm(e) {
+				this.searchstyle = "none";
+				if (e.detail.value == '') {
+					uni.showModal({
+						title: '搜索内容不能为空'
+					});
+					return;
+				} else {
+					if (!this.searchHistoryList.includes(e.detail.value)) {
+						this.searchHistoryList.unshift(e.detail.value);
+						uni.setStorage({
+							key: 'searchList',
+							data: JSON.stringify(this.searchHistoryList)
+						});
+					} else {
+						//有搜索记录，删除之前的旧记录，将新搜索值重新push到数组首位
+						let i = this.searchHistoryList.indexOf(e.detail.value);
+						this.searchHistoryList.splice(i, 1);
+						this.searchHistoryList.unshift(e.detail.value);
+						uni.showToast({
+							title: '重复搜索，搜索词提前'
+						});
+						uni.setStorage({
+							key: 'searchList',
+							data: JSON.stringify(this.searchHistoryList)
+						});
+					}
+				}
 				console.log(e)
 				uni.navigateTo({
 					url: '../basics/layout?s=' + encodeURIComponent(e.detail.value),
 					animationType: 'pop-in',
 					animationDuration: 200
 				});
+			},
+			searchconfirm2(e) {
+				this.searchstyle = "none";
+				if (e == '') {
+					uni.showModal({
+						title: '搜索内容不能为空'
+					});
+					return;
+				} else {
+					if (!this.searchHistoryList.includes(e)) {
+						this.searchHistoryList.unshift(e);
+						uni.setStorage({
+							key: 'searchList',
+							data: JSON.stringify(this.searchHistoryList)
+						});
+					} else {
+						//有搜索记录，删除之前的旧记录，将新搜索值重新push到数组首位
+						let i = this.searchHistoryList.indexOf(e);
+						this.searchHistoryList.splice(i, 1);
+						this.searchHistoryList.unshift(e);
+						//uni.showToast({
+						//	title: '不能重复添加'
+						//});
+						uni.setStorage({
+							key: 'searchList',
+							data: JSON.stringify(this.searchHistoryList)
+						});
+					}
+				}
+				console.log(e)
+				uni.navigateTo({
+					url: '../basics/layout?s=' + encodeURIComponent(e),
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
+			},
+			//清空历史记录
+			empty() {
+				uni.showToast({
+					title: '已清空'
+				});
+				uni.removeStorage({
+					key: 'searchList'
+				});
+
+				this.searchHistoryList = [];
+			},
+			loadlevelicon2(e) {
+				if (e%10 == 0) {
+					return 'line-red';
+				} else if  (e%10 == 1) {
+					return 'line-orange';
+				} else if  (e%10 == 2) {
+					return 'line-olive';
+				} else if  (e%10 == 3) {
+					return 'line-green';
+				} else if  (e%10 == 4) {
+					return 'line-cyan';
+				} else if  (e%10 == 5) {
+					return 'line-blue';
+				} else if  (e%10 == 6) {
+					return 'line-purple';
+				} else if  (e%10 == 7) {
+					return 'line-mauve';
+				} else if  (e%10 == 8) {
+					return 'line-pink';
+				} else if  (e%10 == 9) {
+					return 'line-brown';
+				}
 			},
 			onSuccessImg() {
 				this.avatarimgLoaded = true;
@@ -309,7 +442,7 @@
 			}
 		},
 		created() {
-			this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight;
+			this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight+70;
 			plus.navigator.setStatusBarStyle('light'); //改变系统标题颜色
 			var that = this;
 			uni.getStorage({
@@ -373,6 +506,16 @@
 					}
 				}
 			});
+				//调取搜索历史记录
+				uni.getStorage({
+					key: 'searchList',
+					success: function(res) {
+						console.log(res.data);
+						that.searchHistoryList = JSON.parse(res.data);
+						console.log(that.searchHistoryList);
+						//console.log(that.forumdata);
+					}
+				});
 		},
 		mounted() {
 			//this.setHeight();
@@ -417,5 +560,23 @@
 		line-height: 30px;
 		margin: 0 5px;
 		padding: 0 11px;
+	}
+
+	.searchHistory {
+		width: 100%;
+		margin-top: 5px;
+	}
+
+	.searchHistoryItem {
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	.searchHistoryItem view {
+		/* width: 50px; */
+		height: 20px;
+		border: 1px solid #eee;
+		margin: 0px 5px;
 	}
 </style>

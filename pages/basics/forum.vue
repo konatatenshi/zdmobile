@@ -1,3 +1,4 @@
+<!-- 板块列表页 -->
 <template name="basics">
 	<view>
 		<cu-custom class="statustop" bgColor="bg-gradual-pink" :isBack="true">
@@ -236,7 +237,7 @@
 				<view class="cu-bar bg-white justify-end">
 					<view class="action">
 						<button class="cu-btn line-green text-green" @tap="hideModal">取消</button>
-						<button class="cu-btn bg-green margin-left" @tap="tologin">确定</button>
+						<button class="cu-btn bg-green margin-left" @tap="back">确定</button>
 					</view>
 				</view>
 			</view>
@@ -302,6 +303,9 @@
 					animationType: 'pop-in',
 					animationDuration: 200
 				});
+			},
+			back(){
+				uni.navigateBack();
 			},
 			tothebottom() {
 				this.loadthread(this.forumid, this.mainpage);
