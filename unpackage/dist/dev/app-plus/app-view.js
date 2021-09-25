@@ -7434,6 +7434,49 @@ var render = function() {
           )
         ],
         1
+      ),
+      _c(
+        "v-uni-view",
+        {
+          staticClass: _vm._$g(24, "sc"),
+          attrs: { _i: 24 },
+          on: {
+            click: function($event) {
+              return _vm.$handleViewEvent($event)
+            }
+          }
+        },
+        [
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(25, "sc"), attrs: { _i: 25 } },
+            [_vm._v("检测服务器状态")]
+          ),
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(26, "sc"), attrs: { _i: 26 } },
+            [
+              _c(
+                "v-uni-view",
+                { staticClass: _vm._$g(27, "sc"), attrs: { _i: 27 } },
+                [
+                  _c("v-uni-text", {
+                    staticClass: _vm._$g(28, "sc"),
+                    attrs: { _i: 28 }
+                  }),
+                  _c(
+                    "v-uni-text",
+                    { staticClass: _vm._$g(29, "sc"), attrs: { _i: 29 } },
+                    [_vm._v("点击进行检测")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
       )
     ],
     1
@@ -9596,7 +9639,7 @@ var render = function() {
           _c(
             "template",
             { attrs: { slot: "content", _i: 3 }, slot: "content" },
-            [_vm._v("加载")]
+            [_vm._v("检测服务器状态")]
           ),
           _c(
             "template",
@@ -9632,167 +9675,227 @@ var render = function() {
                 staticClass: _vm._$g(9, "sc"),
                 attrs: { _i: 9 }
               }),
-              _vm._v("背景")
+              _vm._v("服务器状态列表")
             ],
             1
           )
         ],
         1
       ),
-      _c("v-uni-view", {
-        staticClass: _vm._$g(10, "sc"),
-        class: _vm._$g(10, "c"),
-        attrs: { _i: 10 }
-      }),
-      _c(
-        "v-uni-view",
-        { staticClass: _vm._$g(11, "sc"), attrs: { _i: 11 } },
-        [
-          _c(
+      _vm._$g(10, "i")
+        ? _c("v-uni-view", {
+            staticClass: _vm._$g(10, "sc"),
+            class: _vm._$g(10, "c"),
+            attrs: { _i: 10 }
+          })
+        : _c(
             "v-uni-view",
-            { staticClass: _vm._$g(12, "sc"), attrs: { _i: 12 } },
+            { staticClass: _vm._$g(11, "sc"), attrs: { _i: 11 } },
             [
-              _c("v-uni-text", {
-                staticClass: _vm._$g(13, "sc"),
-                attrs: { _i: 13 }
-              }),
-              _vm._v("加载状态")
-            ],
-            1
-          ),
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(14, "sc"), attrs: { _i: 14 } },
-            [
-              _c("v-uni-switch", {
-                class: _vm._$g(15, "c"),
-                attrs: { _i: 15 },
-                on: {
-                  change: function($event) {
-                    return _vm.$handleViewEvent($event)
-                  }
-                }
-              })
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _c("v-uni-view", {
-        staticClass: _vm._$g(16, "sc"),
-        class: _vm._$g(16, "c"),
-        attrs: { _i: 16 }
-      }),
-      _c(
-        "v-uni-view",
-        { staticClass: _vm._$g(17, "sc"), attrs: { _i: 17 } },
-        [
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(18, "sc"), attrs: { _i: 18 } },
-            [
-              _c("v-uni-text", {
-                staticClass: _vm._$g(19, "sc"),
-                attrs: { _i: 19 }
-              }),
-              _vm._v("加载错误")
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _c("v-uni-view", { staticClass: _vm._$g(20, "sc"), attrs: { _i: 20 } }),
-      _c(
-        "v-uni-view",
-        { staticClass: _vm._$g(21, "sc"), attrs: { _i: 21 } },
-        [
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(22, "sc"), attrs: { _i: 22 } },
-            [
-              _c("v-uni-text", {
-                staticClass: _vm._$g(23, "sc"),
-                attrs: { _i: 23 }
-              }),
-              _vm._v("弹框加载")
-            ],
-            1
-          ),
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(24, "sc"), attrs: { _i: 24 } },
-            [
-              _c(
-                "v-uni-button",
-                {
-                  staticClass: _vm._$g(25, "sc"),
-                  attrs: { _i: 25 },
-                  on: {
-                    click: function($event) {
-                      return _vm.$handleViewEvent($event)
-                    }
-                  }
-                },
-                [_vm._v("点我")]
-              )
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _vm._$g(26, "i")
-        ? _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(26, "sc"), attrs: { _i: 26 } },
-            [
-              _c("v-uni-image", {
-                attrs: { src: "/static/logo.png", mode: "aspectFit", _i: 27 }
-              }),
               _c(
                 "v-uni-view",
-                { staticClass: _vm._$g(28, "sc"), attrs: { _i: 28 } },
-                [_vm._v("加载中...")]
-              )
+                { staticClass: _vm._$g(12, "sc"), attrs: { _i: 12 } },
+                [
+                  _c(
+                    "v-uni-view",
+                    { staticClass: _vm._$g(13, "sc"), attrs: { _i: 13 } },
+                    [_vm._v("运行状态")]
+                  ),
+                  _c(
+                    "v-uni-view",
+                    { staticClass: _vm._$g(14, "sc"), attrs: { _i: 14 } },
+                    [_vm._v("节点名称")]
+                  ),
+                  _c(
+                    "v-uni-view",
+                    { staticClass: _vm._$g(15, "sc"), attrs: { _i: 15 } },
+                    [_vm._v("CPU")]
+                  ),
+                  _c(
+                    "v-uni-view",
+                    { staticClass: _vm._$g(16, "sc"), attrs: { _i: 16 } },
+                    [_vm._v("内存")]
+                  ),
+                  _c(
+                    "v-uni-view",
+                    { staticClass: _vm._$g(17, "sc"), attrs: { _i: 17 } },
+                    [_vm._v("网络(B/s)↓|↑")]
+                  )
+                ],
+                1
+              ),
+              _vm._l(_vm._$g(18, "f"), function(item, index, $20, $30) {
+                return _c(
+                  "v-uni-view",
+                  {
+                    key: item,
+                    staticClass: _vm._$g("18-" + $30, "sc"),
+                    attrs: { _i: "18-" + $30 }
+                  },
+                  _vm._l(5, function(items, indexs, $21, $31) {
+                    return _c(
+                      "v-uni-view",
+                      {
+                        key: indexs,
+                        staticClass: _vm._$g("19-" + $30 + "-" + $31, "sc"),
+                        class: _vm._$g("19-" + $30 + "-" + $31, "c"),
+                        style: _vm._$g("19-" + $30 + "-" + $31, "s"),
+                        attrs: { _i: "19-" + $30 + "-" + $31 }
+                      },
+                      [
+                        _vm._$g("20-" + $30 + "-" + $31, "i")
+                          ? _c(
+                              "v-uni-view",
+                              { attrs: { _i: "20-" + $30 + "-" + $31 } },
+                              [
+                                _vm._$g("21-" + $30 + "-" + $31, "i")
+                                  ? _c(
+                                      "v-uni-view",
+                                      {
+                                        attrs: { _i: "21-" + $30 + "-" + $31 }
+                                      },
+                                      [
+                                        _c(
+                                          "v-uni-button",
+                                          {
+                                            staticClass: _vm._$g(
+                                              "22-" + $30 + "-" + $31,
+                                              "sc"
+                                            ),
+                                            attrs: {
+                                              _i: "22-" + $30 + "-" + $31
+                                            }
+                                          },
+                                          [_vm._v("运行中")]
+                                        )
+                                      ],
+                                      1
+                                    )
+                                  : _c(
+                                      "v-uni-view",
+                                      {
+                                        attrs: { _i: "23-" + $30 + "-" + $31 }
+                                      },
+                                      [
+                                        _c(
+                                          "v-uni-button",
+                                          {
+                                            staticClass: _vm._$g(
+                                              "24-" + $30 + "-" + $31,
+                                              "sc"
+                                            ),
+                                            attrs: {
+                                              _i: "24-" + $30 + "-" + $31
+                                            }
+                                          },
+                                          [_vm._v("维护中")]
+                                        )
+                                      ],
+                                      1
+                                    )
+                              ],
+                              1
+                            )
+                          : _vm._e(),
+                        _vm._$g("25-" + $30 + "-" + $31, "i")
+                          ? _c(
+                              "v-uni-view",
+                              { attrs: { _i: "25-" + $30 + "-" + $31 } },
+                              [_vm._v(_vm._$g("25-" + $30 + "-" + $31, "t0-0"))]
+                            )
+                          : _vm._e(),
+                        _vm._$g("26-" + $30 + "-" + $31, "i")
+                          ? _c(
+                              "v-uni-view",
+                              { attrs: { _i: "26-" + $30 + "-" + $31 } },
+                              [
+                                _vm._$g("27-" + $30 + "-" + $31, "i")
+                                  ? _c(
+                                      "v-uni-view",
+                                      {
+                                        attrs: { _i: "27-" + $30 + "-" + $31 }
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._$g(
+                                            "27-" + $30 + "-" + $31,
+                                            "t0-0"
+                                          ) + "%"
+                                        )
+                                      ]
+                                    )
+                                  : _c(
+                                      "v-uni-view",
+                                      {
+                                        attrs: { _i: "28-" + $30 + "-" + $31 }
+                                      },
+                                      [_vm._v("无")]
+                                    )
+                              ],
+                              1
+                            )
+                          : _vm._e(),
+                        _vm._$g("29-" + $30 + "-" + $31, "i")
+                          ? _c(
+                              "v-uni-view",
+                              { attrs: { _i: "29-" + $30 + "-" + $31 } },
+                              [
+                                _vm._$g("30-" + $30 + "-" + $31, "i")
+                                  ? _c(
+                                      "v-uni-view",
+                                      {
+                                        attrs: { _i: "30-" + $30 + "-" + $31 }
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._$g(
+                                            "30-" + $30 + "-" + $31,
+                                            "t0-0"
+                                          ) + "%"
+                                        )
+                                      ]
+                                    )
+                                  : _c(
+                                      "v-uni-view",
+                                      {
+                                        attrs: { _i: "31-" + $30 + "-" + $31 }
+                                      },
+                                      [_vm._v("无")]
+                                    )
+                              ],
+                              1
+                            )
+                          : _vm._e(),
+                        _vm._$g("32-" + $30 + "-" + $31, "i")
+                          ? _c(
+                              "v-uni-view",
+                              { attrs: { _i: "32-" + $30 + "-" + $31 } },
+                              [_vm._v(_vm._$g("32-" + $30 + "-" + $31, "t0-0"))]
+                            )
+                          : _vm._e()
+                      ],
+                      1
+                    )
+                  }),
+                  1
+                )
+              })
             ],
-            1
-          )
-        : _vm._e(),
+            2
+          ),
       _c(
         "v-uni-view",
-        { staticClass: _vm._$g(29, "sc"), attrs: { _i: 29 } },
+        { staticClass: _vm._$g(33, "sc"), attrs: { _i: 33 } },
         [
           _c(
             "v-uni-view",
-            { staticClass: _vm._$g(30, "sc"), attrs: { _i: 30 } },
+            { staticClass: _vm._$g(34, "sc"), attrs: { _i: 34 } },
             [
               _c("v-uni-text", {
-                staticClass: _vm._$g(31, "sc"),
-                attrs: { _i: 31 }
+                staticClass: _vm._$g(35, "sc"),
+                attrs: { _i: 35 }
               }),
-              _vm._v("进度条加载")
-            ],
-            1
-          ),
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(32, "sc"), attrs: { _i: 32 } },
-            [
-              _c(
-                "v-uni-button",
-                {
-                  staticClass: _vm._$g(33, "sc"),
-                  attrs: { _i: 33 },
-                  on: {
-                    click: function($event) {
-                      return _vm.$handleViewEvent($event)
-                    }
-                  }
-                },
-                [_vm._v("点我")]
-              )
+              _vm._v("更新时间")
             ],
             1
           )
@@ -9801,22 +9904,13 @@ var render = function() {
       ),
       _c(
         "v-uni-view",
-        {
-          staticClass: _vm._$g(34, "sc"),
-          class: _vm._$g(34, "c"),
-          style: _vm._$g(34, "s"),
-          attrs: { _i: 34 }
-        },
+        { staticClass: _vm._$g(36, "sc"), attrs: { _i: 36 } },
         [
-          _c("v-uni-view", {
-            staticClass: _vm._$g(35, "sc"),
-            style: _vm._$g(35, "s"),
-            attrs: { _i: 35 }
-          }),
-          _c("v-uni-view", {
-            staticClass: _vm._$g(36, "sc"),
-            attrs: { _i: 36 }
-          })
+          _c(
+            "v-uni-view",
+            { staticClass: _vm._$g(37, "sc"), attrs: { _i: 37 } },
+            [_vm._v(_vm._$g(37, "t0-0") + " 秒前")]
+          )
         ],
         1
       )

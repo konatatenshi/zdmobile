@@ -1,3 +1,4 @@
+<!-- 设置页面 -->
 <template>
 	<view>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
@@ -29,6 +30,15 @@
 					<text class="margin-left-sm"> 大</text>
 				</label>
 			</radio-group>
+		</view>
+		<view class="cu-form-group" @tap="toserver()">
+			<view class="title">检测服务器状态</view>
+			<view class="cu-item">
+				<view class="content">
+					<text class="cuIcon-warn text-green"></text>
+					<text class="text-grey">点击进行检测</text>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -76,6 +86,13 @@
 			SetShadow(e) {
 				this.shadow = e.detail.value
 			},
+			toserver(){
+				uni.navigateTo({
+					url: './loading',
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
+			}
 		},
 		created() {
 			var that = this;
