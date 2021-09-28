@@ -137,7 +137,7 @@
 					},
 					success: (res) => {
 						var jsonfy = res.data.servers;
-						console.log(jsonfy);
+						//console.log(jsonfy);
 						that.updatetime = Math.floor(Date.now() / 1000) - res.data.updated;
 						that.serverlist = jsonfy;
 						setTimeout(function() {

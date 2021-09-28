@@ -1,6 +1,6 @@
 <template>
 	<view class="bg-gray">
-		<basics v-if="PageCur=='basics'" ref="basics"></basics>
+		<basics v-if="PageCur=='basics'" ref="basics" @returnDat='returnDate'></basics>
 		<components v-if="PageCur=='component'"></components>
 		<plugin v-if="PageCur=='plugin'" ref="message"></plugin>
 		<about v-if="PageCur=='about'" @returnDat='returnDate'></about>

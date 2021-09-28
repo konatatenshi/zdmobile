@@ -20,7 +20,8 @@
 							<view v-if="isImage">
 								<img-cache class="touxian" :src="touxian"></img-cache>
 							</view>
-							<view :style="[{ color: groupid==51?randomcolor():''}]">{{postup}}<text :style="[{ padding: groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text>
+							<view :style="[{ color: groupid==51?randomcolor():''}]">{{postup}}<text
+									:style="[{ padding: groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text>
 								<view class="cu-tag padding-left-xs padding-right-xs" :class="loadlevelicon(groupid,1)">
 									{{loadlevelicon(groupid)}}
 								</view><text :style="[{ padding: groupid==51?'0 0 0 4upx':'0'}]"></text><span
@@ -93,7 +94,7 @@
 						<view v-else class="padding-xs radius shadow shadow-lg bg-red margin-top text-xs ltsp">
 							发帖际遇：{{luckymessage}}</view>
 					</view>
-					<view class="padding flex p-xs margin-bottom-sm mb-sm">
+					<view class="padding flex p-xs mb-sm">
 						<view class="cu-capsule flex-sub">
 							<view class='cu-tag bg-pink padding-sm' @tap="dianzan()">
 								<text class='cuIcon-appreciatefill'>点赞</text>
@@ -119,6 +120,10 @@
 							</view>
 						</view>
 					</view>
+					<view class="margin-bottom-sm" style="max-height: 500rpx;" v-if="sightml!=''">
+						<image mode='widthFix' src="../../static/sigline.gif"></image>
+						<rich-text mode='widthFix' :nodes="formatRichText(sightml)"></rich-text>
+					</view>
 				</view>
 				<view class="cu-list menu-avatar comment solids-top" v-for="(item,index) in huifulist" :key="index"
 					:data-id="index">
@@ -130,7 +135,8 @@
 								<img-cache class="touxian2" :src="item.touxian"></img-cache>
 							</view>
 							<view class="flex justify-between">
-								<view :style="[{ color: item.groupid==51?randomcolor():'text-gray'}]">{{item.author}}<text
+								<view :style="[{ color: item.groupid==51?randomcolor():'text-gray'}]">
+									{{item.author}}<text
 										:style="[{ padding: item.groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text><span
 										class="cu-tag padding-left-xs padding-right-xs"
 										:class="loadlevelicon(item.groupid,1)">{{loadlevelicon(item.groupid)}}</span><text
@@ -382,8 +388,10 @@
 				<view class="cu-modal" :class="isShowVaptcha?'show':''">
 					<view class="cu-dialog" style="width: 100%;">
 						<view>
-						<sliding-image-verification v-if="isShowVaptcha" style="width: 100%;height: 60vw;z-index: 9999;" :bgImg=bgimg :successNumber=randomunmber
-							:allowError="3" :canvasH="10" @success="sendmessage" @refresh="refreshyzm"></sliding-image-verification>
+							<sliding-image-verification v-if="isShowVaptcha"
+								style="width: 100%;height: 60vw;z-index: 9999;" :bgImg=bgimg :successNumber=randomunmber
+								:allowError="3" :canvasH="10" @success="sendmessage" @refresh="refreshyzm">
+							</sliding-image-verification>
 						</view>
 						<view class="padding-xl">
 							请滑动上图的滑块来验证回复，避免回帖机器人。
@@ -471,6 +479,7 @@
 				isCard: false,
 				sendpfno: false,
 				postname: '加载中',
+				sightml: '',
 				contenthuifu: '',
 				floorhuifu: '',
 				content: '',
@@ -591,6 +600,27 @@
 			sendpfnofi(e) {
 				this.sendpfno = e.detail.value
 			},
+			formatRichText(html) {
+				// 去掉img标签里的style、width、height属性
+				let newContent = html.replace(/<img[^>]*>/gi, function(match, capture) {
+					match = match.replace(/style="[^"]+"/gi, '').replace(/style='[^']+'/gi, '');
+					match = match.replace(/width="[^"]+"/gi, '').replace(/width='[^']+'/gi, '');
+					match = match.replace(/height="[^"]+"/gi, '').replace(/height='[^']+'/gi, '');
+					return match;
+				});
+				// 修改所有style里的width属性为max-width:100%
+				newContent = newContent.replace(/style="[^"]+"/gi, function(match, capture) {
+					match = match.replace(/width:[^;]+;/gi, 'max-width:100%;').replace(/width:[^;]+;/gi,
+						'max-width:100%;');
+					return match;
+				});
+				// 去掉<br/>标签
+				newContent = newContent.replace(/<br[^>]*\/>/gi, '');
+				// img标签添加style属性：max-width:100%;height:auto
+				newContent = newContent.replace(/\<img/gi,
+					'<img style="max-width:100%;height:auto;display:block;margin:0px auto;"');
+				return newContent;
+			},
 			LoadProgresss(e) {
 				this.loadProgress = this.loadProgress + 3;
 				if (this.loadProgress < 100) {
@@ -692,7 +722,7 @@
 						console.log(res.data)
 						if (res.data.code == 200) {
 							that.jifenbiandong('收藏成功', '已经加进您的收藏夹');
-							that.favorite = parseInt(that.favorite)+1;
+							that.favorite = parseInt(that.favorite) + 1;
 						} else if (res.data.code == 404) {
 							that.jifenbiandong('收藏失败', '帖子不存在');
 							that.loadthread(that.tid);
@@ -726,7 +756,7 @@
 						console.log(res.data)
 						if (res.data.code == 200) {
 							that.jifenbiandong('点赞成功', '此帖支持度+1');
-							that.ding = parseInt(that.ding)+1;
+							that.ding = parseInt(that.ding) + 1;
 						} else if (res.data.code == 404) {
 							that.jifenbiandong('点赞失败', '帖子不存在');
 							that.loadthread(that.tid);
@@ -808,9 +838,9 @@
 						if (res.data.code == 200) {
 							that.modalName = null;
 							that.jifenbiandong('打赏成功', '您将被扣除相应积分');
-							that.dashang =parseInt(that.dashang) + parseInt(that.dashangjinbi);
-							if(that.dashang>0){
-								that.dashang ="+" + that.dashang;
+							that.dashang = parseInt(that.dashang) + parseInt(that.dashangjinbi);
+							if (that.dashang > 0) {
+								that.dashang = "+" + that.dashang;
 							}
 						} else if (res.data.code == 400) {
 							that.jifenbiandong('打赏失败', '您无权打赏');
@@ -1229,13 +1259,15 @@
 			},
 			showVaptcha() {
 				this.isShowVaptcha = true;
-				this.bgimg = 'http://bbs.zdfx.net/img/style/i/yzm_pic/'+ Math.floor(Math.random()*218) +'.jpg';
+				this.bgimg = 'http://bbs.zdfx.net/img/style/i/yzm_pic/' + Math.floor(Math.random() * 218) + '.jpg';
 				//this.bgimg = '../../static/headPic.png';
 				console.log(this.bgimg)
-				this.randomunmber = Math.random()*100;
+				this.randomunmber = Math.random() * 100;
 				// #ifdef APP-PLUS
 				var page = this.$mp.page.$getAppWebview();
-				page.setStyle({ popGesture: 'none' });
+				page.setStyle({
+					popGesture: 'none'
+				});
 				// #endif
 			},
 			refreshyzm() {
@@ -1264,7 +1296,9 @@
 				this.isShowVaptcha = false
 				// #ifdef APP-PLUS
 				var page = this.$mp.page.$getAppWebview();
-				page.setStyle({ popGesture: 'close' });
+				page.setStyle({
+					popGesture: 'close'
+				});
 				// #endif
 				var that = this;
 				console.log(that.contenthuifu.length);
@@ -1508,6 +1542,7 @@
 							that.favorite = res.data.favorite;
 							that.dashang = res.data.rate;
 							that.yzm = res.data.yzm;
+							that.sightml = res.data.userinfo.sightml;
 							if (that.dashang > 0) {
 								that.dashang = "+" + that.dashang;
 							}
@@ -1609,7 +1644,7 @@
 								that.huifulist = res.data;
 								if (res.data.length == 0) {
 									that.loading = '还没有任何回复，快来抢沙发吧！';
-								}else{
+								} else {
 									that.loading = '上拉可加载更多回复';
 								}
 							} else {
@@ -1640,8 +1675,8 @@
 			} else {
 				this.platform = 2;
 			}
-			this.randomunmber = Math.random()*100;
-			this.bgimg = 'http://bbs.zdfx.net/img/style/i/yzm_pic/'+ Math.floor(Math.random()*208) +'.jpg';
+			this.randomunmber = Math.random() * 100;
+			this.bgimg = 'http://bbs.zdfx.net/img/style/i/yzm_pic/' + Math.floor(Math.random() * 208) + '.jpg';
 		},
 		onShow: function() {},
 		onPageScroll() {

@@ -29,7 +29,7 @@
 				<view class="text-content2">
 					<view v-if="content==''" class="cu-load text-gray loading"></view>
 					<mp-html :content="content" @linktap="linktap" />
-					<view class="margin-top-sm flex justify-between">
+					<view class="flex justify-between">
 						<view>
 							<text class="cuIcon-appreciatefill" :class="zan?'text-red':'text-gray'"></text>
 							<text class="cuIcon-messagefill text-gray margin-left-sm" @tap="lzpo()"></text>
@@ -37,6 +37,10 @@
 						<view>
 							<text class="cuIcon-more text-gray margin-right-sm"></text>
 						</view>
+					</view>
+					<view class="margin-bottom-sm" style="max-height: 500rpx;" v-if="sightml!=''">
+						<image mode='widthFix' src="../../static/sigline.gif"></image>
+						<rich-text mode='widthFix' :nodes="formatRichText(sightml)"></rich-text>
 					</view>
 				</view>
 				<view class="cu-list menu-avatar comment solids-top" v-for="(item,index) in huifulist" :key="index" :data-id="index">
@@ -218,6 +222,7 @@
 			return {
 				isCard: false,
 				postname: '加载中',
+				sightml: '',
 				contenthuifu: '',
 				floorhuifu: '',
 				content: '',
@@ -563,6 +568,27 @@
 					}
 				}
 			},
+			formatRichText(html) {
+				// 去掉img标签里的style、width、height属性
+				let newContent = html.replace(/<img[^>]*>/gi, function(match, capture) {
+					match = match.replace(/style="[^"]+"/gi, '').replace(/style='[^']+'/gi, '');
+					match = match.replace(/width="[^"]+"/gi, '').replace(/width='[^']+'/gi, '');
+					match = match.replace(/height="[^"]+"/gi, '').replace(/height='[^']+'/gi, '');
+					return match;
+				});
+				// 修改所有style里的width属性为max-width:100%
+				newContent = newContent.replace(/style="[^"]+"/gi, function(match, capture) {
+					match = match.replace(/width:[^;]+;/gi, 'max-width:100%;').replace(/width:[^;]+;/gi,
+						'max-width:100%;');
+					return match;
+				});
+				// 去掉<br/>标签
+				newContent = newContent.replace(/<br[^>]*\/>/gi, '');
+				// img标签添加style属性：max-width:100%;height:auto
+				newContent = newContent.replace(/\<img/gi,
+					'<img style="max-width:100%;height:auto;display:block;margin:0px auto;"');
+				return newContent;
+			},
 			randomcolor(){
 			     let r = Math.floor(Math.random()*200+55);
 			     let g = Math.floor(Math.random()*200+55);
@@ -836,6 +862,7 @@
 							that.xunzhanglist = res.data.userinfo.xunzhanglist;
 							that.lucky = res.data.luckypost.key;
 							that.luckymessage = res.data.luckypost.msg;
+							that.sightml = res.data.userinfo.sightml;
 							//console.log(that.threadlist);
 							setTimeout(function() {
 								that.setHeight("view_listnow");

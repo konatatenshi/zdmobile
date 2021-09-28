@@ -230,7 +230,7 @@
 				<view class="cu-bar bg-white justify-end">
 					<view class="action">
 						<button class="cu-btn line-green text-green" @tap="hideModal">取消</button>
-						<button class="cu-btn bg-green margin-left" @tap="cleanlogin">确定</button>
+						<button class="cu-btn bg-green margin-left" @tap="cleanlogin()">确定</button>
 					</view>
 				</view>
 			</view>
@@ -356,12 +356,32 @@
 			cleanlogin() {
 			var that = this;
 			this.$token = '';
-				uni.removeStorage({
-					key: 'userlogininfo',
-					success: function(res) {
+			uni.removeStorage({
+				key: 'userlogininfo',
+				success: function(res) {
+					console.log(res)
+					if (uni.getSystemInfoSync().platform == 'ios') {
+						Vue.prototype.$chatid =0;
+						Vue.prototype.$chatuid = 0;
+						Vue.prototype.$auth = "";
+						Vue.prototype.$htauth = "";
+						Vue.prototype.$chatswitch = 0;
+						Vue.prototype.$token = '';
+						Vue.prototype.$cookies = '';
+						Vue.prototype.$uid = 0;
+						Vue.prototype.$adminid = 0;
+						Vue.prototype.$imageswitch = 0;
+						Vue.prototype.$floorswitch = 0;
+						Vue.prototype.$nowdate = 0;
+						Vue.prototype.$username = '游客';
+						Vue.prototype.$avatarsmall = 'https://zd.tiangal.com/uc_server/images/randuser/small/0.jpg';
+						Vue.prototype.$avatarsmalldefault = 'https://zd.tiangal.com/uc_server/images/randuser/small/0.jpg';
 						that.$emit("returnDat","login")//传递的值
+					} else {
+						plus.runtime.restart();//PS:Android不知为何不能正确传值，只能重启程序
 					}
-				});
+				}
+			});
 			},
 			messageclick(index) {
 				console.log(index)

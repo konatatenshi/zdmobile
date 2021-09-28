@@ -3,11 +3,11 @@
 		<view class="box">
 			<view class="cu-bar bg-cyan search hometop">
 				<view>
-					<img-cache v-show="avatarimgLoaded" class="cu-avatar round" :src="$avatarsmall" @tap="tabSelect"
+					<img-cache v-show="avatarimgLoaded" class="cu-avatar round" :src="$avatarsmall" @tap="userinfo"
 						data-id="0" @load="onSuccessImg()" />
 					</img-cache>
 					<img-cache v-show="!avatarimgLoaded" class="cu-avatar round" :src="$avatarsmalldefault"
-						@tap="tabSelect" data-id="0" style="margin-left: 11px;" />
+						@tap="userinfo" data-id="0" style="margin-left: 11px;" />
 					</img-cache>
 				</view>
 				<view class="search-form radius">
@@ -246,6 +246,15 @@
 				}).exec();
 
 			},
+			userinfo(e) {
+				if(this.$token==''){
+					uni.redirectTo({
+						url: '../../components/ay-login/login-password'
+					});
+				}else{
+					this.$emit("returnDat", "about")
+				}
+			},
 			jifenbiandong(e, f) {
 				this.jifenshuoming = e;
 				this.jifenbiangeng = f;
@@ -264,7 +273,7 @@
 						this.loadProgress = 0;
 						return;
 					}
-					console.log(this.loadProgress);
+					//console.log(this.loadProgress);
 					setTimeout(() => {
 						this.LoadProgresss();
 					}, 100)
