@@ -78,7 +78,7 @@
 				</view>
 				<text>答题</text>
 			</view>
-			<view class="cu-item" @click="messageclick">
+			<view class="cu-item" @click="yaoyao">
 				<view class="cuIcon-presentfill text-blue">
 					<view class="cu-tag badge" v-if="this.mynewpm!=0">
 						<block v-if="this.mynewpm!=1">{{this.mynewpm>99?'99+':this.mynewpm}}</block>
@@ -86,7 +86,7 @@
 				</view>
 				<text>摇摇</text>
 			</view>
-			<view class="cu-item" @click="messageclick">
+			<view class="cu-item" @click="paihang">
 				<view class="cuIcon-upstagefill text-cyan">
 					<view class="cu-tag badge" v-if="this.mynewpm!=0">
 						<block v-if="this.mynewpm!=1">{{this.mynewpm>99?'99+':this.mynewpm}}</block>
@@ -348,6 +348,16 @@
 			toqiandao(){
 				uni.navigateTo({
 					url: '../basics/icon'
+				})
+			},
+			yaoyao(){
+				uni.navigateTo({
+					url: '../basics/progress'
+				})
+			},
+			paihang(){
+				uni.navigateTo({
+					url: '../basics/shadow'
 				})
 			},
 			cleanbefore(e) {

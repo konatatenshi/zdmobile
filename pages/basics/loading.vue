@@ -32,7 +32,7 @@
 					网络(B/s)↓|↑
 				</view>
 			</view>
-			<view class="grid margin-bottom text-center solid-bottom justify-start" v-for="(item,index) in serverlist" :key="index">
+			<view class="grid margin-bottom text-center solid-bottom" v-for="(item,index) in serverlist" :key="index">
 				<view class="bg-gray" :class="indexs!=0?(indexs==1?'padding-top-sm padding-bottom-sm':'padding-sm'): 'padding-top-sm padding-left-sm padding-bottom-sm'" :style="indexs==1?'flex-basis:25%':''" v-for="(items,indexs) in 5" :key="indexs">
 					<view v-if="indexs == 0">
 						<view v-if="item.online4">
