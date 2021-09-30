@@ -165,6 +165,10 @@
 				this.$refs.basics.tothebottom();
 			};
 		},
+		onPageScroll(res){
+			Vue.prototype.$scrollheight =res.scrollTop;
+			//console.log(res.scrollTop);//距离页面顶部距离
+		},
 		methods: {
 			returnDate(val) {
 				this.PageCur = val;
@@ -218,7 +222,8 @@
 		position: fixed;
 		left: 0;
 		right: 0;
-		top: calc(var(--status-bar-height) + 40px);
+		height: 60upx;
+		top: calc(var(--status-bar-height) + 72upx);
 		/* #endif */
 	}
 
@@ -228,19 +233,19 @@
 		position: fixed;
 		left: 0;
 		right: 0;
-		top: calc(var(--status-bar-height) + 25px);
+		top: calc(var(--status-bar-height) + 40upx);
 		/* #endif */
 	}
 
 	.hometop2 {
 		/* #ifdef APP-PLUS */
-		margin-top: calc(var(--status-bar-height) + 25px);
+		margin-top: calc(var(--status-bar-height) + 50upx);
 		/* #endif */
 	}
 
 	.hometop3 {
 		/* #ifdef APP-PLUS */
-		margin-top: calc(var(--status-bar-height) + 71px);
+		margin-top: calc(var(--status-bar-height) + 132upx);
 		/* #endif */
 	}
 </style>

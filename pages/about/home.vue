@@ -15,7 +15,7 @@
 				@load="onSuccessImg()" />
 			</img-cache>
 			<img-cache v-show="!avatarimgLoaded" class="cu-avatar round" :src="$avatarsmalldefault" @tap="tabSelect"
-				data-id="0" style="margin-left: 11px;" />
+				data-id="0" style="margin-left: 20upx;" />
 			</img-cache>
 			<view class="content" style="text-align: left;">
 				{{$username}}<text class="cuIcon-edit text-grey"></text>
@@ -208,7 +208,7 @@
 					<text class="text-grey">版本信息</text>
 				</button>
 			</view>
-			<view class="padding-xs flex align-center bg-gray" :style="{'height': iStatusBarHeight+'px'}">
+			<view class="padding-xs flex align-center bg-gray" :style="{'height': iStatusBarHeight+'upx'}">
 				<view class="flex-sub text-center">
 					<view class="text-xs padding">
 						<text class="text-white">终点论坛 @2021</text>
@@ -511,6 +511,9 @@
 			    console.log(wgtinfo.version);  
 			});
 			plus.navigator.setStatusBarStyle('dark');
+			void plus.runtime.setBadgeNumber(0);//桌面角标设置为0
+			const clientInfo = plus.push.getClientInfo();//获取CID推送
+			console.log(clientInfo);
 			console.log(this.iStatusBarHeight);
 			if (Vue.prototype.$token != '') {
 				var that = this;

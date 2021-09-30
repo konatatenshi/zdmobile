@@ -503,7 +503,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../5211game/HBuilderX.3.1.18.20210609.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.hometop {\n\tz-index: 999;\n\n\tposition: fixed;\n\tleft: 0;\n\tright: 0;\n\ttop: 0;\n\tpadding-top: var(--status-bar-height);\n\tpadding-bottom: 10upx;\n}\n.hometop0 {\n\tz-index: 998;\n\n\tposition: fixed;\n\tleft: 0;\n\tright: 0;\n\ttop: calc(var(--status-bar-height) + 40px);\n}\n.hometop1 {\n\tz-index: 998;\n\n\tposition: fixed;\n\tleft: 0;\n\tright: 0;\n\ttop: calc(var(--status-bar-height) + 25px);\n}\n.hometop2 {\n\n\tmargin-top: calc(var(--status-bar-height) + 25px);\n}\n.hometop3 {\n\n\tmargin-top: calc(var(--status-bar-height) + 71px);\n}\n", ""]);
+exports.push([module.i, "\n.hometop {\n\tz-index: 999;\n\n\tposition: fixed;\n\tleft: 0;\n\tright: 0;\n\ttop: 0;\n\tpadding-top: var(--status-bar-height);\n\tpadding-bottom: 10upx;\n}\n.hometop0 {\n\tz-index: 998;\n\n\tposition: fixed;\n\tleft: 0;\n\tright: 0;\n\theight: 60upx;\n\ttop: calc(var(--status-bar-height) + 72upx);\n}\n.hometop1 {\n\tz-index: 998;\n\n\tposition: fixed;\n\tleft: 0;\n\tright: 0;\n\ttop: calc(var(--status-bar-height) + 40upx);\n}\n.hometop2 {\n\n\tmargin-top: calc(var(--status-bar-height) + 50upx);\n}\n.hometop3 {\n\n\tmargin-top: calc(var(--status-bar-height) + 132upx);\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -7677,431 +7677,12 @@ var render = function() {
           _c(
             "template",
             { attrs: { slot: "content", _i: 3 }, slot: "content" },
-            [_vm._v("标签")]
+            [_vm._v("隐私协议及条约")]
           )
         ],
         2
       ),
-      _c(
-        "v-uni-view",
-        { staticClass: _vm._$g(4, "sc"), attrs: { _i: 4 } },
-        [
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(5, "sc"), attrs: { _i: 5 } },
-            [
-              _c("v-uni-text", {
-                staticClass: _vm._$g(6, "sc"),
-                attrs: { _i: 6 }
-              }),
-              _vm._v("标签形状")
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _c(
-        "v-uni-view",
-        { staticClass: _vm._$g(7, "sc"), attrs: { _i: 7 } },
-        [
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(8, "sc"), attrs: { _i: 8 } },
-            [_vm._v("默认")]
-          ),
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(9, "sc"), attrs: { _i: 9 } },
-            [_vm._v("椭圆")]
-          ),
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(10, "sc"), attrs: { _i: 10 } },
-            [_vm._v("圆角")]
-          )
-        ],
-        1
-      ),
-      _c(
-        "v-uni-view",
-        { staticClass: _vm._$g(11, "sc"), attrs: { _i: 11 } },
-        [
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(12, "sc"), attrs: { _i: 12 } },
-            [
-              _c("v-uni-text", {
-                staticClass: _vm._$g(13, "sc"),
-                attrs: { _i: 13 }
-              }),
-              _vm._v("标签尺寸")
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _c(
-        "v-uni-view",
-        { staticClass: _vm._$g(14, "sc"), attrs: { _i: 14 } },
-        [
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(15, "sc"), attrs: { _i: 15 } },
-            [_vm._v("小尺寸")]
-          ),
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(16, "sc"), attrs: { _i: 16 } },
-            [_vm._v("普通尺寸")]
-          )
-        ],
-        1
-      ),
-      _c(
-        "v-uni-view",
-        { staticClass: _vm._$g(17, "sc"), attrs: { _i: 17 } },
-        [
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(18, "sc"), attrs: { _i: 18 } },
-            [
-              _c("v-uni-text", {
-                staticClass: _vm._$g(19, "sc"),
-                attrs: { _i: 19 }
-              }),
-              _vm._v("标签颜色")
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _c(
-        "v-uni-view",
-        { staticClass: _vm._$g(20, "sc"), attrs: { _i: 20 } },
-        [
-          _vm._l(_vm._$g(21, "f"), function(item, index, $20, $30) {
-            return _vm._$g("21-" + $30, "i")
-              ? _c(
-                  "v-uni-view",
-                  {
-                    key: item,
-                    staticClass: _vm._$g("21-" + $30, "sc"),
-                    attrs: { _i: "21-" + $30 }
-                  },
-                  [
-                    _c(
-                      "v-uni-view",
-                      {
-                        staticClass: _vm._$g("22-" + $30, "sc"),
-                        class: _vm._$g("22-" + $30, "c"),
-                        attrs: { _i: "22-" + $30 }
-                      },
-                      [_vm._v(_vm._$g("22-" + $30, "t0-0"))]
-                    )
-                  ],
-                  1
-                )
-              : _vm._e()
-          }),
-          _vm._l(_vm._$g(23, "f"), function(item, index, $21, $31) {
-            return _vm._$g("23-" + $31, "i")
-              ? _c(
-                  "v-uni-view",
-                  {
-                    key: item,
-                    staticClass: _vm._$g("23-" + $31, "sc"),
-                    attrs: { _i: "23-" + $31 }
-                  },
-                  [
-                    _c(
-                      "v-uni-view",
-                      {
-                        staticClass: _vm._$g("24-" + $31, "sc"),
-                        class: _vm._$g("24-" + $31, "c"),
-                        attrs: { _i: "24-" + $31 }
-                      },
-                      [_vm._v(_vm._$g("24-" + $31, "t0-0"))]
-                    )
-                  ],
-                  1
-                )
-              : _vm._e()
-          })
-        ],
-        2
-      ),
-      _c(
-        "v-uni-view",
-        { staticClass: _vm._$g(25, "sc"), attrs: { _i: 25 } },
-        [
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(26, "sc"), attrs: { _i: 26 } },
-            [
-              _c("v-uni-text", {
-                staticClass: _vm._$g(27, "sc"),
-                attrs: { _i: 27 }
-              }),
-              _vm._v("镂空标签")
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _c(
-        "v-uni-view",
-        { staticClass: _vm._$g(28, "sc"), attrs: { _i: 28 } },
-        _vm._l(_vm._$g(29, "f"), function(item, index, $22, $32) {
-          return _vm._$g("29-" + $32, "i")
-            ? _c(
-                "v-uni-view",
-                {
-                  key: item,
-                  staticClass: _vm._$g("29-" + $32, "sc"),
-                  attrs: { _i: "29-" + $32 }
-                },
-                [
-                  _c(
-                    "v-uni-view",
-                    {
-                      staticClass: _vm._$g("30-" + $32, "sc"),
-                      class: _vm._$g("30-" + $32, "c"),
-                      attrs: { _i: "30-" + $32 }
-                    },
-                    [_vm._v(_vm._$g("30-" + $32, "t0-0"))]
-                  )
-                ],
-                1
-              )
-            : _vm._e()
-        }),
-        1
-      ),
-      _c(
-        "v-uni-view",
-        { staticClass: _vm._$g(31, "sc"), attrs: { _i: 31 } },
-        [
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(32, "sc"), attrs: { _i: 32 } },
-            [
-              _c("v-uni-text", {
-                staticClass: _vm._$g(33, "sc"),
-                attrs: { _i: 33 }
-              }),
-              _vm._v("胶囊样式")
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _c(
-        "v-uni-view",
-        { staticClass: _vm._$g(34, "sc"), attrs: { _i: 34 } },
-        [
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(35, "sc"), attrs: { _i: 35 } },
-            [
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(36, "sc"), attrs: { _i: 36 } },
-                [
-                  _c("v-uni-text", {
-                    staticClass: _vm._$g(37, "sc"),
-                    attrs: { _i: 37 }
-                  })
-                ],
-                1
-              ),
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(38, "sc"), attrs: { _i: 38 } },
-                [_vm._v("12")]
-              )
-            ],
-            1
-          ),
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(39, "sc"), attrs: { _i: 39 } },
-            [
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(40, "sc"), attrs: { _i: 40 } },
-                [
-                  _c("v-uni-text", {
-                    staticClass: _vm._$g(41, "sc"),
-                    attrs: { _i: 41 }
-                  })
-                ],
-                1
-              ),
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(42, "sc"), attrs: { _i: 42 } },
-                [_vm._v("23")]
-              )
-            ],
-            1
-          ),
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(43, "sc"), attrs: { _i: 43 } },
-            [
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(44, "sc"), attrs: { _i: 44 } },
-                [_vm._v("说明")]
-              ),
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(45, "sc"), attrs: { _i: 45 } },
-                [_vm._v("123")]
-              )
-            ],
-            1
-          ),
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(46, "sc"), attrs: { _i: 46 } },
-            [
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(47, "sc"), attrs: { _i: 47 } },
-                [
-                  _c("v-uni-text", {
-                    staticClass: _vm._$g(48, "sc"),
-                    attrs: { _i: 48 }
-                  })
-                ],
-                1
-              ),
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(49, "sc"), attrs: { _i: 49 } },
-                [_vm._v("23")]
-              )
-            ],
-            1
-          ),
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(50, "sc"), attrs: { _i: 50 } },
-            [
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(51, "sc"), attrs: { _i: 51 } },
-                [
-                  _c("v-uni-text", {
-                    staticClass: _vm._$g(52, "sc"),
-                    attrs: { _i: 52 }
-                  })
-                ],
-                1
-              ),
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(53, "sc"), attrs: { _i: 53 } },
-                [_vm._v("23")]
-              )
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _c(
-        "v-uni-view",
-        { staticClass: _vm._$g(54, "sc"), attrs: { _i: 54 } },
-        [
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(55, "sc"), attrs: { _i: 55 } },
-            [
-              _c("v-uni-text", {
-                staticClass: _vm._$g(56, "sc"),
-                attrs: { _i: 56 }
-              }),
-              _vm._v("数字标签")
-            ],
-            1
-          )
-        ],
-        1
-      ),
-      _c(
-        "v-uni-view",
-        { staticClass: _vm._$g(57, "sc"), attrs: { _i: 57 } },
-        [
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(58, "sc"), attrs: { _i: 58 } },
-            [
-              _vm._v("港"),
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(59, "sc"), attrs: { _i: 59 } },
-                [_vm._v("99+")]
-              )
-            ],
-            1
-          ),
-          _c(
-            "v-uni-view",
-            {
-              staticClass: _vm._$g(60, "sc"),
-              staticStyle: {
-                "background-image":
-                  "url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg)"
-              },
-              attrs: { _i: 60 }
-            },
-            [
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(61, "sc"), attrs: { _i: 61 } },
-                [_vm._v("9")]
-              )
-            ],
-            1
-          ),
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(62, "sc"), attrs: { _i: 62 } },
-            [
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(63, "sc"), attrs: { _i: 63 } },
-                [_vm._v("99")]
-              ),
-              _c("v-uni-text", {
-                staticClass: _vm._$g(64, "sc"),
-                attrs: { _i: 64 }
-              })
-            ],
-            1
-          ),
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(65, "sc"), attrs: { _i: 65 } },
-            [
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(66, "sc"), attrs: { _i: 66 } },
-                [_vm._v("99+")]
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
+      _c("v-uni-web-view", { attrs: { src: _vm._$g(4, "a-src"), _i: 4 } })
     ],
     1
   )
@@ -22524,10 +22105,81 @@ var render = function() {
         { staticClass: _vm._$g(92, "sc"), attrs: { _i: 92 } },
         [
           _c(
-            "v-uni-view",
+            "v-uni-checkbox-group",
             {
               staticClass: _vm._$g(93, "sc"),
               attrs: { _i: 93 },
+              on: {
+                change: function($event) {
+                  return _vm.$handleViewEvent($event)
+                }
+              }
+            },
+            [
+              _c(
+                "v-uni-view",
+                { staticClass: _vm._$g(94, "sc"), attrs: { _i: 94 } },
+                [
+                  _c("v-uni-checkbox", {
+                    class: _vm._$g(95, "c"),
+                    attrs: {
+                      checked: _vm._$g(95, "a-checked"),
+                      value: "A",
+                      _i: 95
+                    }
+                  }),
+                  _c(
+                    "v-uni-view",
+                    { staticClass: _vm._$g(96, "sc"), attrs: { _i: 96 } },
+                    [
+                      _vm._v("我已认真阅读并同意"),
+                      _c(
+                        "a",
+                        {
+                          attrs: { href: "#", _i: 97 },
+                          on: {
+                            click: function($event) {
+                              return _vm.$handleViewEvent($event)
+                            }
+                          }
+                        },
+                        [_vm._v("《用户服务协议》")]
+                      ),
+                      _vm._v("及"),
+                      _c(
+                        "a",
+                        {
+                          attrs: { href: "#2", _i: 98 },
+                          on: {
+                            click: function($event) {
+                              return _vm.$handleViewEvent($event)
+                            }
+                          }
+                        },
+                        [_vm._v("《隐私政策》")]
+                      ),
+                      _vm._v("全部条款。")
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _c(
+        "v-uni-view",
+        { staticClass: _vm._$g(99, "sc"), attrs: { _i: 99 } },
+        [
+          _c(
+            "v-uni-view",
+            {
+              staticClass: _vm._$g(100, "sc"),
+              attrs: { _i: 100 },
               on: {
                 click: function($event) {
                   return _vm.$handleViewEvent($event)
@@ -22888,7 +22540,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../5211game/HBuilderX.3.1.18.20210609.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\nuni-picker.shoujiquma::after {\n\tcolor: white !important;\n}\nuni-picker.shoujiquma {\n\tpadding-right: 0px;\n}\n.cu-tag{\n\tpadding-top: 30upx!important;\n\tpadding-bottom: 30upx!important;\n\tpadding-left: 10upx!important;\n\tpadding-right: 10upx!important;\n}\n.login-form {\n\tmargin: -9px 10px 0 10px;\n\theight: 280px;\n\tbackground: #007AFF;\n\tborder-radius: 10px;\n\tbackground-color: #EEEEEE;\n\tbox-shadow: 0 2px 10px #9B9B9B;\n\tpadding: 20px;\n}\n.form-input uni-input {\n\tbackground: #ffffff;\n\tborder-radius: 5px;\n\theight: 40px;\n\tmargin: 20px 0;\n\tpadding: 0 10px;\n}\n.login-img {\n\tdisplay: flex;\n\tjustify-content: center;\n\talign-items: center;\n\theight: 108px;\n\tmargin-top: -70rpx;\n}\n.owl-login {\n\twidth: 211px;\n\theight: 108px;\n\tbackground-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAaYAAADYCAMAAACX8Lc0AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAMAUExURQAAAHhROYBWPXpSOpRkR4teQ3NNN3lSOpZlSH9VPHFMNpBhRY1fQ5BhRYxeQ2hGMpVkR4VZP3pSOmxJNJJiRnRON5NjRpBhRV9ALXVPOHpSOnVPOIZaQF8/LW9KNWFALpRkR3ZPOIZaQG9LNV9ALlo8K5VkR31UO1U5KE41JYxeQ3VPOEkyI1U6KU0zJWBALkArHv///93d3BoWG3dQOZVkR5RkR0syJEYvIk0zJZJiRpBhRXhROUkxI3lSOnZQOXZPOHpSOkQuIUEsH0UuIUcwIoRZP1o8K4dbQZNjRoxeQ5FiRopdQntTO0gwI31UPIFXPo1fRIhcQYZaQHhROnZQOIVaQEwzJDYlGl8/LfzHA1I3J5NjRzUkGl4+LT8rH0oxIzgmG4BWPYNYP0MtIFQ4KIJYPlA1Jo9gRIteQ1c6KU40JU81Jj4qHnVPOEoyJDknHH9WPTsoHI5gRGA/LVw9LJRjR0gwIlU5KYlcQlE2J5ZlSF09LD0pHTclG35VPJVlSDQkGVk7KnxTOzonHDwoHT8qHmBALpFhRYVZQIZbQHpTO4hbQTQjGUIsIINZP0cvIoldQoJXPn9VPX5VPUYvIZFiRV4+LI1fQ040JsS+utbKwvn4+Pz8/ItdQ2hGMv7+/nFMNmtIM2ZEMMrCvWNCL+7u7W5KNODg38fAvOTj41c5Kd/Qx/Lx8Vk7K9fV1Ovr6ujo5/X19bmzsIV1bNrZ2LSsp4t9dX5uZJmNhWxXS6+moCckKNTR0N3OxcC6tk40JpKDe6uinM3Kx2hPQkZDR4mHiltGOnJeU5GQkiAcIX57fkw5LTMvM6uqrKGYk9HNy3VkWV5ORf/77f7ur8nGxP3bWkQzKWRJOp6TjfzMFlM8Ljo3O2ZkZ3xnW6GfoWBdYaqel+u5BtDFv6eZkVg9IW9sb1lWWlJDOVE/NPnGCXJSG5qYmmFEH/G9Bf3SMIJhGP7pmP/2131cGpBsFqyEEVpBM4hlF8WZDbuQDqSclt7DbdipCcrArMGVDYJeIqKadIMAAACtdFJOUwARC9SxQFAgwQVkcFBhMSmSGIQ9fd+j16G1pfPC3cDz43SPkn2w+Oj04+zp7Lr0y/r////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+2IAVYAAAF8VJREFUeNrt3XtcE1e+AHBERZGHolZb66vWal+73QxRAwE0gKZoAR9YxNjEB1kQIVBoLIJaC2p0a9lb613REmMSQ5AuIu+XlA+Cz/reddVqrfb93O29+7rvz51HMplJZjKTZITkZH5/tp+PJ8x35nfO+Z2ZcwICBjkiAnwrhjwe4Icx6hkf+8Ezn/VHpim+9ldPyRrlf0oRKYmjfeoHBxdnTfE/pscT430r14+SZZWM8DumZxPjn/OpH/ySLCvX7wYRQQsT40VDfOq+gpn8bhDxEsxUMdOHfvA4JcwUFeRfSsElCJMvdcnPoEwv+RfTzFiEKd+HfvE0lCk30L8mTSiTwncmIqOLUaZ5M/1JaUQ6xvQL35k/WJie8yemx/Mxpl/6Ts6zMM0b7UdMz1qYdo/zkR8cUWZhWvuM/yiNS7cy+cof/XSOlemX/sM0FWfylT96Cs6UMs5vmJ7Fmbb5RqoPVNuY/CbrBW2yMflGlWxmmY3Jb7LeVALTi76R8whMIkvWA3bIN8Iym32WwLTLF/7aQDWRCZvsjXsRVKax09CS+LhcAlOhL2S9mVIiE5b1XiwEtW40VToVnduSmHzhppxCYkJXnR8vLAB1yX2aVIosBEwhMe30/qw3RE5mghPA6ITCAkCHfEO2SqXTAgMClSSmAu/Pek+ryUzPBQQ8B/9wQMt7T8FMOVMDRpWQmbw/602xY0oJeDoP/uG/ApPpCYQpJ2iqHdM6b5/Wjzhox5Q5MxFhWgfmkHwKwlQ8bZo9k7evZjzuwCRSoExgrj2ZUCalzJ7J25PHNAemBIzpFyAqjc6gYVrl3e+BBGXQMQE5hniKlsm778qXaJmAHEM8gTIZKZieDPbinx1scmQ6hDFtHwIg02MIk3GNzoEpsyjUm3Oe0YEpa0FJng9kazd7YoRp/dwkoz1T6pKR3pwEhBo7JplKqMOYQBzqaWAmzZq5c6N1ZCbTkiVLwr134COR6MlMxSqhUBiLMgFYLhqBMJXPhWONgciUK4aZxnhvoUgiidMR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');\n\tbackground-repeat: no-repeat;\n\tbackground-size: 100%;\n\tposition: absolute;\n}\n.owl-login .hand {\n\twidth: 34px;\n\theight: 34px;\n\tborder-radius: 40px;\n\tbackground-color: #472d20;\n\t-webkit-transform: scaleY(0.6);\n\t        transform: scaleY(0.6);\n\ttransition: 0.3s ease-out;\n\tposition: absolute;\n\tleft: 14px;\n\tbottom: -8px;\n}\n.owl-login .hand.hand-r {\n\tleft: 170px;\n}\n.owl-login .arms {\n\ttop: 58px;\n\tposition: absolute;\n\twidth: 100%;\n\theight: 41px;\n\toverflow: hidden;\n}\n.owl-login .arms .arm {\n\twidth: 40px;\n\theight: 65px;\n\tposition: absolute;\n\tleft: 20px;\n\ttop: 40px;\n\tbackground-image: url(\"data:image/png;base64,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\");\n\tbackground-size: 100%;\n\ttransition: 0.3s ease-out;\n\t-webkit-transform: rotate(-20deg);\n\t        transform: rotate(-20deg);\n}\n.owl-login .arms .arm.arm-r {\n\t-webkit-transform: rotate(20deg) scaleX(-1);\n\t        transform: rotate(20deg) scaleX(-1);\n\tleft: 158px;\n}\n.owl-login.password .hand {\n\t-webkit-transform: translateX(42px) translateY(-15px) scale(0.7);\n\t        transform: translateX(42px) translateY(-15px) scale(0.7);\n}\n.owl-login.password .hand.hand-r {\n\t-webkit-transform: translateX(-42px) translateY(-15px) scale(0.7);\n\t        transform: translateX(-42px) translateY(-15px) scale(0.7);\n}\n.owl-login.password .arms .arm {\n\t-webkit-transform: translateY(-40px) translateX(40px);\n\t        transform: translateY(-40px) translateX(40px);\n}\n.owl-login.password .arms .arm.arm-r {\n\t-webkit-transform: translateY(-40px) translateX(-40px) scaleX(-1);\n\t        transform: translateY(-40px) translateX(-40px) scaleX(-1);\n}\nuni-button[disabled].cu-btn.bg-green.shadow {\n\tbackground-color: #39b54a;\n\tcolor: white;\n}\nuni-button[disabled].cu-btn.bg-blue {\n\tbackground-color: #0081ff;\n\tcolor: #ffffff;\n}\n", ""]);
+exports.push([module.i, "\nuni-picker.shoujiquma::after {\n\tcolor: white !important;\n}\nuni-picker.shoujiquma {\n\tpadding-right: 0px;\n}\n.cu-tag{\n\tpadding-top: 30upx!important;\n\tpadding-bottom: 30upx!important;\n\tpadding-left: 10upx!important;\n\tpadding-right: 10upx!important;\n}\n.login-form {\n\tmargin: -9px 10px 0 10px;\n\theight: 280px;\n\tbackground: #007AFF;\n\tborder-radius: 10px;\n\tbackground-color: #EEEEEE;\n\tbox-shadow: 0 2px 10px #9B9B9B;\n\tpadding: 20px;\n}\n.form-input uni-input {\n\tbackground: #ffffff;\n\tborder-radius: 5px;\n\theight: 40px;\n\tmargin: 20px 0;\n\tpadding: 0 10px;\n}\n.login-img {\n\tdisplay: flex;\n\tjustify-content: center;\n\talign-items: center;\n\theight: 108px;\n\tmargin-top: -70rpx;\n}\n.owl-login {\n\twidth: 211px;\n\theight: 108px;\n\tbackground-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAaYAAADYCAMAAACX8Lc0AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAMAUExURQAAAHhROYBWPXpSOpRkR4teQ3NNN3lSOpZlSH9VPHFMNpBhRY1fQ5BhRYxeQ2hGMpVkR4VZP3pSOmxJNJJiRnRON5NjRpBhRV9ALXVPOHpSOnVPOIZaQF8/LW9KNWFALpRkR3ZPOIZaQG9LNV9ALlo8K5VkR31UO1U5KE41JYxeQ3VPOEkyI1U6KU0zJWBALkArHv///93d3BoWG3dQOZVkR5RkR0syJEYvIk0zJZJiRpBhRXhROUkxI3lSOnZQOXZPOHpSOkQuIUEsH0UuIUcwIoRZP1o8K4dbQZNjRoxeQ5FiRopdQntTO0gwI31UPIFXPo1fRIhcQYZaQHhROnZQOIVaQEwzJDYlGl8/LfzHA1I3J5NjRzUkGl4+LT8rH0oxIzgmG4BWPYNYP0MtIFQ4KIJYPlA1Jo9gRIteQ1c6KU40JU81Jj4qHnVPOEoyJDknHH9WPTsoHI5gRGA/LVw9LJRjR0gwIlU5KYlcQlE2J5ZlSF09LD0pHTclG35VPJVlSDQkGVk7KnxTOzonHDwoHT8qHmBALpFhRYVZQIZbQHpTO4hbQTQjGUIsIINZP0cvIoldQoJXPn9VPX5VPUYvIZFiRV4+LI1fQ040JsS+utbKwvn4+Pz8/ItdQ2hGMv7+/nFMNmtIM2ZEMMrCvWNCL+7u7W5KNODg38fAvOTj41c5Kd/Qx/Lx8Vk7K9fV1Ovr6ujo5/X19bmzsIV1bNrZ2LSsp4t9dX5uZJmNhWxXS6+moCckKNTR0N3OxcC6tk40JpKDe6uinM3Kx2hPQkZDR4mHiltGOnJeU5GQkiAcIX57fkw5LTMvM6uqrKGYk9HNy3VkWV5ORf/77f7ur8nGxP3bWkQzKWRJOp6TjfzMFlM8Ljo3O2ZkZ3xnW6GfoWBdYaqel+u5BtDFv6eZkVg9IW9sb1lWWlJDOVE/NPnGCXJSG5qYmmFEH/G9Bf3SMIJhGP7pmP/2131cGpBsFqyEEVpBM4hlF8WZDbuQDqSclt7DbdipCcrArMGVDYJeIqKadIMAAACtdFJOUwARC9SxQFAgwQVkcFBhMSmSGIQ9fd+j16G1pfPC3cDz43SPkn2w+Oj04+zp7Lr0y/r////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+2IAVYAAAF8VJREFUeNrt3XtcE1e+AHBERZGHolZb66vWal+73QxRAwE0gKZoAR9YxNjEB1kQIVBoLIJaC2p0a9lb613REmMSQ5AuIu+XlA+Cz/reddVqrfb93O29+7rvz51HMplJZjKTZITkZH5/tp+PJ8x35nfO+Z2ZcwICBjkiAnwrhjwe4Icx6hkf+8Ezn/VHpim+9ldPyRrlf0oRKYmjfeoHBxdnTfE/pscT430r14+SZZWM8DumZxPjn/OpH/ySLCvX7wYRQQsT40VDfOq+gpn8bhDxEsxUMdOHfvA4JcwUFeRfSsElCJMvdcnPoEwv+RfTzFiEKd+HfvE0lCk30L8mTSiTwncmIqOLUaZ5M/1JaUQ6xvQL35k/WJie8yemx/Mxpl/6Ts6zMM0b7UdMz1qYdo/zkR8cUWZhWvuM/yiNS7cy+cof/XSOlemX/sM0FWfylT96Cs6UMs5vmJ7Fmbb5RqoPVNuY/CbrBW2yMflGlWxmmY3Jb7LeVALTi76R8whMIkvWA3bIN8Iym32WwLTLF/7aQDWRCZvsjXsRVKax09CS+LhcAlOhL2S9mVIiE5b1XiwEtW40VToVnduSmHzhppxCYkJXnR8vLAB1yX2aVIosBEwhMe30/qw3RE5mghPA6ITCAkCHfEO2SqXTAgMClSSmAu/Pek+ryUzPBQQ8B/9wQMt7T8FMOVMDRpWQmbw/602xY0oJeDoP/uG/ApPpCYQpJ2iqHdM6b5/Wjzhox5Q5MxFhWgfmkHwKwlQ8bZo9k7evZjzuwCRSoExgrj2ZUCalzJ7J25PHNAemBIzpFyAqjc6gYVrl3e+BBGXQMQE5hniKlsm778qXaJmAHEM8gTIZKZieDPbinx1scmQ6hDFtHwIg02MIk3GNzoEpsyjUm3Oe0YEpa0FJng9kazd7YoRp/dwkoz1T6pKR3pwEhBo7JplKqMOYQBzqaWAmzZq5c6N1ZCbTkiVLwr134COR6MlMxSqhUBiLMgFYLhqBMJXPhWONgciUK4aZxnhvoUgiidMR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');\n\tbackground-repeat: no-repeat;\n\tbackground-size: 100%;\n\tposition: absolute;\n}\n.owl-login .hand {\n\twidth: 34px;\n\theight: 34px;\n\tborder-radius: 40px;\n\tbackground-color: #472d20;\n\t-webkit-transform: scaleY(0.6);\n\t        transform: scaleY(0.6);\n\ttransition: 0.3s ease-out;\n\tposition: absolute;\n\tleft: 14px;\n\tbottom: -8px;\n}\n.owl-login .hand.hand-r {\n\tleft: 170px;\n}\n.owl-login .arms {\n\ttop: 58px;\n\tposition: absolute;\n\twidth: 100%;\n\theight: 41px;\n\toverflow: hidden;\n}\n.owl-login .arms .arm {\n\twidth: 40px;\n\theight: 65px;\n\tposition: absolute;\n\tleft: 20px;\n\ttop: 40px;\n\tbackground-image: url(\"data:image/png;base64,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\");\n\tbackground-size: 100%;\n\ttransition: 0.3s ease-out;\n\t-webkit-transform: rotate(-20deg);\n\t        transform: rotate(-20deg);\n}\n.owl-login .arms .arm.arm-r {\n\t-webkit-transform: rotate(20deg) scaleX(-1);\n\t        transform: rotate(20deg) scaleX(-1);\n\tleft: 158px;\n}\n.owl-login.password .hand {\n\t-webkit-transform: translateX(42px) translateY(-15px) scale(0.7);\n\t        transform: translateX(42px) translateY(-15px) scale(0.7);\n}\n.owl-login.password .hand.hand-r {\n\t-webkit-transform: translateX(-42px) translateY(-15px) scale(0.7);\n\t        transform: translateX(-42px) translateY(-15px) scale(0.7);\n}\n.owl-login.password .arms .arm {\n\t-webkit-transform: translateY(-40px) translateX(40px);\n\t        transform: translateY(-40px) translateX(40px);\n}\n.owl-login.password .arms .arm.arm-r {\n\t-webkit-transform: translateY(-40px) translateX(-40px) scaleX(-1);\n\t        transform: translateY(-40px) translateX(-40px) scaleX(-1);\n}\nuni-button[disabled].cu-btn.bg-green.shadow {\n\tbackground-color: #39b54a;\n\tcolor: white;\n}\nuni-button[disabled].cu-btn.bg-blue {\n\tbackground-color: #0081ff;\n\tcolor: #ffffff;\n}\n.title2 {\n    text-align: justify;\n    padding-right: 20upx;\n    font-size: 30upx;\n    position: relative;\n    height: 100upx;\n    line-height: 50upx;\n\tpadding-left: 20upx;\n}\n.cu-form-group{\n\tbackground-color: #efefef;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -23187,7 +22839,7 @@ var render = function() {
                 display: "flex",
                 "justify-content": "space-between",
                 "box-sizing": "border-box",
-                padding: "0px 5px",
+                padding: "0px 10upx",
                 "z-index": "999"
               },
               style: _vm._$g(12, "s"),
@@ -23198,7 +22850,7 @@ var render = function() {
               _c(
                 "v-uni-view",
                 {
-                  staticStyle: { color: "red", "font-size": "28px" },
+                  staticStyle: { color: "red", "font-size": "60upx" },
                   attrs: { _i: 14 },
                   on: {
                     click: function($event) {
@@ -23246,153 +22898,378 @@ var render = function() {
         "v-uni-view",
         { staticClass: _vm._$g(18, "sc"), attrs: { _i: 18 } },
         [
-          _c(
-            "v-uni-swiper",
-            {
-              staticClass: _vm._$g(19, "sc"),
-              style: _vm._$g(19, "s"),
-              attrs: { current: _vm._$g(19, "a-current"), _i: 19 },
-              on: {
-                change: function($event) {
-                  return _vm.$handleViewEvent($event)
-                }
-              }
-            },
-            [
-              _c(
-                "v-uni-swiper-item",
-                { key: "1", attrs: { _i: 20 } },
+          _vm._$g(19, "i")
+            ? _c(
+                "v-uni-scroll-view",
+                { staticClass: _vm._$g(19, "sc"), attrs: { _i: 19 } },
                 [
                   _c(
-                    "v-uni-scroll-view",
-                    { staticClass: _vm._$g(21, "sc"), attrs: { _i: 21 } },
+                    "v-uni-view",
+                    { staticClass: _vm._$g(20, "sc"), attrs: { _i: 20 } },
                     [
+                      _c("v-uni-view", {
+                        staticClass: _vm._$g(21, "sc"),
+                        attrs: { _i: 21 }
+                      }),
                       _vm._$g(22, "i")
-                        ? _c("v-uni-view", { attrs: { _i: 22 } })
+                        ? _c(
+                            "v-uni-view",
+                            { attrs: { _i: 22 } },
+                            [
+                              _vm._l(_vm._$g(23, "f"), function(
+                                itemex,
+                                indexe1,
+                                $22,
+                                $32
+                              ) {
+                                return [
+                                  _c(
+                                    "v-uni-view",
+                                    {
+                                      key: itemex["k0"],
+                                      staticClass: _vm._$g("24-" + $32, "sc"),
+                                      staticStyle: {
+                                        "padding-top": "10upx",
+                                        "padding-bottom": "10upx"
+                                      },
+                                      attrs: { _i: "24-" + $32 },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.$handleViewEvent($event)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "v-uni-view",
+                                        {
+                                          staticClass: _vm._$g(
+                                            "25-" + $32,
+                                            "sc"
+                                          ),
+                                          staticStyle: {
+                                            "margin-right": "20upx",
+                                            "padding-left": "80upx"
+                                          },
+                                          attrs: { _i: "25-" + $32 }
+                                        },
+                                        [_vm._v(_vm._$g("25-" + $32, "t0-0"))]
+                                      ),
+                                      _c(
+                                        "v-uni-view",
+                                        {
+                                          staticStyle: {
+                                            "padding-left": "80upx"
+                                          },
+                                          attrs: { _i: "26-" + $32 }
+                                        },
+                                        [
+                                          _c(
+                                            "v-uni-view",
+                                            { attrs: { _i: "27-" + $32 } },
+                                            [
+                                              _c("img-cache", {
+                                                staticClass: _vm._$g(
+                                                  "28-" + $32,
+                                                  "sc"
+                                                ),
+                                                attrs: { _i: "28-" + $32 }
+                                              }),
+                                              _vm._$g("29-" + $32, "i")
+                                                ? _c("img-cache", {
+                                                    staticClass: _vm._$g(
+                                                      "29-" + $32,
+                                                      "sc"
+                                                    ),
+                                                    attrs: { _i: "29-" + $32 }
+                                                  })
+                                                : _vm._e()
+                                            ],
+                                            1
+                                          ),
+                                          _c(
+                                            "v-uni-view",
+                                            {
+                                              staticClass: _vm._$g(
+                                                "30-" + $32,
+                                                "sc"
+                                              ),
+                                              class: _vm._$g("30-" + $32, "c"),
+                                              attrs: { _i: "30-" + $32 }
+                                            },
+                                            [
+                                              _vm._v(
+                                                _vm._$g("30-" + $32, "t0-0")
+                                              )
+                                            ]
+                                          ),
+                                          _c(
+                                            "v-uni-text",
+                                            {
+                                              staticClass: _vm._$g(
+                                                "31-" + $32,
+                                                "sc"
+                                              ),
+                                              attrs: { _i: "31-" + $32 }
+                                            },
+                                            [
+                                              _vm._v(
+                                                _vm._$g("31-" + $32, "t0-0") +
+                                                  "  " +
+                                                  _vm._$g("31-" + $32, "t0-1") +
+                                                  "评  " +
+                                                  _vm._$g("31-" + $32, "t0-2")
+                                              )
+                                            ]
+                                          )
+                                        ],
+                                        1
+                                      ),
+                                      _c(
+                                        "v-uni-view",
+                                        {
+                                          staticClass: _vm._$g(
+                                            "32-" + $32,
+                                            "sc"
+                                          ),
+                                          staticStyle: {
+                                            "padding-left": "10upx",
+                                            "padding-top": "5upx"
+                                          },
+                                          attrs: { _i: "32-" + $32 }
+                                        },
+                                        [_vm._v(_vm._$g("32-" + $32, "t0-0"))]
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ]
+                              })
+                            ],
+                            2
+                          )
                         : _vm._e()
                     ],
                     1
                   )
                 ],
                 1
-              ),
-              _c(
-                "v-uni-swiper-item",
-                { key: "2", attrs: { _i: 23 } },
+              )
+            : _vm._$g(33, "e")
+            ? _c(
+                "v-uni-scroll-view",
+                { staticClass: _vm._$g(33, "sc"), attrs: { _i: 33 } },
                 [
                   _c(
-                    "v-uni-scroll-view",
-                    { staticClass: _vm._$g(24, "sc"), attrs: { _i: 24 } },
+                    "v-uni-view",
+                    { staticClass: _vm._$g(34, "sc"), attrs: { _i: 34 } },
                     [
                       _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(25, "sc"), attrs: { _i: 25 } },
-                        [
-                          _c(
-                            "v-uni-swiper",
+                        "v-uni-swiper",
+                        {
+                          staticClass: _vm._$g(35, "sc"),
+                          attrs: {
+                            "indicator-dots": true,
+                            circular: true,
+                            autoplay: true,
+                            interval: "5000",
+                            duration: "500",
+                            _i: 35
+                          }
+                        },
+                        _vm._l(_vm._$g(36, "f"), function(
+                          item,
+                          index,
+                          $23,
+                          $33
+                        ) {
+                          return _c(
+                            "v-uni-swiper-item",
                             {
-                              staticClass: _vm._$g(26, "sc"),
-                              attrs: {
-                                "indicator-dots": true,
-                                circular: true,
-                                autoplay: true,
-                                interval: "5000",
-                                duration: "500",
-                                _i: 26
+                              key: item,
+                              attrs: { _i: "36-" + $33 },
+                              on: {
+                                click: function($event) {
+                                  return _vm.$handleViewEvent($event)
+                                }
                               }
                             },
-                            _vm._l(_vm._$g(27, "f"), function(
-                              item,
-                              index,
-                              $22,
-                              $32
-                            ) {
-                              return _c(
-                                "v-uni-swiper-item",
-                                {
-                                  key: item,
-                                  attrs: { _i: "27-" + $32 },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.$handleViewEvent($event)
+                            [
+                              _vm._$g("37-" + $33, "i")
+                                ? _c("v-uni-image", {
+                                    attrs: {
+                                      src: _vm._$g("37-" + $33, "a-src"),
+                                      mode: "aspectFill",
+                                      _i: "37-" + $33
                                     }
-                                  }
-                                },
-                                [
-                                  _vm._$g("28-" + $32, "i")
-                                    ? _c("v-uni-image", {
-                                        attrs: {
-                                          src: _vm._$g("28-" + $32, "a-src"),
-                                          mode: "aspectFill",
-                                          _i: "28-" + $32
-                                        }
-                                      })
-                                    : _c("v-uni-image", {
-                                        attrs: {
-                                          src: _vm._$g("29-" + $32, "a-src"),
-                                          mode: "aspectFill",
-                                          _i: "29-" + $32
-                                        }
-                                      })
-                                ],
-                                1
-                              )
-                            }),
+                                  })
+                                : _c("v-uni-image", {
+                                    attrs: {
+                                      src: _vm._$g("38-" + $33, "a-src"),
+                                      mode: "aspectFill",
+                                      _i: "38-" + $33
+                                    }
+                                  })
+                            ],
                             1
-                          ),
-                          _vm._$g(30, "i")
-                            ? _c(
-                                "v-uni-view",
-                                { attrs: { _i: 30 } },
-                                [
-                                  _vm._l(_vm._$g(31, "f"), function(
-                                    item,
-                                    index1,
-                                    $23,
-                                    $33
-                                  ) {
-                                    return [
+                          )
+                        }),
+                        1
+                      ),
+                      _vm._$g(39, "i")
+                        ? _c(
+                            "v-uni-view",
+                            { attrs: { _i: 39 } },
+                            [
+                              _vm._l(_vm._$g(40, "f"), function(
+                                item,
+                                index1,
+                                $24,
+                                $34
+                              ) {
+                                return [
+                                  _c(
+                                    "v-uni-view",
+                                    {
+                                      key: item["k0"],
+                                      staticClass: _vm._$g("41-" + $34, "sc"),
+                                      staticStyle: {
+                                        "padding-top": "10upx",
+                                        "padding-bottom": "10upx"
+                                      },
+                                      attrs: { _i: "41-" + $34 },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.$handleViewEvent($event)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "v-uni-view",
+                                        { attrs: { _i: "42-" + $34 } },
+                                        [
+                                          _c(
+                                            "v-uni-text",
+                                            {
+                                              staticClass: _vm._$g(
+                                                "43-" + $34,
+                                                "sc"
+                                              ),
+                                              staticStyle: { width: "100%" },
+                                              attrs: { _i: "43-" + $34 }
+                                            },
+                                            [
+                                              _vm._v(
+                                                _vm._$g("43-" + $34, "t0-0")
+                                              )
+                                            ]
+                                          )
+                                        ],
+                                        1
+                                      ),
+                                      _c(
+                                        "v-uni-view",
+                                        { attrs: { _i: "44-" + $34 } },
+                                        [
+                                          _c(
+                                            "v-uni-text",
+                                            {
+                                              staticClass: _vm._$g(
+                                                "45-" + $34,
+                                                "sc"
+                                              ),
+                                              attrs: { _i: "45-" + $34 }
+                                            },
+                                            [_vm._v("置顶")]
+                                          ),
+                                          _c(
+                                            "v-uni-text",
+                                            {
+                                              staticClass: _vm._$g(
+                                                "46-" + $34,
+                                                "sc"
+                                              ),
+                                              attrs: { _i: "46-" + $34 }
+                                            },
+                                            [
+                                              _vm._v(
+                                                _vm._$g("46-" + $34, "t0-0") +
+                                                  "  " +
+                                                  _vm._$g("46-" + $34, "t0-1") +
+                                                  "评"
+                                              )
+                                            ]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ]
+                              })
+                            ],
+                            2
+                          )
+                        : _vm._e(),
+                      _vm._$g(47, "i")
+                        ? _c(
+                            "v-uni-view",
+                            { attrs: { _i: 47 } },
+                            [
+                              _vm._l(_vm._$g(48, "f"), function(
+                                item,
+                                index2,
+                                $25,
+                                $35
+                              ) {
+                                return [
+                                  _c(
+                                    "v-uni-view",
+                                    {
+                                      key: item["k0"],
+                                      staticClass: _vm._$g("49-" + $35, "sc"),
+                                      attrs: { _i: "49-" + $35 },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.$handleViewEvent($event)
+                                        }
+                                      }
+                                    },
+                                    [
                                       _c(
                                         "v-uni-view",
                                         {
-                                          key: item["k0"],
                                           staticClass: _vm._$g(
-                                            "32-" + $33,
+                                            "50-" + $35,
                                             "sc"
                                           ),
-                                          staticStyle: {
-                                            "padding-top": "10upx",
-                                            "padding-bottom": "10upx"
-                                          },
-                                          attrs: { _i: "32-" + $33 },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.$handleViewEvent(
-                                                $event
-                                              )
-                                            }
-                                          }
+                                          attrs: { _i: "50-" + $35 }
                                         },
                                         [
                                           _c(
                                             "v-uni-view",
-                                            { attrs: { _i: "33-" + $33 } },
+                                            {
+                                              staticClass: _vm._$g(
+                                                "51-" + $35,
+                                                "sc"
+                                              ),
+                                              attrs: { _i: "51-" + $35 }
+                                            },
                                             [
                                               _c(
-                                                "v-uni-text",
+                                                "v-uni-view",
                                                 {
                                                   staticClass: _vm._$g(
-                                                    "34-" + $33,
+                                                    "52-" + $35,
                                                     "sc"
                                                   ),
-                                                  staticStyle: {
-                                                    width: "100%"
-                                                  },
-                                                  attrs: { _i: "34-" + $33 }
+                                                  attrs: { _i: "52-" + $35 }
                                                 },
                                                 [
                                                   _vm._v(
-                                                    _vm._$g("34-" + $33, "t0-0")
+                                                    _vm._$g("52-" + $35, "t0-0")
                                                   )
                                                 ]
                                               )
@@ -23401,287 +23278,26 @@ var render = function() {
                                           ),
                                           _c(
                                             "v-uni-view",
-                                            { attrs: { _i: "35-" + $33 } },
-                                            [
-                                              _c(
-                                                "v-uni-text",
-                                                {
-                                                  staticClass: _vm._$g(
-                                                    "36-" + $33,
-                                                    "sc"
-                                                  ),
-                                                  attrs: { _i: "36-" + $33 }
-                                                },
-                                                [_vm._v("置顶")]
-                                              ),
-                                              _c(
-                                                "v-uni-text",
-                                                {
-                                                  staticClass: _vm._$g(
-                                                    "37-" + $33,
-                                                    "sc"
-                                                  ),
-                                                  attrs: { _i: "37-" + $33 }
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    _vm._$g(
-                                                      "37-" + $33,
-                                                      "t0-0"
-                                                    ) +
-                                                      "  " +
-                                                      _vm._$g(
-                                                        "37-" + $33,
-                                                        "t0-1"
-                                                      ) +
-                                                      "评"
-                                                  )
-                                                ]
-                                              )
-                                            ],
-                                            1
-                                          )
-                                        ],
-                                        1
-                                      )
-                                    ]
-                                  })
-                                ],
-                                2
-                              )
-                            : _vm._e(),
-                          _vm._$g(38, "i")
-                            ? _c(
-                                "v-uni-view",
-                                { attrs: { _i: 38 } },
-                                [
-                                  _vm._l(_vm._$g(39, "f"), function(
-                                    item,
-                                    index2,
-                                    $24,
-                                    $34
-                                  ) {
-                                    return [
-                                      _c(
-                                        "v-uni-view",
-                                        {
-                                          key: item["k0"],
-                                          staticClass: _vm._$g(
-                                            "40-" + $34,
-                                            "sc"
-                                          ),
-                                          attrs: { _i: "40-" + $34 },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.$handleViewEvent(
-                                                $event
-                                              )
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "v-uni-view",
                                             {
                                               staticClass: _vm._$g(
-                                                "41-" + $34,
+                                                "53-" + $35,
                                                 "sc"
                                               ),
-                                              attrs: { _i: "41-" + $34 }
+                                              attrs: { _i: "53-" + $35 }
                                             },
                                             [
-                                              _c(
-                                                "v-uni-view",
-                                                {
-                                                  staticClass: _vm._$g(
-                                                    "42-" + $34,
-                                                    "sc"
-                                                  ),
-                                                  attrs: { _i: "42-" + $34 }
-                                                },
-                                                [
-                                                  _c(
-                                                    "v-uni-view",
-                                                    {
-                                                      staticClass: _vm._$g(
-                                                        "43-" + $34,
-                                                        "sc"
+                                              _vm._$g("54-" + $35, "i")
+                                                ? _c("v-uni-image", {
+                                                    attrs: {
+                                                      src: _vm._$g(
+                                                        "54-" + $35,
+                                                        "a-src"
                                                       ),
-                                                      attrs: { _i: "43-" + $34 }
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        _vm._$g(
-                                                          "43-" + $34,
-                                                          "t0-0"
-                                                        )
-                                                      )
-                                                    ]
-                                                  )
-                                                ],
-                                                1
-                                              ),
-                                              _c(
-                                                "v-uni-view",
-                                                {
-                                                  staticClass: _vm._$g(
-                                                    "44-" + $34,
-                                                    "sc"
-                                                  ),
-                                                  attrs: { _i: "44-" + $34 }
-                                                },
-                                                [
-                                                  _vm._$g("45-" + $34, "i")
-                                                    ? _c("v-uni-image", {
-                                                        attrs: {
-                                                          src: _vm._$g(
-                                                            "45-" + $34,
-                                                            "a-src"
-                                                          ),
-                                                          mode: "aspectFill",
-                                                          _i: "45-" + $34
-                                                        }
-                                                      })
-                                                    : _vm._e(),
-                                                  _c(
-                                                    "v-uni-view",
-                                                    {
-                                                      staticClass: _vm._$g(
-                                                        "46-" + $34,
-                                                        "sc"
-                                                      ),
-                                                      attrs: { _i: "46-" + $34 }
-                                                    },
-                                                    [
-                                                      _c(
-                                                        "v-uni-view",
-                                                        {
-                                                          staticClass: _vm._$g(
-                                                            "47-" + $34,
-                                                            "sc"
-                                                          ),
-                                                          attrs: {
-                                                            _i: "47-" + $34
-                                                          }
-                                                        },
-                                                        [
-                                                          _vm._v(
-                                                            _vm._$g(
-                                                              "47-" + $34,
-                                                              "t0-0"
-                                                            )
-                                                          )
-                                                        ]
-                                                      ),
-                                                      _c(
-                                                        "v-uni-view",
-                                                        {
-                                                          attrs: {
-                                                            _i: "48-" + $34
-                                                          }
-                                                        },
-                                                        [
-                                                          _c(
-                                                            "v-uni-view",
-                                                            {
-                                                              staticClass: _vm._$g(
-                                                                "49-" + $34,
-                                                                "sc"
-                                                              ),
-                                                              attrs: {
-                                                                _i: "49-" + $34
-                                                              }
-                                                            },
-                                                            [
-                                                              _vm._v(
-                                                                _vm._$g(
-                                                                  "49-" + $34,
-                                                                  "t0-0"
-                                                                )
-                                                              )
-                                                            ]
-                                                          ),
-                                                          _c(
-                                                            "v-uni-view",
-                                                            {
-                                                              staticClass: _vm._$g(
-                                                                "50-" + $34,
-                                                                "sc"
-                                                              ),
-                                                              attrs: {
-                                                                _i: "50-" + $34
-                                                              }
-                                                            },
-                                                            [
-                                                              _vm._v(
-                                                                _vm._$g(
-                                                                  "50-" + $34,
-                                                                  "t0-0"
-                                                                ) + "评"
-                                                              )
-                                                            ]
-                                                          )
-                                                        ],
-                                                        1
-                                                      )
-                                                    ],
-                                                    1
-                                                  )
-                                                ],
-                                                1
-                                              )
-                                            ],
-                                            1
-                                          )
-                                        ],
-                                        1
-                                      )
-                                    ]
-                                  })
-                                ],
-                                2
-                              )
-                            : _vm._e(),
-                          _vm._$g(51, "i")
-                            ? _c(
-                                "v-uni-view",
-                                { attrs: { _i: 51 } },
-                                [
-                                  _vm._l(_vm._$g(52, "f"), function(
-                                    item,
-                                    index3,
-                                    $25,
-                                    $35
-                                  ) {
-                                    return [
-                                      _c(
-                                        "v-uni-view",
-                                        {
-                                          key: item["k0"],
-                                          staticClass: _vm._$g(
-                                            "53-" + $35,
-                                            "sc"
-                                          ),
-                                          attrs: { _i: "53-" + $35 },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.$handleViewEvent(
-                                                $event
-                                              )
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "v-uni-view",
-                                            {
-                                              staticClass: _vm._$g(
-                                                "54-" + $35,
-                                                "sc"
-                                              ),
-                                              attrs: { _i: "54-" + $35 }
-                                            },
-                                            [
+                                                      mode: "aspectFill",
+                                                      _i: "54-" + $35
+                                                    }
+                                                  })
+                                                : _vm._e(),
                                               _c(
                                                 "v-uni-view",
                                                 {
@@ -23709,57 +23325,28 @@ var render = function() {
                                                         )
                                                       )
                                                     ]
-                                                  )
-                                                ],
-                                                1
-                                              ),
-                                              _c(
-                                                "v-uni-view",
-                                                {
-                                                  staticClass: _vm._$g(
-                                                    "57-" + $35,
-                                                    "sc"
                                                   ),
-                                                  attrs: { _i: "57-" + $35 }
-                                                },
-                                                [
-                                                  _vm._$g("58-" + $35, "i")
-                                                    ? _c("v-uni-image", {
-                                                        attrs: {
-                                                          src: _vm._$g(
-                                                            "58-" + $35,
-                                                            "a-src"
-                                                          ),
-                                                          mode: "aspectFill",
-                                                          _i: "58-" + $35
-                                                        }
-                                                      })
-                                                    : _vm._e(),
                                                   _c(
                                                     "v-uni-view",
                                                     {
-                                                      staticClass: _vm._$g(
-                                                        "59-" + $35,
-                                                        "sc"
-                                                      ),
-                                                      attrs: { _i: "59-" + $35 }
+                                                      attrs: { _i: "57-" + $35 }
                                                     },
                                                     [
                                                       _c(
                                                         "v-uni-view",
                                                         {
                                                           staticClass: _vm._$g(
-                                                            "60-" + $35,
+                                                            "58-" + $35,
                                                             "sc"
                                                           ),
                                                           attrs: {
-                                                            _i: "60-" + $35
+                                                            _i: "58-" + $35
                                                           }
                                                         },
                                                         [
                                                           _vm._v(
                                                             _vm._$g(
-                                                              "60-" + $35,
+                                                              "58-" + $35,
                                                               "t0-0"
                                                             )
                                                           )
@@ -23768,53 +23355,22 @@ var render = function() {
                                                       _c(
                                                         "v-uni-view",
                                                         {
+                                                          staticClass: _vm._$g(
+                                                            "59-" + $35,
+                                                            "sc"
+                                                          ),
                                                           attrs: {
-                                                            _i: "61-" + $35
+                                                            _i: "59-" + $35
                                                           }
                                                         },
                                                         [
-                                                          _c(
-                                                            "v-uni-view",
-                                                            {
-                                                              staticClass: _vm._$g(
-                                                                "62-" + $35,
-                                                                "sc"
-                                                              ),
-                                                              attrs: {
-                                                                _i: "62-" + $35
-                                                              }
-                                                            },
-                                                            [
-                                                              _vm._v(
-                                                                _vm._$g(
-                                                                  "62-" + $35,
-                                                                  "t0-0"
-                                                                )
-                                                              )
-                                                            ]
-                                                          ),
-                                                          _c(
-                                                            "v-uni-view",
-                                                            {
-                                                              staticClass: _vm._$g(
-                                                                "63-" + $35,
-                                                                "sc"
-                                                              ),
-                                                              attrs: {
-                                                                _i: "63-" + $35
-                                                              }
-                                                            },
-                                                            [
-                                                              _vm._v(
-                                                                _vm._$g(
-                                                                  "63-" + $35,
-                                                                  "t0-0"
-                                                                ) + "评"
-                                                              )
-                                                            ]
+                                                          _vm._v(
+                                                            _vm._$g(
+                                                              "59-" + $35,
+                                                              "t0-0"
+                                                            ) + "评"
                                                           )
-                                                        ],
-                                                        1
+                                                        ]
                                                       )
                                                     ],
                                                     1
@@ -23828,48 +23384,228 @@ var render = function() {
                                         ],
                                         1
                                       )
-                                    ]
-                                  })
-                                ],
-                                2
-                              )
-                            : _vm._e(),
-                          _c(
+                                    ],
+                                    1
+                                  )
+                                ]
+                              })
+                            ],
+                            2
+                          )
+                        : _vm._e(),
+                      _vm._$g(60, "i")
+                        ? _c(
                             "v-uni-view",
-                            { attrs: { _i: 64 } },
+                            { attrs: { _i: 60 } },
                             [
+                              _vm._l(_vm._$g(61, "f"), function(
+                                item,
+                                index3,
+                                $26,
+                                $36
+                              ) {
+                                return [
+                                  _c(
+                                    "v-uni-view",
+                                    {
+                                      key: item["k0"],
+                                      staticClass: _vm._$g("62-" + $36, "sc"),
+                                      attrs: { _i: "62-" + $36 },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.$handleViewEvent($event)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "v-uni-view",
+                                        {
+                                          staticClass: _vm._$g(
+                                            "63-" + $36,
+                                            "sc"
+                                          ),
+                                          attrs: { _i: "63-" + $36 }
+                                        },
+                                        [
+                                          _c(
+                                            "v-uni-view",
+                                            {
+                                              staticClass: _vm._$g(
+                                                "64-" + $36,
+                                                "sc"
+                                              ),
+                                              attrs: { _i: "64-" + $36 }
+                                            },
+                                            [
+                                              _c(
+                                                "v-uni-view",
+                                                {
+                                                  staticClass: _vm._$g(
+                                                    "65-" + $36,
+                                                    "sc"
+                                                  ),
+                                                  attrs: { _i: "65-" + $36 }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    _vm._$g("65-" + $36, "t0-0")
+                                                  )
+                                                ]
+                                              )
+                                            ],
+                                            1
+                                          ),
+                                          _c(
+                                            "v-uni-view",
+                                            {
+                                              staticClass: _vm._$g(
+                                                "66-" + $36,
+                                                "sc"
+                                              ),
+                                              attrs: { _i: "66-" + $36 }
+                                            },
+                                            [
+                                              _vm._$g("67-" + $36, "i")
+                                                ? _c("v-uni-image", {
+                                                    attrs: {
+                                                      src: _vm._$g(
+                                                        "67-" + $36,
+                                                        "a-src"
+                                                      ),
+                                                      mode: "aspectFill",
+                                                      _i: "67-" + $36
+                                                    }
+                                                  })
+                                                : _vm._e(),
+                                              _c(
+                                                "v-uni-view",
+                                                {
+                                                  staticClass: _vm._$g(
+                                                    "68-" + $36,
+                                                    "sc"
+                                                  ),
+                                                  attrs: { _i: "68-" + $36 }
+                                                },
+                                                [
+                                                  _c(
+                                                    "v-uni-view",
+                                                    {
+                                                      staticClass: _vm._$g(
+                                                        "69-" + $36,
+                                                        "sc"
+                                                      ),
+                                                      attrs: { _i: "69-" + $36 }
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        _vm._$g(
+                                                          "69-" + $36,
+                                                          "t0-0"
+                                                        )
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _c(
+                                                    "v-uni-view",
+                                                    {
+                                                      attrs: { _i: "70-" + $36 }
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "v-uni-view",
+                                                        {
+                                                          staticClass: _vm._$g(
+                                                            "71-" + $36,
+                                                            "sc"
+                                                          ),
+                                                          attrs: {
+                                                            _i: "71-" + $36
+                                                          }
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            _vm._$g(
+                                                              "71-" + $36,
+                                                              "t0-0"
+                                                            )
+                                                          )
+                                                        ]
+                                                      ),
+                                                      _c(
+                                                        "v-uni-view",
+                                                        {
+                                                          staticClass: _vm._$g(
+                                                            "72-" + $36,
+                                                            "sc"
+                                                          ),
+                                                          attrs: {
+                                                            _i: "72-" + $36
+                                                          }
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            _vm._$g(
+                                                              "72-" + $36,
+                                                              "t0-0"
+                                                            ) + "评"
+                                                          )
+                                                        ]
+                                                      )
+                                                    ],
+                                                    1
+                                                  )
+                                                ],
+                                                1
+                                              )
+                                            ],
+                                            1
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ],
+                                    1
+                                  )
+                                ]
+                              })
+                            ],
+                            2
+                          )
+                        : _vm._e(),
+                      _c(
+                        "v-uni-view",
+                        { attrs: { _i: 73 } },
+                        [
+                          [
+                            _c(
+                              "v-uni-view",
+                              {
+                                staticClass: _vm._$g(75, "sc"),
+                                attrs: { _i: 75 }
+                              },
                               [
                                 _c(
                                   "v-uni-view",
                                   {
-                                    staticClass: _vm._$g(66, "sc"),
-                                    attrs: { _i: 66 }
+                                    staticClass: _vm._$g(76, "sc"),
+                                    attrs: { _i: 76 }
                                   },
                                   [
                                     _c(
                                       "v-uni-view",
                                       {
-                                        staticClass: _vm._$g(67, "sc"),
-                                        attrs: { _i: 67 }
+                                        staticClass: _vm._$g(77, "sc"),
+                                        attrs: { _i: 77 }
                                       },
                                       [
                                         _c(
-                                          "v-uni-view",
+                                          "v-uni-text",
                                           {
-                                            staticClass: _vm._$g(68, "sc"),
-                                            attrs: { _i: 68 }
+                                            staticClass: _vm._$g(78, "sc"),
+                                            attrs: { _i: 78 }
                                           },
-                                          [
-                                            _c(
-                                              "v-uni-text",
-                                              {
-                                                staticClass: _vm._$g(69, "sc"),
-                                                attrs: { _i: 69 }
-                                              },
-                                              [_vm._v(_vm._$g(69, "t0-0"))]
-                                            )
-                                          ],
-                                          1
+                                          [_vm._v(_vm._$g(78, "t0-0"))]
                                         )
                                       ],
                                       1
@@ -23877,12 +23613,12 @@ var render = function() {
                                   ],
                                   1
                                 )
-                              ]
-                            ],
-                            2
-                          )
+                              ],
+                              1
+                            )
+                          ]
                         ],
-                        1
+                        2
                       )
                     ],
                     1
@@ -23890,37 +23626,35 @@ var render = function() {
                 ],
                 1
               )
-            ],
-            1
-          )
+            : _vm._e()
         ],
         1
       ),
       _c(
         "v-uni-view",
         {
-          staticClass: _vm._$g(70, "sc"),
-          class: _vm._$g(70, "c"),
-          attrs: { _i: 70 }
+          staticClass: _vm._$g(79, "sc"),
+          class: _vm._$g(79, "c"),
+          attrs: { _i: 79 }
         },
         [
           _c(
             "v-uni-button",
             {
-              staticClass: _vm._$g(71, "sc"),
-              class: _vm._$g(71, "c"),
-              attrs: { _i: 71 }
+              staticClass: _vm._$g(80, "sc"),
+              class: _vm._$g(80, "c"),
+              attrs: { _i: 80 }
             },
             [
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(72, "sc"), attrs: { _i: 72 } },
-                [_vm._v(_vm._$g(72, "t0-0") + "：")]
+                { staticClass: _vm._$g(81, "sc"), attrs: { _i: 81 } },
+                [_vm._v(_vm._$g(81, "t0-0") + "：")]
               ),
               _c(
                 "v-uni-text",
-                { staticClass: _vm._$g(73, "sc"), attrs: { _i: 73 } },
-                [_vm._v(_vm._$g(73, "t0-0"))]
+                { staticClass: _vm._$g(82, "sc"), attrs: { _i: 82 } },
+                [_vm._v(_vm._$g(82, "t0-0"))]
               )
             ],
             1
@@ -23935,23 +23669,23 @@ var render = function() {
             {
               name: "show",
               rawName: "v-show",
-              value: _vm._$g(74, "v-show"),
-              expression: "_$g(74,'v-show')"
+              value: _vm._$g(83, "v-show"),
+              expression: "_$g(83,'v-show')"
             }
           ],
-          staticClass: _vm._$g(74, "sc"),
-          style: _vm._$g(74, "s"),
-          attrs: { _i: 74 }
+          staticClass: _vm._$g(83, "sc"),
+          style: _vm._$g(83, "s"),
+          attrs: { _i: 83 }
         },
         [
           _c("v-uni-view", {
-            staticClass: _vm._$g(75, "sc"),
-            style: _vm._$g(75, "s"),
-            attrs: { _i: 75 }
+            staticClass: _vm._$g(84, "sc"),
+            style: _vm._$g(84, "s"),
+            attrs: { _i: 84 }
           }),
           _c("v-uni-view", {
-            staticClass: _vm._$g(76, "sc"),
-            attrs: { _i: 76 }
+            staticClass: _vm._$g(85, "sc"),
+            attrs: { _i: 85 }
           })
         ],
         1
@@ -24048,7 +23782,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../5211game/HBuilderX.3.1.18.20210609.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.cu-card>.cu-item[data-v-0fd8db80] {\n\tbackground-color: #FFFFFF !important;\n\tborder-radius: 4%;\n\tbackground-position-y: 9%;\n\tmargin: 0;\n}\n.text-df[data-v-0fd8db80] {\n\tbackground-color: #FFFFFF !important;\n\tborder-radius: 4%;\n\tbackground-position-y: 9%;\n\tmargin: 0;\n}\n.article[data-v-0fd8db80] {\n\tmargin: 10upx;\n}\n.page[data-v-0fd8db80] {\n\theight: 100vh;\n}\n.nav-sm[data-v-0fd8db80] {\n\twhite-space: nowrap;\n}\n.nav-sm .cu-item.cur[data-v-0fd8db80] {\n\tborder-bottom: 2px solid;\n}\n.nav-sm .cu-item[data-v-0fd8db80] {\n\theight: 30px;\n\tdisplay: inline-block;\n\tline-height: 30px;\n\tmargin: 0 5px;\n\tpadding: 0 11px;\n}\n.searchHistory[data-v-0fd8db80] {\n\twidth: 100%;\n\tmargin-top: 5px;\n}\n.searchHistoryItem[data-v-0fd8db80] {\n\twidth: 100%;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n}\n.searchHistoryItem uni-view[data-v-0fd8db80] {\n\t/* width: 50px; */\n\theight: 20px;\n\tborder: 1px solid #eee;\n\tmargin: 0px 5px;\n}\n", ""]);
+exports.push([module.i, "\n.cu-card>.cu-item[data-v-0fd8db80] {\r\n\tbackground-color: #FFFFFF !important;\r\n\tborder-radius: 4%;\r\n\tbackground-position-y: 9%;\r\n\tmargin: 0;\n}\n.text-df[data-v-0fd8db80] {\r\n\tbackground-color: #FFFFFF !important;\r\n\tborder-radius: 4%;\r\n\tbackground-position-y: 9%;\r\n\tmargin: 0;\n}\n.article[data-v-0fd8db80] {\r\n\tmargin: 10upx;\n}\n.page[data-v-0fd8db80] {\r\n\theight: 100vh;\n}\n.nav-sm[data-v-0fd8db80] {\r\n\twhite-space: nowrap;\n}\n.nav-sm .cu-item.cur[data-v-0fd8db80] {\r\n\tborder-bottom: 2px solid;\n}\n.nav-sm .cu-item[data-v-0fd8db80] {\r\n\theight: 30px;\r\n\tdisplay: inline-block;\r\n\tline-height: 30px;\r\n\tmargin: 0 5px;\r\n\tpadding: 0 11px;\n}\n.searchHistory[data-v-0fd8db80] {\r\n\twidth: 100%;\r\n\tmargin-top: 5px;\n}\n.searchHistoryItem[data-v-0fd8db80] {\r\n\twidth: 100%;\r\n\tdisplay: flex;\r\n\tflex-wrap: wrap;\n}\n.searchHistoryItem uni-view[data-v-0fd8db80] {\r\n\t/* width: 50px; */\r\n\theight: 20px;\r\n\tborder: 1px solid #eee;\r\n\tmargin: 0px 5px;\n}\n.gzlist[data-v-0fd8db80] {\r\n\t\tposition: absolute;\r\n\t\tmargin: -33upx 0 0 -75upx;\n}\n.gzlist2[data-v-0fd8db80] {\r\n\t\tposition: absolute;\r\n\tbackground-color: transparent;\r\n\t\tmargin: -45upx 0 0 -85upx;\r\n\twidth: 86upx;\r\n\theight: 86upx;\n}\r\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -25770,7 +25504,7 @@ var render = function() {
               }
             ],
             staticClass: _vm._$g(10, "sc"),
-            staticStyle: { "margin-left": "11px" },
+            staticStyle: { "margin-left": "20upx" },
             attrs: { "data-id": "0", _i: 10 },
             on: {
               click: function($event) {
@@ -28061,10 +27795,81 @@ var render = function() {
         { staticClass: _vm._$g(92, "sc"), attrs: { _i: 92 } },
         [
           _c(
-            "v-uni-view",
+            "v-uni-checkbox-group",
             {
               staticClass: _vm._$g(93, "sc"),
               attrs: { _i: 93 },
+              on: {
+                change: function($event) {
+                  return _vm.$handleViewEvent($event)
+                }
+              }
+            },
+            [
+              _c(
+                "v-uni-view",
+                { staticClass: _vm._$g(94, "sc"), attrs: { _i: 94 } },
+                [
+                  _c("v-uni-checkbox", {
+                    class: _vm._$g(95, "c"),
+                    attrs: {
+                      checked: _vm._$g(95, "a-checked"),
+                      value: "A",
+                      _i: 95
+                    }
+                  }),
+                  _c(
+                    "v-uni-view",
+                    { staticClass: _vm._$g(96, "sc"), attrs: { _i: 96 } },
+                    [
+                      _vm._v("我已认真阅读并同意"),
+                      _c(
+                        "a",
+                        {
+                          attrs: { href: "#", _i: 97 },
+                          on: {
+                            click: function($event) {
+                              return _vm.$handleViewEvent($event)
+                            }
+                          }
+                        },
+                        [_vm._v("《用户服务协议》")]
+                      ),
+                      _vm._v("及"),
+                      _c(
+                        "a",
+                        {
+                          attrs: { href: "#2", _i: 98 },
+                          on: {
+                            click: function($event) {
+                              return _vm.$handleViewEvent($event)
+                            }
+                          }
+                        },
+                        [_vm._v("《隐私政策》")]
+                      ),
+                      _vm._v("全部条款。")
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _c(
+        "v-uni-view",
+        { staticClass: _vm._$g(99, "sc"), attrs: { _i: 99 } },
+        [
+          _c(
+            "v-uni-view",
+            {
+              staticClass: _vm._$g(100, "sc"),
+              attrs: { _i: 100 },
               on: {
                 click: function($event) {
                   return _vm.$handleViewEvent($event)
@@ -28168,7 +27973,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../5211game/HBuilderX.3.1.18.20210609.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\nuni-picker.shoujiquma[data-v-05398fef]::after {\n\tcolor: white !important;\n}\nuni-picker.shoujiquma[data-v-05398fef] {\n\tpadding-right: 0px;\n}\n.cu-tag[data-v-05398fef]{\n\tpadding-top: 30upx!important;\n\tpadding-bottom: 30upx!important;\n\tpadding-left: 10upx!important;\n\tpadding-right: 10upx!important;\n}\n.login-form[data-v-05398fef] {\n\tmargin: -9px 10px 0 10px;\n\theight: 280px;\n\tbackground: #007AFF;\n\tborder-radius: 10px;\n\tbackground-color: #EEEEEE;\n\tbox-shadow: 0 2px 10px #9B9B9B;\n\tpadding: 20px;\n}\n.form-input uni-input[data-v-05398fef] {\n\tbackground: #ffffff;\n\tborder-radius: 5px;\n\theight: 40px;\n\tmargin: 20px 0;\n\tpadding: 0 10px;\n}\n.login-img[data-v-05398fef] {\n\tdisplay: flex;\n\tjustify-content: center;\n\talign-items: center;\n\theight: 108px;\n\tmargin-top: -70rpx;\n}\n.owl-login[data-v-05398fef] {\n\twidth: 211px;\n\theight: 108px;\n\tbackground-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAaYAAADYCAMAAACX8Lc0AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAMAUExURQAAAHhROYBWPXpSOpRkR4teQ3NNN3lSOpZlSH9VPHFMNpBhRY1fQ5BhRYxeQ2hGMpVkR4VZP3pSOmxJNJJiRnRON5NjRpBhRV9ALXVPOHpSOnVPOIZaQF8/LW9KNWFALpRkR3ZPOIZaQG9LNV9ALlo8K5VkR31UO1U5KE41JYxeQ3VPOEkyI1U6KU0zJWBALkArHv///93d3BoWG3dQOZVkR5RkR0syJEYvIk0zJZJiRpBhRXhROUkxI3lSOnZQOXZPOHpSOkQuIUEsH0UuIUcwIoRZP1o8K4dbQZNjRoxeQ5FiRopdQntTO0gwI31UPIFXPo1fRIhcQYZaQHhROnZQOIVaQEwzJDYlGl8/LfzHA1I3J5NjRzUkGl4+LT8rH0oxIzgmG4BWPYNYP0MtIFQ4KIJYPlA1Jo9gRIteQ1c6KU40JU81Jj4qHnVPOEoyJDknHH9WPTsoHI5gRGA/LVw9LJRjR0gwIlU5KYlcQlE2J5ZlSF09LD0pHTclG35VPJVlSDQkGVk7KnxTOzonHDwoHT8qHmBALpFhRYVZQIZbQHpTO4hbQTQjGUIsIINZP0cvIoldQoJXPn9VPX5VPUYvIZFiRV4+LI1fQ040JsS+utbKwvn4+Pz8/ItdQ2hGMv7+/nFMNmtIM2ZEMMrCvWNCL+7u7W5KNODg38fAvOTj41c5Kd/Qx/Lx8Vk7K9fV1Ovr6ujo5/X19bmzsIV1bNrZ2LSsp4t9dX5uZJmNhWxXS6+moCckKNTR0N3OxcC6tk40JpKDe6uinM3Kx2hPQkZDR4mHiltGOnJeU5GQkiAcIX57fkw5LTMvM6uqrKGYk9HNy3VkWV5ORf/77f7ur8nGxP3bWkQzKWRJOp6TjfzMFlM8Ljo3O2ZkZ3xnW6GfoWBdYaqel+u5BtDFv6eZkVg9IW9sb1lWWlJDOVE/NPnGCXJSG5qYmmFEH/G9Bf3SMIJhGP7pmP/2131cGpBsFqyEEVpBM4hlF8WZDbuQDqSclt7DbdipCcrArMGVDYJeIqKadIMAAACtdFJOUwARC9SxQFAgwQVkcFBhMSmSGIQ9fd+j16G1pfPC3cDz43SPkn2w+Oj04+zp7Lr0y/r////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+2IAVYAAAF8VJREFUeNrt3XtcE1e+AHBERZGHolZb66vWal+73QxRAwE0gKZoAR9YxNjEB1kQIVBoLIJaC2p0a9lb613REmMSQ5AuIu+XlA+Cz/reddVqrfb93O29+7rvz51HMplJZjKTZITkZH5/tp+PJ8x35nfO+Z2ZcwICBjkiAnwrhjwe4Icx6hkf+8Ezn/VHpim+9ldPyRrlf0oRKYmjfeoHBxdnTfE/pscT430r14+SZZWM8DumZxPjn/OpH/ySLCvX7wYRQQsT40VDfOq+gpn8bhDxEsxUMdOHfvA4JcwUFeRfSsElCJMvdcnPoEwv+RfTzFiEKd+HfvE0lCk30L8mTSiTwncmIqOLUaZ5M/1JaUQ6xvQL35k/WJie8yemx/Mxpl/6Ts6zMM0b7UdMz1qYdo/zkR8cUWZhWvuM/yiNS7cy+cof/XSOlemX/sM0FWfylT96Cs6UMs5vmJ7Fmbb5RqoPVNuY/CbrBW2yMflGlWxmmY3Jb7LeVALTi76R8whMIkvWA3bIN8Iym32WwLTLF/7aQDWRCZvsjXsRVKax09CS+LhcAlOhL2S9mVIiE5b1XiwEtW40VToVnduSmHzhppxCYkJXnR8vLAB1yX2aVIosBEwhMe30/qw3RE5mghPA6ITCAkCHfEO2SqXTAgMClSSmAu/Pek+ryUzPBQQ8B/9wQMt7T8FMOVMDRpWQmbw/602xY0oJeDoP/uG/ApPpCYQpJ2iqHdM6b5/Wjzhox5Q5MxFhWgfmkHwKwlQ8bZo9k7evZjzuwCRSoExgrj2ZUCalzJ7J25PHNAemBIzpFyAqjc6gYVrl3e+BBGXQMQE5hniKlsm778qXaJmAHEM8gTIZKZieDPbinx1scmQ6hDFtHwIg02MIk3GNzoEpsyjUm3Oe0YEpa0FJng9kazd7YoRp/dwkoz1T6pKR3pwEhBo7JplKqMOYQBzqaWAmzZq5c6N1ZCbTkiVLwr134COR6MlMxSqhUBiLMgFYLhqBMJXPhWONgciUK4aZxnhvoUgiidMR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');\n\tbackground-repeat: no-repeat;\n\tbackground-size: 100%;\n\tposition: absolute;\n}\n.owl-login .hand[data-v-05398fef] {\n\twidth: 34px;\n\theight: 34px;\n\tborder-radius: 40px;\n\tbackground-color: #472d20;\n\t-webkit-transform: scaleY(0.6);\n\t        transform: scaleY(0.6);\n\ttransition: 0.3s ease-out;\n\tposition: absolute;\n\tleft: 14px;\n\tbottom: -8px;\n}\n.owl-login .hand.hand-r[data-v-05398fef] {\n\tleft: 170px;\n}\n.owl-login .arms[data-v-05398fef] {\n\ttop: 58px;\n\tposition: absolute;\n\twidth: 100%;\n\theight: 41px;\n\toverflow: hidden;\n}\n.owl-login .arms .arm[data-v-05398fef] {\n\twidth: 40px;\n\theight: 65px;\n\tposition: absolute;\n\tleft: 20px;\n\ttop: 40px;\n\tbackground-image: url(\"data:image/png;base64,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\");\n\tbackground-size: 100%;\n\ttransition: 0.3s ease-out;\n\t-webkit-transform: rotate(-20deg);\n\t        transform: rotate(-20deg);\n}\n.owl-login .arms .arm.arm-r[data-v-05398fef] {\n\t-webkit-transform: rotate(20deg) scaleX(-1);\n\t        transform: rotate(20deg) scaleX(-1);\n\tleft: 158px;\n}\n.owl-login.password .hand[data-v-05398fef] {\n\t-webkit-transform: translateX(42px) translateY(-15px) scale(0.7);\n\t        transform: translateX(42px) translateY(-15px) scale(0.7);\n}\n.owl-login.password .hand.hand-r[data-v-05398fef] {\n\t-webkit-transform: translateX(-42px) translateY(-15px) scale(0.7);\n\t        transform: translateX(-42px) translateY(-15px) scale(0.7);\n}\n.owl-login.password .arms .arm[data-v-05398fef] {\n\t-webkit-transform: translateY(-40px) translateX(40px);\n\t        transform: translateY(-40px) translateX(40px);\n}\n.owl-login.password .arms .arm.arm-r[data-v-05398fef] {\n\t-webkit-transform: translateY(-40px) translateX(-40px) scaleX(-1);\n\t        transform: translateY(-40px) translateX(-40px) scaleX(-1);\n}\nuni-button[disabled].cu-btn.bg-green.shadow[data-v-05398fef] {\n\tbackground-color: #39b54a;\n\tcolor: white;\n}\nuni-button[disabled].cu-btn.bg-blue[data-v-05398fef] {\n\tbackground-color: #0081ff;\n\tcolor: #ffffff;\n}\n", ""]);
+exports.push([module.i, "\nuni-picker.shoujiquma[data-v-05398fef]::after {\n\tcolor: white !important;\n}\nuni-picker.shoujiquma[data-v-05398fef] {\n\tpadding-right: 0px;\n}\n.cu-tag[data-v-05398fef]{\n\tpadding-top: 30upx!important;\n\tpadding-bottom: 30upx!important;\n\tpadding-left: 10upx!important;\n\tpadding-right: 10upx!important;\n}\n.login-form[data-v-05398fef] {\n\tmargin: -9px 10px 0 10px;\n\theight: 280px;\n\tbackground: #007AFF;\n\tborder-radius: 10px;\n\tbackground-color: #EEEEEE;\n\tbox-shadow: 0 2px 10px #9B9B9B;\n\tpadding: 20px;\n}\n.form-input uni-input[data-v-05398fef] {\n\tbackground: #ffffff;\n\tborder-radius: 5px;\n\theight: 40px;\n\tmargin: 20px 0;\n\tpadding: 0 10px;\n}\n.login-img[data-v-05398fef] {\n\tdisplay: flex;\n\tjustify-content: center;\n\talign-items: center;\n\theight: 108px;\n\tmargin-top: -70rpx;\n}\n.owl-login[data-v-05398fef] {\n\twidth: 211px;\n\theight: 108px;\n\tbackground-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAaYAAADYCAMAAACX8Lc0AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAMAUExURQAAAHhROYBWPXpSOpRkR4teQ3NNN3lSOpZlSH9VPHFMNpBhRY1fQ5BhRYxeQ2hGMpVkR4VZP3pSOmxJNJJiRnRON5NjRpBhRV9ALXVPOHpSOnVPOIZaQF8/LW9KNWFALpRkR3ZPOIZaQG9LNV9ALlo8K5VkR31UO1U5KE41JYxeQ3VPOEkyI1U6KU0zJWBALkArHv///93d3BoWG3dQOZVkR5RkR0syJEYvIk0zJZJiRpBhRXhROUkxI3lSOnZQOXZPOHpSOkQuIUEsH0UuIUcwIoRZP1o8K4dbQZNjRoxeQ5FiRopdQntTO0gwI31UPIFXPo1fRIhcQYZaQHhROnZQOIVaQEwzJDYlGl8/LfzHA1I3J5NjRzUkGl4+LT8rH0oxIzgmG4BWPYNYP0MtIFQ4KIJYPlA1Jo9gRIteQ1c6KU40JU81Jj4qHnVPOEoyJDknHH9WPTsoHI5gRGA/LVw9LJRjR0gwIlU5KYlcQlE2J5ZlSF09LD0pHTclG35VPJVlSDQkGVk7KnxTOzonHDwoHT8qHmBALpFhRYVZQIZbQHpTO4hbQTQjGUIsIINZP0cvIoldQoJXPn9VPX5VPUYvIZFiRV4+LI1fQ040JsS+utbKwvn4+Pz8/ItdQ2hGMv7+/nFMNmtIM2ZEMMrCvWNCL+7u7W5KNODg38fAvOTj41c5Kd/Qx/Lx8Vk7K9fV1Ovr6ujo5/X19bmzsIV1bNrZ2LSsp4t9dX5uZJmNhWxXS6+moCckKNTR0N3OxcC6tk40JpKDe6uinM3Kx2hPQkZDR4mHiltGOnJeU5GQkiAcIX57fkw5LTMvM6uqrKGYk9HNy3VkWV5ORf/77f7ur8nGxP3bWkQzKWRJOp6TjfzMFlM8Ljo3O2ZkZ3xnW6GfoWBdYaqel+u5BtDFv6eZkVg9IW9sb1lWWlJDOVE/NPnGCXJSG5qYmmFEH/G9Bf3SMIJhGP7pmP/2131cGpBsFqyEEVpBM4hlF8WZDbuQDqSclt7DbdipCcrArMGVDYJeIqKadIMAAACtdFJOUwARC9SxQFAgwQVkcFBhMSmSGIQ9fd+j16G1pfPC3cDz43SPkn2w+Oj04+zp7Lr0y/r////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+2IAVYAAAF8VJREFUeNrt3XtcE1e+AHBERZGHolZb66vWal+73QxRAwE0gKZoAR9YxNjEB1kQIVBoLIJaC2p0a9lb613REmMSQ5AuIu+XlA+Cz/reddVqrfb93O29+7rvz51HMplJZjKTZITkZH5/tp+PJ8x35nfO+Z2ZcwICBjkiAnwrhjwe4Icx6hkf+8Ezn/VHpim+9ldPyRrlf0oRKYmjfeoHBxdnTfE/pscT430r14+SZZWM8DumZxPjn/OpH/ySLCvX7wYRQQsT40VDfOq+gpn8bhDxEsxUMdOHfvA4JcwUFeRfSsElCJMvdcnPoEwv+RfTzFiEKd+HfvE0lCk30L8mTSiTwncmIqOLUaZ5M/1JaUQ6xvQL35k/WJie8yemx/Mxpl/6Ts6zMM0b7UdMz1qYdo/zkR8cUWZhWvuM/yiNS7cy+cof/XSOlemX/sM0FWfylT96Cs6UMs5vmJ7Fmbb5RqoPVNuY/CbrBW2yMflGlWxmmY3Jb7LeVALTi76R8whMIkvWA3bIN8Iym32WwLTLF/7aQDWRCZvsjXsRVKax09CS+LhcAlOhL2S9mVIiE5b1XiwEtW40VToVnduSmHzhppxCYkJXnR8vLAB1yX2aVIosBEwhMe30/qw3RE5mghPA6ITCAkCHfEO2SqXTAgMClSSmAu/Pek+ryUzPBQQ8B/9wQMt7T8FMOVMDRpWQmbw/602xY0oJeDoP/uG/ApPpCYQpJ2iqHdM6b5/Wjzhox5Q5MxFhWgfmkHwKwlQ8bZo9k7evZjzuwCRSoExgrj2ZUCalzJ7J25PHNAemBIzpFyAqjc6gYVrl3e+BBGXQMQE5hniKlsm778qXaJmAHEM8gTIZKZieDPbinx1scmQ6hDFtHwIg02MIk3GNzoEpsyjUm3Oe0YEpa0FJng9kazd7YoRp/dwkoz1T6pKR3pwEhBo7JplKqMOYQBzqaWAmzZq5c6N1ZCbTkiVLwr134COR6MlMxSqhUBiLMgFYLhqBMJXPhWONgciUK4aZxnhvoUgiidMRmU4sgJWERpQJwA9pQmEmYxLCtHmzKgpnStkIKy2Z5a2d8ZAnYaY0k41JI0Rjfj7MtO0x8JhC9Bpj5VyMac0GpYUpdnk0wvS7EG+dRUhgprgYk4VJZhBamPT5ebn6+cHAMY2ZA4eVaY3YnI4wqRdHY0zTvfMPDp6NMsWl6ZD39JSmlTFWpvnzV65csAC8z9JGkpjWJInL9fq90dEWpj1hXvmjR0kwprg4odlgFsbE2DGB9zLYdDsmOKKjbUwTvfJHD8WZ4tLS0mIcmIBbwA2e5Zxpjzf2TkESBqangRuPz2FgEk8I9M6HyRnTJNCYhjMyiSd62yQ36B0mpqmgMYUxM4mXjPeq8V7wUEYm4CZO41kwedkDNeodRibgJk5jWDGJxWO8ZsOpwNnMTKoIwJiGsWQSPz/eK4YSgaOGJrNgAm3iNJItU3b29LBBTyUjxs5OTmbDBNqK03T2TDBUyGA+UcFBTySjwYIJtPntLFeYsoueHz9YWT98xuzyZNZMT4GlFLjDNSY4Jgwf+J85euzQcjjYM40FrAjhOlNR0cTxA1qBDh87NDU11TUmwMoQ4e4wFS1bNjlsYJLfkKBJs1PRcI3pCcBqRW4ywTE55BE/U4HDx04+kGoN15gAqxaFus9UuXjxxBmhj2joFxE0dvLrb8HhJtNQwEp6HjEhMXlGaATHD9FTk4a+//6BA295wARYUS/EY6bFGzdunDghZDgXL7eMCBo7aejrSHjK9AJglVdOmDZuPPLKKxOHzQgLdzMHRgwPg4GWrkeCE6YneSYaJjTee37ysBkhoeERbOpKwRHhoaPGzpg8dMNSLLhjUoHFNIZrpve2ILF8+fLnJ04eNmHG+JCQsNDQ0OHWCA0NCwsZP2PGpMmTh87esOHXSOzfv5RnGiym5cv37XsZjd/8ZgUSryKxd+8iNH772w1IPDomsD7KmMAz8UyDyATWC5XDeCaeiWfimXgmnolnGhim0TwT/zTxTDwTz8Qz8Uw8E8/E1/T4mh7PxC9kOGUK5pl8gYlfZPcFJv5dCJ5p4CMEUCbA3tNz4XXKomWVsEzlgDLpdSb1h0pZ1qGSHLkhhn/rlYFpr16em58iiq9Q5O2Kl20YMCaNWlqGMqXDrYuUBv4dcnqmbEmG5UKhTDvXmQeKSZJBZIJbzzfwX2TQMK3XEC8UwiQfKCaVPVPeruI4f2Ri/L4p22x/oXauixooJrMj006Ryg8/Q4tgYKrUbXVk2jVQTEYKpnWKOP/7qJPp21tdBgXTqo0DxKTJ2KoxGY1GkzznkK11vf99Is30JbvGwqTU6MxCSXlynEqnjt2+fICY9DH4tCl1pUGdjzGp/HDDgenMTFKjcAVpertl4yBNb/VyEcw03w+375jIxGSUVA5yFaJcpdNIlVEpSNJTKHZtjy05YTLH8JvhEJjMiwa1WJRs1ihjFdvg2AVHIRI74SgoKChMKTOk0TON9i+mQazpSQxl8xR5SFAxFRSsW5enNPvLDmDTvZNJnxGlUCh273bKBMdCIzUTaGffstyzaNnGffAFhq/7xkfPlGqWihRoMDOt256oo2ACbB2DcXp7ZL/QrDPJy3Is8WHxh1K5SadfkPrqo2F63VwWn5CgYM+0fXuuCvhNRJ0Ui8QbFujkUumJMiRsTGgo4SjW6PRvvcItk0qekoCES0zbt+nsmQBbx6CtkC8r16mlaNAywSGTKeUG4QqOmA7ocisqKtxgWrVdascEWOWVevVWnGqwGDEyoaE2JG/xmGn+VlFFhZtMq1bJwN4unuLNokpVhlrtEpNMVqI0zX/ZEyazMjMz0wOmVbkkJsAqr46vU1bqD6rVrjPBIdMsWO4e03pdVGamh0yW5wnQMzJGkpn2COVbt7rJVJKVJTOmus70ujE/Pt5zptfUBCbgduQlMS0ybd3qCRMcZfoVLjGlmlLi4zlhWqUD92CgWQSmaJX8oMdMubky3VLWTAdMsYnxHDG9lqfCmQCrFQ3ZYWNappNzwpSbe0iTyoppvTE/MZE7ptdKcCbAzl4ItzHtM8lZMKnP937Z1dra+vBOcz8906ZN8mRGpl8b0v81kVOm13QWJsB20wsYjjMt0sgZmNRtPTWNRwW20NbVt96nYYKhUp0z6UtEIq6Z4i1MoBUhwqxMezUZTpn6u2q1Aqqoqu/IoWSKijItpWeKyxGJuGd624QxgVbSG29hWq7JcMIk7YCOCuhDe+0+JVNUrm4RNdNS05v/8kiY4jEm0M4FGoMxFZky6JnkXY0Cpmhoo2KKilKqqJjMUQsXMjNdau7qq6lurKqqaqyuvdbU9h0Lprd1QB6oOgFl2mzIoGfqZUZCoZqpmNLTM5baM5WXvbmQiSm++Xi1wwPc2N1xi4kpHch500iUKeYNWqbOPq2AZbT0UzGl55pJTIt0a99kYrreV0WXX1vanDOt0oNYLJqIMG15g45J3tEgYB/a01RM6elbl9qYkpUpKc6Z4jtOOm2lseuWE6a31SCWXqfDTHMNdEydh6sFLkXNbSqmeSUqC9MiXX6Kc6bM3jrGVqq6FPRMIgAPVA0uhZnWv0HD1F7vohJ8BdupmObNM76KMKXmxMY6Z7rRfZRNM3VttEyv6cFbFoyAmTYbqZnUHdBJgcuhvUPJNE+6f8Wr5vRY50z5Hazvi+5LNEzvmsBbZA+HmZCHiYJJ/hBqELgTrZRM+TKhfG2sc6Ybh+vYN9PYTsOUhTCBVS0aDjPpKJnkXVCt1i0mQQ8lU/7atQxM7fV1rjRz9DQ10270PT2wakWlO97TUDHBSjVVAjejyR2m+F7I1Z6wbycV07t64N56DSndsYCS6UsIqhO4HaddZxJddaMnbMmjYjIiTOEgMY0v3WGkYuqF3OyYLPmo11Um0UOo9qjrDUF5FExlwH2RMab0PQ0F030IqtF6wCTQdrrIdMfNBrspmA4B933TsNJkCqb+ax6lPCSqlS4x9brdYI8jUyZwXwuOLDU7MslbIahW4GEcc4Xpugc5tsOBaSdw395OLDU5MrVBHj9McPfUzp7pXDcEad3Pr/ZM76pA+5J9erbGgel2NwcPk0BQV8KWSdQEuTwWJ+bXXfZMZpgJqLeTZ61wZHrIxcMERxdbpjYPByxN9kw6wLbvCCx934GpswW+akc5YKr6Bzumcy0ePUxw2rthx2QCbDOciNI0B6Yu+GE6KeAietgxIQ16NPoXQHZMGYDtABZeqrJn6oQvGlTFCVPVXTZMnRzcFu1kJilg++kNL9XbM30JX7UaATfRxYaplYPbopbMVAbY7pShyLSJxKSr5yznwYM9Fkz9nNwW50lMxYAxhZUa7JiQORPUyBGToJ2Z6b84uS26SUxKwLbkDXFgaoI87tCJKw2MTJdaOLkttLdAZhpvz3QbuWq1XCkJGhmZmpHbgoPh/1V7JpDWBcfY903oVWvgjElwnYmplaPbosavmJAKhGdzTbsCAQMTmvO4GLFoFfZMAB1lMsF+QH6T0xEEfJMzMF2HOKpMCdrsBuQgMQ0rFZKYbkPcTW6xGS4DUwdnt0UPgekEYEwjS8tJTPchTgd6cJxzzsTdwLKWwHQQsNPQJpbuJzGhsyYuBl62XOScqZuz9qoITBrgmPaRmO6gTBwqCR46ZboLcVeaumVjMgLGNL1UTGLq4pzpsFOmTg6ZzpPXm0BimlVKXmRv4pzpmlOm6xwytZFXb0FiKi1FyhA2ph7OmVqcMrVzyHSH/C4EQEyBMJOKyHSc85Ee5JSpjUOm0zjTOsDOvR0CM60fdCaIa6Y8wJgiYKaNjkxVA8yk5ZhJBBjTCJhprsmhb6rjkKnbKVMzh7fFVZypBDCmcJhph57A1ApxXHoV9DEPITi6LXpxJimITAcITGiBnMuFDKxE7nzexNFt0U7+cAYgpuEI0zICE1oJ5eyNFSS+dMp0jsPb4lvyZ2igMe0w2piwvoLLoV67U6b8Fs6KiFq8ppeHHfYNToU8FGWKszFhSYjLMcRd56XXwxBXKxnVOFMUmExHbEyaejZZSFvH2rGOYb3pKmed0zWcSQ4aUxjKNEdnW73FinpOXiFvvPLp5cjIyItnztazuXj1DExYluXiZYirOJMeYwoEjancxoSNIWizUNWFU5GWOHWhhUWuesjAhI0huJg5fWtlysQOBgLolZUQjEmswZnOQ86yXssZK1LkGXbvmfQzvVmE1T1o/rHaHx/cO3X5zNdNzIx1+JtFOcAxjceY5qhwpoxrTsZ6N/FHKfIiu0F7NeN7er307dV+ijd3+QrT4LMHZzIDy/SK7a3XLyHa27vephT5KcvJLSOTJetRDCKuXMRbe8DceXVamUSW09CeBI9pjgFnsmQ9iq/3Gu/ZlCIvsFI62s/8DnkTTXtnbY09YJ7HncTfIdeAxzTGyrTP9uHMYbrbm3DdIiPP2joFZ2/psfgio526vc8IjdWwGedZmApVADPNMeNMlkKEQ29Rd4rI9A2+UOHsueplwZTSR9Veiy3jRV5m8VpRnpXphPUIyBdAZNqCM2n6qAd7P0aSotvyn7++fNTJAILNZ2jNVO19E0nBRD/rbrV+hlagsjI9BiLTHD3+7W0bRDl3+obMdA/LRBdsYI7RwYop5bhjhaqb1JZ1PPMZ7cOksDLlCAFkmmBjKsK3i9fcpBxFnCIzRZ76uOfmZ8g8ivbinWS54YB11EKYHH1Maupjy793iu5xumP9RLpQhTMNBZJprgTfF8LSqZPTUHUkXXxMx9TMdl+I01h7hB3AzpCbuIDcMbVnIq9QN9SA7wshF4LJlJ1mMOrFCFOSDt8MpxVyTEO1tExf0y2vs94M57tr9veF/aN77+Ozn14kji9JleAbVqaKBTYmgDYcmLBIrcyNjc9fjJw48x5+4kx/PeRQamtw9WmqOsd+z6LrkN2k2qWmTuOnoRkIh30DtH3HMI0UYco7gZ7fFIdv1GYdlBO6J+1FOiaaEXmvKzuAWSq++OzpogtMLfgOYEohmEyTMzCmXZsRpiQdvu2hpbcgbsp7ho7pMKXSMZe2PRS1kp0uUzf1I9Wo/5aVSaEiMk0Cj6kgGj20rshkZTIddnA6S6N0kXI5o6HEtd0pL/WQ8t6n1G3dpFj/Omfd9nCdQQgo0zALk8JyBORefK/X/mv2TpArI4jGc67u9XrXemM0IA1eoWzqlGNtr6oT30RUTTqeGKSN2kbqMSad9UDVOHzn5E7rMAKfztDc4VSLuFXnXd85GXeqhRtsPMWua4KVrEybYCJD2aa1OXrwmJIMCJPJdu6t3sq09bzVyTourz3FtlfX3ndnH/JLTdYGq48i1Q3Hh8lhdaXuBr4PeeJKoVBXJtuUkpmILbIDtDvlyNLSRSrVFsLxxNEG/PAFm9NJbN7ZRHHpzlCsq1a1u7erf8pVCH+gtBQjFodyR80tfFf/PH2MUC9HmbbJAGQq3UE+7FtsxI8y6eyDCHnIbnGBfqm98Xyum4cvZLbjd0ZDzWWm51bbWoAfvlBojokRGixMCSsB25KXgmlNthE/GKjfOvyCHyi0926yy3vfUCy6Vt/OdZsp8xye+KC+e3ZK5Eq8tuWG7cSZQkOMvzGtqTTh5zdpHuJXraYOuUwNXxMXGK5QrGFcu5vrAVNFfHO3tcXuB8R+qYm0KlxX26awnd9UoItBmKxJL3clYPuQE5iKtixfjDElVRpth9a1dxOgkCeq5izWa5x6cIWiW6puozy0jj1TRcWljhZri00PLNWIez8SJmdVdQ3Q1UuE09AKDWkok9CEMu02AMuUbURGfCeSUKakbKPtCMjbXZAN6iQqUwXV11MtKWirH97N8pipouK7DryLqr9y4eyFK/WNVVokqhrrqhtqoPo73xLPFtxlSLMwqTQw05s6bEAeBB7TZp1l/oQxJYkNhANV7x+3QUG11VV0Lyw3tPZTHqjqMlNCQn5zE0QXPc23SCd1JpjTrExCod5gsL4LASDTK5ZqRIKFKWmPnnDurbT5JvE61TTUNZLKAdqqupM1UNP5khKumOD4rrm13oGopbXtW7tzbxeq4ghMhCrEOPCYNlhre9kWpujoOOJh39J2+7u7prah4SQcDQ21Ncj1O91ZUsIpk0KhqLjR3tF1+BrSVbVcO9za0XwjweEU6UPCOP9hetnCtDMaZ4reLyecyV5W1tlxkz4Ptf1DVsI9E/OZ7AXyuDiEab5KJbRnCgePKcmEMRVvtjFFHzESmcpycjp7KfJQ3+nm2zI4BoNJYUCU4vRbZVFvJprAZ5rzMraKe4TIFC3Wk5ngKOtv73jY2nOzr6/veE/r1d7752SWGASmQypUKUaTAzNVbDOQmUYAyDRnseFEjiF7M4kpeslSjR0THB8Wo6HEQjZoTLs0EgnKZD6IMcn8gIlQhSAwLVlm9lamfL3EwmSwMInITEP8iGnJktc13si02ySR2DOl+DPT74r0Ug6Yfvrh55//+sNXHDEp579jY9JbmOxWbwPBZ6p8ecViK9OePa8aPWP66m//8flqLD7/z5/TPWbKNye/Q2CKM6JM81RkJnCUAoZRMol1xVnzEpVHrExi8Vsa95m++vufVxPj87/FesQUb0xOJjOlGaRZuQdXCv2MSS9FmBQlNiZxdozcTaa/fr7aPv7nJ/eZKkySZAcmqirEfNCZojUY0871NiaxuEiodofpn6sp4s8/uMmUqYlLTmbH9CToTGIrk57IJBYvWyB3memn71dTOv3kDpPIKCnHlCR6o8ak928m/GmKIzOJs4skGheZ/r6amukr15midMnl5RiTxFRcMk+UYHTG9IK/9E2JYnsmON7XucT01eeUTP90NekpcvSpqeVWJrMaYVIoYpwwPQY8U7YRYRItxYYQlSsWbbExZRct16td6Jt+oMp6/+fiECLdKElNJTCZMKZCo58w/Z46Pvrgiy+++AiLD44dO3742Eek+OCLYzRx3CH+21Hp+/+1/e/DzHHsA/v4Am2J6v8QIoAPV+JPDkx/5C+K98Uf/mKn9Cf+mnhj/PsnJKVP/sBfEq+MP/Ipz+e6Jz7leW/8hU95PjGM+IRPeb7UPfEpz7vj3/iU5zvDCD7l+cIsl095PjDL/Z5PeT7RPfEpjw8++OCDDz4ebfw/69Hcv7hil4YAAAAASUVORK5CYII=');\n\tbackground-repeat: no-repeat;\n\tbackground-size: 100%;\n\tposition: absolute;\n}\n.owl-login .hand[data-v-05398fef] {\n\twidth: 34px;\n\theight: 34px;\n\tborder-radius: 40px;\n\tbackground-color: #472d20;\n\t-webkit-transform: scaleY(0.6);\n\t        transform: scaleY(0.6);\n\ttransition: 0.3s ease-out;\n\tposition: absolute;\n\tleft: 14px;\n\tbottom: -8px;\n}\n.owl-login .hand.hand-r[data-v-05398fef] {\n\tleft: 170px;\n}\n.owl-login .arms[data-v-05398fef] {\n\ttop: 58px;\n\tposition: absolute;\n\twidth: 100%;\n\theight: 41px;\n\toverflow: hidden;\n}\n.owl-login .arms .arm[data-v-05398fef] {\n\twidth: 40px;\n\theight: 65px;\n\tposition: absolute;\n\tleft: 20px;\n\ttop: 40px;\n\tbackground-image: url(\"data:image/png;base64,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\");\n\tbackground-size: 100%;\n\ttransition: 0.3s ease-out;\n\t-webkit-transform: rotate(-20deg);\n\t        transform: rotate(-20deg);\n}\n.owl-login .arms .arm.arm-r[data-v-05398fef] {\n\t-webkit-transform: rotate(20deg) scaleX(-1);\n\t        transform: rotate(20deg) scaleX(-1);\n\tleft: 158px;\n}\n.owl-login.password .hand[data-v-05398fef] {\n\t-webkit-transform: translateX(42px) translateY(-15px) scale(0.7);\n\t        transform: translateX(42px) translateY(-15px) scale(0.7);\n}\n.owl-login.password .hand.hand-r[data-v-05398fef] {\n\t-webkit-transform: translateX(-42px) translateY(-15px) scale(0.7);\n\t        transform: translateX(-42px) translateY(-15px) scale(0.7);\n}\n.owl-login.password .arms .arm[data-v-05398fef] {\n\t-webkit-transform: translateY(-40px) translateX(40px);\n\t        transform: translateY(-40px) translateX(40px);\n}\n.owl-login.password .arms .arm.arm-r[data-v-05398fef] {\n\t-webkit-transform: translateY(-40px) translateX(-40px) scaleX(-1);\n\t        transform: translateY(-40px) translateX(-40px) scaleX(-1);\n}\nuni-button[disabled].cu-btn.bg-green.shadow[data-v-05398fef] {\n\tbackground-color: #39b54a;\n\tcolor: white;\n}\nuni-button[disabled].cu-btn.bg-blue[data-v-05398fef] {\n\tbackground-color: #0081ff;\n\tcolor: #ffffff;\n}\n.title2[data-v-05398fef] {\n    text-align: justify;\n    padding-right: 20upx;\n    font-size: 30upx;\n    position: relative;\n    height: 100upx;\n    line-height: 50upx;\n\tpadding-left: 20upx;\n}\n.cu-form-group[data-v-05398fef]{\n\tbackground-color: #efefef;\n}\n", ""]);
 // Exports
 module.exports = exports;
 

@@ -1,117 +1,11 @@
+<!-- 排行榜 -->
 <template>
 	<view>
-		<cu-custom bgColor="bg-gradual-blue" :isBack="true"><block slot="backText">返回</block><block slot="content">标签</block></cu-custom>
-		<view class="cu-bar bg-white solid-bottom">
-			<view class='action'>
-				<text class='cuIcon-title text-blue'></text>标签形状
-			</view>
-		</view>
-		<view class="padding bg-white solid-bottom">
-			<view class='cu-tag'>默认</view>
-			<view class='cu-tag round'>椭圆</view>
-			<view class='cu-tag radius'>圆角</view>
-		</view>
-
-		<view class="cu-bar bg-white margin-top">
-			<view class='action'>
-				<text class='cuIcon-title text-blue'></text>标签尺寸
-			</view>
-		</view>
-		<view class="padding bg-white">
-			<view class='cu-tag radius sm'>小尺寸</view>
-			<view class='cu-tag radius'>普通尺寸</view>
-		</view>
-		<view class="cu-bar bg-white margin-top">
-			<view class='action'>
-				<text class='cuIcon-title text-blue'></text>标签颜色
-			</view>
-		</view>
-		<view class='padding-sm flex flex-wrap'>
-			<view class="padding-xs" v-for="(item,index) in ColorList" :key="index" v-if="item.name!='gray'">
-				<view class='cu-tag' :class="'bg-' + item.name">{{item.title}}</view>
-			</view>
-			<view class="padding-xs" v-for="(item,index) in ColorList" :key="index" v-if="item.name!='gray' && item.name!='black' && item.name!='white'">
-				<view class='cu-tag light' :class="'bg-' + item.name">{{item.title}}</view>
-			</view>
-		</view>
-		<view class="cu-bar bg-white margin-top">
-			<view class='action'>
-				<text class='cuIcon-title text-blue'></text>镂空标签
-			</view>
-		</view>
-		<view class='padding-sm flex flex-wrap'>
-			<view class="padding-xs" v-for="(item,index) in ColorList" :key="index" v-if="item.name!='white'">
-				<view class='cu-tag' :class="'line-' + item.name">{{item.title}}</view>
-			</view>
-		</view>
-		<view class="cu-bar bg-white margin-top">
-			<view class='action'>
-				<text class='cuIcon-title text-blue'></text>胶囊样式
-			</view>
-		</view>
-		<view class="padding">
-			<view class="cu-capsule">
-				<view class='cu-tag bg-red'>
-					<text class='cuIcon-likefill'></text>
-				</view>
-				<view class="cu-tag line-red">
-					12
-				</view>
-			</view>
-			<view class="cu-capsule round">
-				<view class='cu-tag bg-blue '>
-					<text class='cuIcon-likefill'></text>
-				</view>
-				<view class="cu-tag line-blue">
-					23
-				</view>
-			</view>
-			<view class="cu-capsule round">
-				<view class='cu-tag bg-blue '>
-					说明
-				</view>
-				<view class="cu-tag line-blue">
-					123
-				</view>
-			</view>
-			<view class="cu-capsule radius">
-				<view class='cu-tag bg-grey '>
-					<text class='cuIcon-likefill'></text>
-				</view>
-				<view class="cu-tag line-grey">
-					23
-				</view>
-			</view>
-			<view class="cu-capsule radius">
-				<view class='cu-tag bg-brown sm'>
-					<text class='cuIcon-likefill'></text>
-				</view>
-				<view class="cu-tag line-brown sm">
-					23
-				</view>
-			</view>
-		</view>
-		<view class="cu-bar bg-white margin-top">
-			<view class='action'>
-				<text class='cuIcon-title text-blue'></text>数字标签
-			</view>
-		</view>
-		<view class="padding flex justify-between align-center">
-			<view class='cu-avatar xl radius'>
-				港
-				<view class="cu-tag badge">99+</view>
-			</view>
-			<view class='cu-avatar xl radius' style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg)">
-				<view class='cu-tag badge'>9</view>
-			</view>
-			<view class='cu-avatar xl radius'>
-				<view class='cu-tag badge'>99</view>
-				<text class='cuIcon-people'></text>
-			</view>
-			<view class='cu-avatar xl radius'>
-				<view class='cu-tag badge'>99+</view>
-			</view>
-		</view>
+		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
+			<block slot="backText">返回</block>
+			<block slot="content">隐私协议及条约</block>
+		</cu-custom>
+		<web-view :src="url"></web-view>
 	</view>
 </template>
 
@@ -119,12 +13,76 @@
 	export default {
 		data() {
 			return {
-				ColorList: this.ColorList,
+				url: '',
+				tag: 0,
+				title: "排行榜"
 			};
+		},
+		methods: {
+			webviewurl() {
+				var that = this;
+				var currentWebview = this.$scope.$getAppWebview();
+				var thisurl = currentWebview.children()[0].getURL();
+				var re = /\/thread-(\d*)*/i;
+				var found = thisurl.match(re);
+
+				//console.log(found);
+				if (found) {
+					console.log(found[1]);
+					let that = this;
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:fatie', //获取置顶帖子
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							platform: that.platform,
+							tid: found[1]
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data)
+							uni.redirectTo({
+								url: '../component/card?tid=' + found[1],
+								animationType: 'pop-in',
+								animationDuration: 200
+							});
+						}
+					});
+				}
+				setTimeout(function() {
+					if (found == null){
+						that.webviewurl();
+					}
+				}, 500); //如页面初始化调用需要写延迟
+			},
+		},
+		onLoad(e) {
+			// 获取传递过来的链接
+			this.tag = e.id;
+			if(this.tag == 1){
+				this.url = getApp().globalData.zddomain + 'm/about.html';
+			}else{
+				this.url = getApp().globalData.zddomain + 'm/private.html';
+			}
+			console.log(this.url)
+			console.log(e.url)
+		},
+		onReady() {
+			var that = this;
+			var height = 0; //定义动态的高度变量，如高度为定值，可以直接写
+			var statusBarHeight = 0;
+			uni.getSystemInfo({
+				//成功获取的回调函数，返回值为系统信息
+				success: (sysinfo) => {
+					height = sysinfo.windowHeight - 45 - sysinfo.statusBarHeight; //自行修改，自己需要的高度
+					statusBarHeight = sysinfo.statusBarHeight;
+				},
+				complete: () => {}
+			});
+			var currentWebview = this.$scope.$getAppWebview(); //获取当前web-view
 		}
 	}
 </script>
-
-<style>
-
-</style>

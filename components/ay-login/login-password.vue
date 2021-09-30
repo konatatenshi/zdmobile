@@ -156,6 +156,14 @@
 			<view class="gray-text">登录中...</view>
 		</view>
 		<view class="flex padding justify-between foot">
+			<checkbox-group class="block" @change="CheckboxChange">
+				<view class="cu-form-group margin-top">
+					<checkbox :class="checked?'checked':''" :checked="checked?true:false" value="A"></checkbox>
+					<view class="title2">我已认真阅读并同意<a href="#" @tap="about">《用户服务协议》</a>及<a href="#2" @tap="private">《隐私政策》</a>全部条款。</view>
+				</view>
+			</checkbox-group>
+		</view>
+		<view class="flex padding justify-between foot">
 			<view class="padding-sm margin-xs radius" @tap="resetpass">手机重置密码</view>
 			<!-- <view class="padding-sm margin-xs radius" @tap="qqlogin">QQ登录(外部跳转)</view> -->
 		</view>
@@ -172,6 +180,7 @@
 		data() {
 			return {
 				index: 0,
+				checked: false,
 				yanzhengput: '',
 				displaynewpass: '',
 				countryList: [],
@@ -373,6 +382,19 @@
 
 				//console.log(this.countryList);
 			},
+			CheckboxChange(e) {
+				this.checked= !this.checked;
+			},
+			about(){
+				uni.navigateTo({
+					url: '../../pages/basics/tag?id=1'
+				})
+			},
+			private(){
+				uni.navigateTo({
+					url: '../../pages/basics/tag'
+				})
+			},
 			Pickcountry(e) {
 				//console.log(e.detail.value)
 				this.addressData.countryid = e.detail.value
@@ -436,6 +458,13 @@
 				this.error.reasoncode = 0;
 			},
 			formSubmit(e) {
+				if(!this.checked){
+					this.error.reasoncode = 'error0300';
+					this.modalName = 'loginerror';
+					this.error.reason = '请阅读并同意用户协议及隐私政策后方可继续';
+					this.formsub2 = false;
+					return;
+				}
 				this.formsub = true;
 				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value.text));
 				let status = -1;
@@ -507,6 +536,13 @@
 				});
 			},
 			register(e) {
+				if(!this.checked){
+					this.error.reasoncode = 'error0300';
+					this.modalName = 'loginerror';
+					this.error.reason = '请阅读并同意用户协议及隐私政策后方可继续';
+					this.formsub2 = false;
+					return;
+				}
 				this.formsub2 = true;
 				uni.getStorage({
 					key: 'userlogininfo',
@@ -864,5 +900,17 @@
 	uni-button[disabled].cu-btn.bg-blue {
 		background-color: #0081ff;
 		color: #ffffff;
+	}
+	.title2 {
+	    text-align: justify;
+	    padding-right: 20upx;
+	    font-size: 30upx;
+	    position: relative;
+	    height: 100upx;
+	    line-height: 50upx;
+		padding-left: 20upx;
+	}
+	.cu-form-group{
+		background-color: #efefef;
 	}
 </style>
