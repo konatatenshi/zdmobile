@@ -16,6 +16,7 @@
 							<view v-show="sex==1" class="cu-tag badge cuIcon-male bg-blue"></view>
 							<view v-show="sex==2" class="cu-tag badge cuIcon-female bg-pink"></view>
 						</view>
+						<img-cache class="cu-avatar round gzlist2" v-if="touxiangkuanglist != ''" :src="'https://zd.tiangal.com/' + touxiangkuanglist"/>
 						<view class="content flex-sub hbx">
 							<view><img-cache class="touxian" :src="touxian"></img-cache></view>
 							<view>{{postup}}<text :style="[{ padding: groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text><view class="cu-tag padding-left-xs padding-right-xs" :class="loadlevelicon(groupid,1)">{{loadlevelicon(groupid)}}</view><text :style="[{ padding: groupid==51?'0 0 0 4upx':'0'}]"></text><span v-if="xunzhanglist.length>0" v-for="(xzitem,xzindex) in xunzhanglist.slice(0, 6)"><img-cache v-if="xzitem.id>0" class="cu-tag xunzhangshow" :src="xzitem.url"></img-cache></span></view>
@@ -257,6 +258,7 @@
 				platform: 0,
 				huifulist: [],
 				xunzhanglist: [],
+				touxiangkuanglist: '',
 				rplist: [],
 				isfloat: [],
 				isfloats: false,
@@ -860,6 +862,7 @@
 							that.groupid = res.data.userinfo.groupid;
 							that.touxian = res.data.userinfo.touxian;
 							that.xunzhanglist = res.data.userinfo.xunzhanglist;
+							that.touxiangkuanglist = res.data.userinfo.touxiangkuanglist;
 							that.lucky = res.data.luckypost.key;
 							that.luckymessage = res.data.luckypost.msg;
 							that.sightml = res.data.userinfo.sightml;
@@ -1143,5 +1146,12 @@
 	}
 	.ltsp{
 		line-height: 24upx;
+	}
+	.gzlist2 {		position: absolute;
+		background-color: transparent;		margin: -0upx 0 0 -28upx;
+		width: 140upx;
+		height: 140upx;
+	}
+	.badge {		z-index: 9;
 	}
 </style>

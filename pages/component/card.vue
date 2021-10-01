@@ -4,6 +4,11 @@
 		<cu-custom class="statustop" bgColor="bg-gradual-pink" :isBack="true">
 			<block slot="backText">返回</block>
 			<block slot="content">{{postname}}</block>
+			<block slot="right">
+				<view class="action">
+					<view class="cu-load cuIcon-moreandroid" @tap="more()"></view>
+				</view>
+			</block>
 		</cu-custom>
 		<view class="cu-card dynamic no-card" :style="'margin-top: -' + iStatusBarHeight +'px;'">
 			<view class="cu-item shadow">
@@ -16,6 +21,7 @@
 							<view v-show="sex==1" class="cu-tag badge cuIcon-male bg-blue"></view>
 							<view v-show="sex==2" class="cu-tag badge cuIcon-female bg-pink"></view>
 						</view>
+						<img-cache class="cu-avatar round gzlist2" v-if="touxiangkuanglist != ''" :src="'https://zd.tiangal.com/' + touxiangkuanglist"/>
 						<view class="content flex-sub hbx">
 							<view v-if="isImage">
 								<img-cache class="touxian" :src="touxian"></img-cache>
@@ -134,6 +140,7 @@
 							<view v-if="isImage">
 								<img-cache class="touxian2" :src="item.touxian"></img-cache>
 							</view>
+							<img-cache class="cu-avatar round gzlist3" v-if="item.touxiangkuanglist" :src="'https://zd.tiangal.com/' + item.touxiangkuanglist"/>
 							<view class="flex justify-between">
 								<view :style="[{ color: item.groupid==51?randomcolor():'text-gray'}]">
 									{{item.author}}<text
@@ -223,8 +230,8 @@
 						</view>
 					</block>
 				</view>
-				<view class="cu-modal" :class="modalName=='needlogin'?'show':''">
-					<view class="cu-dialog">
+				<view class="cu-modal" :class="modalName=='needlogin'?'show':''" @tap="hideModal">
+					<view class="cu-dialog" @tap.stop>
 						<view class="cu-bar bg-white justify-end">
 							<view class="content">需要登录</view>
 							<view class="action" @tap="hideModal">
@@ -242,8 +249,29 @@
 						</view>
 					</view>
 				</view>
-				<view class="cu-modal" :class="modalName=='cantview'?'show':''">
-					<view class="cu-dialog">
+				<view class="cu-modal" :class="modalName=='more'?'show':''" @tap="hideModal">
+					<view class="cu-dialog" @tap.stop>
+						<view class="cu-list menu text-left solid-top">
+							<view class="cu-item" @tap="guanzhu()">
+								<view class="content">
+									<text class="text-grey">{{guanzhutext}}</text>
+								</view>
+							</view>
+							<view class="cu-item">
+								<view class="content">
+									<text class="text-grey">私信作者</text>
+								</view>
+							</view>
+							<view class="cu-item">
+								<view class="content">
+									<text class="text-grey">查看资料</text>
+								</view>
+							</view>
+						</view>
+					</view>
+				</view>
+				<view class="cu-modal" :class="modalName=='cantview'?'show':''" @tap="hideModal">
+					<view class="cu-dialog" @tap.stop>
 						<view class="cu-bar bg-white justify-end">
 							<view class="content">权限不足</view>
 							<view class="action" @tap="hideModal">
@@ -260,8 +288,8 @@
 						</view>
 					</view>
 				</view>
-				<view class="cu-modal" :class="modalName=='cantpost'?'show':''">
-					<view class="cu-dialog">
+				<view class="cu-modal" :class="modalName=='cantpost'?'show':''" @tap="hideModal">
+					<view class="cu-dialog" @tap.stop>
 						<view class="cu-bar bg-white justify-end">
 							<view class="content">回帖错误</view>
 							<view class="action" @tap="hideModal">
@@ -278,8 +306,8 @@
 						</view>
 					</view>
 				</view>
-				<view class="cu-modal" :class="modalName=='testpan'?'show':''">
-					<view class="cu-dialog">
+				<view class="cu-modal" :class="modalName=='testpan'?'show':''" @tap="hideModal">
+					<view class="cu-dialog" @tap.stop>
 						<view class="cu-bar bg-white justify-end">
 							<view class="content">帖子检测</view>
 							<view class="action" @tap="hideModal">
@@ -310,8 +338,8 @@
 					<image src="/static/19.gif" style="border-radius: 50%;" mode="aspectFit"></image>
 					<view class="gray-text">检测中...</view>
 				</view>
-				<view class="cu-modal" :class="modalName=='floorpost'?'show':''">
-					<view class="cu-dialog">
+				<view class="cu-modal" :class="modalName=='floorpost'?'show':''"  @tap="hideModal">
+					<view class="cu-dialog" @tap.stop>
 						<view class="cu-bar bg-white justify-end">
 							<view class="content">楼中楼回复</view>
 							<view class="action" @tap="hideModal">
@@ -331,8 +359,8 @@
 						</view>
 					</view>
 				</view>
-				<view class="cu-modal" :class="modalName=='dashang'?'show':''">
-					<view class="cu-dialog">
+				<view class="cu-modal" :class="modalName=='dashang'?'show':''"  @tap="hideModal">
+					<view class="cu-dialog" @tap.stop>
 						<view class="cu-bar bg-white justify-end">
 							<view class="content">请输入打赏金币的数目</view>
 							<view class="action" @tap="hideModal">
@@ -366,8 +394,8 @@
 						</view>
 					</view>
 				</view>
-				<view class="cu-modal" :class="modalName=='postnew'?'show':''">
-					<view class="cu-dialog">
+				<view class="cu-modal" :class="modalName=='postnew'?'show':''" @tap="hideModal">
+					<view class="cu-dialog" @tap.stop>
 						<view class="cu-bar bg-white justify-end">
 							<view class="content">发表回复成功</view>
 							<view class="action" @tap="hideModal">
@@ -495,6 +523,7 @@
 				cantpostmessage: '',
 				replykey: '',
 				touxian: '',
+				touxiangkuanglist: '',
 				bgimg: '',
 				lucky: -1,
 				yzm: 0,
@@ -521,6 +550,7 @@
 				toPID: 0,
 				index: 0,
 				pm: 0,
+				authorid: 0,
 				fasong: false,
 				floorfasong: false,
 				loadModal: false,
@@ -535,6 +565,8 @@
 				randomunmber: 0,
 				platform: 0,
 				loadwb: 0,
+				guanzhutext: '关注作者',
+				guanzhuvar: 1,
 				huifulist: [],
 				rplist: [],
 				isfloat: [],
@@ -566,6 +598,59 @@
 			},
 			jiequ(e) {
 				return e.substr(0, 200);
+			},
+			more(e) {
+				let that = this;
+				that.loadModal = true;
+				this.modalName = 'more';
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:guanzhu', //获取置顶帖子
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token,
+						touid: that.authorid,
+						typeid: 0
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data)
+						if (res.data.code == 200) {
+							that.guanzhutext = '取消关注';
+							that.guanzhuvar = 2;
+						} else if (res.data.code == 404) {
+							that.guanzhutext = '关注作者';
+							that.guanzhuvar = 1;
+						} 
+						that.loadModal = false;
+					}
+				});
+			},
+			guanzhu(e) {
+				let that = this;
+				that.loadModal = true;
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:guanzhu', //获取置顶帖子
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token,
+						touid: that.authorid,
+						typeid: that.guanzhuvar
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data)
+						if (res.data.code == 200) {
+							this.modalName = null;
+						} 
+						that.loadModal = false;
+					}
+				});
 			},
 			jifenbiandong(e, f) {
 				this.jifenshuoming = e;
@@ -1525,6 +1610,7 @@
 							that.postup = res.data.author;
 							that.fid = res.data.fid;
 							that.pid = res.data.pid;
+							that.authorid = res.data.authorid;
 							that.postname = res.data.subject;
 							that.replykey = res.data.replykey;
 							that.content = res.data.html;
@@ -1534,6 +1620,7 @@
 							that.groupid = res.data.userinfo.groupid;
 							that.touxian = res.data.userinfo.touxian;
 							that.xunzhanglist = res.data.userinfo.xunzhanglist;
+							that.touxiangkuanglist = res.data.userinfo.touxiangkuanglist;
 							that.lucky = res.data.luckypost.key;
 							that.luckymessage = res.data.luckypost.msg;
 							that.status = res.data.status;
@@ -1852,5 +1939,17 @@
 
 	.ltsp {
 		line-height: 24upx;
+	}
+	.gzlist2 {		position: absolute;
+		background-color: transparent;		margin: -0upx 0 0 -28upx;
+		width: 140upx;
+		height: 140upx;
+	}
+	.badge {		z-index: 9;
+	}
+	.gzlist3 {		position: absolute;
+		background-color: transparent;		margin: -13upx 0 0 -100upx;
+		width: 86upx;
+		height: 86upx;
 	}
 </style>

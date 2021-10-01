@@ -39,11 +39,13 @@
 												<view class="cu-item">
 													<view class="cu-avatar round lg"
 														:style="[{ backgroundImage:'url(' + item.userinfo.avatarlist + ')' }]">
+														</img-cache>
 														<view v-show="item.userinfo.sex==1"
 															class="cu-tag badge cuIcon-male bg-blue"></view>
 														<view v-show="item.userinfo.sex==2"
 															class="cu-tag badge cuIcon-female bg-pink"></view>
 													</view>
+													<img-cache class="cu-avatar round gzlist2" v-if="item.userinfo.touxiangkuanglist != ''" :src="'https://zd.tiangal.com/' + item.userinfo.touxiangkuanglist"/>
 													<view class="content flex-sub hbx">
 														<view v-if="isImage">
 															<img-cache class="touxian" :src="item.userinfo.touxian">
@@ -809,5 +811,12 @@
 
 	.padding-top2 {
 		padding-top: 26upx;
+	}
+	.gzlist2 {		position: absolute;
+		background-color: transparent;		margin: -0upx 0 0 -28upx;
+		width: 140upx;
+		height: 140upx;
+	}
+	.badge {		z-index: 9;
 	}
 </style>

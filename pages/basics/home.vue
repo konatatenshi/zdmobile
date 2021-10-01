@@ -61,10 +61,25 @@
 										</view>
 									<view class="cu-tag padding-left-xs padding-right-xs" :class="loadlevelicon2(itemex.fid)">
 											{{itemex.bkname}}
-									</view><text class="text-sm text-gray">&nbsp&nbsp{{itemex.author}}&nbsp&nbsp{{itemex.replies}}评&nbsp&nbsp{{itemex.nowdate}}</text>
+									</view><text class="text-sm text-gray" style="padding-left: 8upx;">{{itemex.author}}&nbsp&nbsp{{itemex.replies}}评&nbsp&nbsp{{itemex.nowdate}}</text>
+									<img-cache v-if="itemex.img!='static/image/common/nophoto.gif'" mode="aspectFill" class="gzlist3" :src="itemex.img"/>
 								</view>
-								<view class="text-grey" style="padding-left: 10upx;padding-top: 5upx;">
+								<view v-if="itemex.img=='static/image/common/nophoto.gif'" class="text-grey" style="padding-left: 10upx;padding-top: 5upx;">
 									{{itemex.summary}}
+								</view>
+								<view v-else class="text-grey" style="line-height:35upx; font-size: 25upx; padding-left: 10upx; padding-right: 100upx;padding-top: 5upx;text-overflow: -o-ellipsis-lastline;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
+									</img-cache>{{itemex.summary}}
+								</view>
+							</view>
+						</block>
+					</view>
+					<view>
+						<block>
+							<view class="padding-xs flex align-center bg-gray">
+								<view class="flex-sub text-center">
+									<view class="text-xs padding">
+										<text class="text-black">{{loading}}</text>
+									</view>
 								</view>
 							</view>
 						</block>
@@ -270,7 +285,7 @@
 									that.guanzhupost.push(push[i]);
 								}
 							}
-							if (res.data.length < 30) {
+							if (push.length < 30) {
 								that.loading = '竟然到底了！';
 							}
 							that.page0++;
@@ -724,5 +739,10 @@
 		background-color: transparent;		margin: -45upx 0 0 -85upx;
 		width: 86upx;
 		height: 86upx;
+	}
+	.gzlist3 {		position: absolute;
+		right: 10upx;		margin: 34upx 0 0 -105upx;
+		width: 95upx;
+		height: 72upx;
 	}
 </style>
