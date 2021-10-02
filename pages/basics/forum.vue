@@ -45,7 +45,7 @@
 														<view v-show="item.userinfo.sex==2"
 															class="cu-tag badge cuIcon-female bg-pink"></view>
 													</view>
-													<img-cache class="cu-avatar round gzlist2" v-if="item.userinfo.touxiangkuanglist != ''" :src="'https://zd.tiangal.com/' + item.userinfo.touxiangkuanglist"/>
+													<img-cache class="cu-avatar round gzlist2" v-if="item.userinfo.touxiangkuanglist != ''" :src="item.userinfo.touxiangkuanglist"/>
 													<view class="content flex-sub hbx">
 														<view v-if="isImage">
 															<img-cache class="touxian" :src="item.userinfo.touxian">

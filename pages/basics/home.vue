@@ -56,7 +56,7 @@
 										<view>
 											<img-cache class="cu-avatar round gzlist" :src="itemex.avatar"/>
 											</img-cache>
-											<img-cache class="cu-avatar round gzlist2" v-if="itemex.touxiangkuanglist != ''" :src="'https://zd.tiangal.com/' + itemex.touxiangkuanglist"/>
+											<img-cache class="cu-avatar round gzlist2" v-if="itemex.touxiangkuanglist != ''" :src="itemex.touxiangkuanglist"/>
 											</img-cache>
 										</view>
 									<view class="cu-tag padding-left-xs padding-right-xs" :class="loadlevelicon2(itemex.fid)">

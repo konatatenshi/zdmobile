@@ -21,7 +21,7 @@
 							<view v-show="sex==1" class="cu-tag badge cuIcon-male bg-blue"></view>
 							<view v-show="sex==2" class="cu-tag badge cuIcon-female bg-pink"></view>
 						</view>
-						<img-cache class="cu-avatar round gzlist2" v-if="touxiangkuanglist != ''" :src="'https://zd.tiangal.com/' + touxiangkuanglist"/>
+						<img-cache class="cu-avatar round gzlist2" v-if="touxiangkuanglist != ''" :src="touxiangkuanglist"/>
 						<view class="content flex-sub hbx">
 							<view v-if="isImage">
 								<img-cache class="touxian" :src="touxian"></img-cache>
@@ -140,7 +140,7 @@
 							<view v-if="isImage">
 								<img-cache class="touxian2" :src="item.touxian"></img-cache>
 							</view>
-							<img-cache class="cu-avatar round gzlist3" v-if="item.touxiangkuanglist" :src="'https://zd.tiangal.com/' + item.touxiangkuanglist"/>
+							<img-cache class="cu-avatar round gzlist3" v-if="item.touxiangkuanglist" :src="item.touxiangkuanglist"/>
 							<view class="flex justify-between">
 								<view :style="[{ color: item.groupid==51?randomcolor():'text-gray'}]">
 									{{item.author}}<text
@@ -257,9 +257,14 @@
 									<text class="text-grey">{{guanzhutext}}</text>
 								</view>
 							</view>
-							<view class="cu-item">
+							<view v-if="pm==1" class="cu-item" @tap="siliaozuozhe">
 								<view class="content">
 									<text class="text-grey">私信作者</text>
+								</view>
+							</view>
+							<view v-else class="cu-item">
+								<view class="content">
+									<text class="text-gray">{{sixintxt}}</text>
 								</view>
 							</view>
 							<view class="cu-item">
@@ -355,6 +360,27 @@
 						<view class="cu-bar bg-white justify-end">
 							<view v-if="closed==0" class="action">
 								<button class="cu-btn bg-green margin-left" @tap="sendfloor">发送</button>
+							</view>
+						</view>
+					</view>
+				</view>
+				<view class="cu-modal" :class="modalName=='siliao'?'show':''"  @tap="hideModal">
+					<view class="cu-dialog" @tap.stop>
+						<view class="cu-bar bg-white justify-end">
+							<view class="content">私聊给{{postup}}</view>
+							<view class="action" @tap="hideModal">
+								<text class="cuIcon-close text-red"></text>
+							</view>
+						</view>
+						<view class="padding-xl">
+							<view class="cu-form-group align-start">
+								<textarea maxlength="-1" v-model="siliaotxt" placeholder="请在此输入想要说的话"></textarea>
+								<text class="cuIcon-emojifill text-grey" @tap="togglePicker(200, 'emoji')"></text>
+							</view>
+						</view>
+						<view class="cu-bar bg-white justify-end">
+							<view v-if="closed==0" class="action">
+								<button class="cu-btn bg-green margin-left" @tap="sendsl">发送</button>
 							</view>
 						</view>
 					</view>
@@ -510,7 +536,9 @@
 				sightml: '',
 				contenthuifu: '',
 				floorhuifu: '',
+				siliaotxt: '',
 				content: '',
+				sixintxt: '私信作者',
 				dashangjinbi: '',
 				picker: [],
 				postup: '加载中',
@@ -560,6 +588,7 @@
 				loadModal4: false,
 				floorpage: [],
 				jiazai: 0,
+				pm: 0,
 				jiazaiwanbi: [],
 				InputBottom: 0,
 				randomunmber: 0,
@@ -601,7 +630,7 @@
 			},
 			more(e) {
 				let that = this;
-				that.loadModal = true;
+				this.jiazai = 1;
 				this.modalName = 'more';
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:guanzhu', //获取置顶帖子
@@ -624,13 +653,19 @@
 							that.guanzhutext = '关注作者';
 							that.guanzhuvar = 1;
 						} 
-						that.loadModal = false;
+						if(res.data.pm == 1){
+							that.pm = 1;
+						}else{
+							that.sixintxt = '私信作者（无权限使用）';
+						}
+						that.jiazai = 0;
+						that.loadwb = 1;
 					}
 				});
 			},
 			guanzhu(e) {
 				let that = this;
-				that.loadModal = true;
+				this.jiazai = 1;
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:guanzhu', //获取置顶帖子
 					method: 'GET',
@@ -648,7 +683,8 @@
 						if (res.data.code == 200) {
 							this.modalName = null;
 						} 
-						that.loadModal = false;
+						that.jiazai = 0;
+						that.loadwb = 1;
 					}
 				});
 			},
@@ -966,6 +1002,9 @@
 				this.index = g;
 				this.modalName = 'floorpost';
 			},
+			siliaozuozhe() {
+				this.modalName = 'siliao';
+			},
 			zanpo(f, g, h, i) {
 				if (i == 1) {
 					return;
@@ -1014,6 +1053,9 @@
 			floorhuif(e) {
 				if (this.modalName == 'floorpost') {
 					this.floorhuifu += e;
+					this.showEmoji = false;
+				} else if (this.modalName == 'siliao') {
+					this.siliaotxt += e;
 					this.showEmoji = false;
 				} else {
 					this.contenthuifu += e;
@@ -1475,6 +1517,48 @@
 								this.floorfasong = false;
 							} else {
 								that.refreshfloor(message);
+							}
+						}
+					});
+				}
+			},
+			sendsl() {
+				var that = this;
+				console.log(that.siliaotxt.length);
+				if (that.siliaotxt.length < 2) {
+					that.modalName = "cantpost";
+					that.cantpostmessage = '请输入大于等于2个字的回复内容。';
+					this.floorfasong = false;
+					return;
+				}
+				if (!this.floorfasong) {
+					that.floorfasong = true;
+					var message = encodeURI(that.siliaotxt);
+					console.log(that.siliaotxt);
+					console.log(that.toUID);
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=xinxiu_network:pm', //获取置顶帖子
+						method: 'POST',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							action: 'pm_send',
+							message: message,
+							msgto: that.authorid
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data)
+							if (res.data.code ==400) {
+								that.modalName = "needlogin";
+							} else if (res.data.code == 200) {
+								that.modalName = null;
+								that.jifenbiandong('私信成功','你的私信发送完毕。')
+							} else{
+								that.modalName = null;
+								that.jifenbiandong('私信失败',res.data.message);
 							}
 						}
 					});

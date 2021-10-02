@@ -2,13 +2,12 @@
     "name" : "终点论坛",
     "appid" : "__UNI__0D1E511",
     "description" : "",
-    "versionName" : "0.2.3",
-    "versionCode" : 18,
+    "versionName" : "0.2.4",
+    "versionCode" : 19,
     "transformPx" : false,
     "app-plus" : {
         /* 5+App特有相关 */
         "modules" : {
-            "VideoPlayer" : {},
             "Push" : {}
         },
         /* 模块配置 */
