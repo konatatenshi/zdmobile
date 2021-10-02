@@ -43,8 +43,8 @@
 				</view>
 			</form>
 		</view>
-		<view class="cu-modal" :class="modalName=='loginerror'?'show':''">
-			<view class="cu-dialog">
+		<view class="cu-modal" :class="modalName=='loginerror'?'show':''" @tap="hideModal">
+			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar bg-white justify-end">
 					<view class="content">注册登录错误</view>
 					<view class="action" @tap="hideModal">
@@ -131,8 +131,8 @@
 				</view>
 			</view>
 		</view>
-		<view class="cu-modal" :class="modalName=='yzcg'?'show':''">
-			<view class="cu-dialog">
+		<view class="cu-modal" :class="modalName=='yzcg'?'show':''" @tap="hideModal">
+			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar bg-white justify-end">
 					<view class="content">修改密码成功</view>
 					<view class="action" @tap="hideModal">
@@ -525,7 +525,26 @@
 								data: res.data.data,
 								success: function() {
 									console.log(res.data.data);
-									plus.runtime.restart();
+									try {
+									    const loginvalue = uni.getStorageSync('userlogininfo');
+									    if (loginvalue) {
+											Vue.prototype.$token = loginvalue.token;
+											Vue.prototype.$uid = loginvalue.uid;
+											Vue.prototype.$username = loginvalue.username;
+											Vue.prototype.$adminid = loginvalue.adminid;
+											let avanum = (Array(9).join("0") + loginvalue.uid).slice(-9);
+											Vue.prototype.$avatarsmall = 'https://zd.tiangal.com/uc_server/data/avatar/' + avanum
+												.substr(0, 3) + '/' + avanum.substr(3, 2) + '/' + avanum.substr(5, 2) + '/' +
+												avanum.substr(7, 2) + '_avatar_small.jpg';
+											Vue.prototype.$avatarsmalldefault = 'https://zd.tiangal.com/uc_server/images/randuser/small/' + avanum.substr(-1) + '.jpg';
+											//this.$emit("returnDat", "basics");
+											uni.redirectTo({
+												url: '/pages/index/index'
+											});
+									    }
+									} catch (e) {
+									    // error
+									}
 								}
 							});
 						}

@@ -138,7 +138,7 @@ if (typeof Promise !== 'undefined' && !Promise.prototype.finally) {
 
   };
 }
-window.__uniConfig = { "window": { "navigationBarBackgroundColor": "#0081ff", "navigationBarTitleText": "ColorUi for UniApp", "navigationStyle": "custom", "navigationBarTextStyle": "white", "backgroundColor": "gray" } };
+window.__uniConfig = { "window": { "navigationBarBackgroundColor": "#0081ff", "navigationBarTitleText": "ColorUi for UniApp", "navigationStyle": "custom", "navigationBarTextStyle": "white", "pageOrientation": "auto", "backgroundColor": "gray" } };
 if (uni.restoreGlobal) {
   uni.restoreGlobal(weex, plus, setTimeout, clearTimeout, setInterval, clearInterval);
 }
@@ -21806,12 +21806,25 @@ var render = function() {
         {
           staticClass: _vm._$g(27, "sc"),
           class: _vm._$g(27, "c"),
-          attrs: { _i: 27 }
+          attrs: { _i: 27 },
+          on: {
+            click: function($event) {
+              return _vm.$handleViewEvent($event)
+            }
+          }
         },
         [
           _c(
             "v-uni-view",
-            { staticClass: _vm._$g(28, "sc"), attrs: { _i: 28 } },
+            {
+              staticClass: _vm._$g(28, "sc"),
+              attrs: { _i: 28 },
+              on: {
+                click: function($event) {
+                  return _vm.$handleViewEvent($event, { stop: true })
+                }
+              }
+            },
             [
               _c(
                 "v-uni-view",
@@ -22266,12 +22279,25 @@ var render = function() {
         {
           staticClass: _vm._$g(77, "sc"),
           class: _vm._$g(77, "c"),
-          attrs: { _i: 77 }
+          attrs: { _i: 77 },
+          on: {
+            click: function($event) {
+              return _vm.$handleViewEvent($event)
+            }
+          }
         },
         [
           _c(
             "v-uni-view",
-            { staticClass: _vm._$g(78, "sc"), attrs: { _i: 78 } },
+            {
+              staticClass: _vm._$g(78, "sc"),
+              attrs: { _i: 78 },
+              on: {
+                click: function($event) {
+                  return _vm.$handleViewEvent($event, { stop: true })
+                }
+              }
+            },
             [
               _c(
                 "v-uni-view",
@@ -27587,12 +27613,25 @@ var render = function() {
         {
           staticClass: _vm._$g(27, "sc"),
           class: _vm._$g(27, "c"),
-          attrs: { _i: 27 }
+          attrs: { _i: 27 },
+          on: {
+            click: function($event) {
+              return _vm.$handleViewEvent($event)
+            }
+          }
         },
         [
           _c(
             "v-uni-view",
-            { staticClass: _vm._$g(28, "sc"), attrs: { _i: 28 } },
+            {
+              staticClass: _vm._$g(28, "sc"),
+              attrs: { _i: 28 },
+              on: {
+                click: function($event) {
+                  return _vm.$handleViewEvent($event, { stop: true })
+                }
+              }
+            },
             [
               _c(
                 "v-uni-view",
@@ -28047,12 +28086,25 @@ var render = function() {
         {
           staticClass: _vm._$g(77, "sc"),
           class: _vm._$g(77, "c"),
-          attrs: { _i: 77 }
+          attrs: { _i: 77 },
+          on: {
+            click: function($event) {
+              return _vm.$handleViewEvent($event)
+            }
+          }
         },
         [
           _c(
             "v-uni-view",
-            { staticClass: _vm._$g(78, "sc"), attrs: { _i: 78 } },
+            {
+              staticClass: _vm._$g(78, "sc"),
+              attrs: { _i: 78 },
+              on: {
+                click: function($event) {
+                  return _vm.$handleViewEvent($event, { stop: true })
+                }
+              }
+            },
             [
               _c(
                 "v-uni-view",

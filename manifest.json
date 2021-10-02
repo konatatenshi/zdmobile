@@ -2,8 +2,8 @@
     "name" : "终点论坛",
     "appid" : "__UNI__0D1E511",
     "description" : "",
-    "versionName" : "0.2.2",
-    "versionCode" : 17,
+    "versionName" : "0.2.3",
+    "versionCode" : 18,
     "transformPx" : false,
     "app-plus" : {
         /* 5+App特有相关 */
@@ -15,6 +15,7 @@
         "distribute" : {
             /* 应用发布信息 */
             "android" : {
+                "screenOrientation" : [ "portrait-primary" ],
                 /* android打包配置 */
                 "permissions" : [
                     "<uses-feature android:name=\"android.hardware.camera\"/>",
@@ -43,6 +44,7 @@
                 "abiFilters" : [ "armeabi-v7a", "arm64-v8a" ]
             },
             "ios" : {
+                "screenOrientation" : [ "portrait-primary", "landscape-primary" ],
                 "idfa" : true
             },
             /* ios打包配置 */

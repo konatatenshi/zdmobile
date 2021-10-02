@@ -155,6 +155,7 @@
 		"navigationBarTitleText": "ColorUi for UniApp",
 		"navigationStyle": "custom",
 		"navigationBarTextStyle": "white",
+		"pageOrientation": "auto",
 		"backgroundColor": "gray"
 
 	},
