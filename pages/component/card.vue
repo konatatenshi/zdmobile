@@ -681,8 +681,16 @@
 					success: (res) => {
 						console.log(res.data)
 						if (res.data.code == 200) {
-							this.modalName = null;
-						} 
+							that.modalName = null;
+							if(that.guanzhuvar==1){
+								that.jifenbiandong('关注成功', '恭喜，你已关注该作者');
+							}else{
+								that.jifenbiandong('取关成功', '你已不再关注该作者');
+							}
+						} else{
+							that.modalName = null;
+							that.jifenbiandong('关注失败', '关注失败');
+						}
 						that.jiazai = 0;
 						that.loadwb = 1;
 					}

@@ -42,7 +42,7 @@
 			</view>
 		</view>
 		<!-- 搜索历史 -->
-		<view class="view_head">
+		<view class="view_head" @touchstart="start" @touchend="end">
 			<scroll-view v-if="TabCur==0" class="list">
 				<view class="view_listnow">
 					<view class="hometop3">
@@ -51,23 +51,30 @@
 						<block v-for="(itemex,indexe1) in guanzhupost" :key="indexe1">
 							<view class="solid-bottom text-df article"
 								style="padding-top: 10upx; padding-bottom: 10upx;" @tap="tourl(itemex.url)">
-								<view style="margin-right: 20upx;padding-left: 80upx;" class="text-black text-cut" >{{itemex.title}}</view>
+								<view style="margin-right: 20upx;padding-left: 80upx;" class="text-black text-cut">
+									{{itemex.title}}</view>
 								<view style="padding-left: 80upx;">
-										<view>
-											<img-cache class="cu-avatar round gzlist" :src="itemex.avatar"/>
-											</img-cache>
-											<img-cache class="cu-avatar round gzlist2" v-if="itemex.touxiangkuanglist != ''" :src="itemex.touxiangkuanglist"/>
-											</img-cache>
-										</view>
-									<view class="cu-tag padding-left-xs padding-right-xs" :class="loadlevelicon2(itemex.fid)">
-											{{itemex.bkname}}
-									</view><text class="text-sm text-gray" style="padding-left: 8upx;">{{itemex.author}}&nbsp&nbsp{{itemex.replies}}评&nbsp&nbsp{{itemex.nowdate}}</text>
-									<img-cache v-if="itemex.img!='static/image/common/nophoto.gif'" mode="aspectFill" class="gzlist3" :src="itemex.img"/>
+									<view>
+										<img-cache class="cu-avatar round gzlist" :src="itemex.avatar" />
+										</img-cache>
+										<img-cache class="cu-avatar round gzlist2" v-if="itemex.touxiangkuanglist != ''"
+											:src="itemex.touxiangkuanglist" />
+										</img-cache>
+									</view>
+									<view class="cu-tag padding-left-xs padding-right-xs"
+										:class="loadlevelicon2(itemex.fid)">
+										{{itemex.bkname}}
+									</view><text class="text-sm text-gray"
+										style="padding-left: 8upx;">{{itemex.author}}&nbsp&nbsp{{itemex.replies}}评&nbsp&nbsp{{itemex.nowdate}}</text>
+									<img-cache v-if="itemex.img!='static/image/common/nophoto.gif'" mode="aspectFill"
+										class="gzlist3" :src="itemex.img" />
 								</view>
-								<view v-if="itemex.img=='static/image/common/nophoto.gif'" class="text-grey" style="padding-left: 10upx;padding-top: 5upx;">
+								<view v-if="itemex.img=='static/image/common/nophoto.gif'" class="text-grey"
+									style="padding-left: 10upx;padding-top: 5upx;">
 									{{itemex.summary}}
 								</view>
-								<view v-else class="text-grey" style="line-height:35upx; font-size: 25upx; padding-left: 10upx; padding-right: 100upx;padding-top: 5upx;text-overflow: -o-ellipsis-lastline;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
+								<view v-else class="text-grey"
+									style="line-height:35upx; font-size: 25upx; padding-left: 10upx; padding-right: 100upx;padding-top: 5upx;text-overflow: -o-ellipsis-lastline;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
 									</img-cache>{{itemex.summary}}
 								</view>
 							</view>
@@ -224,6 +231,10 @@
 				jifenshuoming: '积分变更',
 				searchHistoryList: [], //搜索出来的内容
 				swiperheight: 1000, //高度
+				startData: {
+					clientX: 0,
+					clientY: 0
+				}
 			};
 		},
 		methods: {
@@ -297,6 +308,86 @@
 					});
 				}
 				console.log("到底了");
+			},
+			start(e) {
+				console.log("开始下滑坐标", e.changedTouches[0].clientY)
+				this.startData.clientX = e.changedTouches[0].clientX;
+				this.startData.clientY = e.changedTouches[0].clientY;
+			},
+			end(e) {
+				console.log("结束下滑坐标", e.changedTouches[0].clientY)
+				const subX = e.changedTouches[0].clientX - this.startData.clientX;
+				const subY = e.changedTouches[0].clientY - this.startData.clientY;
+				if (subY < -50) {
+					//console.log('下滑')
+				} else if (subY > 50) {
+					console.log('上滑');
+					console.log(this.$scrollheight);
+					if(this.$scrollheight<0){
+						this.shuaxinlist();
+					}
+				} else if (subX > 50) {
+					console.log('左滑');
+					this.scrollht[this.TabCur] = this.$scrollheight;
+					if(this.TabCur>0){
+						this.TabCur --;
+						this.shuaxinlist();
+					}
+					uni.pageScrollTo({
+						scrollTop: this.scrollht[this.TabCur],
+						duration: 0
+					});
+				} else if (subX < -50) {
+					console.log('右滑')
+					this.scrollht[this.TabCur] = this.$scrollheight;
+					if(this.TabCur<6){
+						this.TabCur ++;
+						this.shuaxinlist();
+					}
+					uni.pageScrollTo({
+						scrollTop: this.scrollht[this.TabCur],
+						duration: 0
+					});
+				} else {
+					console.log('无效')
+				}
+			},
+			shuaxinlist(){
+				var that = this;
+				that.loadwb = 0;
+				that.LoadProgresss();
+				if (this.TabCur == 0) {
+					this.page0 = 0;
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取轮播列表
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							typeid: 2,
+							page: that.page0,
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data.post);
+							that.guanzhupost = res.data.post;
+							if (res.data.length < 30) {
+								that.loading = '竟然到底了！';
+							}
+							that.page0++;
+							setTimeout(function() {
+								that.setHeight("view_listnow");
+							}, 100)
+							that.loadwb = 1;
+						}
+					});
+				} else if (this.TabCur == 1) {
+					setTimeout(function() {
+						that.loadwb = 1;
+					}, 500)
+				}
 			},
 			setHeight(e) {
 				var query = uni.createSelectorQuery();
@@ -474,9 +565,9 @@
 			},
 			tabSelect(e) {
 				let that = this;
-				if(this.$scrollheight>0){
+				if (this.$scrollheight > 0) {
 					this.scrollht[this.TabCur] = this.$scrollheight;
-				}else{
+				} else {
 					this.scrollht[this.TabCur] = 0;
 				}
 				if (this.TabCur == e.currentTarget.dataset.id) {
@@ -490,7 +581,7 @@
 						duration: 0
 					});
 				}
-				if (e.currentTarget.dataset.id == 0 && that.page0==0) {
+				if (e.currentTarget.dataset.id == 0 && that.page0 == 0) {
 					uni.request({
 						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取轮播列表
 						method: 'GET',
@@ -733,15 +824,24 @@
 		border: 1px solid #eee;
 		margin: 0px 5px;
 	}
-	.gzlist {		position: absolute;		margin: -33upx 0 0 -75upx;
+
+	.gzlist {
+		position: absolute;
+		margin: -33upx 0 0 -75upx;
 	}
-	.gzlist2 {		position: absolute;
-		background-color: transparent;		margin: -45upx 0 0 -85upx;
+
+	.gzlist2 {
+		position: absolute;
+		background-color: transparent;
+		margin: -45upx 0 0 -85upx;
 		width: 86upx;
 		height: 86upx;
 	}
-	.gzlist3 {		position: absolute;
-		right: 10upx;		margin: 34upx 0 0 -105upx;
+
+	.gzlist3 {
+		position: absolute;
+		right: 10upx;
+		margin: 34upx 0 0 -105upx;
 		width: 95upx;
 		height: 72upx;
 	}

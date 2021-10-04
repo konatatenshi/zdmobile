@@ -9632,12 +9632,13 @@ var render = function() {
         {
           staticClass: _vm._$g(1, "sc"),
           class: _vm._$g(1, "c"),
+          style: _vm._$g(1, "s"),
           attrs: { "scroll-y": _vm._$g(1, "a-scroll-y"), _i: 1 }
         },
         [
           _c(
             "cu-custom",
-            { attrs: { _i: 2 } },
+            { staticClass: _vm._$g(2, "sc"), attrs: { _i: 2 } },
             [
               _c(
                 "template",
@@ -9646,861 +9647,26 @@ var render = function() {
               ),
               _c(
                 "template",
-                { attrs: { slot: "content", _i: 4 }, slot: "content" },
-                [_vm._v("列表")]
-              )
-            ],
-            2
-          ),
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(5, "sc"), attrs: { _i: 5 } },
-            [
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(6, "sc"), attrs: { _i: 6 } },
-                [
-                  _c("v-uni-text", {
-                    staticClass: _vm._$g(7, "sc"),
-                    attrs: { _i: 7 }
-                  }),
-                  _vm._v("宫格列表")
-                ],
-                1
-              ),
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(8, "sc"), attrs: { _i: 8 } },
-                [
-                  _c(
-                    "v-uni-button",
-                    {
-                      staticClass: _vm._$g(9, "sc"),
-                      attrs: { "data-target": "gridModal", _i: 9 },
-                      on: {
-                        click: function($event) {
-                          return _vm.$handleViewEvent($event)
-                        }
-                      }
-                    },
-                    [_vm._v("设置")]
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _c(
-            "v-uni-view",
-            {
-              staticClass: _vm._$g(10, "sc"),
-              class: _vm._$g(10, "c"),
-              attrs: { _i: 10 },
-              on: {
-                click: function($event) {
-                  return _vm.$handleViewEvent($event)
-                }
-              }
-            },
-            [
-              _c(
-                "v-uni-view",
-                {
-                  staticClass: _vm._$g(11, "sc"),
-                  attrs: { _i: 11 },
-                  on: {
-                    click: function($event) {
-                      return _vm.$handleViewEvent($event, { stop: true })
-                    }
-                  }
-                },
-                [
-                  _c(
-                    "v-uni-radio-group",
-                    {
-                      staticClass: _vm._$g(12, "sc"),
-                      attrs: { _i: 12 },
-                      on: {
-                        change: function($event) {
-                          return _vm.$handleViewEvent($event)
-                        }
-                      }
-                    },
-                    [
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(13, "sc"), attrs: { _i: 13 } },
-                        _vm._l(3, function(item, index, $20, $30) {
-                          return _c(
-                            "v-uni-view",
-                            {
-                              key: index,
-                              staticClass: _vm._$g("14-" + $30, "sc"),
-                              attrs: { _i: "14-" + $30 }
-                            },
-                            [
-                              _c(
-                                "v-uni-label",
-                                {
-                                  staticClass: _vm._$g("15-" + $30, "sc"),
-                                  attrs: { _i: "15-" + $30 }
-                                },
-                                [
-                                  _c(
-                                    "v-uni-view",
-                                    {
-                                      staticClass: _vm._$g("16-" + $30, "sc"),
-                                      attrs: { _i: "16-" + $30 }
-                                    },
-                                    [
-                                      _vm._v(
-                                        _vm._$g("16-" + $30, "t0-0") + " 列"
-                                      )
-                                    ]
-                                  ),
-                                  _c("v-uni-radio", {
-                                    staticClass: _vm._$g("17-" + $30, "sc"),
-                                    class: _vm._$g("17-" + $30, "c"),
-                                    attrs: {
-                                      value: _vm._$g("17-" + $30, "a-value"),
-                                      checked: _vm._$g(
-                                        "17-" + $30,
-                                        "a-checked"
-                                      ),
-                                      _i: "17-" + $30
-                                    }
-                                  })
-                                ],
-                                1
-                              )
-                            ],
-                            1
-                          )
-                        }),
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(18, "sc"), attrs: { _i: 18 } },
-                    [
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(19, "sc"), attrs: { _i: 19 } },
-                        [
-                          _c(
-                            "v-uni-view",
-                            {
-                              staticClass: _vm._$g(20, "sc"),
-                              attrs: { _i: 20 }
-                            },
-                            [
-                              _c(
-                                "v-uni-text",
-                                {
-                                  staticClass: _vm._$g(21, "sc"),
-                                  attrs: { _i: 21 }
-                                },
-                                [_vm._v("边框")]
-                              )
-                            ],
-                            1
-                          ),
-                          _c(
-                            "v-uni-view",
-                            {
-                              staticClass: _vm._$g(22, "sc"),
-                              attrs: { _i: 22 }
-                            },
-                            [
-                              _c("v-uni-switch", {
-                                class: _vm._$g(23, "c"),
-                                attrs: {
-                                  checked: _vm._$g(23, "a-checked"),
-                                  _i: 23
-                                },
-                                on: {
-                                  change: function($event) {
-                                    return _vm.$handleViewEvent($event)
-                                  }
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _c(
-            "v-uni-view",
-            {
-              staticClass: _vm._$g(24, "sc"),
-              class: _vm._$g(24, "c"),
-              attrs: { _i: 24 }
-            },
-            _vm._l(_vm._$g(25, "f"), function(item, index, $21, $31) {
-              return _vm._$g("25-" + $31, "i")
-                ? _c(
-                    "v-uni-view",
-                    {
-                      key: item,
-                      staticClass: _vm._$g("25-" + $31, "sc"),
-                      attrs: { _i: "25-" + $31 }
-                    },
-                    [
-                      _c(
-                        "v-uni-view",
-                        {
-                          class: _vm._$g("26-" + $31, "c"),
-                          attrs: { _i: "26-" + $31 }
-                        },
-                        [
-                          _vm._$g("27-" + $31, "i")
-                            ? _c(
-                                "v-uni-view",
-                                {
-                                  staticClass: _vm._$g("27-" + $31, "sc"),
-                                  attrs: { _i: "27-" + $31 }
-                                },
-                                [
-                                  _vm._$g("28-" + $31, "i")
-                                    ? [_vm._v(_vm._$g("28-" + $31, "t0-0"))]
-                                    : _vm._e()
-                                ],
-                                2
-                              )
-                            : _vm._e()
-                        ],
-                        1
-                      ),
-                      _c("v-uni-text", { attrs: { _i: "29-" + $31 } }, [
-                        _vm._v(_vm._$g("29-" + $31, "t0-0"))
-                      ])
-                    ],
-                    1
-                  )
-                : _vm._e()
-            }),
-            1
-          ),
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(30, "sc"), attrs: { _i: 30 } },
-            [
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(31, "sc"), attrs: { _i: 31 } },
-                [
-                  _c("v-uni-text", {
-                    staticClass: _vm._$g(32, "sc"),
-                    attrs: { _i: 32 }
-                  }),
-                  _vm._v("菜单列表")
-                ],
-                1
-              ),
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(33, "sc"), attrs: { _i: 33 } },
-                [
-                  _c(
-                    "v-uni-button",
-                    {
-                      staticClass: _vm._$g(34, "sc"),
-                      attrs: { "data-target": "menuModal", _i: 34 },
-                      on: {
-                        click: function($event) {
-                          return _vm.$handleViewEvent($event)
-                        }
-                      }
-                    },
-                    [_vm._v("设置")]
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _c(
-            "v-uni-view",
-            {
-              staticClass: _vm._$g(35, "sc"),
-              class: _vm._$g(35, "c"),
-              attrs: { _i: 35 },
-              on: {
-                click: function($event) {
-                  return _vm.$handleViewEvent($event)
-                }
-              }
-            },
-            [
-              _c(
-                "v-uni-view",
-                {
-                  staticClass: _vm._$g(36, "sc"),
-                  attrs: { _i: 36 },
-                  on: {
-                    click: function($event) {
-                      return _vm.$handleViewEvent($event, { stop: true })
-                    }
-                  }
-                },
+                { attrs: { slot: "right", _i: 4 }, slot: "right" },
                 [
                   _c(
                     "v-uni-view",
-                    { staticClass: _vm._$g(37, "sc"), attrs: { _i: 37 } },
+                    { staticClass: _vm._$g(5, "sc"), attrs: { _i: 5 } },
                     [
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(38, "sc"), attrs: { _i: 38 } },
-                        [
-                          _c(
-                            "v-uni-view",
-                            {
-                              staticClass: _vm._$g(39, "sc"),
-                              attrs: { _i: 39 }
-                            },
-                            [
-                              _c(
-                                "v-uni-text",
-                                {
-                                  staticClass: _vm._$g(40, "sc"),
-                                  attrs: { _i: 40 }
-                                },
-                                [_vm._v("短边框")]
-                              )
-                            ],
-                            1
-                          ),
-                          _c(
-                            "v-uni-view",
-                            {
-                              staticClass: _vm._$g(41, "sc"),
-                              attrs: { _i: 41 }
-                            },
-                            [
-                              _c("v-uni-switch", {
-                                class: _vm._$g(42, "c"),
-                                attrs: {
-                                  checked: _vm._$g(42, "a-checked"),
-                                  _i: 42
-                                },
-                                on: {
-                                  change: function($event) {
-                                    return _vm.$handleViewEvent($event)
-                                  }
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      ),
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(43, "sc"), attrs: { _i: 43 } },
-                        [
-                          _c(
-                            "v-uni-view",
-                            {
-                              staticClass: _vm._$g(44, "sc"),
-                              attrs: { _i: 44 }
-                            },
-                            [
-                              _c(
-                                "v-uni-text",
-                                {
-                                  staticClass: _vm._$g(45, "sc"),
-                                  attrs: { _i: 45 }
-                                },
-                                [_vm._v("箭头")]
-                              )
-                            ],
-                            1
-                          ),
-                          _c(
-                            "v-uni-view",
-                            {
-                              staticClass: _vm._$g(46, "sc"),
-                              attrs: { _i: 46 }
-                            },
-                            [
-                              _c("v-uni-switch", {
-                                class: _vm._$g(47, "c"),
-                                attrs: {
-                                  checked: _vm._$g(47, "a-checked"),
-                                  _i: 47
-                                },
-                                on: {
-                                  change: function($event) {
-                                    return _vm.$handleViewEvent($event)
-                                  }
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      ),
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(48, "sc"), attrs: { _i: 48 } },
-                        [
-                          _c(
-                            "v-uni-view",
-                            {
-                              staticClass: _vm._$g(49, "sc"),
-                              attrs: { _i: 49 }
-                            },
-                            [
-                              _c(
-                                "v-uni-text",
-                                {
-                                  staticClass: _vm._$g(50, "sc"),
-                                  attrs: { _i: 50 }
-                                },
-                                [_vm._v("卡片")]
-                              )
-                            ],
-                            1
-                          ),
-                          _c(
-                            "v-uni-view",
-                            {
-                              staticClass: _vm._$g(51, "sc"),
-                              attrs: { _i: 51 }
-                            },
-                            [
-                              _c("v-uni-switch", {
-                                class: _vm._$g(52, "c"),
-                                attrs: {
-                                  checked: _vm._$g(52, "a-checked"),
-                                  _i: 52
-                                },
-                                on: {
-                                  change: function($event) {
-                                    return _vm.$handleViewEvent($event)
-                                  }
-                                }
-                              })
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _c(
-            "v-uni-view",
-            {
-              staticClass: _vm._$g(53, "sc"),
-              class: _vm._$g(53, "c"),
-              attrs: { _i: 53 }
-            },
-            [
-              _c(
-                "v-uni-view",
-                {
-                  staticClass: _vm._$g(54, "sc"),
-                  class: _vm._$g(54, "c"),
-                  attrs: { _i: 54 }
-                },
-                [
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(55, "sc"), attrs: { _i: 55 } },
-                    [
-                      _c("v-uni-text", {
-                        staticClass: _vm._$g(56, "sc"),
-                        attrs: { _i: 56 }
-                      }),
-                      _c(
-                        "v-uni-text",
-                        { staticClass: _vm._$g(57, "sc"), attrs: { _i: 57 } },
-                        [_vm._v("图标 + 标题")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _c(
-                "v-uni-view",
-                {
-                  staticClass: _vm._$g(58, "sc"),
-                  class: _vm._$g(58, "c"),
-                  attrs: { _i: 58 }
-                },
-                [
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(59, "sc"), attrs: { _i: 59 } },
-                    [
-                      _c("v-uni-image", {
-                        staticClass: _vm._$g(60, "sc"),
-                        attrs: {
-                          src: "/static/logo.png",
-                          mode: "aspectFit",
-                          _i: 60
-                        }
-                      }),
-                      _c(
-                        "v-uni-text",
-                        { staticClass: _vm._$g(61, "sc"), attrs: { _i: 61 } },
-                        [_vm._v("图片 + 标题")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _c(
-                "v-uni-view",
-                {
-                  staticClass: _vm._$g(62, "sc"),
-                  class: _vm._$g(62, "c"),
-                  attrs: { _i: 62 }
-                },
-                [
-                  _c(
-                    "v-uni-button",
-                    {
-                      staticClass: _vm._$g(63, "sc"),
-                      attrs: { "open-type": "contact", _i: 63 }
-                    },
-                    [
-                      _c("v-uni-text", {
-                        staticClass: _vm._$g(64, "sc"),
-                        attrs: { _i: 64 }
-                      }),
-                      _c(
-                        "v-uni-text",
-                        { staticClass: _vm._$g(65, "sc"), attrs: { _i: 65 } },
-                        [_vm._v("Open-type 按钮")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _c(
-                "v-uni-view",
-                {
-                  staticClass: _vm._$g(66, "sc"),
-                  class: _vm._$g(66, "c"),
-                  attrs: { _i: 66 }
-                },
-                [
-                  _c(
-                    "v-uni-navigator",
-                    {
-                      staticClass: _vm._$g(67, "sc"),
-                      attrs: {
-                        "hover-class": "none",
-                        url: "../list/list",
-                        "open-type": "redirect",
-                        _i: 67
-                      }
-                    },
-                    [
-                      _c("v-uni-text", {
-                        staticClass: _vm._$g(68, "sc"),
-                        attrs: { _i: 68 }
-                      }),
-                      _c(
-                        "v-uni-text",
-                        { staticClass: _vm._$g(69, "sc"), attrs: { _i: 69 } },
-                        [_vm._v("Navigator 跳转")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _c(
-                "v-uni-view",
-                {
-                  staticClass: _vm._$g(70, "sc"),
-                  class: _vm._$g(70, "c"),
-                  attrs: { _i: 70 }
-                },
-                [
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(71, "sc"), attrs: { _i: 71 } },
-                    [
-                      _c("v-uni-text", {
-                        staticClass: _vm._$g(72, "sc"),
-                        attrs: { _i: 72 }
-                      }),
-                      _c(
-                        "v-uni-text",
-                        { staticClass: _vm._$g(73, "sc"), attrs: { _i: 73 } },
-                        [_vm._v("头像组")]
-                      )
-                    ],
-                    1
-                  ),
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(74, "sc"), attrs: { _i: 74 } },
-                    [
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(75, "sc"), attrs: { _i: 75 } },
-                        [
-                          _c("v-uni-view", {
-                            staticClass: _vm._$g(76, "sc"),
-                            staticStyle: {
-                              "background-image":
-                                "url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg)"
-                            },
-                            attrs: { _i: 76 }
-                          }),
-                          _c("v-uni-view", {
-                            staticClass: _vm._$g(77, "sc"),
-                            staticStyle: {
-                              "background-image":
-                                "url(https://ossweb-img.qq.com/images/lol/web201310/skin/big81005.jpg)"
-                            },
-                            attrs: { _i: 77 }
-                          }),
-                          _c("v-uni-view", {
-                            staticClass: _vm._$g(78, "sc"),
-                            staticStyle: {
-                              "background-image":
-                                "url(https://ossweb-img.qq.com/images/lol/web201310/skin/big25002.jpg)"
-                            },
-                            attrs: { _i: 78 }
-                          }),
-                          _c("v-uni-view", {
-                            staticClass: _vm._$g(79, "sc"),
-                            staticStyle: {
-                              "background-image":
-                                "url(https://ossweb-img.qq.com/images/lol/web201310/skin/big91012.jpg)"
-                            },
-                            attrs: { _i: 79 }
-                          })
-                        ],
-                        1
-                      ),
-                      _c(
-                        "v-uni-text",
-                        { staticClass: _vm._$g(80, "sc"), attrs: { _i: 80 } },
-                        [_vm._v("4 人")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _c(
-                "v-uni-view",
-                {
-                  staticClass: _vm._$g(81, "sc"),
-                  class: _vm._$g(81, "c"),
-                  attrs: { _i: 81 }
-                },
-                [
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(82, "sc"), attrs: { _i: 82 } },
-                    [
-                      _c("v-uni-text", {
-                        staticClass: _vm._$g(83, "sc"),
-                        attrs: { _i: 83 }
-                      }),
-                      _c(
-                        "v-uni-text",
-                        { staticClass: _vm._$g(84, "sc"), attrs: { _i: 84 } },
-                        [_vm._v("按钮")]
-                      )
-                    ],
-                    1
-                  ),
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(85, "sc"), attrs: { _i: 85 } },
-                    [
-                      _c(
-                        "v-uni-button",
-                        { staticClass: _vm._$g(86, "sc"), attrs: { _i: 86 } },
-                        [
-                          _c("v-uni-text", {
-                            staticClass: _vm._$g(87, "sc"),
-                            attrs: { _i: 87 }
-                          }),
-                          _vm._v("上传")
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _c(
-                "v-uni-view",
-                {
-                  staticClass: _vm._$g(88, "sc"),
-                  class: _vm._$g(88, "c"),
-                  attrs: { _i: 88 }
-                },
-                [
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(89, "sc"), attrs: { _i: 89 } },
-                    [
-                      _c("v-uni-text", {
-                        staticClass: _vm._$g(90, "sc"),
-                        attrs: { _i: 90 }
-                      }),
-                      _c(
-                        "v-uni-text",
-                        { staticClass: _vm._$g(91, "sc"), attrs: { _i: 91 } },
-                        [_vm._v("标签")]
-                      )
-                    ],
-                    1
-                  ),
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(92, "sc"), attrs: { _i: 92 } },
-                    [
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(93, "sc"), attrs: { _i: 93 } },
-                        [_vm._v("音乐")]
-                      ),
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(94, "sc"), attrs: { _i: 94 } },
-                        [_vm._v("电影")]
-                      ),
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(95, "sc"), attrs: { _i: 95 } },
-                        [_vm._v("旅行")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _c(
-                "v-uni-view",
-                {
-                  staticClass: _vm._$g(96, "sc"),
-                  class: _vm._$g(96, "c"),
-                  attrs: { _i: 96 }
-                },
-                [
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(97, "sc"), attrs: { _i: 97 } },
-                    [
-                      _c("v-uni-text", {
-                        staticClass: _vm._$g(98, "sc"),
-                        attrs: { _i: 98 }
-                      }),
-                      _c(
-                        "v-uni-text",
-                        { staticClass: _vm._$g(99, "sc"), attrs: { _i: 99 } },
-                        [_vm._v("文本")]
-                      )
-                    ],
-                    1
-                  ),
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(100, "sc"), attrs: { _i: 100 } },
-                    [
-                      _c(
-                        "v-uni-text",
-                        { staticClass: _vm._$g(101, "sc"), attrs: { _i: 101 } },
-                        [_vm._v("小目标还没有实现！")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(102, "sc"), attrs: { _i: 102 } },
-                [
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(103, "sc"), attrs: { _i: 103 } },
-                    [
-                      _c(
-                        "v-uni-view",
-                        { attrs: { _i: 104 } },
-                        [
-                          _c("v-uni-text", {
-                            staticClass: _vm._$g(105, "sc"),
-                            attrs: { _i: 105 }
-                          }),
-                          _vm._v("多行Item")
-                        ],
-                        1
-                      ),
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(106, "sc"), attrs: { _i: 106 } },
-                        [
-                          _c("v-uni-text", {
-                            staticClass: _vm._$g(107, "sc"),
-                            attrs: { _i: 107 }
-                          }),
-                          _vm._v("小目标还没有实现！")
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(108, "sc"), attrs: { _i: 108 } },
-                    [
-                      _c("v-uni-switch", {
-                        staticClass: _vm._$g(109, "sc"),
-                        class: _vm._$g(109, "c"),
-                        attrs: { checked: _vm._$g(109, "a-checked"), _i: 109 },
+                      _c("v-uni-view", {
+                        staticClass: _vm._$g(6, "sc"),
+                        attrs: { _i: 6 },
                         on: {
-                          change: function($event) {
+                          click: function($event) {
+                            return _vm.$handleViewEvent($event)
+                          }
+                        }
+                      }),
+                      _c("v-uni-view", {
+                        staticClass: _vm._$g(7, "sc"),
+                        attrs: { _i: 7 },
+                        on: {
+                          click: function($event) {
                             return _vm.$handleViewEvent($event)
                           }
                         }
@@ -10512,69 +9678,59 @@ var render = function() {
                 1
               )
             ],
-            1
+            2
           ),
           _c(
             "v-uni-view",
-            { staticClass: _vm._$g(110, "sc"), attrs: { _i: 110 } },
+            { staticClass: _vm._$g(8, "sc"), attrs: { _i: 8 } },
             [
               _c(
                 "v-uni-view",
-                { staticClass: _vm._$g(111, "sc"), attrs: { _i: 111 } },
-                [
-                  _c("v-uni-text", {
-                    staticClass: _vm._$g(112, "sc"),
-                    attrs: { _i: 112 }
-                  }),
-                  _vm._v("消息列表")
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _c(
-            "v-uni-view",
-            { staticClass: _vm._$g(113, "sc"), attrs: { _i: 113 } },
-            [
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(114, "sc"), attrs: { _i: 114 } },
+                { staticClass: _vm._$g(9, "sc"), attrs: { _i: 9 } },
                 [
                   _c("v-uni-view", {
-                    staticClass: _vm._$g(115, "sc"),
-                    staticStyle: {
-                      "background-image":
-                        "url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg)"
-                    },
-                    attrs: { _i: 115 }
+                    staticClass: _vm._$g(10, "sc"),
+                    style: _vm._$g(10, "s"),
+                    attrs: { _i: 10 }
                   }),
                   _c(
                     "v-uni-view",
-                    { staticClass: _vm._$g(116, "sc"), attrs: { _i: 116 } },
+                    { staticClass: _vm._$g(11, "sc"), attrs: { _i: 11 } },
                     [
                       _c(
                         "v-uni-view",
-                        { staticClass: _vm._$g(117, "sc"), attrs: { _i: 117 } },
-                        [_vm._v("凯尔")]
+                        { staticClass: _vm._$g(12, "sc"), attrs: { _i: 12 } },
+                        [_vm._v("")]
                       ),
                       _c(
                         "v-uni-view",
-                        { staticClass: _vm._$g(118, "sc"), attrs: { _i: 118 } },
+                        { staticClass: _vm._$g(13, "sc"), attrs: { _i: 13 } },
                         [
+                          _vm._v(""),
                           _c(
                             "v-uni-view",
                             {
-                              staticClass: _vm._$g(119, "sc"),
-                              attrs: { _i: 119 }
+                              staticClass: _vm._$g(14, "sc"),
+                              attrs: { _i: 14 }
                             },
                             [
-                              _c("v-uni-text", {
-                                staticClass: _vm._$g(120, "sc"),
-                                attrs: { _i: 120 }
-                              }),
-                              _vm._v(
-                                "我已天理为凭，踏入这片荒芜，不再受凡人的枷锁遏制。我已天理为凭，踏入这片荒芜，不再受凡人的枷锁遏制。"
+                              _c(
+                                "v-uni-view",
+                                {
+                                  staticClass: _vm._$g(15, "sc"),
+                                  attrs: { _i: 15 }
+                                },
+                                [
+                                  _c(
+                                    "v-uni-button",
+                                    {
+                                      staticClass: _vm._$g(16, "sc"),
+                                      attrs: { _i: 16 }
+                                    },
+                                    [_vm._v("关注")]
+                                  )
+                                ],
+                                1
                               )
                             ],
                             1
@@ -10584,354 +9740,6 @@ var render = function() {
                       )
                     ],
                     1
-                  ),
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(121, "sc"), attrs: { _i: 121 } },
-                    [
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(122, "sc"), attrs: { _i: 122 } },
-                        [_vm._v("22:20")]
-                      ),
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(123, "sc"), attrs: { _i: 123 } },
-                        [_vm._v("5")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(124, "sc"), attrs: { _i: 124 } },
-                [
-                  _c(
-                    "v-uni-view",
-                    {
-                      staticClass: _vm._$g(125, "sc"),
-                      staticStyle: {
-                        "background-image":
-                          "url(https://ossweb-img.qq.com/images/lol/img/champion/Taric.png)"
-                      },
-                      attrs: { _i: 125 }
-                    },
-                    [
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(126, "sc"), attrs: { _i: 126 } },
-                        [_vm._v("99+")]
-                      )
-                    ],
-                    1
-                  ),
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(127, "sc"), attrs: { _i: 127 } },
-                    [
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(128, "sc"), attrs: { _i: 128 } },
-                        [
-                          _c(
-                            "v-uni-view",
-                            {
-                              staticClass: _vm._$g(129, "sc"),
-                              attrs: { _i: 129 }
-                            },
-                            [_vm._v("瓦洛兰之盾-塔里克")]
-                          ),
-                          _c(
-                            "v-uni-view",
-                            {
-                              staticClass: _vm._$g(130, "sc"),
-                              attrs: { _i: 130 }
-                            },
-                            [_vm._v("战士")]
-                          )
-                        ],
-                        1
-                      ),
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(131, "sc"), attrs: { _i: 131 } },
-                        [
-                          _c(
-                            "v-uni-view",
-                            {
-                              staticClass: _vm._$g(132, "sc"),
-                              attrs: { _i: 132 }
-                            },
-                            [
-                              _vm._v(
-                                "塔里克是保护者星灵，用超乎寻常的力量守护着符文之地的生命、仁爱以及万物之美。塔里克由于渎职而被放逐，离开了祖国德玛西亚，前去攀登巨神峰寻找救赎，但他找到的却是来自星界的更高层的召唤。现在的塔里克与古代巨神族的神力相融合，以瓦洛兰之盾的身份，永不疲倦地警惕着阴险狡诈的虚空腐化之力。"
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(133, "sc"), attrs: { _i: 133 } },
-                    [
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(134, "sc"), attrs: { _i: 134 } },
-                        [_vm._v("22:20")]
-                      ),
-                      _c("v-uni-view", {
-                        staticClass: _vm._$g(135, "sc"),
-                        attrs: { _i: 135 }
-                      })
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(136, "sc"), attrs: { _i: 136 } },
-                [
-                  _c("v-uni-view", {
-                    staticClass: _vm._$g(137, "sc"),
-                    staticStyle: {
-                      "background-image":
-                        "url(https://ossweb-img.qq.com/images/lol/img/champion/Morgana.png)"
-                    },
-                    attrs: { _i: 137 }
-                  }),
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(138, "sc"), attrs: { _i: 138 } },
-                    [
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(139, "sc"), attrs: { _i: 139 } },
-                        [
-                          _c(
-                            "v-uni-view",
-                            {
-                              staticClass: _vm._$g(140, "sc"),
-                              attrs: { _i: 140 }
-                            },
-                            [_vm._v("莫甘娜")]
-                          )
-                        ],
-                        1
-                      ),
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(141, "sc"), attrs: { _i: 141 } },
-                        [
-                          _c(
-                            "v-uni-view",
-                            {
-                              staticClass: _vm._$g(142, "sc"),
-                              attrs: { _i: 142 }
-                            },
-                            [_vm._v("凯尔，你被自己的光芒变的盲目！")]
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(143, "sc"), attrs: { _i: 143 } },
-                    [
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(144, "sc"), attrs: { _i: 144 } },
-                        [_vm._v("22:20")]
-                      ),
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(145, "sc"), attrs: { _i: 145 } },
-                        [_vm._v("5")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(146, "sc"), attrs: { _i: 146 } },
-                [
-                  _c("v-uni-view", {
-                    staticClass: _vm._$g(147, "sc"),
-                    staticStyle: {
-                      "background-image":
-                        "url(https://ossweb-img.qq.com/images/lol/web201310/skin/big81007.jpg)"
-                    },
-                    attrs: { _i: 147 }
-                  }),
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(148, "sc"), attrs: { _i: 148 } },
-                    [
-                      _c(
-                        "v-uni-view",
-                        { attrs: { _i: 149 } },
-                        [
-                          _c(
-                            "v-uni-view",
-                            {
-                              staticClass: _vm._$g(150, "sc"),
-                              attrs: { _i: 150 }
-                            },
-                            [_vm._v("伊泽瑞尔")]
-                          ),
-                          _c(
-                            "v-uni-view",
-                            {
-                              staticClass: _vm._$g(151, "sc"),
-                              attrs: { _i: 151 }
-                            },
-                            [_vm._v("断开连接...")]
-                          )
-                        ],
-                        1
-                      ),
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(152, "sc"), attrs: { _i: 152 } },
-                        [
-                          _c(
-                            "v-uni-view",
-                            {
-                              staticClass: _vm._$g(153, "sc"),
-                              attrs: { _i: 153 }
-                            },
-                            [_vm._v("等我回来一个打十个")]
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(154, "sc"), attrs: { _i: 154 } },
-                    [
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(155, "sc"), attrs: { _i: 155 } },
-                        [_vm._v("22:20")]
-                      ),
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(156, "sc"), attrs: { _i: 156 } },
-                        [_vm._v("5")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              ),
-              _c(
-                "v-uni-view",
-                { staticClass: _vm._$g(157, "sc"), attrs: { _i: 157 } },
-                [
-                  _c(
-                    "v-uni-view",
-                    {
-                      staticClass: _vm._$g(158, "sc"),
-                      staticStyle: {
-                        "background-image":
-                          "url(https://ossweb-img.qq.com/images/lol/web201310/skin/big81020.jpg)"
-                      },
-                      attrs: { _i: 158 }
-                    },
-                    [
-                      _c("v-uni-view", {
-                        staticClass: _vm._$g(159, "sc"),
-                        attrs: { _i: 159 }
-                      })
-                    ],
-                    1
-                  ),
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(160, "sc"), attrs: { _i: 160 } },
-                    [
-                      _c(
-                        "v-uni-view",
-                        { attrs: { _i: 161 } },
-                        [
-                          _c(
-                            "v-uni-view",
-                            {
-                              staticClass: _vm._$g(162, "sc"),
-                              attrs: { _i: 162 }
-                            },
-                            [_vm._v("瓦罗兰大陆-睡衣守护者-新手保护营")]
-                          ),
-                          _c(
-                            "v-uni-view",
-                            {
-                              staticClass: _vm._$g(163, "sc"),
-                              attrs: { _i: 163 }
-                            },
-                            [_vm._v("6人")]
-                          )
-                        ],
-                        1
-                      ),
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(164, "sc"), attrs: { _i: 164 } },
-                        [
-                          _c(
-                            "v-uni-view",
-                            {
-                              staticClass: _vm._$g(165, "sc"),
-                              attrs: { _i: 165 }
-                            },
-                            [
-                              _vm._v("伊泽瑞尔："),
-                              _c("v-uni-text", {
-                                staticClass: _vm._$g(166, "sc"),
-                                attrs: { _i: 166 }
-                              }),
-                              _vm._v("传送中...")
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _c(
-                    "v-uni-view",
-                    { staticClass: _vm._$g(167, "sc"), attrs: { _i: 167 } },
-                    [
-                      _c(
-                        "v-uni-view",
-                        { staticClass: _vm._$g(168, "sc"), attrs: { _i: 168 } },
-                        [_vm._v("22:20")]
-                      ),
-                      _c("v-uni-view", {
-                        staticClass: _vm._$g(169, "sc"),
-                        attrs: { _i: 169 }
-                      })
-                    ],
-                    1
                   )
                 ],
                 1
@@ -10941,17 +9749,39 @@ var render = function() {
           ),
           _c(
             "v-uni-view",
-            { staticClass: _vm._$g(170, "sc"), attrs: { _i: 170 } },
+            { staticClass: _vm._$g(17, "sc"), attrs: { _i: 17 } },
             [
               _c(
                 "v-uni-view",
-                { staticClass: _vm._$g(171, "sc"), attrs: { _i: 171 } },
+                { staticClass: _vm._$g(18, "sc"), attrs: { _i: 18 } },
                 [
-                  _c("v-uni-text", {
-                    staticClass: _vm._$g(172, "sc"),
-                    attrs: { _i: 172 }
-                  }),
-                  _vm._v("列表左滑")
+                  _c(
+                    "v-uni-text",
+                    { staticClass: _vm._$g(19, "sc"), attrs: { _i: 19 } },
+                    [_vm._v("用户名")]
+                  )
+                ],
+                1
+              ),
+              _c(
+                "v-uni-view",
+                { staticClass: _vm._$g(20, "sc"), attrs: { _i: 20 } },
+                [
+                  _vm._$g(21, "i")
+                    ? _c(
+                        "v-uni-button",
+                        {
+                          staticClass: _vm._$g(21, "sc"),
+                          attrs: { "data-target": "menuModal", _i: 21 },
+                          on: {
+                            click: function($event) {
+                              return _vm.$handleViewEvent($event)
+                            }
+                          }
+                        },
+                        [_vm._v("管理按钮")]
+                      )
+                    : _vm._e()
                 ],
                 1
               )
@@ -10960,127 +9790,161 @@ var render = function() {
           ),
           _c(
             "v-uni-view",
-            { staticClass: _vm._$g(173, "sc"), attrs: { _i: 173 } },
-            _vm._l(4, function(item, index, $22, $32) {
-              return _c(
+            { staticClass: _vm._$g(22, "sc"), attrs: { _i: 22 } },
+            [
+              _c(
+                "v-uni-view",
+                { staticClass: _vm._$g(23, "sc"), attrs: { _i: 23 } },
+                [
+                  _c(
+                    "v-uni-text",
+                    { staticClass: _vm._$g(24, "sc"), attrs: { _i: 24 } },
+                    [_vm._v("UID:0000")]
+                  ),
+                  _c("v-uni-text", {
+                    staticClass: _vm._$g(25, "sc"),
+                    attrs: { _i: 25 }
+                  }),
+                  _c("v-uni-text", {
+                    staticClass: _vm._$g(26, "sc"),
+                    staticStyle: { color: "#f5f5f5" },
+                    attrs: { _i: 26 }
+                  }),
+                  _c(
+                    "v-uni-text",
+                    { staticClass: _vm._$g(27, "sc"), attrs: { _i: 27 } },
+                    [_vm._v("点龄：0年")]
+                  ),
+                  _c("v-uni-text", {
+                    staticClass: _vm._$g(28, "sc"),
+                    staticStyle: { color: "#f5f5f5" },
+                    attrs: { _i: 28 }
+                  }),
+                  _c("v-uni-text", {
+                    staticClass: _vm._$g(29, "sc"),
+                    attrs: { _i: 29 }
+                  })
+                ],
+                1
+              ),
+              _c(
+                "v-uni-view",
+                { staticClass: _vm._$g(30, "sc"), attrs: { _i: 30 } },
+                [
+                  _c(
+                    "v-uni-view",
+                    {
+                      staticClass: _vm._$g(31, "sc"),
+                      staticStyle: { width: "75%" },
+                      attrs: { _i: 31 }
+                    },
+                    [
+                      _vm._v(
+                        "You may use this piece of code in PHP to strip HTML tags, remove leading and ending spaces and convert special characters to HTML entities (if you put this into an HTML page):"
+                      )
+                    ]
+                  ),
+                  _c(
+                    "v-uni-view",
+                    {
+                      staticClass: _vm._$g(32, "sc"),
+                      staticStyle: { width: "25%" },
+                      attrs: { _i: 32 }
+                    },
+                    [
+                      _vm._v("关于Ta"),
+                      _c("v-uni-text", {
+                        staticClass: _vm._$g(33, "sc"),
+                        attrs: { _i: 33 }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _c(
+                "v-uni-view",
+                { staticClass: _vm._$g(34, "sc"), attrs: { _i: 34 } },
+                [
+                  _c(
+                    "v-uni-view",
+                    { staticClass: _vm._$g(35, "sc"), attrs: { _i: 35 } },
+                    [_vm._v("700")]
+                  ),
+                  _c(
+                    "v-uni-view",
+                    { staticClass: _vm._$g(36, "sc"), attrs: { _i: 36 } },
+                    [_vm._v("获赞")]
+                  ),
+                  _c(
+                    "v-uni-view",
+                    { staticClass: _vm._$g(37, "sc"), attrs: { _i: 37 } },
+                    [_vm._v("700")]
+                  ),
+                  _c(
+                    "v-uni-view",
+                    { staticClass: _vm._$g(38, "sc"), attrs: { _i: 38 } },
+                    [_vm._v("关注")]
+                  ),
+                  _c(
+                    "v-uni-view",
+                    { staticClass: _vm._$g(39, "sc"), attrs: { _i: 39 } },
+                    [_vm._v("700")]
+                  ),
+                  _c(
+                    "v-uni-view",
+                    { staticClass: _vm._$g(40, "sc"), attrs: { _i: 40 } },
+                    [_vm._v("粉丝")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _c(
+            "v-uni-scroll-view",
+            {
+              staticClass: _vm._$g(41, "sc"),
+              attrs: { "scroll-x": true, _i: 41 }
+            },
+            [
+              _c(
                 "v-uni-view",
                 {
-                  key: index,
-                  staticClass: _vm._$g("174-" + $32, "sc"),
-                  class: _vm._$g("174-" + $32, "c"),
-                  attrs: {
-                    "data-target": _vm._$g("174-" + $32, "a-data-target"),
-                    _i: "174-" + $32
-                  },
+                  staticClass: _vm._$g(42, "sc"),
+                  class: _vm._$g(42, "c"),
+                  attrs: { _i: 42 },
                   on: {
-                    touchstart: function($event) {
-                      return _vm.$handleViewEvent($event)
-                    },
-                    touchmove: function($event) {
-                      return _vm.$handleViewEvent($event)
-                    },
-                    touchend: function($event) {
+                    click: function($event) {
                       return _vm.$handleViewEvent($event)
                     }
                   }
                 },
-                [
-                  _c("v-uni-view", {
-                    staticClass: _vm._$g("175-" + $32, "sc"),
-                    style: _vm._$g("175-" + $32, "s"),
-                    attrs: { _i: "175-" + $32 }
-                  }),
-                  _c(
-                    "v-uni-view",
-                    {
-                      staticClass: _vm._$g("176-" + $32, "sc"),
-                      attrs: { _i: "176-" + $32 }
-                    },
-                    [
-                      _c(
-                        "v-uni-view",
-                        {
-                          staticClass: _vm._$g("177-" + $32, "sc"),
-                          attrs: { _i: "177-" + $32 }
-                        },
-                        [_vm._v("文晓港")]
-                      ),
-                      _c(
-                        "v-uni-view",
-                        {
-                          staticClass: _vm._$g("178-" + $32, "sc"),
-                          attrs: { _i: "178-" + $32 }
-                        },
-                        [
-                          _c("v-uni-text", {
-                            staticClass: _vm._$g("179-" + $32, "sc"),
-                            attrs: { _i: "179-" + $32 }
-                          }),
-                          _vm._v("消息未送达")
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _c(
-                    "v-uni-view",
-                    {
-                      staticClass: _vm._$g("180-" + $32, "sc"),
-                      attrs: { _i: "180-" + $32 }
-                    },
-                    [
-                      _c(
-                        "v-uni-view",
-                        {
-                          staticClass: _vm._$g("181-" + $32, "sc"),
-                          attrs: { _i: "181-" + $32 }
-                        },
-                        [_vm._v("22:20")]
-                      ),
-                      _c(
-                        "v-uni-view",
-                        {
-                          staticClass: _vm._$g("182-" + $32, "sc"),
-                          attrs: { _i: "182-" + $32 }
-                        },
-                        [_vm._v("5")]
-                      )
-                    ],
-                    1
-                  ),
-                  _c(
-                    "v-uni-view",
-                    {
-                      staticClass: _vm._$g("183-" + $32, "sc"),
-                      attrs: { _i: "183-" + $32 }
-                    },
-                    [
-                      _c(
-                        "v-uni-view",
-                        {
-                          staticClass: _vm._$g("184-" + $32, "sc"),
-                          attrs: { _i: "184-" + $32 }
-                        },
-                        [_vm._v("置顶")]
-                      ),
-                      _c(
-                        "v-uni-view",
-                        {
-                          staticClass: _vm._$g("185-" + $32, "sc"),
-                          attrs: { _i: "185-" + $32 }
-                        },
-                        [_vm._v("删除")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
+                [_vm._v("Ta 的帖子 111")]
+              ),
+              _c(
+                "v-uni-view",
+                {
+                  staticClass: _vm._$g(43, "sc"),
+                  class: _vm._$g(43, "c"),
+                  attrs: { _i: 43 },
+                  on: {
+                    click: function($event) {
+                      return _vm.$handleViewEvent($event)
+                    }
+                  }
+                },
+                [_vm._v("Ta 的回复 222")]
               )
-            }),
+            ],
             1
-          )
+          ),
+          _c("v-uni-view", {
+            staticClass: _vm._$g(44, "sc"),
+            attrs: { _i: 44 }
+          })
         ],
         1
       )
@@ -11176,7 +10040,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../5211game/HBuilderX.3.1.18.20210609.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.page {\n\theight: 100Vh;\n\twidth: 100vw;\n}\n.page.show {\n\toverflow: hidden;\n}\n.switch-sex::after {\n\tcontent: \"\\e716\";\n}\n.switch-sex::before {\n\tcontent: \"\\e7a9\";\n}\n.switch-music::after {\n\tcontent: \"\\e66a\";\n}\n.switch-music::before {\n\tcontent: \"\\e6db\";\n}\n", ""]);
+exports.push([module.i, "\n.page {\n\theight: 100Vh;\n\twidth: 100vw;\n}\n.page.show {\n\toverflow: hidden;\n}\n.switch-sex::after {\n\tcontent: \"\\e716\";\n}\n.switch-sex::before {\n\tcontent: \"\\e7a9\";\n}\n.switch-music::after {\n\tcontent: \"\\e66a\";\n}\n.switch-music::before {\n\tcontent: \"\\e6db\";\n}\n.cu-avatar2{\n    font-variant: small-caps;\n    margin: 0;\n    padding: 0;\n    display: inline-flex;\n    text-align: center;\n    justify-content: center;\n    align-items: center;\n    background-color: transparent;\n    color: #ffffff;\n    white-space: nowrap;\n    position: relative;\n    width: 190upx;\n    height: 190upx;\n    background-size: cover;\n    background-position: center;\n    vertical-align: middle;\n    font-size: 1.5em;\n\tposition: absolute;\n\tleft: 40upx;\n}\n.cu-list2.menu-avatar>.cu-item{\n\tposition: relative;\n    display: flex;\n    padding-right: 5px;\n    height: 200upx;\n    background-color: transparent;\n    justify-content: flex-end;\n    align-items: center;\n\ttransition: all .6s ease-in-out 0s;\n\t-webkit-transform: translateX(0px);\n\ttransform: translateX(0px);\n}\n.cu-list.grid.no-border{\n\tmargin-top: 0px;\n\tpadding-top: 0px;\n\tbackground-color: transparent;\n}\n.page{\n\tbackground: top center no-repeat #efeff4 ;\n\tbackground-size: 100% 600upx;\n\tbackground-color: #FFFFFF;\n}\n.text-shadow1{\n\ttext-shadow:-1px 0 white,0 1px white,1px 0 white,0 -1px white;\n}\n.text-shadow2{\n\ttext-shadow:-2px 0 white,0 2px white,2px 0 white,0 -2px white;\n}\n.border-custom2{\n\tborder-top:30upx solid #f1f1f1;\n}\n.border-custom{\n\tborder:6upx solid white;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -23363,7 +22227,18 @@ var render = function() {
       ),
       _c(
         "v-uni-view",
-        { staticClass: _vm._$g(18, "sc"), attrs: { _i: 18 } },
+        {
+          staticClass: _vm._$g(18, "sc"),
+          attrs: { _i: 18 },
+          on: {
+            touchstart: function($event) {
+              return _vm.$handleViewEvent($event)
+            },
+            touchend: function($event) {
+              return _vm.$handleViewEvent($event)
+            }
+          }
+        },
         [
           _vm._$g(19, "i")
             ? _c(
@@ -24340,7 +23215,7 @@ if(false) {}
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../../../5211game/HBuilderX.3.1.18.20210609.full/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/runtime/api.js */ 10);
 exports = ___CSS_LOADER_API_IMPORT___(false);
 // Module
-exports.push([module.i, "\n.cu-card>.cu-item[data-v-0fd8db80] {\r\n\tbackground-color: #FFFFFF !important;\r\n\tborder-radius: 4%;\r\n\tbackground-position-y: 9%;\r\n\tmargin: 0;\n}\n.text-df[data-v-0fd8db80] {\r\n\tbackground-color: #FFFFFF !important;\r\n\tborder-radius: 4%;\r\n\tbackground-position-y: 9%;\r\n\tmargin: 0;\n}\n.article[data-v-0fd8db80] {\r\n\tmargin: 10upx;\n}\n.page[data-v-0fd8db80] {\r\n\theight: 100vh;\n}\n.nav-sm[data-v-0fd8db80] {\r\n\twhite-space: nowrap;\n}\n.nav-sm .cu-item.cur[data-v-0fd8db80] {\r\n\tborder-bottom: 2px solid;\n}\n.nav-sm .cu-item[data-v-0fd8db80] {\r\n\theight: 30px;\r\n\tdisplay: inline-block;\r\n\tline-height: 30px;\r\n\tmargin: 0 5px;\r\n\tpadding: 0 11px;\n}\n.searchHistory[data-v-0fd8db80] {\r\n\twidth: 100%;\r\n\tmargin-top: 5px;\n}\n.searchHistoryItem[data-v-0fd8db80] {\r\n\twidth: 100%;\r\n\tdisplay: flex;\r\n\tflex-wrap: wrap;\n}\n.searchHistoryItem uni-view[data-v-0fd8db80] {\r\n\t/* width: 50px; */\r\n\theight: 20px;\r\n\tborder: 1px solid #eee;\r\n\tmargin: 0px 5px;\n}\n.gzlist[data-v-0fd8db80] {\r\n\t\tposition: absolute;\r\n\t\tmargin: -33upx 0 0 -75upx;\n}\n.gzlist2[data-v-0fd8db80] {\r\n\t\tposition: absolute;\r\n\tbackground-color: transparent;\r\n\t\tmargin: -45upx 0 0 -85upx;\r\n\twidth: 86upx;\r\n\theight: 86upx;\n}\n.gzlist3[data-v-0fd8db80] {\r\n\t\tposition: absolute;\r\n\tright: 10upx;\r\n\t\tmargin: 34upx 0 0 -105upx;\r\n\twidth: 95upx;\r\n\theight: 72upx;\n}\r\n", ""]);
+exports.push([module.i, "\n.cu-card>.cu-item[data-v-0fd8db80] {\n\tbackground-color: #FFFFFF !important;\n\tborder-radius: 4%;\n\tbackground-position-y: 9%;\n\tmargin: 0;\n}\n.text-df[data-v-0fd8db80] {\n\tbackground-color: #FFFFFF !important;\n\tborder-radius: 4%;\n\tbackground-position-y: 9%;\n\tmargin: 0;\n}\n.article[data-v-0fd8db80] {\n\tmargin: 10upx;\n}\n.page[data-v-0fd8db80] {\n\theight: 100vh;\n}\n.nav-sm[data-v-0fd8db80] {\n\twhite-space: nowrap;\n}\n.nav-sm .cu-item.cur[data-v-0fd8db80] {\n\tborder-bottom: 2px solid;\n}\n.nav-sm .cu-item[data-v-0fd8db80] {\n\theight: 30px;\n\tdisplay: inline-block;\n\tline-height: 30px;\n\tmargin: 0 5px;\n\tpadding: 0 11px;\n}\n.searchHistory[data-v-0fd8db80] {\n\twidth: 100%;\n\tmargin-top: 5px;\n}\n.searchHistoryItem[data-v-0fd8db80] {\n\twidth: 100%;\n\tdisplay: flex;\n\tflex-wrap: wrap;\n}\n.searchHistoryItem uni-view[data-v-0fd8db80] {\n\t/* width: 50px; */\n\theight: 20px;\n\tborder: 1px solid #eee;\n\tmargin: 0px 5px;\n}\n.gzlist[data-v-0fd8db80] {\n\tposition: absolute;\n\tmargin: -33upx 0 0 -75upx;\n}\n.gzlist2[data-v-0fd8db80] {\n\tposition: absolute;\n\tbackground-color: transparent;\n\tmargin: -45upx 0 0 -85upx;\n\twidth: 86upx;\n\theight: 86upx;\n}\n.gzlist3[data-v-0fd8db80] {\n\tposition: absolute;\n\tright: 10upx;\n\tmargin: 34upx 0 0 -105upx;\n\twidth: 95upx;\n\theight: 72upx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
