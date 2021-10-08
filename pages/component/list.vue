@@ -20,18 +20,24 @@
 						<view class="text-black text-sm flex justify-end">
 							&nbsp;
 							<view class="text-black text-sm">
-								<view class="margin-tb-sm text-center padding-right-xl"><button
-										class="padding-left-xl padding-right-xl cu-btn round bg-purple border-custom" v-if="!woguanzhu">关注</button><button
-										class="padding-left-xl padding-right-xl cu-btn round bg-purple border-custom" v-else>取关</button>
+								<view class="margin-tb-sm text-center padding-right-xl" v-if="uid!=$uid"><button
+										class="padding-left-xl padding-right-xl cu-btn round bg-purple" v-if="woguanzhu==1" @tap="guanzhuta()">关注Ta</button><button
+										class="padding-left-xl padding-right-xl cu-btn round bg-purple" v-else @tap="guanzhuta()">取关Ta</button>
 								</view>
 							</view>
 						</view>
 					</view>
 				</view>
 			</view>
+			<img-cache class="cu-avatar round gzlist4" v-if="touxiangkuanglist != ''" :src="touxiangkuanglist"/>
 			<view class="cu-bar bg-trans no-border ">
 				<view class="action">
 					<text class="margin-left-xs text-xxl text-black text-bold text-shadow2">{{username}}</text>
+					<text
+							:style="[{ padding: groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text>
+						<view class="cu-tag padding-left-xs padding-right-xs" :class="loadlevelicon(groupid,1)">
+							{{loadlevelicon(groupid)}}
+						</view><text :style="[{ padding: groupid==51?'0 0 0 4upx':'0'}]"></text>
 				</view>
 				<view class="action">
 					<button class="cu-btn bg-green shadow" v-if="$adminid>0" @tap="showModal"
@@ -46,7 +52,8 @@
 						class="text-shadow1">点龄：{{age}}年</text><text class="margin-right-xs margin-left-xs cuIcon-titles"
 						style="color: #f5f5f5;"></text><text v-if="sex==1" class="cuIcon-male text-shadow1"></text><text v-else-if="sex==2" class="cuIcon-female text-shadow1"></text><text v-else class="cuIcon-question text-shadow1"></text></view>
 				<view class="flex justify-start padding-left-sm">
-					<view class="text-black text-content text-cut text-left text-shadow1" style="width: 75%;">{{sig}}</view>
+					<view class="text-black text-content text-cut text-left text-shadow1" style="width: 75%;" v-if="sig==''">他很懒，什么都没有留下…</view>
+					<view class="text-black text-content text-cut text-left text-shadow1" style="width: 75%;" v-else>{{sig}}</view>
 					<view class="text-right text-black text-shadow1" style="width: 25%;">关于Ta<text
 							class="margin-left-xs cuIcon-right"></text></view>
 				</view>
@@ -207,12 +214,14 @@
 				fensi: 0,
 				guanzhu: 0,
 				huitie: 0,
+				groupid: 0,
 				iconlist: "",
 				sex: 0,
-				sig: '',
+				sig: '加载中……',
 				username: "加载中……",
+				touxiangkuanglist: '',
 				zan: 0,
-				woguanzhu: 0,
+				woguanzhu: 1,
 				scrollhight: 0,
 				swiperheight: 0,
 				avatar: '',
@@ -288,13 +297,16 @@
 								that.guanzhu = res.data.userinfo.guanzhu;
 								that.huitie = res.data.userinfo.huitie;
 								that.iconlist = res.data.userinfo.iconlist;
+								that.touxiangkuanglist = res.data.userinfo.touxiangkuanglist;
 								that.sex = res.data.userinfo.sex;
 								that.sig = res.data.userinfo.sig;
 								that.username = res.data.userinfo.username;
 								that.zan = res.data.userinfo.zan;
 								that.avatar = that.getavatar(res.data.userinfo.avatarlist);
 								that.woguanzhu = res.data.userinfo.woguanzhu;
+								that.groupid = res.data.userinfo.groupid;
 							}
+							console.log(that.touxiangkuanglist);
 							that.page0++;
 							setTimeout(function() {
 								//that.setHeight("view_listnow");
@@ -356,6 +368,207 @@
 					return 'line-pink';
 				} else if (e % 10 == 9) {
 					return 'line-brown';
+				}
+			},
+			loadlevelicon(e, f) {
+				if (e == 7) {
+					if (f == 1) {
+						return 'line-gray';
+					} else {
+						return '游客';
+					}
+				} else if (e == 9) {
+					if (f == 1) {
+						return 'line-gray';
+					} else {
+						return 'Lv0';
+					}
+				} else if (e == 10) {
+					if (f == 1) {
+						return 'line-gray';
+					} else {
+						return 'Lv1';
+					}
+				} else if (e == 29) {
+					if (f == 1) {
+						return 'light bg-grey';
+					} else {
+						return 'Lv2';
+					}
+				} else if (e == 30) {
+					if (f == 1) {
+						return 'light bg-olive';
+					} else {
+						return 'Lv3';
+					}
+				} else if (e == 31) {
+					if (f == 1) {
+						return 'light bg-cyan';
+					} else {
+						return 'Lv4';
+					}
+				} else if (e == 32) {
+					if (f == 1) {
+						return 'light bg-blue';
+					} else {
+						return 'Lv5';
+					}
+				} else if (e == 33) {
+					if (f == 1) {
+						return 'light bg-purple';
+					} else {
+						return 'Lv6';
+					}
+				} else if (e == 34) {
+					if (f == 1) {
+						return 'light bg-mauve';
+					} else {
+						return 'Lv7';
+					}
+				} else if (e == 35) {
+					if (f == 1) {
+						return 'light bg-pink';
+					} else {
+						return 'Lv8';
+					}
+				} else if (e == 36) {
+					if (f == 1) {
+						return 'light bg-brown';
+					} else {
+						return 'Lv9';
+					}
+				} else if (e == 37) {
+					if (f == 1) {
+						return 'light bg-yellow';
+					} else {
+						return 'Lv10';
+					}
+				} else if (e == 38) {
+					if (f == 1) {
+						return 'light bg-orange';
+					} else {
+						return 'Lv11';
+					}
+				} else if (e == 52) {
+					if (f == 1) {
+						return 'light bg-red';
+					} else {
+						return 'Lv12';
+					}
+				} else if (e == 54) {
+					if (f == 1) {
+						return 'light bg-blue';
+					} else {
+						return 'Lv13';
+					}
+				} else if (e == 4) {
+					if (f == 1) {
+						return 'light bg-grey';
+					} else {
+						return '禁言';
+					}
+				} else if (e == 5) {
+					if (f == 1) {
+						return 'light bg-grey';
+					} else {
+						return '封禁';
+					}
+				} else if (e == 6) {
+					if (f == 1) {
+						return 'light bg-grey';
+					} else {
+						return 'IP禁止';
+					}
+				} else if (e == 8) {
+					if (f == 1) {
+						return 'light bg-gray';
+					} else {
+						return 'QQ游客';
+					}
+				} else if (e == 41) {
+					if (f == 1) {
+						return 'light bg-mauve';
+					} else {
+						return '摸鱼组';
+					}
+				} else if (e == 42) {
+					if (f == 1) {
+						return 'light bg-pink';
+					} else {
+						return '宣传组';
+					}
+				} else if (e == 50) {
+					if (f == 1) {
+						return 'light bg-cyan';
+					} else {
+						return '测试组';
+					}
+				} else if (e == 44 || e == 51) {
+					if (f == 1) {
+						return 'vip';
+					} else {
+						return '';
+					}
+				} else if (e == 1) {
+					if (f == 1) {
+						return 'bg-blue';
+					} else {
+						return '管理员';
+					}
+				} else if (e == 2) {
+					if (f == 1) {
+						return 'bg-cyan';
+					} else {
+						return '超版';
+					}
+				} else if (e == 3) {
+					if (f == 1) {
+						return 'bg-green';
+					} else {
+						return '版主';
+					}
+				} else if (e == 16) {
+					if (f == 1) {
+						return 'bg-grey';
+					} else {
+						return '见习版主';
+					}
+				} else if (e == 17) {
+					if (f == 1) {
+						return 'bg-orange';
+					} else {
+						return '总编辑';
+					}
+				} else if (e == 18) {
+					if (f == 1) {
+						return 'bg-red';
+					} else {
+						return '信息监管';
+					}
+				} else if (e == 45) {
+					if (f == 1) {
+						return 'bg-olive';
+					} else {
+						return '副版主';
+					}
+				} else if (e == 19) {
+					if (f == 1) {
+						return 'bg-red';
+					} else {
+						return '审核员';
+					}
+				} else if (e == 47) {
+					if (f == 1) {
+						return 'bg-mauve';
+					} else {
+						return '元素魔法使';
+					}
+				} else if (e == 57) {
+					if (f == 1) {
+						return 'bg-yellow';
+					} else {
+						return '编辑';
+					}
 				}
 			},
 			tothebottom(push) {
@@ -441,6 +654,42 @@
 				setTimeout(() => {
 					this.jifencaozuo = 0;
 				}, 2000)
+			},
+			guanzhuta(e) {
+				let that = this;
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:guanzhu', //获取置顶帖子
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token,
+						touid: that.uid,
+						typeid: that.woguanzhu
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data)
+						if (res.data.code == 200) {
+							that.modalName = null;
+							if(that.woguanzhu==1){
+								that.jifenbiandong('关注成功', '恭喜，你已关注该作者');
+								that.woguanzhu = 2;
+							}else{
+								that.jifenbiandong('取关成功', '你已不再关注该作者');
+								that.woguanzhu = 1;
+							}
+						} else{
+							that.modalName = null;
+							that.jifenbiandong('关注失败', '关注失败');
+						}
+					}
+				});
+			},
+			more(e) {
+				let that = this;
+				this.modalName = 'more';
 			},
 			tourl(e) {
 				uni.navigateTo({
@@ -540,7 +789,7 @@
 	}
 
 	.page {
-		background: #efeff4;
+		background: white;
 		background-repeat: no-repeat;
 		background-position: top right;
 		background-size: auto 550upx;
@@ -560,12 +809,13 @@
 
 	.text-df {
 		background-color: #FFFFFF !important;
-		border-radius: 8%;
-		background-position-y: 50%;
+		border-radius: 4%;
+		background-position-y: 20%;
 		border-top: 6upx solid #f1f1f1;
 		border-bottom: 6upx solid #f1f1f1;
 		border-left: 15upx solid #f1f1f1;
 		border-right: 15upx solid #f1f1f1;
+		min-height: 170upx;
 	}
 
 	.border-custom {
@@ -593,6 +843,14 @@
 		height: 72upx;
 	}
 
+	.gzlist4 {
+		position: absolute;
+		background-color: transparent!important;
+		margin: -270upx 0 0 26upx!important;
+		width: 280upx!important;
+		height: 280upx!important;
+	}
+	
 	.cu-avatar4 {
 		justify-content: center;
 		align-items: center;
@@ -611,6 +869,10 @@
 	}
 	.text-xl{
 		font-size: 30upx!important;
+	}
+	.bg-purple{
+		background-color: rgba(196, 16, 212, 0.4);
+		border: 4upx solid rgba(221, 255, 253, 0.4);
 	}
 	
 </style>

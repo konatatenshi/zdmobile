@@ -258,7 +258,7 @@
 					</view>
 				</view>
 				<view v-if="progress>0" class="padding-xl">
-					{{bite}} / {{zongbite}}
+					{{mbh(bite)}} MB / {{mbh(zongbite)}} MB
 				</view>
 				<view v-if="progress>0" class="padding-xl">
 					如果遇到进度条100，但是APP没有正常重启，说明安装失败，版本差距过大，请去市场更新。
@@ -340,6 +340,10 @@
 			bbxx(e) {
 				this.checkupdate();
 				this.modalName = 'update';
+			},
+			mbh(e) {
+				e = e/1024/1024;
+				return e.toFixed(2);
 			},
 			backhome(){      
 				this.$emit("returnDat","basics")//传递的值
@@ -506,8 +510,9 @@
 		},
 		created() {
             this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight;
-			this.version = plus.runtime.version;
+			//this.version = plus.runtime.version;
 			plus.runtime.getProperty(plus.runtime.appid, function(wgtinfo){  
+				this.version = wgtinfo.version;
 			    console.log(wgtinfo.version);  
 			});
 			plus.navigator.setStatusBarStyle('dark');

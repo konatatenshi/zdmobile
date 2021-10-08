@@ -49,7 +49,7 @@
 					</view>
 					<view v-if="guanzhupost.length > 0">
 						<block v-for="(itemex,indexe1) in guanzhupost" :key="indexe1">
-							<view class="solid-bottom text-df article"
+							<view class="solid-bottom text-df article text-min"
 								style="padding-top: 10upx; padding-bottom: 10upx;" @tap="tourl(itemex.url)">
 								<view style="margin-right: 20upx;padding-left: 80upx;" class="text-black text-cut">
 									{{itemex.title}}</view>
@@ -782,7 +782,9 @@
 		background-position-y: 9%;
 		margin: 0;
 	}
-
+	.text-min {
+		min-height: 160upx;
+	}
 	.article {
 		margin: 10upx;
 	}
