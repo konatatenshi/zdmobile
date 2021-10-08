@@ -87,7 +87,9 @@
 </template>
 
 <script>
+	import previewImage from '@/components/kxj-previewImage/kxj-previewImage.vue';
 	export default {
+		components: { previewImage},
 		data() {
 			return {
 				list: [],
@@ -146,6 +148,7 @@
 			});
 		},
 		mounted() {
+			plus.navigator.setStatusBarStyle('light'); //改变系统标题颜色
 		},
 		methods: {
 			hideModal(e) {

@@ -29,7 +29,7 @@
 				</view>
 				<view class="text-content2">
 					<view v-if="content==''" class="cu-load text-gray loading"></view>
-					<mp-html :content="content" @linktap="linktap" />
+					<mp-html :content="content" @linktap="linktap" selectable="true" />
 					<view class="flex justify-between">
 						<view>
 							<text class="cuIcon-appreciatefill" :class="zan?'text-red':'text-gray'"></text>
@@ -60,9 +60,9 @@
 								<view class="text-gray text-sm">{{item.dateline}}</view>
 							</view>
 							<mp-html v-if="!isfloat[index]" class="text-content text-df float" :class="isfloat[index]?'show':'hide'"
-								:content="jiequ(item.content)" @linktap="linktap" />
+								:content="jiequ(item.content)" @linktap="linktap" selectable="true" />
 							<mp-html v-else class="text-content text-df float" :class="isfloat[index]?'show':'hide'"
-								:content="item.content" @linktap="linktap" />
+								:content="item.content" @linktap="linktap" selectable="true" />
 							<view class="text-blue" v-if="Letter(item.content).length>140&&isfloat[index]!= true"
 								@tap="loadmore(index)">展开</view>
 							<view class="margin-top-sm flex justify-between">

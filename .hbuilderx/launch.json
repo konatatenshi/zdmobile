@@ -4,7 +4,7 @@
     "configurations": [{
      	"app-plus" : 
      	{
-     		"launchtype" : "local"
+     		"launchtype" : "remote"
      	},
      	"default" : 
      	{
@@ -14,6 +14,7 @@
      	{
      		"launchtype" : "local"
      	},
+     	"provider" : "tcb",
      	"type" : "uniCloud"
      }
     ]

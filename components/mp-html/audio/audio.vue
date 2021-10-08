@@ -72,7 +72,9 @@ export default {
   },
   beforeDestroy () {
     this._ctx.destroy()
-    context.remove(this.properties.audioId)
+	if(this.properties.audioId != undefined){
+		context.remove(this.properties.audioId)
+	}
   },
   onPageShow () {
     if (this.playing && this._ctx.paused) {

@@ -327,7 +327,7 @@
 			if (getApp().globalData.onlyacceptfriendpm == 1) {
 				this.switchA = true;
 			};
-			//plus.navigator.setStatusBarStyle('light');//改变系统标题颜色
+			plus.navigator.setStatusBarStyle('light');//改变系统标题颜色
 			var that = this;
 			uni.getStorage({
 				key: 'chatswitch',
@@ -352,6 +352,7 @@
 					this.swiperheight = height;
 				}
 			})
+			plus.navigator.setStatusBarStyle('dark'); //改变系统标题颜色
 			var that=this;
 			setTimeout(function() {
 				console.log(that.chatonline);

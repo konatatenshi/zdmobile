@@ -150,7 +150,9 @@ export default {
       }
     },
     _tooltipTap(e) {
-      this._tooltipcb(e.currentTarget.dataset.i)
+	  if(e.currentTarget.dataset!=undefined){
+		  this._tooltipcb(e.currentTarget.dataset.i)
+	  }
       this.$set(this, 'tooltip', null)
     },
     _sliderChanging(e) {

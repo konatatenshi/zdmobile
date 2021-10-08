@@ -15,7 +15,7 @@
 				<view class="title">
 					<view class="text-cut">{{postname}}</view>
 				</view>
-				<view class="cu-list menu-avatar">
+				<view class="cu-list menu-avatar" @tap="totheuid(authorid)">
 					<view class="cu-item">
 						<view class="cu-avatar round lg" :style="[{ backgroundImage:'url(' + avatarlist + ')' }]">
 							<view v-show="sex==1" class="cu-tag badge cuIcon-male bg-blue"></view>
@@ -55,7 +55,7 @@
 				</view>
 				<view class="text-content2">
 					<view v-if="content==''" class="cu-load text-gray loading"></view>
-					<mp-html :content="content" @linktap="linktap" />
+					<mp-html :content="content" @linktap="linktap"  selectable="true" />
 					<view v-if="jiance.type>0" class="text-center" @tap="jiancequery()">
 						<view v-if="jiance.type==1"
 							class="padding-xs radius shadow shadow-lg bg-cyan margin-top text-sm ltsp"><text
@@ -134,14 +134,14 @@
 				<view class="cu-list menu-avatar comment solids-top" v-for="(item,index) in huifulist" :key="index"
 					:data-id="index">
 					<view class="cu-item">
-						<view class="cu-avatar round" :style="[{ backgroundImage:'url(' + item.avatarlist + ')' }]">
+						<view class="cu-avatar round" :style="[{ backgroundImage:'url(' + item.avatarlist + ')' }]" @tap="totheuid(item.authorid)">
 						</view>
 						<view class="content hbx">
 							<view v-if="isImage">
 								<img-cache class="touxian2" :src="item.touxian"></img-cache>
 							</view>
 							<img-cache class="cu-avatar round gzlist3" v-if="item.touxiangkuanglist" :src="item.touxiangkuanglist"/>
-							<view class="flex justify-between">
+							<view class="flex justify-between" @tap="totheuid(item.authorid)">
 								<view :style="[{ color: item.groupid==51?randomcolor():'text-gray'}]">
 									{{item.author}}<text
 										:style="[{ padding: item.groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text><span
@@ -153,7 +153,7 @@
 										<img-cache v-if="xxzitem.id>0" class="cu-tag xunzhangshow" :src="xxzitem.url">
 										</img-cache>
 									</span></view>
-								<view v-show="item.dateline!='刚刚'" class="text-grey text-sm">{{index+2}}楼</view>
+								<view v-show="item.dateline!='刚刚'" class="text-grey text-sm">{{item.position}}楼</view>
 							</view>
 							<view class="flex justify-start">
 								<view class="text-gray text-sm">{{item.dateline}}</view>
@@ -164,12 +164,12 @@
 								<view v-else-if="item.status&8" class="text-xs text-gray cuIcon-mobile">来自手机网页版</view>
 							</view>
 							<mp-html v-if="item.status&1" class="text-content text-df float"
-								:class="isfloat[index]?'show':'hide'" :content="pingbi" @linktap="linktap" />
+								:class="isfloat[index]?'show':'hide'" :content="pingbi" @linktap="linktap" selectable="true" />
 							<mp-html v-else-if="!isfloat[index]" class="text-content text-df float"
 								:class="isfloat[index]?'show':'hide'" :content="item.html.substr(0,140)"
-								@linktap="linktap" />
+								@linktap="linktap" selectable="true" />
 							<mp-html v-else class="text-content text-df float" :class="isfloat[index]?'show':'hide'"
-								:content="item.html" @linktap="linktap" />
+								:content="item.html" @linktap="linktap" selectable="true" />
 							<view class="text-blue" v-if="Letter(item.html).length>70&&isfloat[index]!= true"
 								@tap="loadmore(index)">展开</view>
 							<view v-if="item.luckypost.key>=0" class="text-center">
@@ -267,9 +267,14 @@
 									<text class="text-gray">{{sixintxt}}</text>
 								</view>
 							</view>
-							<view class="cu-item">
+							<view class="cu-item" @tap="totheuid(authorid)">
 								<view class="content">
 									<text class="text-grey">查看资料</text>
+								</view>
+							</view>
+							<view class="cu-item">
+								<view class="content">
+									<text class="text-grey">举报此帖</text>
 								</view>
 							</view>
 						</view>
@@ -566,6 +571,8 @@
 				ding: 0,
 				favorite: 0,
 				dashang: 0,
+				daoxu: 0,
+				replies: 0,
 				loadProgress: 0,
 				jifencaozuo: 0,
 				tid: 0,
@@ -781,8 +788,15 @@
 					this.tofloor(e);
 				}
 			},
+			louindex(e){
+				if(this.daoxu==0){
+					return e + 2;
+				}else{
+					return this.replies - e + 1;
+				}
+			},
 			doNothing: function() {
-
+				//
 			},
 			jiancequery() {
 				if (this.loadModal == true) {
@@ -1636,6 +1650,14 @@
 					animationDuration: 200
 				});
 			},
+			totheuid(e) {
+				this.modalName = null;
+				uni.navigateTo({
+					url: '../component/list?uid=' + e,
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
+			},
 			tobar(e) {
 				plus.runtime.restart();
 			},
@@ -1721,6 +1743,8 @@
 							that.favorite = res.data.favorite;
 							that.dashang = res.data.rate;
 							that.yzm = res.data.yzm;
+							that.daoxu = res.data.daoxu;
+							that.replies = res.data.replies;
 							that.sightml = res.data.userinfo.sightml;
 							if (that.dashang > 0) {
 								that.dashang = "+" + that.dashang;
@@ -1835,7 +1859,7 @@
 									that.loading = '到底了。';
 								}
 							}
-							console.log(res.data);
+							//console.log(res.data);
 							that.page++;
 							that.loadwb = 1;
 						}
