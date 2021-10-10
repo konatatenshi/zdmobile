@@ -247,7 +247,7 @@
 					</view>
 				</view>
 				<view class="padding-xl">
-					{{version}}{{update}}
+					终点分享 V{{version}}{{update}}
 				</view>
 				<view v-if="isupdate==1" class="padding-xl">
 					目前服务器有新版本，确认进行更新吗？
@@ -266,7 +266,7 @@
 				<view class="cu-bar bg-white justify-end">
 					<view v-if="isupdate==1" class="action">
 						<button class="cu-btn line-green text-green" @tap="cancelupdate">取消</button>
-						<button v-if="bite==0" class="cu-btn bg-green margin-left" @tap="updatequery">确定</button>
+						<button v-if="bite==0" class="cu-btn bg-green margin-left" @tap="chechabout">确定</button>
 					</view>
 				</view>
 			</view>
@@ -338,7 +338,7 @@
 				this.cancel = 1;
 			},
 			bbxx(e) {
-				this.checkupdate();
+				this.AppStore();
 				this.modalName = 'update';
 			},
 			mbh(e) {
@@ -439,13 +439,13 @@
 					animationDuration: 200
 				});
 			},
-			checkupdate(){
+			AppStore(){
 				var that=this;
 				plus.runtime.getProperty(plus.runtime.appid, function(widgetInfo) {  
 					console.log(widgetInfo.version);
 					console.log(widgetInfo.name);
 				    uni.request({  
-				        url: getApp().globalData.zddomain + 'api/update.php', //升级地址
+				        url: getApp().globalData.zddomain + 'api/checkapi.php', //升级地址
 				        data: {  
 				            version: widgetInfo.version,  
 				            name: widgetInfo.name  
@@ -453,8 +453,8 @@
 				        success: (result) => {  
 				            var data = result.data;  
 							console.log(data);
-							that.downfile = data.wgtUrl;
-				            if (data.update == 200 && data.wgtUrl) {  
+							that.downfile = data.StoreID;
+				            if (data.update == 200 && data.StoreID) {  
 								that.update = '(有更新)';
 								that.isupdate = 1;
 				            } else if (data.update === 201) {
@@ -466,12 +466,12 @@
 				    });  
 				});  
 			},
-			updatequery(){
+			chechabout(){
 				this.bite=1;
 				this.zongbite=1;
 				console.log(this.downfile);
 				var that=this;
-				const downloadTask = uni.downloadFile({  
+				const conclude = uni.downloadFile({  
 				    url: that.downfile,
 				    success: (downloadResult) => {  
 						console.log(downloadResult);
@@ -479,28 +479,24 @@
 				            plus.runtime.install(downloadResult.tempFilePath, {  
 				                force: false  
 				            }, function() {  
-				                console.log('install success...');  
-								plus.nativeUI.alert("应用资源更新完成！",function(){
+								plus.nativeUI.alert("您已是最新版本了哦！",function(){
 								    plus.runtime.restart();
 								});
 				            }, function(e) {  
 								plus.nativeUI.closeWaiting();
-								console.log("安装wgt文件失败["+e.code+"]："+e.message);
-								plus.nativeUI.alert("安装wgt文件失败["+e.code+"]："+e.message);
+								console.log("错误代码：["+e.code+"]："+e.message);
+								plus.nativeUI.alert("错误代码["+e.code+"]："+e.message);
 				            });  
 				        }
 				    }
 				});  
-				downloadTask.onProgressUpdate((res) => {
+				conclude.onProgressUpdate((res) => {
 					that.progress = res.progress;
 					that.bite = res.totalBytesWritten;
 					that.zongbite = res.totalBytesExpectedToWrite;
-					console.log('下载进度' + res.progress);
-					console.log('已经下载的数据长度' + res.totalBytesWritten);
-					console.log('预期需要下载的数据总长度' + res.totalBytesExpectedToWrite);
 					// 测试条件，取消下载任务。  
 					if (that.cancel == 1) {  
-					    downloadTask.abort();  
+					    conclude.abort();  
 						that.progress = 0;
 						that.bite = 0;
 						that.zongbite = 0;
@@ -511,9 +507,10 @@
 		created() {
             this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight;
 			//this.version = plus.runtime.version;
+			var that = this;
 			plus.runtime.getProperty(plus.runtime.appid, function(wgtinfo){  
-				this.version = wgtinfo.version;
-			    console.log(wgtinfo.version);  
+				that.version = wgtinfo.version;
+			    console.log(that.version);  
 			});
 			plus.navigator.setStatusBarStyle('dark');
 			void plus.runtime.setBadgeNumber(0);//桌面角标设置为0

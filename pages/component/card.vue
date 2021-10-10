@@ -193,7 +193,7 @@
 										@tap="lzpo(item.pid,index)"></text>
 								</view>
 								<view>
-									<text class="cuIcon-more text-gray margin-right-sm"></text>
+									<text class="cuIcon-close text-gray margin-right-sm" @tap="more2(item.authorid,item.author,item.pid)"></text>
 								</view>
 							</view>
 							<view v-if="item.reply>0" class="bg-gray padding-sm radius margin-top-sm  text-sm">
@@ -252,29 +252,83 @@
 				<view class="cu-modal" :class="modalName=='more'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
 						<view class="cu-list menu text-left solid-top">
-							<view class="cu-item" @tap="guanzhu()">
-								<view class="content">
-									<text class="text-grey">{{guanzhutext}}</text>
+							<view class="cu-item" v-if="authorid==$uid">
+								<view class="content noborder2">
+									<text class="text-gray"><text class="cuIcon-attention"></text>关注自己</text>
+								</view>
+							</view>
+							<view class="cu-item" v-else @tap="guanzhu()">
+								<view class="content noborder2">
+									<text class="text-grey"><text class="cuIcon-attention"></text>{{guanzhutext}}</text>
 								</view>
 							</view>
 							<view v-if="pm==1" class="cu-item" @tap="siliaozuozhe">
 								<view class="content">
-									<text class="text-grey">私信作者</text>
+									<text class="text-grey"><text class="cuIcon-mark"></text>私信作者</text>
 								</view>
 							</view>
 							<view v-else class="cu-item">
 								<view class="content">
-									<text class="text-gray">{{sixintxt}}</text>
+									<text class="text-gray"><text class="cuIcon-mark"></text>{{sixintxt}}</text>
 								</view>
 							</view>
 							<view class="cu-item" @tap="totheuid(authorid)">
 								<view class="content">
-									<text class="text-grey">查看资料</text>
+									<text class="text-grey"><text class="cuIcon-form"></text>查看资料</text>
 								</view>
 							</view>
-							<view class="cu-item">
+							<view class="cu-item" @tap="jubaota(jubaopid)">
 								<view class="content">
-									<text class="text-grey">举报此帖</text>
+									<text class="text-grey"><text class="cuIcon-info"></text>举报此帖</text>
+								</view>
+							</view>
+						</view>
+					</view>
+				</view>
+				<view class="cu-modal" :class="modalName=='pingbi'?'show':''" @tap="hideModal">
+					<view class="cu-dialog" @tap.stop>
+						<view class="cu-list menu text-left solid-top">
+							<view class="cu-item" v-if="pingbiuid==$uid">
+								<view class="content">
+									<text class="text-gray"><text class="cuIcon-roundclose"></text>屏蔽自己</text>
+								</view>
+							</view>
+							<view class="cu-item" v-else @tap="guanzhu()">
+								<view class="content noborder2">
+									<text class="text-grey"><text class="cuIcon-roundclose"></text>屏蔽作者：{{pingbiauthor}}</text>
+									<view class="text-gray text-sm noborder">屏蔽后，你将不会收到他的信息。</view>
+								</view>
+							</view>
+							<view class="cu-item" v-if="pingbiuid==$uid">
+								<view class="content">
+									<text class="text-gray"><text class="cuIcon-attentionforbid"></text>拉黑自己</text>
+								</view>
+							</view>
+							<view class="cu-item" v-else @tap="guanzhu()">
+								<view class="content noborder2">
+									<text class="text-grey"><text class="cuIcon-attentionforbid"></text>拉黑作者：{{pingbiauthor}}</text>
+									<view class="text-gray text-sm noborder">拉黑后，他将不能回复和私聊你任何信息。</view>
+								</view>
+							</view>
+							<view v-if="pm==1" class="cu-item" @tap="siliaozuozhe">
+								<view class="content">
+									<text class="text-grey"><text class="cuIcon-mark"></text>私信作者</text>
+								</view>
+							</view>
+							<view v-else class="cu-item">
+								<view class="content">
+									<text class="text-gray"><text class="cuIcon-mark"></text>{{sixintxt}}</text>
+								</view>
+							</view>
+							<view class="cu-item" v-if="pingbiuid == 0" @tap="totheuid(pingbiuid)">
+								<view class="content">
+									<text class="text-grey"><text class="cuIcon-form"></text>查看资料</text>
+								</view>
+							</view>
+							<view class="cu-item" @tap="jubaota(jubaopid)">
+								<view class="content">
+									<text class="text-grey noborder2"><text class="cuIcon-info"></text>举报此回复</text>
+									<view class="text-gray text-sm noborder">标题夸张，内容质量差等。</view>
 								</view>
 							</view>
 						</view>
@@ -386,6 +440,69 @@
 						<view class="cu-bar bg-white justify-end">
 							<view v-if="closed==0" class="action">
 								<button class="cu-btn bg-green margin-left" @tap="sendsl">发送</button>
+							</view>
+						</view>
+					</view>
+				</view>
+				<view class="cu-modal" :class="modalName=='siliao2'?'show':''"  @tap="hideModal">
+					<view class="cu-dialog" @tap.stop>
+						<view class="cu-bar bg-white justify-end">
+							<view class="content">私聊给{{pingbiauthor}}</view>
+							<view class="action" @tap="hideModal">
+								<text class="cuIcon-close text-red"></text>
+							</view>
+						</view>
+						<view class="padding-xl">
+							<view class="cu-form-group align-start">
+								<textarea maxlength="-1" v-model="siliaotxt" placeholder="请在此输入想要说的话"></textarea>
+								<text class="cuIcon-emojifill text-grey" @tap="togglePicker(200, 'emoji')"></text>
+							</view>
+						</view>
+						<view class="cu-bar bg-white justify-end">
+							<view v-if="closed==0" class="action">
+								<button class="cu-btn bg-green margin-left" @tap="sendsl2">发送</button>
+							</view>
+						</view>
+					</view>
+				</view>
+				<view class="cu-modal" :class="modalName=='jubaoxinxi'?'show':''"  @tap="hideModal">
+					<view class="cu-dialog" @tap.stop>
+						<view class="cu-bar bg-white justify-end">
+							<view class="content">请输入举报理由</view>
+							<view class="action" @tap="hideModal">
+								<text class="cuIcon-close text-red"></text>
+							</view>
+						</view>
+						<view class="padding-sm">
+							<radio-group class="block" @change="RadioChange">
+								<view class="cu-form-group">
+									<view class="text-xl">广告垃圾</view>
+									<radio :class="radio=='A'?'checked':''" :checked="radio=='A'?true:false" value="A"></radio>
+								</view>
+								<view class="cu-form-group">
+									<view class="text-xl">违规内容</view>
+									<radio :class="radio=='B'?'checked':''" :checked="radio=='B'?true:false" value="B"></radio>
+								</view>
+								<view class="cu-form-group">
+									<view class="text-xl">恶意灌水</view>
+									<radio :class="radio=='C'?'checked':''" :checked="radio=='C'?true:false" value="C"></radio>
+								</view>
+								<view class="cu-form-group">
+									<view class="text-xl">重复内容</view>
+									<radio :class="radio=='D'?'checked':''" :checked="radio=='D'?true:false" value="D"></radio>
+								</view>
+								<view class="cu-form-group">
+									<view class="text-xl">其他</view>
+									<radio :class="radio=='E'?'checked':''" :checked="radio=='E'?true:false" value="E"></radio>
+								</view>
+							</radio-group>
+							<view class="cu-form-group align-start" v-if="radio=='E'">
+								<textarea maxlength="-1" v-model="jubaomessage" placeholder="请在此输入想要说的话"></textarea>
+							</view>
+						</view>
+						<view class="cu-bar bg-white justify-end">
+							<view v-if="closed==0" class="action">
+								<button class="cu-btn bg-green margin-left" @tap="sendjbxx">发送</button>
 							</view>
 						</view>
 					</view>
@@ -544,6 +661,8 @@
 				siliaotxt: '',
 				content: '',
 				sixintxt: '私信作者',
+				pingbiauthor: '',
+				pingbiuid: 0,
 				dashangjinbi: '',
 				picker: [],
 				postup: '加载中',
@@ -558,6 +677,7 @@
 				touxian: '',
 				touxiangkuanglist: '',
 				bgimg: '',
+				radio: 'A',
 				lucky: -1,
 				yzm: 0,
 				luckymessage: '',
@@ -580,6 +700,7 @@
 				closed: 0,
 				groupid: 0,
 				pid: 0,
+				jubaopid: 0,
 				page: 0,
 				toUID: 0,
 				toPID: 0,
@@ -602,6 +723,7 @@
 				platform: 0,
 				loadwb: 0,
 				guanzhutext: '关注作者',
+				jubaomessage: '',
 				guanzhuvar: 1,
 				huifulist: [],
 				rplist: [],
@@ -635,9 +757,16 @@
 			jiequ(e) {
 				return e.substr(0, 200);
 			},
+			RadioChange(e) {
+				this.radio = e.detail.value;
+			},
+			jubaota(e) {
+				this.modalName = 'jubaoxinxi';
+			},
 			more(e) {
 				let that = this;
 				this.jiazai = 1;
+				this.jubaopid = this.pid;
 				this.modalName = 'more';
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:guanzhu', //获取置顶帖子
@@ -647,6 +776,45 @@
 						token: that.$token,
 						touid: that.authorid,
 						typeid: 0
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data)
+						if (res.data.code == 200) {
+							that.guanzhutext = '取消关注';
+							that.guanzhuvar = 2;
+						} else if (res.data.code == 404) {
+							that.guanzhutext = '关注作者';
+							that.guanzhuvar = 1;
+						} 
+						if(res.data.pm == 1){
+							that.pm = 1;
+						}else{
+							that.sixintxt = '私信作者（无权限使用）';
+						}
+						that.jiazai = 0;
+						that.loadwb = 1;
+					}
+				});
+			},
+			more2(e,f,g) {
+				let that = this;
+				this.pingbiuid = e;
+				this.pingbiauthor = f;
+				this.jubaopid = g;
+				this.jiazai = 1;
+				this.modalName = 'pingbi';
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:guanzhu', //获取置顶帖子
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token,
+						touid: that.pingbiuid,
+						typeid: 0,
+						lahei: 1
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
@@ -1559,7 +1727,7 @@
 					console.log(that.siliaotxt);
 					console.log(that.toUID);
 					uni.request({
-						url: getApp().globalData.zddomain + 'plugin.php?id=xinxiu_network:pm', //获取置顶帖子
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:sendpm', //获取置顶帖子
 						method: 'POST',
 						timeout: 10000,
 						data: {
@@ -1577,10 +1745,108 @@
 								that.modalName = "needlogin";
 							} else if (res.data.code == 200) {
 								that.modalName = null;
-								that.jifenbiandong('私信成功','你的私信发送完毕。')
+								that.jifenbiandong('私信成功','你的私信发送完毕。');
+								that.siliaotxt = '';
 							} else{
 								that.modalName = null;
 								that.jifenbiandong('私信失败',res.data.message);
+							}
+						}
+					});
+				}
+			},
+			sendsl2() {
+				var that = this;
+				console.log(that.siliaotxt.length);
+				if (that.siliaotxt.length < 2) {
+					that.modalName = "cantpost";
+					that.cantpostmessage = '请输入大于等于2个字的回复内容。';
+					this.floorfasong = false;
+					return;
+				}
+				if (!this.floorfasong) {
+					that.floorfasong = true;
+					var message = encodeURI(that.siliaotxt);
+					console.log(that.siliaotxt);
+					console.log(that.toUID);
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:sendpm', //获取置顶帖子
+						method: 'POST',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							action: 'pm_send',
+							message: message,
+							msgto: that.pingbiuid
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data)
+							if (res.data.code ==400) {
+								that.modalName = "needlogin";
+							} else if (res.data.code == 200) {
+								that.modalName = null;
+								that.jifenbiandong('私信成功','你的私信发送完毕。')
+								that.siliaotxt = '';
+							} else{
+								that.modalName = null;
+								that.jifenbiandong('私信失败',res.data.message);
+							}
+						}
+					});
+				}
+			},
+			sendjbxx() {
+				var that = this;
+				console.log(that.jubaomessage.length);
+				if (that.jubaomessage.length < 2 && that.radio == 'E') {
+					that.modalName = "cantpost";
+					that.cantpostmessage = '请输入大于等于2个字的举报内容。';
+					this.floorfasong = false;
+					return;
+				}
+				if (!this.floorfasong) {
+					that.floorfasong = true;
+					if(that.radio=='A'){
+						var message = encodeURI('广告垃圾');
+					}else if(that.radio=='B'){
+						var message = encodeURI('违规内容');
+					}else if(that.radio=='C'){
+						var message = encodeURI('恶意灌水');
+					}else if(that.radio=='D'){
+						var message = encodeURI('重复发帖');
+					}else if(that.radio=='E'){
+						var message = encodeURI(that.jubaomessage);
+					}
+					console.log(that.jubaomessage);
+					console.log(that.jubaopid);
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:jubao', //获取置顶帖子
+						method: 'POST',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							message: message,
+							pid: that.jubaopid
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data);
+							that.floorfasong = false;
+							that.jubaomessage = '';
+							if (res.data.code ==400) {
+								that.modalName = "needlogin";
+							} else if (res.data.code == 200) {
+								that.modalName = null;
+								that.jifenbiandong('举报成功','你的举报发送完毕。')
+								that.siliaotxt = '';
+							} else{
+								that.modalName = null;
+								that.jifenbiandong('举报失败',res.data.message);
 							}
 						}
 					});
@@ -1910,6 +2176,10 @@
 		padding: 0 30upx;
 	}
 
+	.cu-modal .cu-item .content {
+		border-bottom: 1upx solid #ccc!important;
+		padding-bottom: 20upx;
+	}
 	.float {
 		display: -webkit-box;
 		word-break: break-all;
@@ -2067,5 +2337,12 @@
 		background-color: transparent;		margin: -13upx 0 0 -100upx;
 		width: 86upx;
 		height: 86upx;
+	}
+	.noborder{
+		padding-top: 0px!important;
+		margin-top: 0px!important;
+	}
+	.noborder2{
+		padding-top: 30upx;
 	}
 </style>

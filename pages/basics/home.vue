@@ -242,6 +242,10 @@
 				var that = this;
 				that.loadwb = 0;
 				that.LoadProgresss();
+				if (this.$token == '') {
+					that.loading = '登录以看更多内容……';
+					return;
+				}
 				if (that.TabCur == 1) {
 					uni.request({
 						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取轮播列表
@@ -356,6 +360,11 @@
 				var that = this;
 				that.loadwb = 0;
 				that.LoadProgresss();
+				if (this.$token == '') {
+					uni.redirectTo({
+						url: '../../components/ay-login/login-password'
+					});
+				}
 				if (this.TabCur == 0) {
 					this.page0 = 0;
 					uni.request({
@@ -581,6 +590,11 @@
 						duration: 0
 					});
 				}
+				if (this.$token == '') {
+					uni.redirectTo({
+						url: '../../components/ay-login/login-password'
+					});
+				}
 				if (e.currentTarget.dataset.id == 0 && that.page0 == 0) {
 					uni.request({
 						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取轮播列表
@@ -622,6 +636,11 @@
 					scrollTop: this.scrollht[e.detail.current],
 					duration: 0
 				});
+				if (this.$token == '') {
+					uni.redirectTo({
+						url: '../../components/ay-login/login-password'
+					});
+				}
 				var that = this;
 				if (this.TabCur == 1 && this.tab1enabled == 0) {
 					uni.request({

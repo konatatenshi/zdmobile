@@ -87,7 +87,7 @@
 						<view v-if="guanzhupost.length > 0">
 							<block v-for="(itemex,indexe1) in guanzhupost" :key="indexe1">
 								<view class="solid-bottom text-df article"
-									style="padding-top: 10upx; padding-bottom: 10upx;" @tap="tourl(itemex.url)">
+									style="padding-top: 10upx; padding-bottom: 10upx;" @tap="tourl(itemex.url)" v-if="itemex.url!=496145">
 									<view style="margin-right: 20upx;padding-left: 80upx;" class="text-black text-cut">
 										{{itemex.title}}
 									</view>
@@ -138,7 +138,7 @@
 						<view v-if="huifupost.length > 0">
 							<block v-for="(iteme2,indexe2) in huifupost" :key="indexe2">
 								<view class="solid-bottom text-df article"
-									style="padding-top: 10upx; padding-bottom: 10upx;" @tap="tourl(iteme2.url)">
+									style="padding-top: 10upx; padding-bottom: 10upx;" @tap="tourl(iteme2.url)" v-if="iteme2.url!=496145">
 									<view style="margin-right: 20upx;padding-left: 80upx;" class="text-black text-cut">
 										{{iteme2.title}}
 									</view>

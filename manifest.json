@@ -44,7 +44,12 @@
             },
             "ios" : {
                 "screenOrientation" : [ "portrait-primary", "landscape-primary" ],
-                "idfa" : true
+                "idfa" : true,
+                "privacyDescription" : {
+                    "NSPhotoLibraryUsageDescription" : "应用需要读取您的相册，以便为您选择上传的图片",
+                    "NSPhotoLibraryAddUsageDescription" : "应用需要写入您的相册，以便将图片保存到本地手机",
+                    "NSCameraUsageDescription" : "应用需要使用您的相机，以便将拍摄图片用于发布信息"
+                }
             },
             /* ios打包配置 */
             "sdkConfigs" : {
@@ -84,6 +89,13 @@
                         "spotlight@3x" : "unpackage/res/icons/120x120.png"
                     }
                 }
+            },
+            "splashscreen" : {
+                "iosStyle" : "storyboard",
+                "ios" : {
+                    "storyboard" : "D:/MyDocuments/ios/CustomStoryboard.zip"
+                },
+                "androidStyle" : "common"
             }
         },
         "uniStatistics" : {

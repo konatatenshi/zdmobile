@@ -413,7 +413,7 @@
 					}
 				});
 				this.$emit("returnDat", "basics") //传递的值
-				uni.navigateTo({
+				uni.redirectTo({
 					url: '../../pages/index/index',
 					animationType: 'pop-in',
 					animationDuration: 200
