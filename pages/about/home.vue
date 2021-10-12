@@ -20,7 +20,7 @@
 			<view class="content" style="text-align: left;">
 				{{$username}}<text class="cuIcon-edit text-grey"></text>
 			</view>
-			<view class="action">
+			<view class="action" @tap="touserpage">
 				个人主页<text class="cuIcon-right"></text>
 			</view>
 		</view>
@@ -363,6 +363,13 @@
 				uni.navigateTo({
 					url: '../basics/shadow'
 				})
+			},
+			touserpage(){
+				uni.navigateTo({
+					url: '../component/list?uid=' + this.$uid,
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
 			},
 			cleanbefore(e) {
 				this.modalName = 'logout';

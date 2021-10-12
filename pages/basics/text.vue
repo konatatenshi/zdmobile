@@ -1,4 +1,5 @@
 <template>
+	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<view class="editor_toolbox">
 			<i class="iconfont icon-undo" data-method="undo" @tap="edit" />

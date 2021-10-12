@@ -1,4 +1,5 @@
 <template>
+	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view class="bg-gray">
 		<basics v-if="PageCur=='basics'" ref="basics" @returnDat='returnDate'></basics>
 		<components v-if="PageCur=='component'"></components>

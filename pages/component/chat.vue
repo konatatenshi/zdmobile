@@ -1,4 +1,5 @@
 <template>
+	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<cu-custom class="statustop" bgColor="bg-gradual-pink" :isBack="true">
 			<block slot="backText">返回</block>
@@ -545,7 +546,7 @@
 			}
 
 			.text {
-				font-size: 24upx;
+				font-size: 1.2rem;;
 				margin-top: 4upx;
 			}
 		}
@@ -553,7 +554,7 @@
 
 	uni-view.author {
 		position: absolute;
-		font-size: 12px;
+		font-size: 1rem;
 		color: #8799a3;
 		width: calc(100% - 160px);
 		top: -15upx;

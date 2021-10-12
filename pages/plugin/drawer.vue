@@ -117,7 +117,7 @@
 		justify-content: center;
 		background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.01), rgba(0, 0, 0, 0.6));
 		letter-spacing: 5px;
-		font-size: 50upx;
+		font-size: 2.5rem;
 		opacity: 0;
 		pointer-events: none;
 		transition: all 0.4s;

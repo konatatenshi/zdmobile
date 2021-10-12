@@ -1,4 +1,5 @@
 <template name="basics">
+	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true"><block slot="backText">返回</block><block slot="content">发帖成功</block></cu-custom>
 		<view class="bg-white padding-lr">

@@ -1,4 +1,5 @@
 <template>
+	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true"><block slot="backText">返回</block><block slot="content">头像</block></cu-custom>
 		<view class="cu-bar bg-white">

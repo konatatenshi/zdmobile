@@ -1,4 +1,5 @@
 <template>
+  <page-meta :root-font-size="$fontsize"></page-meta>
   <view class="wrapper">
     <view class="content">
       <button type="button" @click="showCaptcha">体验验证码</button>

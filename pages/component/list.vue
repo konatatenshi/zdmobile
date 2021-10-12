@@ -1,4 +1,5 @@
 <template>
+	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<cu-custom bgColor="bg-white" :isBack="true" class="text-shadow1">
 				<block slot="backText">返回</block>
@@ -33,8 +34,7 @@
 			<view class="cu-bar bg-trans no-border ">
 				<view class="action">
 					<text class="margin-left-xs text-xxl text-black text-bold text-shadow2">{{username}}</text>
-					<text
-							:style="[{ padding: groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text>
+					<text :style="[{ padding: groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text>
 						<view class="cu-tag padding-left-xs padding-right-xs" :class="loadlevelicon(groupid,1)">
 							{{loadlevelicon(groupid)}}
 						</view><text :style="[{ padding: groupid==51?'0 0 0 4upx':'0'}]"></text>
@@ -862,6 +862,14 @@
 		background-position: center;
 		vertical-align: middle;
 		font-size: 1.5em;
+	}
+	
+	
+	.vip {
+		background-image: url(../../static/vip.png);
+		background-size: 28upx 28upx;
+		height: 28upx !important;
+		width: 28upx !important;
 	}
 	
 	.padding-left-sm .padding-right-xl .text-black .text-shadow1{

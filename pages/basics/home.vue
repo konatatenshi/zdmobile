@@ -1,4 +1,5 @@
 <template name="basics">
+	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<view class="box">
 			<view class="cu-bar bg-cyan search hometop">
@@ -30,7 +31,7 @@
 				:style="'margin-top:'+ iStatusBarHeight +'upx;'">
 				<view>搜索历史:</view>
 
-				<view style="color: red;font-size: 60upx;" @click="empty">×</view>
+				<view style="color: red;font-size: 3rem;" @click="empty">×</view>
 			</view>
 			<view class="searchHistoryItem">
 				<view v-for="(item3, index3) in searchHistoryList" :key="index3">
@@ -74,7 +75,7 @@
 									{{itemex.summary}}
 								</view>
 								<view v-else class="text-grey"
-									style="line-height:35upx; font-size: 25upx; padding-left: 10upx; padding-right: 100upx;padding-top: 5upx;text-overflow: -o-ellipsis-lastline;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
+									style="line-height:35upx; font-size: 1.2rem; padding-left: 10upx; padding-right: 100upx;padding-top: 5upx;text-overflow: -o-ellipsis-lastline;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
 									</img-cache>{{itemex.summary}}
 								</view>
 							</view>
@@ -105,33 +106,37 @@
 					<view v-if="toplist.length > 0">
 						<block v-for="(item,index1) in toplist" :key="index1">
 							<view class="solid-bottom text-df article"
-								style="padding-top: 10upx; padding-bottom: 10upx;" @tap="tourl(item.url)">
-								<view>
+								style="padding-top: 10upx; padding-bottom: 10upx;">
+								<view @tap="tourl(item.url)">
 									<text class="text-black text-cut" style="width: 100%;">{{item.title}}</text>
 								</view>
-								<view> <text class="text-sm text-red padding-sm">置顶</text> <text
-										class="text-sm text-gray padding-sm">{{item.author}}&nbsp&nbsp{{item.replies}}评</text>
+								<view> <text class="text-sm text-red padding-sm" @tap="tourl(item.url)">置顶</text> <text
+										class="text-sm text-gray padding-sm" @tap="tourl(item.url)">{{item.author}}&nbsp&nbsp{{item.replies}}评</text>
+												<view class="chacha text-gray cuIcon-close" @tap="more2(item.author,item.url)">
+												</view>
 								</view>
 							</view>
 						</block>
 					</view>
 					<view v-if="tuijiantie.length > 0">
 						<block v-for="(item,index2) in tuijiantie" :key="index2">
-							<view class="solid-bottom cu-card article no-card" @tap="tourl(item.url)">
+							<view class="solid-bottom cu-card article no-card">
 								<view class="cu-item shadow">
-									<view class="title">
+									<view class="title" @tap="tourl(item.url)">
 										<view class="text-cut">{{item.title}}</view>
 									</view>
 									<view class="content">
-										<image v-if="isImage" :src="item.img" mode="aspectFill"></image>
+										<image v-if="isImage" :src="item.img" mode="aspectFill" @tap="tourl(item.url)"></image>
 										<view class="desc">
-											<view class="text-content">
+											<view class="text-content" @tap="tourl(item.url)">
 												{{item.summary}}
 											</view>
 											<view>
 												<view class="cu-tag bg-red light sm round">{{item.author}}
 												</view>
 												<view class="cu-tag bg-green light sm round">{{item.replies}}评
+												</view>
+												<view class="chacha text-gray cuIcon-close" @tap="more2(item.author,item.url)">
 												</view>
 											</view>
 										</view>
@@ -142,22 +147,24 @@
 					</view>
 					<view v-if="newpost.length > 0">
 						<block v-for="(item,index3) in newpost" :key="index3">
-							<view class="solid-bottom cu-card article no-card" @tap="tourl(item.url)">
+							<view class="solid-bottom cu-card article no-card">
 								<view class="cu-item shadow">
-									<view class="title">
+									<view class="title" @tap="tourl(item.url)">
 										<view class="text-cut">{{item.title}}</view>
 									</view>
 									<view class="content">
 										<image v-if="item.img != 'static/image/common/nophoto.gif'&&isImage"
-											:src="item.img" mode="aspectFill"></image>
+											:src="item.img" mode="aspectFill" @tap="tourl(item.url)"></image>
 										<view class="desc">
-											<view class="text-content">
+											<view class="text-content" @tap="tourl(item.url)">
 												{{item.summary}}
 											</view>
 											<view>
 												<view class="cu-tag bg-red light sm round">{{item.author}}
 												</view>
 												<view class="cu-tag bg-green light sm round">{{item.replies}}评
+												</view>
+												<view class="chacha text-gray cuIcon-close"  @tap="more2(item.author,item.url)">
 												</view>
 											</view>
 										</view>
@@ -179,6 +186,106 @@
 					</view>
 				</view>
 			</scroll-view>
+		</view>
+		<view class="cu-modal" :class="modalName=='pingbi'?'show':''" @tap="hideModal">
+			<view class="cu-dialog" @tap.stop>
+				<view class="cu-list menu text-left solid-top">
+					<view class="cu-item" v-if="pingbiauthor==$username">
+						<view class="content">
+							<text class="text-gray"><text class="cuIcon-roundclose"></text>屏蔽自己</text>
+						</view>
+					</view>
+					<view class="cu-item" v-else-if="!ifpingbi(pingbiauthor)" @tap="pingbiadd(pingbiauthor)">
+						<view class="content noborder2">
+							<text class="text-grey"><text class="cuIcon-roundclose"></text>屏蔽作者：{{pingbiauthor}}</text>
+							<view class="text-gray text-sm noborder">屏蔽后，你将不会收到他的信息。</view>
+						</view>
+					</view>
+					<view class="cu-item" v-else @tap="pingbiremove(pingbiauthor)">
+						<view class="content noborder2">
+							<text class="text-grey"><text class="cuIcon-roundclose"></text>取消屏蔽：{{pingbiauthor}}</text>
+							<view class="text-gray text-sm noborder">屏蔽后，你将不会收到他的信息。</view>
+						</view>
+					</view>
+					<view class="cu-item" v-if="pingbiauthor==$username">
+						<view class="content">
+							<text class="text-gray"><text class="cuIcon-attentionforbid"></text>拉黑自己</text>
+						</view>
+					</view>
+					<view class="cu-item" v-else @tap="lahei(pingbitid)">
+						<view class="content noborder2">
+							<text class="text-grey"><text class="cuIcon-attentionforbid"></text>{{laheitext}}：{{pingbiauthor}}</text>
+							<view class="text-gray text-sm noborder">拉黑后，他将不能回复和私聊你任何信息。</view>
+						</view>
+					</view>
+					<view class="cu-item" @tap="jubaota(pingbitid)">
+						<view class="content">
+							<text class="text-grey noborder2"><text class="cuIcon-info"></text>举报此内容</text>
+							<view class="text-gray text-sm noborder">标题夸张，内容质量差等。</view>
+						</view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="cu-modal" :class="modalName=='jubaoxinxi'?'show':''"  @tap="hideModal">
+			<view class="cu-dialog" @tap.stop>
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">请输入举报理由</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-sm">
+					<radio-group class="block" @change="RadioChange">
+						<view class="cu-form-group">
+							<view class="text-xl">广告垃圾</view>
+							<radio :class="radio=='A'?'checked':''" :checked="radio=='A'?true:false" value="A"></radio>
+						</view>
+						<view class="cu-form-group">
+							<view class="text-xl">违规内容</view>
+							<radio :class="radio=='B'?'checked':''" :checked="radio=='B'?true:false" value="B"></radio>
+						</view>
+						<view class="cu-form-group">
+							<view class="text-xl">恶意灌水</view>
+							<radio :class="radio=='C'?'checked':''" :checked="radio=='C'?true:false" value="C"></radio>
+						</view>
+						<view class="cu-form-group">
+							<view class="text-xl">重复内容</view>
+							<radio :class="radio=='D'?'checked':''" :checked="radio=='D'?true:false" value="D"></radio>
+						</view>
+						<view class="cu-form-group">
+							<view class="text-xl">其他</view>
+							<radio :class="radio=='E'?'checked':''" :checked="radio=='E'?true:false" value="E"></radio>
+						</view>
+					</radio-group>
+					<view class="cu-form-group align-start" v-if="radio=='E'">
+						<textarea maxlength="-1" v-model="jubaomessage" placeholder="请在此输入想要说的话"></textarea>
+					</view>
+				</view>
+				<view class="cu-bar bg-white justify-end">
+					<view v-if="closed==0" class="action">
+						<button class="cu-btn bg-green margin-left" @tap="sendjbxx">发送</button>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="cu-modal" :class="modalName=='cantpost'?'show':''" @tap="hideModal">
+			<view class="cu-dialog" @tap.stop>
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">举报错误</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl">
+					无法举报，错误提示：{{cantpostmessage}}
+				</view>
+				<view class="cu-bar bg-white justify-end">
+					<view class="action">
+						<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
+					</view>
+				</view>
+			</view>
 		</view>
 		<view class="cu-modal" :class="jifencaozuo!=0?'show':''">
 			<button class="cu-btn margin-sm basis-sm shadow bg-orange"
@@ -215,16 +322,27 @@
 				isImage: 1,
 				jifencaozuo: 0,
 				loadProgress: 0,
+				pingbiauthor: "",
+				pingbitid: 0,
+				modalName: null,
+				laheivar: 0,
+				laheitext: '拉黑作者',
 				loadwb: 0,
+				radio: 'A',
 				swiperList: [],
 				toplist: [],
 				tuijiantie: [],
 				newpost: [],
+				pingbilist: [],
 				guanzhupost: [],
 				scrollht: [0, 0, 0, 0, 0, 0, 0, 0],
 				tabname: ["关注", "推荐", "热榜", "资讯", "讨论", "美图", "喇叭"],
 				avatarimgLoaded: false,
 				TabCur: 1,
+				fontsize: '',
+				closed: 0,
+				jubaomessage: '',
+				cantpostmessage: '',
 				loading: "载入中……",
 				searchstyle: "none",
 				jifenbiangeng: '积分名+1',
@@ -238,6 +356,9 @@
 			};
 		},
 		methods: {
+			hideModal(e) {
+				this.modalName = null
+			},
 			tothebottom(push) {
 				var that = this;
 				that.loadwb = 0;
@@ -687,9 +808,190 @@
 					animationType: 'pop-in',
 					animationDuration: 200
 				});
-			}
+			},
+			more2(e,f) {
+				let that = this;
+				this.pingbiauthor = e;
+				this.pingbitid = f;
+				this.modalName = 'pingbi';
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:guanzhu', //获取置顶帖子
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token,
+						tid: f,
+						typeid: 0,
+						lahei: 1
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data)
+						if (res.data.code == 200) {
+							that.guanzhutext = '取消关注';
+							that.guanzhuvar = 2;
+						} else if (res.data.code == 404) {
+							that.guanzhutext = '关注作者';
+							that.guanzhuvar = 1;
+						} 
+						if (res.data.blacklist == 1) {
+							that.laheitext = '取消拉黑';
+							that.laheivar = 1;
+						}else{
+							that.laheitext = '拉黑作者';
+							that.laheivar = 0;
+						}
+						if(res.data.pm == 1){
+							that.pm = 1;
+						}else{
+							that.sixintxt = '私信作者（无权限使用）';
+						}
+					}
+				});
+			},
+			pingbiremove(e){
+				var that = this;
+				this.pingbilist.splice(this.pingbilist.indexOf(e), 1);
+				console.log(this.pingbilist)
+				uni.setStorage({
+					key: 'pingbilist',
+					data: that.pingbilist,
+					success: function() {
+						that.jifenbiandong('屏蔽取消', '你已将此作者从屏蔽列表移除');
+					}
+				});
+				setTimeout(() => {
+					this.modalName = null;
+				}, 200)
+			},
+			pingbiadd(e){
+				var that = this;
+				console.log(this.pingbilist);
+				console.log(e);
+				this.pingbilist.push(e);
+				uni.setStorage({
+					key: 'pingbilist',
+					data: that.pingbilist,
+					success: function() {
+						that.jifenbiandong('屏蔽成功', '你已将此作者加入屏蔽列表');
+					}
+				});
+				setTimeout(() => {
+					this.modalName = null;
+				}, 200)
+			},
+			ifpingbi(e){
+				if(this.pingbilist.indexOf(e)>=0){
+					console.log(e);
+					return true;
+				}else{
+					return false;
+				}
+			},
+			lahei(e) {
+				let that = this;
+				this.jiazai = 1;
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:blacklist', //获取置顶帖子
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token,
+						tid: e,
+						typeid: that.laheivar
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data)
+						if (res.data.code == 200) {
+							that.laheitext = '取消拉黑';
+							that.laheivar = 1;
+							that.jifenbiandong('拉黑成功', that.pingbiauthor + '已加入黑名单');
+						} else if (res.data.code == 201) {
+							that.laheitext = '拉黑作者';
+							that.laheivar = 0;
+							that.jifenbiandong('拉黑取消', that.pingbiauthor + '已移除黑名单');
+						} else{
+							that.jifenbiandong('拉黑失败', res.data.message);
+						}
+						that.jiazai = 0;
+						that.loadwb = 1;
+						setTimeout(() => {
+							this.modalName = null;
+						}, 200)
+					}
+				});
+			},
+			jubaota(e) {
+				this.modalName = 'jubaoxinxi';
+				this.pingbitid = e;
+			},
+			RadioChange(e) {
+				this.radio = e.detail.value;
+			},
+			sendjbxx() {
+				var that = this;
+				this.closed = 1;
+				console.log(that.jubaomessage.length);
+				if (that.jubaomessage.length < 2 && that.radio == 'E') {
+					that.modalName = "cantpost";
+					that.cantpostmessage = '请输入大于等于2个字的举报内容。';
+					this.floorfasong = false;
+					return;
+				}
+				if (!this.floorfasong) {
+					that.floorfasong = true;
+					if(that.radio=='A'){
+						var message = encodeURI('广告垃圾');
+					}else if(that.radio=='B'){
+						var message = encodeURI('违规内容');
+					}else if(that.radio=='C'){
+						var message = encodeURI('恶意灌水');
+					}else if(that.radio=='D'){
+						var message = encodeURI('重复发帖');
+					}else if(that.radio=='E'){
+						var message = encodeURI(that.jubaomessage);
+					}
+					console.log(that.jubaomessage);
+					console.log(that.pingbitid);
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:jubao', //获取置顶帖子
+						method: 'POST',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							message: message,
+							tid: that.pingbitid
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data);
+							that.floorfasong = false;
+							that.jubaomessage = '';
+							if (res.data.code ==400) {
+								that.modalName = "needlogin";
+							} else if (res.data.code == 200) {
+								that.modalName = null;
+								that.jifenbiandong('举报成功','你的举报发送完毕。')
+								that.siliaotxt = '';
+							} else{
+								that.modalName = null;
+								that.jifenbiandong('举报失败',res.data.message);
+							}
+							that.closed = 0;
+						}
+					});
+				}
+			},
 		},
 		created() {
+			this.fontsize = this.$fontsize;
 			this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight + 170;
 			plus.navigator.setStatusBarStyle('light'); //改变系统标题颜色
 			var that = this;
@@ -780,6 +1082,14 @@
 					//console.log(that.forumdata);
 				}
 			});
+			//载入屏蔽名单
+			uni.getStorage({
+				key: 'pingbilist',
+				success: function(res) {
+					console.log(res.data);
+					that.pingbilist = res.data;
+				}
+			});
 		},
 		mounted() {
 			//this.setHeight();
@@ -817,20 +1127,20 @@
 	}
 
 	.nav-sm .cu-item.cur {
-		border-bottom: 2px solid;
+		border-bottom: 3upx solid;
 	}
 
 	.nav-sm .cu-item {
-		height: 30px;
+		height: 50upx;
 		display: inline-block;
-		line-height: 30px;
-		margin: 0 5px;
-		padding: 0 11px;
+		line-height: 50upx;
+		margin: 0 8upx;
+		padding: 0 16upx;
 	}
 
 	.searchHistory {
 		width: 100%;
-		margin-top: 5px;
+		margin-top: 8upx;
 	}
 
 	.searchHistoryItem {
@@ -841,9 +1151,9 @@
 
 	.searchHistoryItem view {
 		/* width: 50px; */
-		height: 20px;
-		border: 1px solid #eee;
-		margin: 0px 5px;
+		height: 30upx;
+		border: 1upx solid #eee;
+		margin: 0upx 8upx;
 	}
 
 	.gzlist {
@@ -865,5 +1175,14 @@
 		margin: 34upx 0 0 -105upx;
 		width: 95upx;
 		height: 72upx;
+	}
+	.chacha{
+		position: absolute;
+		margin: -30upx 0 0 0;
+		right: 20upx;
+	}
+	.noborder{
+		padding-top: 0px!important;
+		margin-top: 0px!important;
 	}
 </style>

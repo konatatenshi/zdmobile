@@ -1,5 +1,6 @@
 <!-- 搜索页面 -->
 <template name="basics">
+	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<cu-custom class="statustop" bgColor="bg-gradual-pink" :isBack="true">
 			<block slot="backText">返回</block>

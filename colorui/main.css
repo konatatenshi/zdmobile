@@ -9,7 +9,7 @@
  ==================== */
 body {
 	background-color: #f1f1f1;
-	font-size: 28upx;
+	font-size: 1.4rem;
 	color: #333333;
 	font-family: Helvetica Neue, Helvetica, sans-serif;
 	padding-bottom: 100upx;
@@ -72,7 +72,7 @@ image.loading::after {
 	right: 0;
 	bottom: 0;
 	z-index: -1;
-	font-size: 32upx;
+	font-size: 1.6rem;
 	margin: auto;
 	color: #ccc;
 	-webkit-animation: cuIcon-spin 2s infinite linear;
@@ -102,7 +102,7 @@ switch::before {
 	color: #ffffff !important;
 	top: 0%;
 	left: 0upx;
-	font-size: 26upx;
+	font-size: 1.3rem;
 	line-height: 26px;
 	width: 50%;
 	text-align: center;
@@ -142,7 +142,7 @@ checkbox::before {
 	top: 50%;
 	margin-top: -8px;
 	right: 5px;
-	font-size: 32upx;
+	font-size: 1.6rem;
 	line-height: 16px;
 	pointer-events: none;
 	transform: scale(1, 1);
@@ -630,7 +630,7 @@ radio.white.checked .uni-radio-input {
 	justify-content: center;
 	box-sizing: border-box;
 	padding: 0 30upx;
-	font-size: 28upx;
+	font-size: 1.4rem;
 	height: 64upx;
 	line-height: 1;
 	text-align: center;
@@ -684,13 +684,13 @@ radio.white.checked .uni-radio-input {
 
 .cu-btn.sm {
 	padding: 0 20upx;
-	font-size: 20upx;
+	font-size: 1rem;
 	height: 48upx;
 }
 
 .cu-btn.lg {
 	padding: 0 40upx;
-	font-size: 32upx;
+	font-size: 1.6rem;
 	height: 80upx;
 }
 
@@ -740,7 +740,7 @@ button.cuIcon.lg {
  ==================== */
 
 .cu-tag {
-	font-size: 24upx;
+	font-size: 1.2rem;
 	vertical-align: middle;
 	position: relative;
 	display: inline-flex;
@@ -790,7 +790,7 @@ button.cuIcon.lg {
 }
 
 .cu-tag.sm {
-	font-size: 20upx;
+	font-size: 1rem;
 	padding: 0upx 12upx;
 	height: 32upx;
 }
@@ -845,7 +845,7 @@ button.cuIcon.lg {
 	position: absolute;
 	top: -10upx;
 	right: -10upx;
-	font-size: 20upx;
+	font-size: 1rem;
 	padding: 0upx 10upx;
 	height: 28upx;
 	color: #ffffff;
@@ -891,29 +891,29 @@ button.cuIcon.lg {
 	background-size: cover;
 	background-position: center;
 	vertical-align: middle;
-	font-size: 1.5em;
+	font-size: 1.5rem;
 }
 
 .cu-avatar.sm {
 	width: 48upx;
 	height: 48upx;
-	font-size: 1em;
+	font-size: 1rem;
 }
 
 .cu-avatar.lg {
 	width: 96upx;
 	height: 96upx;
-	font-size: 2em;
+	font-size: 2rem;
 }
 
 .cu-avatar.xl {
 	width: 128upx;
 	height: 128upx;
-	font-size: 2.5em;
+	font-size: 2.5rem;
 }
 
 .cu-avatar .avatar-text {
-	font-size: 0.4em;
+	font-size: 0.4rem;
 }
 
 .cu-avatar-group {
@@ -967,7 +967,7 @@ button.cuIcon.lg {
 	display: flex;
 	justify-items: flex-end;
 	justify-content: space-around;
-	font-size: 20upx;
+	font-size: 1rem;
 	color: #ffffff;
 	transition: width 0.6s ease;
 }
@@ -975,7 +975,7 @@ button.cuIcon.lg {
 .cu-progress text {
 	align-items: center;
 	display: flex;
-	font-size: 20upx;
+	font-size: 1rem;
 	color: #333333;
 	text-indent: 10upx;
 }
@@ -1045,7 +1045,7 @@ button.cuIcon.lg {
 }
 
 .cu-load.load-cuIcon::before {
-	font-size: 32upx;
+	font-size: 1.6rem;
 }
 
 .cu-load.load-cuIcon::after {
@@ -1072,13 +1072,13 @@ button.cuIcon.lg {
 	align-items: center;
 	flex-direction: column;
 	justify-content: center;
-	font-size: 28upx;
+	font-size: 1.4rem;
 	z-index: 9999;
 	line-height: 2.4em;
 }
 
 .cu-load.load-modal [class*="cuIcon-"] {
-	font-size: 60upx;
+	font-size: 3rem;
 }
 
 .cu-load.load-modal image {
@@ -1093,7 +1093,7 @@ button.cuIcon.lg {
 	border-radius: 50%;
 	width: 200upx;
 	height: 200upx;
-	font-size: 10px;
+	font-size: 0.8rem;
 	border-top: 6upx solid rgba(0, 0, 0, 0.05);
 	border-right: 6upx solid rgba(0, 0, 0, 0.05);
 	border-bottom: 6upx solid rgba(0, 0, 0, 0.05);
@@ -1241,7 +1241,7 @@ button.cuIcon.lg {
 }
 
 .cu-list.menu-avatar>.cu-item .content>view:first-child {
-	font-size: 30upx;
+	font-size: 1.5rem;
 	display: flex;
 	align-items: center
 }
@@ -1250,7 +1250,7 @@ button.cuIcon.lg {
 	display: inline-block;
 	margin-left: 10upx;
 	height: 28upx;
-	font-size: 16upx;
+	font-size: 0.8rem;
 	line-height: 32upx
 }
 
@@ -1331,7 +1331,7 @@ button.cuIcon.lg {
 	color: #8799a3;
 	content: "\e6a3";
 	text-align: center;
-	font-size: 34upx;
+	font-size: 1.7rem;
 	font-family: cuIcon;
 	line-height: 30upx
 }
@@ -1371,7 +1371,7 @@ button.cuIcon.lg {
 }
 
 .cu-list.menu>.cu-item .content {
-	font-size: 30upx;
+	font-size: 1.5rem;
 	line-height: 1.6em;
 	flex: 1
 }
@@ -1380,7 +1380,7 @@ button.cuIcon.lg {
 	display: inline-block;
 	margin-left: 10upx;
 	height: 28upx;
-	font-size: 16upx;
+	font-size: 0.8rem;
 	line-height: 32upx
 }
 
@@ -1426,7 +1426,7 @@ button.cuIcon.lg {
 	display: block;
 	margin-top: 10upx;
 	color: #888;
-	font-size: 26upx;
+	font-size: 1.3rem;
 	line-height: 40upx
 }
 
@@ -1435,7 +1435,7 @@ button.cuIcon.lg {
 	display: block;
 	margin-top: 20upx;
 	width: 100%;
-	font-size: 48upx
+	font-size: 2.4rem;
 }
 
 .cu-list.grid>.cu-item .cu-tag {
@@ -1540,7 +1540,7 @@ button.cuIcon.lg {
 	z-index: 0;
 	text-align: right;
 	font-weight: 900;
-	font-size: 36upx;
+	font-size: 1.8rem;
 }
 
 .cu-bar.justify-center .action.border-title text:last-child,
@@ -1553,7 +1553,7 @@ button.cuIcon.lg {
 
 .cu-bar .action:first-child {
 	margin-left: 30upx;
-	font-size: 30upx;
+	font-size: 1.5rem;
 }
 
 .cu-bar .action text.text-cut {
@@ -1576,7 +1576,7 @@ button.cuIcon.lg {
 
 .cu-bar .action>text[class*="cuIcon-"],
 .cu-bar .action>view[class*="cuIcon-"] {
-	font-size: 36upx;
+	font-size: 1.8rem;
 }
 
 .cu-bar .action>text[class*="cuIcon-"]+text[class*="cuIcon-"] {
@@ -1593,7 +1593,7 @@ button.cuIcon.lg {
 	top: 0;
 	margin: auto;
 	height: 60upx;
-	font-size: 32upx;
+	font-size: 1.6rem;
 	line-height: 60upx;
 	cursor: none;
 	pointer-events: none;
@@ -1605,7 +1605,7 @@ button.cuIcon.lg {
 .cu-bar.ios .content {
 	bottom: 7px;
 	height: 30px;
-	font-size: 32upx;
+	font-size: 1.6rem;
 	line-height: 30px;
 }
 
@@ -1627,7 +1627,7 @@ button.cuIcon.lg {
 	background-color: #f5f5f5;
 	line-height: 64upx;
 	height: 64upx;
-	font-size: 24upx;
+	font-size: 1.2rem;
 	color: #333333;
 	flex: 1;
 	display: flex;
@@ -1644,7 +1644,7 @@ button.cuIcon.lg {
 	padding-right: 30upx;
 	height: 64upx;
 	line-height: 64upx;
-	font-size: 26upx;
+	font-size: 1.3rem;
 	background-color: transparent;
 }
 
@@ -1689,7 +1689,7 @@ button.cuIcon.lg {
 }
 
 .cu-bar.tabbar .action {
-	font-size: 22upx;
+	font-size: 1.1rem;
 	position: relative;
 	flex: 1;
 	text-align: center;
@@ -1720,7 +1720,7 @@ button.cuIcon.lg {
 	height: 70upx;
 	border-radius: 50%;
 	line-height: 70upx;
-	font-size: 50upx;
+	font-size: 2.5rem;
 	top: -35upx;
 	left: 0;
 	right: 0;
@@ -1775,7 +1775,7 @@ button.cuIcon.lg {
 	height: auto;
 	margin: 0 auto 10upx;
 	text-align: center;
-	font-size: 40upx;
+	font-size: 2rem;
 }
 
 .cu-bar.tabbar .action .cuIcon-cu-image {
@@ -1834,7 +1834,7 @@ button.cuIcon.lg {
 	height: 64upx;
 	min-height: 64upx;
 	flex: 1;
-	font-size: 30upx;
+	font-size: 1.5rem;
 	margin: 0 20upx;
 }
 
@@ -1843,7 +1843,7 @@ button.cuIcon.lg {
 }
 
 .cu-bar.input .action [class*="cuIcon-"] {
-	font-size: 48upx;
+	font-size: 2.4rem;
 }
 
 .cu-bar.input input+.action {
@@ -1933,7 +1933,7 @@ button.cuIcon.lg {
 	flex: 1;
 	margin: auto !important;
 	text-align: center;
-	font-size: 34upx;
+	font-size: 1.7rem;
 }
 
 /* ==================
@@ -1973,7 +1973,7 @@ button.cuIcon.lg {
 	width: 120upx;
 	text-align: center;
 	padding: 20upx 0;
-	font-size: 26upx;
+	font-size: 1.3rem;
 	color: #888;
 	display: block;
 }
@@ -2083,7 +2083,7 @@ button.cuIcon.lg {
 	display: inline-flex;
 	max-width: 100%;
 	align-items: center;
-	font-size: 30upx;
+	font-size: 1.5rem;
 	position: relative;
 	min-height: 80upx;
 	line-height: 40upx;
@@ -2097,7 +2097,7 @@ button.cuIcon.lg {
 
 .cu-chat .cu-item .date {
 	position: absolute;
-	font-size: 24upx;
+	font-size: 1.2rem;
 	color: #8799a3;
 	width: calc(100% - 320upx);
 	top: -15upx;
@@ -2170,7 +2170,7 @@ button.cuIcon.lg {
 .cu-chat .cu-info {
 	display: inline-block;
 	margin: 20upx auto;
-	font-size: 24upx;
+	font-size: 1.2rem;
 	padding: 8upx 12upx;
 	background-color: rgba(0, 0, 0, 0.2);
 	border-radius: 6upx;
@@ -2251,7 +2251,7 @@ button.cuIcon.lg {
 	padding: 0 30upx 0;
 	max-height: 6.4em;
 	overflow: hidden;
-	font-size: 30upx;
+	font-size: 1.5rem;
 	margin-bottom: 20upx;
 }
 
@@ -2283,7 +2283,7 @@ button.cuIcon.lg {
 }
 
 .cu-card.article>.cu-item .title {
-	font-size: 30upx;
+	font-size: 1.5rem;
 	font-weight: 900;
 	color: #333333;
 	line-height: 100upx;
@@ -2310,7 +2310,7 @@ button.cuIcon.lg {
 }
 
 .cu-card.article>.cu-item .content .text-content {
-	font-size: 28upx;
+	font-size: 1.4rem;
 	color: #888;
 	height: 4.8em;
 	overflow: hidden;
@@ -2336,7 +2336,7 @@ button.cuIcon.lg {
 .cu-form-group .title {
 	text-align: justify;
 	padding-right: 30upx;
-	font-size: 30upx;
+	font-size: 1.5rem;
 	position: relative;
 	height: 60upx;
 	line-height: 60upx;
@@ -2344,13 +2344,13 @@ button.cuIcon.lg {
 
 .cu-form-group input {
 	flex: 1;
-	font-size: 30upx;
+	font-size: 1.5rem;
 	color: #555;
 	padding-right: 20upx;
 }
 
 .cu-form-group>text[class*="cuIcon-"] {
-	font-size: 36upx;
+	font-size: 1.8rem;
 	padding: 0;
 	box-sizing: border-box;
 }
@@ -2361,7 +2361,7 @@ button.cuIcon.lg {
 	width: 100%;
 	line-height: 1.2em;
 	flex: 1;
-	font-size: 28upx;
+	font-size: 1.4rem;
 	padding: 0;
 }
 
@@ -2380,7 +2380,7 @@ button.cuIcon.lg {
 
 .cu-form-group picker .picker {
 	line-height: 100upx;
-	font-size: 28upx;
+	font-size: 1.4rem;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
@@ -2393,7 +2393,7 @@ button.cuIcon.lg {
 	display: block;
 	content: "\e6a3";
 	position: absolute;
-	font-size: 34upx;
+	font-size: 1.7rem;
 	color: #8799a3;
 	line-height: 100upx;
 	width: 60upx;
@@ -2683,7 +2683,7 @@ scroll-view.cu-steps .cu-item {
 .cu-steps .cu-item [class*="cuIcon-"],
 .cu-steps .cu-item .num {
 	display: block;
-	font-size: 40upx;
+	font-size: 2rem;
 	line-height: 80upx;
 }
 
@@ -2743,7 +2743,7 @@ scroll-view.cu-steps .cu-item {
 	border-radius: 50%;
 	line-height: 40upx;
 	margin: 20upx auto;
-	font-size: 24upx;
+	font-size: 1.2rem;
 	border: 1px solid currentColor;
 	position: relative;
 	overflow: hidden;
@@ -2916,7 +2916,7 @@ scroll-view.cu-steps .cu-item {
 }
 
 .grid.grid-square>view>text[class*="cuIcon-"] {
-	font-size: 52upx;
+	font-size: 2.6rem;
 	position: absolute;
 	color: #8799a3;
 	margin: auto;
@@ -3751,35 +3751,35 @@ scroll-view.cu-steps .cu-item {
  ==================== */
 
 .text-xs {
-	font-size: 20upx;
+	font-size: 1rem;
 }
 
 .text-sm {
-	font-size: 24upx;
+	font-size: 1.2rem;
 }
 
 .text-df {
-	font-size: 28upx;
+	font-size: 1.4rem;
 }
 
 .text-lg {
-	font-size: 32upx;
+	font-size: 1.6rem;
 }
 
 .text-xl {
-	font-size: 36upx;
+	font-size: 1.8rem;
 }
 
 .text-xxl {
-	font-size: 44upx;
+	font-size: 2.2rem;
 }
 
 .text-sl {
-	font-size: 80upx;
+	font-size: 4rem;
 }
 
 .text-xsl {
-	font-size: 120upx;
+	font-size: 6rem;
 }
 
 .text-Abc {

@@ -1,5 +1,6 @@
 <!-- 帖子页面 -->
 <template>
+	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<cu-custom class="statustop" bgColor="bg-gradual-pink" :isBack="true">
 			<block slot="backText">返回</block>
@@ -125,6 +126,9 @@
 								<text :class="loadModal1?'cuIcon-loading2 cuIconfont-spin':''"></text>{{favorite}}
 							</view>
 						</view>
+						<view class="cu-capsule flex-sub" @tap="more2(authorid,postup,pid)">
+							<text class='cuIcon-roundclose'></text>
+						</view>
 					</view>
 					<view class="margin-bottom-sm" style="max-height: 500rpx;" v-if="sightml!=''">
 						<image mode='widthFix' src="../../static/sigline.gif"></image>
@@ -133,7 +137,7 @@
 				</view>
 				<view class="cu-list menu-avatar comment solids-top" v-for="(item,index) in huifulist" :key="index"
 					:data-id="index">
-					<view class="cu-item">
+					<view class="cu-item" v-if="!ifpingbi(item.author)&&$adminid<=0">
 						<view class="cu-avatar round" :style="[{ backgroundImage:'url(' + item.avatarlist + ')' }]" @tap="totheuid(item.authorid)">
 						</view>
 						<view class="content hbx">
@@ -288,44 +292,50 @@
 				<view class="cu-modal" :class="modalName=='pingbi'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
 						<view class="cu-list menu text-left solid-top">
-							<view class="cu-item" v-if="pingbiuid==$uid">
+							<view class="cu-item" v-if="pingbiauthor==$username">
 								<view class="content">
 									<text class="text-gray"><text class="cuIcon-roundclose"></text>屏蔽自己</text>
 								</view>
 							</view>
-							<view class="cu-item" v-else @tap="guanzhu()">
+							<view class="cu-item" v-else-if="!ifpingbi(pingbiauthor)" @tap="pingbiadd(pingbiauthor)">
 								<view class="content noborder2">
 									<text class="text-grey"><text class="cuIcon-roundclose"></text>屏蔽作者：{{pingbiauthor}}</text>
 									<view class="text-gray text-sm noborder">屏蔽后，你将不会收到他的信息。</view>
 								</view>
 							</view>
-							<view class="cu-item" v-if="pingbiuid==$uid">
+							<view class="cu-item" v-else @tap="pingbiremove(pingbiauthor)">
+								<view class="content noborder2">
+									<text class="text-grey"><text class="cuIcon-roundclose"></text>取消屏蔽：{{pingbiauthor}}</text>
+									<view class="text-gray text-sm noborder">屏蔽后，你将不会收到他的信息。</view>
+								</view>
+							</view>
+							<view class="cu-item" v-if="pingbiauthor==$username">
 								<view class="content">
 									<text class="text-gray"><text class="cuIcon-attentionforbid"></text>拉黑自己</text>
 								</view>
 							</view>
-							<view class="cu-item" v-else @tap="guanzhu()">
+							<view class="cu-item" v-else @tap="lahei()">
 								<view class="content noborder2">
-									<text class="text-grey"><text class="cuIcon-attentionforbid"></text>拉黑作者：{{pingbiauthor}}</text>
+									<text class="text-grey"><text class="cuIcon-attentionforbid"></text>{{laheitext}}：{{pingbiauthor}}</text>
 									<view class="text-gray text-sm noborder">拉黑后，他将不能回复和私聊你任何信息。</view>
 								</view>
 							</view>
-							<view v-if="pm==1" class="cu-item" @tap="siliaozuozhe">
+							<view v-if="pm==1&&jubaopid!=pid" class="cu-item" @tap="siliaozuozhe">
 								<view class="content">
 									<text class="text-grey"><text class="cuIcon-mark"></text>私信作者</text>
 								</view>
 							</view>
-							<view v-else class="cu-item">
+							<view v-else-if="jubaopid!=pid" class="cu-item">
 								<view class="content">
 									<text class="text-gray"><text class="cuIcon-mark"></text>{{sixintxt}}</text>
 								</view>
 							</view>
-							<view class="cu-item" v-if="pingbiuid == 0" @tap="totheuid(pingbiuid)">
+							<view class="cu-item" v-if="pingbiuid == 0&& jubaopid!=pid" @tap="totheuid(pingbiuid)">
 								<view class="content">
 									<text class="text-grey"><text class="cuIcon-form"></text>查看资料</text>
 								</view>
 							</view>
-							<view class="cu-item" @tap="jubaota(jubaopid)">
+							<view class="cu-item" @tap="jubaota(jubaopid)" v-if="jubaopid!=pid">
 								<view class="content">
 									<text class="text-grey noborder2"><text class="cuIcon-info"></text>举报此回复</text>
 									<view class="text-gray text-sm noborder">标题夸张，内容质量差等。</view>
@@ -717,6 +727,8 @@
 				floorpage: [],
 				jiazai: 0,
 				pm: 0,
+				laheivar: 0,
+				laheitext: '拉黑作者',
 				jiazaiwanbi: [],
 				InputBottom: 0,
 				randomunmber: 0,
@@ -726,6 +738,7 @@
 				jubaomessage: '',
 				guanzhuvar: 1,
 				huifulist: [],
+				pingbilist: [],
 				rplist: [],
 				isfloat: [],
 				xunzhanglist: [],
@@ -765,6 +778,8 @@
 			},
 			more(e) {
 				let that = this;
+				this.pingbiuid = this.uid;
+				this.pingbiauthor = this.postup;
 				this.jiazai = 1;
 				this.jubaopid = this.pid;
 				this.modalName = 'more';
@@ -799,6 +814,45 @@
 					}
 				});
 			},
+			pingbiremove(e){
+				var that = this;
+				this.pingbilist.splice(this.pingbilist.indexOf(e), 1);
+				console.log(this.pingbilist)
+				uni.setStorage({
+					key: 'pingbilist',
+					data: that.pingbilist,
+					success: function() {
+						that.jifenbiandong('屏蔽取消', '你已将此作者从屏蔽列表移除');
+					}
+				});
+				setTimeout(() => {
+					this.modalName = null;
+				}, 200)
+			},
+			pingbiadd(e){
+				var that = this;
+				console.log(this.pingbilist);
+				console.log(e);
+				this.pingbilist.push(e);
+				uni.setStorage({
+					key: 'pingbilist',
+					data: that.pingbilist,
+					success: function() {
+						that.jifenbiandong('屏蔽成功', '你已将此作者加入屏蔽列表');
+					}
+				});
+				setTimeout(() => {
+					this.modalName = null;
+				}, 200)
+			},
+			ifpingbi(e){
+				if(this.pingbilist.indexOf(e)>=0){
+					console.log(e);
+					return true;
+				}else{
+					return false;
+				}
+			},
 			more2(e,f,g) {
 				let that = this;
 				this.pingbiuid = e;
@@ -828,6 +882,13 @@
 							that.guanzhutext = '关注作者';
 							that.guanzhuvar = 1;
 						} 
+						if (res.data.blacklist == 1) {
+							that.laheitext = '取消拉黑';
+							that.laheivar = 1;
+						}else{
+							that.laheitext = '拉黑作者';
+							that.laheivar = 0;
+						}
 						if(res.data.pm == 1){
 							that.pm = 1;
 						}else{
@@ -868,6 +929,42 @@
 						}
 						that.jiazai = 0;
 						that.loadwb = 1;
+					}
+				});
+			},
+			lahei(e) {
+				let that = this;
+				this.jiazai = 1;
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:blacklist', //获取置顶帖子
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token,
+						touid: that.pingbiuid,
+						typeid: that.laheivar
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data)
+						if (res.data.code == 200) {
+							that.laheitext = '取消拉黑';
+							that.laheivar = 1;
+							that.jifenbiandong('拉黑成功', that.pingbiauthor + '已加入黑名单');
+						} else if (res.data.code == 201) {
+							that.laheitext = '拉黑作者';
+							that.laheivar = 0;
+							that.jifenbiandong('拉黑取消', that.pingbiauthor + '已移除黑名单');
+						} else{
+							that.jifenbiandong('拉黑失败', res.data.message);
+						}
+						that.jiazai = 0;
+						that.loadwb = 1;
+						setTimeout(() => {
+							this.modalName = null;
+						}, 200)
 					}
 				});
 			},
@@ -1263,6 +1360,12 @@
 				} else if (e.target == 'forum') {
 					uni.navigateTo({
 						url: '../basics/forum?forumid=' + e.apphref,
+						animationType: 'pop-in',
+						animationDuration: 200
+					});
+				} else if (e.innerText.indexOf("@") == 0) {
+					uni.navigateTo({
+						url: '../component/list?uid=' + e.href.replace(/[^0-9]/ig,""),
 						animationType: 'pop-in',
 						animationDuration: 200
 					});
@@ -2135,6 +2238,7 @@
 		},
 		onLoad: function(option) { //option为object类型，会序列化上个页面传递的参数 
 			this.tid = option.tid;
+			var that = this;
 			console.log(option.tid); //打印出上个页面传递的参数。
 			this.loadthread(this.tid);
 			this.loadhuifu(this.tid, this.page, '', '', '', '1');
@@ -2146,6 +2250,14 @@
 			}
 			this.randomunmber = Math.random() * 100;
 			this.bgimg = 'http://bbs.zdfx.net/img/style/i/yzm_pic/' + Math.floor(Math.random() * 208) + '.jpg';
+			//载入屏蔽名单
+			uni.getStorage({
+				key: 'pingbilist',
+				success: function(res) {
+					console.log(res.data);
+					that.pingbilist = res.data;
+				}
+			})
 		},
 		onShow: function() {},
 		onPageScroll() {
@@ -2164,12 +2276,12 @@
 <style lang="scss" scoped>
 	.text-content2 {
 		padding: 0 30upx 0;
-		font-size: 30upx;
+		font-size: 1.5rem;
 		margin-bottom: 20upx;
 	}
 
 	.cu-item .title {
-		font-size: 40upx;
+		font-size: 2rem;
 		font-weight: 900;
 		color: #333333;
 		line-height: 100upx;
@@ -2256,7 +2368,7 @@
 			}
 
 			.text {
-				font-size: 24upx;
+				font-size: 1.2rem;
 				margin-top: 4upx;
 			}
 		}

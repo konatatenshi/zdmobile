@@ -1,5 +1,6 @@
 <!-- 楼中楼 -->
 <template>
+	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<cu-custom class="statustop" bgColor="bg-white" :isBack="true">
 			<block slot="backText">返回</block>
@@ -1007,12 +1008,12 @@
 <style lang="scss" scoped>
 	.text-content2 {
 		padding: 0 30upx 0;
-		font-size: 30upx;
+		font-size: 1.5rem;
 		margin-bottom: 20upx;
 	}
 
 	.cu-item .title {
-		font-size: 40upx;
+		font-size: 2rem;
 		font-weight: 900;
 		color: #333333;
 		line-height: 100upx;
@@ -1087,7 +1088,7 @@
 			}
 
 			.text {
-				font-size: 24upx;
+				font-size: 1.2rem;
 				margin-top: 4upx;
 			}
 		}

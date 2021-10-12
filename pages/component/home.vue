@@ -1,5 +1,6 @@
 <!-- 板块列表页 -->
 <template name="components">
+	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<view class="fixed">
 			<cu-custom :isBack="false" bgColor="bg-shadeTop text-white">

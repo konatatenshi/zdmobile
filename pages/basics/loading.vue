@@ -1,5 +1,6 @@
 <!-- 服务器状态 -->
 <template>
+	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true"><block slot="backText">返回</block><block slot="content">检测服务器状态</block>
 			<block slot="right">

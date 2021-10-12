@@ -1,5 +1,6 @@
 <!-- 板块列表页 -->
 <template name="basics">
+	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<cu-custom class="statustop" bgColor="bg-gradual-pink" :isBack="true">
 			<block slot="backText">返回</block>
@@ -30,6 +31,8 @@
 									</view>
 									<view> <text class="text-sm text-red padding-sm">置顶</text> <text
 											class="text-sm text-gray padding-sm">{{item.author}}&nbsp&nbsp{{item.replies}}评</text>
+												<view class="chacha text-gray cuIcon-close">
+												</view>
 									</view>
 								</view>
 								<view class="cu-card article no-card" v-else>
@@ -153,6 +156,7 @@
 													{{item.recommends}}
 													<text class="cuIcon-messagefill margin-lr-xs"></text>
 													{{item.replies}}
+													<text class="text-gray cuIcon-close margin-lr-xs"></text>
 												</view>
 											</view>
 										</view>
@@ -758,10 +762,10 @@
 	}
 
 	.forumtitle {
-		font-size: 15px;
+		font-size: 1.4rem;
 		font-weight: 900;
 		color: #333333;
-		line-height: 20px;
+		line-height: 1.6rem;
 		padding: 0 15px;
 	}
 
@@ -818,5 +822,10 @@
 		height: 140upx;
 	}
 	.badge {		z-index: 9;
+	}
+	.chacha{
+		position: absolute;
+		margin: -30upx 0 0 0;
+		right: 20upx;
 	}
 </style>

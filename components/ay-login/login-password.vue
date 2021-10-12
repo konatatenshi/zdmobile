@@ -1,4 +1,5 @@
 <template>
+	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<view class="flex flex-wrap justify-center">
 			<view class="basis-xl padding-top radius shadow-blur bg-red margin-top bg-img"
@@ -923,7 +924,7 @@
 	.title2 {
 	    text-align: justify;
 	    padding-right: 20upx;
-	    font-size: 30upx;
+	    font-size: 1.5rem;
 	    position: relative;
 	    height: 100upx;
 	    line-height: 50upx;

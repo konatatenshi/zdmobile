@@ -1,4 +1,5 @@
 <template>
+	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view class="previewImage" :style="{ 'background-color': 'rgba(0,0,0,' + opacity + ')' }" v-if="show" @tap="close" @touchmove.stop.prevent>
 		<swiper class="swiper" :current="index" @change="swiperChange" :disable-touch="swiper" :circular="circular">
 			<swiper-item v-for="(img, i) in imgs" :key="'swiper-item-'+i" :id="'swiper-item-'+i">
@@ -304,7 +305,7 @@ export default {
 		text-align: center;
 		.text {
 			color: #fff;
-			font-size: 26rpx;
+			font-size: 1.3rem;
 			background-color: rgba(0, 0, 0, 0.5);
 			padding: 3rpx 16rpx;
 			border-radius: 20rpx;
@@ -322,7 +323,7 @@ export default {
 		.text {
 			background-color: rgba(0, 0, 0, 0.5);
 			color: #fff;
-			font-size: 30rpx;
+			font-size: 1.5rem;
 			border-radius: 20rpx;
 			border: 1rpx solid #f1f1f1;
 			padding: 6rpx 22rpx;
@@ -343,7 +344,7 @@ export default {
 		.text {
 			background-color: rgba(0, 0, 0, 0.5);
 			color: #fff;
-			font-size: 30rpx;
+			font-size: 1.5rem;
 			border-radius: 20rpx;
 			border: 1rpx solid #f1f1f1;
 			padding: 6rpx 22rpx;
@@ -364,7 +365,7 @@ export default {
 		white-space: nowrap;
 		background-color: rgba(0, 0, 0, 0.5);
 		color: #fff;
-		font-size: 28rpx;
+		font-size: 1.4rem;
 		letter-spacing: 3rpx;
 		user-select: none;
 	}
