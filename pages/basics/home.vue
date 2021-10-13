@@ -106,7 +106,7 @@
 					<view v-if="toplist.length > 0">
 						<block v-for="(item,index1) in toplist" :key="index1">
 							<view class="solid-bottom text-df article"
-								style="padding-top: 10upx; padding-bottom: 10upx;">
+								style="padding-top: 10upx; padding-bottom: 10upx;"  v-if="!(ifpingbi(item.author)&&$adminid<=0)">
 								<view @tap="tourl(item.url)">
 									<text class="text-black text-cut" style="width: 100%;">{{item.title}}</text>
 								</view>
@@ -120,7 +120,7 @@
 					</view>
 					<view v-if="tuijiantie.length > 0">
 						<block v-for="(item,index2) in tuijiantie" :key="index2">
-							<view class="solid-bottom cu-card article no-card">
+							<view class="solid-bottom cu-card article no-card"  v-if="!(ifpingbi(item.author)&&$adminid<=0)">
 								<view class="cu-item shadow">
 									<view class="title" @tap="tourl(item.url)">
 										<view class="text-cut">{{item.title}}</view>
@@ -147,7 +147,7 @@
 					</view>
 					<view v-if="newpost.length > 0">
 						<block v-for="(item,index3) in newpost" :key="index3">
-							<view class="solid-bottom cu-card article no-card">
+							<view class="solid-bottom cu-card article no-card"  v-if="!ifpingbi(item.author)&&$adminid<=0">
 								<view class="cu-item shadow">
 									<view class="title" @tap="tourl(item.url)">
 										<view class="text-cut">{{item.title}}</view>
@@ -884,7 +884,7 @@
 			},
 			ifpingbi(e){
 				if(this.pingbilist.indexOf(e)>=0){
-					console.log(e);
+					//console.log(e);
 					return true;
 				}else{
 					return false;
@@ -956,7 +956,7 @@
 					}else if(that.radio=='E'){
 						var message = encodeURI(that.jubaomessage);
 					}
-					console.log(that.jubaomessage);
+					console.log(message);
 					console.log(that.pingbitid);
 					uni.request({
 						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:jubao', //获取置顶帖子

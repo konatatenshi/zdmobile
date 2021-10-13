@@ -1855,7 +1855,14 @@ var render = function() {
                                                   "23-" + $31,
                                                   "sc"
                                                 ),
-                                                attrs: { _i: "23-" + $31 }
+                                                attrs: { _i: "23-" + $31 },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.$handleViewEvent(
+                                                      $event
+                                                    )
+                                                  }
+                                                }
                                               })
                                             ],
                                             1
@@ -1863,7 +1870,8 @@ var render = function() {
                                         ],
                                         1
                                       )
-                                    : _c(
+                                    : _vm._$g("24-" + $31, "e")
+                                    ? _c(
                                         "v-uni-view",
                                         {
                                           key: item["k-1"],
@@ -2929,6 +2937,15 @@ var render = function() {
                                                             ),
                                                             attrs: {
                                                               _i: "74-" + $31
+                                                            },
+                                                            on: {
+                                                              click: function(
+                                                                $event
+                                                              ) {
+                                                                return _vm.$handleViewEvent(
+                                                                  $event
+                                                                )
+                                                              }
                                                             }
                                                           })
                                                         ],
@@ -2946,6 +2963,7 @@ var render = function() {
                                         ],
                                         1
                                       )
+                                    : _vm._e()
                                 ]
                               })
                             ],
@@ -3430,27 +3448,740 @@ var render = function() {
           _c(
             "v-uni-view",
             {
+              staticClass: _vm._$g(118, "sc"),
+              class: _vm._$g(118, "c"),
+              attrs: { _i: 118 },
+              on: {
+                click: function($event) {
+                  return _vm.$handleViewEvent($event)
+                }
+              }
+            },
+            [
+              _c(
+                "v-uni-view",
+                {
+                  staticClass: _vm._$g(119, "sc"),
+                  attrs: { _i: 119 },
+                  on: {
+                    click: function($event) {
+                      return _vm.$handleViewEvent($event, { stop: true })
+                    }
+                  }
+                },
+                [
+                  _c(
+                    "v-uni-view",
+                    { staticClass: _vm._$g(120, "sc"), attrs: { _i: 120 } },
+                    [
+                      _vm._$g(121, "i")
+                        ? _c(
+                            "v-uni-view",
+                            {
+                              staticClass: _vm._$g(121, "sc"),
+                              attrs: { _i: 121 }
+                            },
+                            [
+                              _c(
+                                "v-uni-view",
+                                {
+                                  staticClass: _vm._$g(122, "sc"),
+                                  attrs: { _i: 122 }
+                                },
+                                [
+                                  _c(
+                                    "v-uni-text",
+                                    {
+                                      staticClass: _vm._$g(123, "sc"),
+                                      attrs: { _i: 123 }
+                                    },
+                                    [
+                                      _c("v-uni-text", {
+                                        staticClass: _vm._$g(124, "sc"),
+                                        attrs: { _i: 124 }
+                                      }),
+                                      _vm._v("屏蔽自己")
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._$g(125, "e")
+                        ? _c(
+                            "v-uni-view",
+                            {
+                              staticClass: _vm._$g(125, "sc"),
+                              attrs: { _i: 125 },
+                              on: {
+                                click: function($event) {
+                                  return _vm.$handleViewEvent($event)
+                                }
+                              }
+                            },
+                            [
+                              _c(
+                                "v-uni-view",
+                                {
+                                  staticClass: _vm._$g(126, "sc"),
+                                  attrs: { _i: 126 }
+                                },
+                                [
+                                  _c(
+                                    "v-uni-text",
+                                    {
+                                      staticClass: _vm._$g(127, "sc"),
+                                      attrs: { _i: 127 }
+                                    },
+                                    [
+                                      _c("v-uni-text", {
+                                        staticClass: _vm._$g(128, "sc"),
+                                        attrs: { _i: 128 }
+                                      }),
+                                      _vm._v(
+                                        "屏蔽作者：" + _vm._$g(127, "t1-0")
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _c(
+                                    "v-uni-view",
+                                    {
+                                      staticClass: _vm._$g(129, "sc"),
+                                      attrs: { _i: 129 }
+                                    },
+                                    [_vm._v("屏蔽后，你将不会收到他的信息。")]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        : _c(
+                            "v-uni-view",
+                            {
+                              staticClass: _vm._$g(130, "sc"),
+                              attrs: { _i: 130 },
+                              on: {
+                                click: function($event) {
+                                  return _vm.$handleViewEvent($event)
+                                }
+                              }
+                            },
+                            [
+                              _c(
+                                "v-uni-view",
+                                {
+                                  staticClass: _vm._$g(131, "sc"),
+                                  attrs: { _i: 131 }
+                                },
+                                [
+                                  _c(
+                                    "v-uni-text",
+                                    {
+                                      staticClass: _vm._$g(132, "sc"),
+                                      attrs: { _i: 132 }
+                                    },
+                                    [
+                                      _c("v-uni-text", {
+                                        staticClass: _vm._$g(133, "sc"),
+                                        attrs: { _i: 133 }
+                                      }),
+                                      _vm._v(
+                                        "取消屏蔽：" + _vm._$g(132, "t1-0")
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _c(
+                                    "v-uni-view",
+                                    {
+                                      staticClass: _vm._$g(134, "sc"),
+                                      attrs: { _i: 134 }
+                                    },
+                                    [_vm._v("屏蔽后，你将不会收到他的信息。")]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                      _vm._$g(135, "i")
+                        ? _c(
+                            "v-uni-view",
+                            {
+                              staticClass: _vm._$g(135, "sc"),
+                              attrs: { _i: 135 }
+                            },
+                            [
+                              _c(
+                                "v-uni-view",
+                                {
+                                  staticClass: _vm._$g(136, "sc"),
+                                  attrs: { _i: 136 }
+                                },
+                                [
+                                  _c(
+                                    "v-uni-text",
+                                    {
+                                      staticClass: _vm._$g(137, "sc"),
+                                      attrs: { _i: 137 }
+                                    },
+                                    [
+                                      _c("v-uni-text", {
+                                        staticClass: _vm._$g(138, "sc"),
+                                        attrs: { _i: 138 }
+                                      }),
+                                      _vm._v("拉黑自己")
+                                    ],
+                                    1
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          )
+                        : _c(
+                            "v-uni-view",
+                            {
+                              staticClass: _vm._$g(139, "sc"),
+                              attrs: { _i: 139 },
+                              on: {
+                                click: function($event) {
+                                  return _vm.$handleViewEvent($event)
+                                }
+                              }
+                            },
+                            [
+                              _c(
+                                "v-uni-view",
+                                {
+                                  staticClass: _vm._$g(140, "sc"),
+                                  attrs: { _i: 140 }
+                                },
+                                [
+                                  _c(
+                                    "v-uni-text",
+                                    {
+                                      staticClass: _vm._$g(141, "sc"),
+                                      attrs: { _i: 141 }
+                                    },
+                                    [
+                                      _c("v-uni-text", {
+                                        staticClass: _vm._$g(142, "sc"),
+                                        attrs: { _i: 142 }
+                                      }),
+                                      _vm._v(
+                                        _vm._$g(141, "t1-0") +
+                                          "：" +
+                                          _vm._$g(141, "t1-1")
+                                      )
+                                    ],
+                                    1
+                                  ),
+                                  _c(
+                                    "v-uni-view",
+                                    {
+                                      staticClass: _vm._$g(143, "sc"),
+                                      attrs: { _i: 143 }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "拉黑后，他将不能回复和私聊你任何信息。"
+                                      )
+                                    ]
+                                  )
+                                ],
+                                1
+                              )
+                            ],
+                            1
+                          ),
+                      _c(
+                        "v-uni-view",
+                        {
+                          staticClass: _vm._$g(144, "sc"),
+                          attrs: { _i: 144 },
+                          on: {
+                            click: function($event) {
+                              return _vm.$handleViewEvent($event)
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "v-uni-view",
+                            {
+                              staticClass: _vm._$g(145, "sc"),
+                              attrs: { _i: 145 }
+                            },
+                            [
+                              _c(
+                                "v-uni-text",
+                                {
+                                  staticClass: _vm._$g(146, "sc"),
+                                  attrs: { _i: 146 }
+                                },
+                                [
+                                  _c("v-uni-text", {
+                                    staticClass: _vm._$g(147, "sc"),
+                                    attrs: { _i: 147 }
+                                  }),
+                                  _vm._v("举报此内容")
+                                ],
+                                1
+                              ),
+                              _c(
+                                "v-uni-view",
+                                {
+                                  staticClass: _vm._$g(148, "sc"),
+                                  attrs: { _i: 148 }
+                                },
+                                [_vm._v("标题夸张，内容质量差等。")]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _c(
+            "v-uni-view",
+            {
+              staticClass: _vm._$g(149, "sc"),
+              class: _vm._$g(149, "c"),
+              attrs: { _i: 149 },
+              on: {
+                click: function($event) {
+                  return _vm.$handleViewEvent($event)
+                }
+              }
+            },
+            [
+              _c(
+                "v-uni-view",
+                {
+                  staticClass: _vm._$g(150, "sc"),
+                  attrs: { _i: 150 },
+                  on: {
+                    click: function($event) {
+                      return _vm.$handleViewEvent($event, { stop: true })
+                    }
+                  }
+                },
+                [
+                  _c(
+                    "v-uni-view",
+                    { staticClass: _vm._$g(151, "sc"), attrs: { _i: 151 } },
+                    [
+                      _c(
+                        "v-uni-view",
+                        { staticClass: _vm._$g(152, "sc"), attrs: { _i: 152 } },
+                        [_vm._v("请输入举报理由")]
+                      ),
+                      _c(
+                        "v-uni-view",
+                        {
+                          staticClass: _vm._$g(153, "sc"),
+                          attrs: { _i: 153 },
+                          on: {
+                            click: function($event) {
+                              return _vm.$handleViewEvent($event)
+                            }
+                          }
+                        },
+                        [
+                          _c("v-uni-text", {
+                            staticClass: _vm._$g(154, "sc"),
+                            attrs: { _i: 154 }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _c(
+                    "v-uni-view",
+                    { staticClass: _vm._$g(155, "sc"), attrs: { _i: 155 } },
+                    [
+                      _c(
+                        "v-uni-radio-group",
+                        {
+                          staticClass: _vm._$g(156, "sc"),
+                          attrs: { _i: 156 },
+                          on: {
+                            change: function($event) {
+                              return _vm.$handleViewEvent($event)
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "v-uni-view",
+                            {
+                              staticClass: _vm._$g(157, "sc"),
+                              attrs: { _i: 157 }
+                            },
+                            [
+                              _c(
+                                "v-uni-view",
+                                {
+                                  staticClass: _vm._$g(158, "sc"),
+                                  attrs: { _i: 158 }
+                                },
+                                [_vm._v("广告垃圾")]
+                              ),
+                              _c("v-uni-radio", {
+                                class: _vm._$g(159, "c"),
+                                attrs: {
+                                  checked: _vm._$g(159, "a-checked"),
+                                  value: "A",
+                                  _i: 159
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _c(
+                            "v-uni-view",
+                            {
+                              staticClass: _vm._$g(160, "sc"),
+                              attrs: { _i: 160 }
+                            },
+                            [
+                              _c(
+                                "v-uni-view",
+                                {
+                                  staticClass: _vm._$g(161, "sc"),
+                                  attrs: { _i: 161 }
+                                },
+                                [_vm._v("违规内容")]
+                              ),
+                              _c("v-uni-radio", {
+                                class: _vm._$g(162, "c"),
+                                attrs: {
+                                  checked: _vm._$g(162, "a-checked"),
+                                  value: "B",
+                                  _i: 162
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _c(
+                            "v-uni-view",
+                            {
+                              staticClass: _vm._$g(163, "sc"),
+                              attrs: { _i: 163 }
+                            },
+                            [
+                              _c(
+                                "v-uni-view",
+                                {
+                                  staticClass: _vm._$g(164, "sc"),
+                                  attrs: { _i: 164 }
+                                },
+                                [_vm._v("恶意灌水")]
+                              ),
+                              _c("v-uni-radio", {
+                                class: _vm._$g(165, "c"),
+                                attrs: {
+                                  checked: _vm._$g(165, "a-checked"),
+                                  value: "C",
+                                  _i: 165
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _c(
+                            "v-uni-view",
+                            {
+                              staticClass: _vm._$g(166, "sc"),
+                              attrs: { _i: 166 }
+                            },
+                            [
+                              _c(
+                                "v-uni-view",
+                                {
+                                  staticClass: _vm._$g(167, "sc"),
+                                  attrs: { _i: 167 }
+                                },
+                                [_vm._v("重复内容")]
+                              ),
+                              _c("v-uni-radio", {
+                                class: _vm._$g(168, "c"),
+                                attrs: {
+                                  checked: _vm._$g(168, "a-checked"),
+                                  value: "D",
+                                  _i: 168
+                                }
+                              })
+                            ],
+                            1
+                          ),
+                          _c(
+                            "v-uni-view",
+                            {
+                              staticClass: _vm._$g(169, "sc"),
+                              attrs: { _i: 169 }
+                            },
+                            [
+                              _c(
+                                "v-uni-view",
+                                {
+                                  staticClass: _vm._$g(170, "sc"),
+                                  attrs: { _i: 170 }
+                                },
+                                [_vm._v("其他")]
+                              ),
+                              _c("v-uni-radio", {
+                                class: _vm._$g(171, "c"),
+                                attrs: {
+                                  checked: _vm._$g(171, "a-checked"),
+                                  value: "E",
+                                  _i: 171
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._$g(172, "i")
+                        ? _c(
+                            "v-uni-view",
+                            {
+                              staticClass: _vm._$g(172, "sc"),
+                              attrs: { _i: 172 }
+                            },
+                            [
+                              _c("v-uni-textarea", {
+                                attrs: {
+                                  maxlength: "-1",
+                                  placeholder: "请在此输入想要说的话",
+                                  _i: 173
+                                },
+                                model: {
+                                  value: _vm._$g(173, "v-model"),
+                                  callback: function($$v) {
+                                    _vm.$handleVModelEvent(173, $$v)
+                                  },
+                                  expression: "jubaomessage"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ],
+                    1
+                  ),
+                  _c(
+                    "v-uni-view",
+                    { staticClass: _vm._$g(174, "sc"), attrs: { _i: 174 } },
+                    [
+                      _vm._$g(175, "i")
+                        ? _c(
+                            "v-uni-view",
+                            {
+                              staticClass: _vm._$g(175, "sc"),
+                              attrs: { _i: 175 }
+                            },
+                            [
+                              _c(
+                                "v-uni-button",
+                                {
+                                  staticClass: _vm._$g(176, "sc"),
+                                  attrs: { _i: 176 },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.$handleViewEvent($event)
+                                    }
+                                  }
+                                },
+                                [_vm._v("发送")]
+                              )
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _c(
+            "v-uni-view",
+            {
+              staticClass: _vm._$g(177, "sc"),
+              class: _vm._$g(177, "c"),
+              attrs: { _i: 177 }
+            },
+            [
+              _c(
+                "v-uni-button",
+                {
+                  staticClass: _vm._$g(178, "sc"),
+                  class: _vm._$g(178, "c"),
+                  attrs: { _i: 178 }
+                },
+                [
+                  _c(
+                    "v-uni-text",
+                    { staticClass: _vm._$g(179, "sc"), attrs: { _i: 179 } },
+                    [_vm._v(_vm._$g(179, "t0-0") + "：")]
+                  ),
+                  _c(
+                    "v-uni-text",
+                    { staticClass: _vm._$g(180, "sc"), attrs: { _i: 180 } },
+                    [_vm._v(_vm._$g(180, "t0-0"))]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _c(
+            "v-uni-view",
+            {
+              staticClass: _vm._$g(181, "sc"),
+              class: _vm._$g(181, "c"),
+              attrs: { _i: 181 },
+              on: {
+                click: function($event) {
+                  return _vm.$handleViewEvent($event)
+                }
+              }
+            },
+            [
+              _c(
+                "v-uni-view",
+                {
+                  staticClass: _vm._$g(182, "sc"),
+                  attrs: { _i: 182 },
+                  on: {
+                    click: function($event) {
+                      return _vm.$handleViewEvent($event, { stop: true })
+                    }
+                  }
+                },
+                [
+                  _c(
+                    "v-uni-view",
+                    { staticClass: _vm._$g(183, "sc"), attrs: { _i: 183 } },
+                    [
+                      _c(
+                        "v-uni-view",
+                        { staticClass: _vm._$g(184, "sc"), attrs: { _i: 184 } },
+                        [_vm._v("举报错误")]
+                      ),
+                      _c(
+                        "v-uni-view",
+                        {
+                          staticClass: _vm._$g(185, "sc"),
+                          attrs: { _i: 185 },
+                          on: {
+                            click: function($event) {
+                              return _vm.$handleViewEvent($event)
+                            }
+                          }
+                        },
+                        [
+                          _c("v-uni-text", {
+                            staticClass: _vm._$g(186, "sc"),
+                            attrs: { _i: 186 }
+                          })
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _c(
+                    "v-uni-view",
+                    { staticClass: _vm._$g(187, "sc"), attrs: { _i: 187 } },
+                    [_vm._v("无法举报，错误提示：" + _vm._$g(187, "t0-0"))]
+                  ),
+                  _c(
+                    "v-uni-view",
+                    { staticClass: _vm._$g(188, "sc"), attrs: { _i: 188 } },
+                    [
+                      _c(
+                        "v-uni-view",
+                        { staticClass: _vm._$g(189, "sc"), attrs: { _i: 189 } },
+                        [
+                          _c(
+                            "v-uni-button",
+                            {
+                              staticClass: _vm._$g(190, "sc"),
+                              attrs: { _i: 190 },
+                              on: {
+                                click: function($event) {
+                                  return _vm.$handleViewEvent($event)
+                                }
+                              }
+                            },
+                            [_vm._v("确定")]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _c(
+            "v-uni-view",
+            {
               directives: [
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: _vm._$g(118, "v-show"),
-                  expression: "_$g(118,'v-show')"
+                  value: _vm._$g(191, "v-show"),
+                  expression: "_$g(191,'v-show')"
                 }
               ],
-              staticClass: _vm._$g(118, "sc"),
-              style: _vm._$g(118, "s"),
-              attrs: { _i: 118 }
+              staticClass: _vm._$g(191, "sc"),
+              style: _vm._$g(191, "s"),
+              attrs: { _i: 191 }
             },
             [
               _c("v-uni-view", {
-                staticClass: _vm._$g(119, "sc"),
-                style: _vm._$g(119, "s"),
-                attrs: { _i: 119 }
+                staticClass: _vm._$g(192, "sc"),
+                style: _vm._$g(192, "s"),
+                attrs: { _i: 192 }
               }),
               _c("v-uni-view", {
-                staticClass: _vm._$g(120, "sc"),
-                attrs: { _i: 120 }
+                staticClass: _vm._$g(193, "sc"),
+                attrs: { _i: 193 }
               })
             ],
             1
@@ -16766,7 +17497,7 @@ var ___CSS_LOADER_URL_IMPORT_0___ = __webpack_require__(/*! ../../static/vip.png
 exports = ___CSS_LOADER_API_IMPORT___(false);
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = ___CSS_LOADER_GET_URL_IMPORT___(___CSS_LOADER_URL_IMPORT_0___);
 // Module
-exports.push([module.i, ".text-content2[data-v-01f0416b] {\n  padding: 0 30upx 0;\n  font-size: 1.5rem;\n  margin-bottom: 20upx;\n}\n.cu-item .title[data-v-01f0416b] {\n  font-size: 2rem;\n  font-weight: 900;\n  color: #333333;\n  line-height: 100upx;\n  padding: 0 30upx;\n}\n.cu-modal .cu-item .content[data-v-01f0416b] {\n  border-bottom: 1upx solid #ccc !important;\n  padding-bottom: 20upx;\n}\n.float[data-v-01f0416b] {\n  display: -webkit-box;\n  word-break: break-all;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: 3;\n  overflow: hidden;\n}\n.float2[data-v-01f0416b] {\n  display: -webkit-box;\n  word-break: break-all;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: 2;\n  overflow: hidden;\n}\n.hide[data-v-01f0416b] {\n  display: -webkit-box;\n}\n.show[data-v-01f0416b] {\n  display: block;\n}\n.status_bar[data-v-01f0416b],\n.container[data-v-01f0416b],\n.header[data-v-01f0416b],\n.emoji[data-v-01f0416b],\n.file[data-v-01f0416b] {\n  background-color: white;\n}\n.emoji[data-v-01f0416b] {\n  height: 400upx;\n  padding: 0 0 20upx 20upx;\n  position: relative;\n}\n.emoji .list[data-v-01f0416b] {\n  width: 100%;\n  height: 400upx;\n  padding: 20upx 0;\n  overflow-y: auto;\n}\n.emoji .list .item[data-v-01f0416b] {\n  float: left;\n  display: block;\n  height: 60upx;\n  line-height: 60upx;\n  width: calc(100% / 11);\n  margin-right: 20upx;\n}\n.file[data-v-01f0416b] {\n  padding: 30upx 20upx;\n}\n.file .list[data-v-01f0416b] {\n  overflow: hidden;\n  padding-left: 10upx;\n  justify-content: flex-start;\n}\n.file .item[data-v-01f0416b] {\n  float: left;\n  width: 110upx;\n  height: 200upx;\n  border-radius: 10upx;\n  margin-right: 40upx;\n  background-color: #FFF;\n}\n.file .item .icon[data-v-01f0416b] {\n  width: 50upx;\n}\n.file .item .text[data-v-01f0416b] {\n  font-size: 1.2rem;\n  margin-top: 4upx;\n}\n.icon[data-v-01f0416b] {\n  width: 48upx;\n  height: 48upx;\n}\n.cu-list[data-v-01f0416b] {\n  margin-top: -10upx !important;\n}\n.solids-top[data-v-01f0416b]::after {\n  border-top: 1px solid #eee !important;\n}\n.overlayer[data-v-01f0416b] {\n  position: fixed;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  z-index: 10;\n}\n.vip[data-v-01f0416b] {\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n  background-size: 28upx 28upx;\n  height: 28upx !important;\n  width: 28upx !important;\n}\n.xunzhangshow[data-v-01f0416b] {\n  max-height: 32upx !important;\n  max-width: 22upx !important;\n  padding-left: 4upx;\n}\n.touxian[data-v-01f0416b] {\n  max-width: 200upx;\n  max-height: 100upx;\n  position: absolute;\n  right: 0;\n  margin-top: 50upx;\n}\n.touxian2[data-v-01f0416b] {\n  max-width: 160upx;\n  max-height: 80upx;\n  position: absolute;\n  right: 0;\n  margin-top: 40upx;\n}\n.bhh[data-v-01f0416b] {\n  display: inline-block;\n  word-wrap: break-word;\n  white-space: normal;\n}\n.hbx[data-v-01f0416b] {\n  position: relative;\n}\n.ltsp[data-v-01f0416b] {\n  line-height: 24upx;\n}\n.gzlist2[data-v-01f0416b] {\n  position: absolute;\n  background-color: transparent;\n  margin: -0upx 0 0 -28upx;\n  width: 140upx;\n  height: 140upx;\n}\n.badge[data-v-01f0416b] {\n  z-index: 9;\n}\n.gzlist3[data-v-01f0416b] {\n  position: absolute;\n  background-color: transparent;\n  margin: -13upx 0 0 -100upx;\n  width: 86upx;\n  height: 86upx;\n}\n.noborder[data-v-01f0416b] {\n  padding-top: 0px !important;\n  margin-top: 0px !important;\n}\n.noborder2[data-v-01f0416b] {\n  padding-top: 30upx;\n}\n", ""]);
+exports.push([module.i, ".text-content2[data-v-01f0416b] {\n  padding: 0 30upx 0;\n  font-size: 1.5rem;\n  margin-bottom: 20upx;\n}\n.cu-item .title[data-v-01f0416b] {\n  font-size: 2rem;\n  font-weight: 900;\n  color: #333333;\n  line-height: 100upx;\n  padding: 0 30upx;\n}\n.cu-modal .cu-item .content[data-v-01f0416b] {\n  border-bottom: 1upx solid #ccc !important;\n  padding-bottom: 20upx;\n}\n.float[data-v-01f0416b] {\n  display: -webkit-box;\n  word-break: break-all;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: 3;\n  overflow: hidden;\n}\n.float2[data-v-01f0416b] {\n  display: -webkit-box;\n  word-break: break-all;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: 2;\n  overflow: hidden;\n}\n.hide[data-v-01f0416b] {\n  display: -webkit-box;\n}\n.show[data-v-01f0416b] {\n  display: block;\n}\n.status_bar[data-v-01f0416b],\n.container[data-v-01f0416b],\n.header[data-v-01f0416b],\n.emoji[data-v-01f0416b],\n.file[data-v-01f0416b] {\n  background-color: white;\n}\n.emoji[data-v-01f0416b] {\n  height: 400upx;\n  padding: 0 0 20upx 20upx;\n  position: relative;\n}\n.emoji .list[data-v-01f0416b] {\n  width: 100%;\n  height: 400upx;\n  padding: 20upx 0;\n  overflow-y: auto;\n}\n.emoji .list .item[data-v-01f0416b] {\n  float: left;\n  display: block;\n  height: 60upx;\n  line-height: 60upx;\n  width: calc(100% / 11);\n  margin-right: 20upx;\n}\n.file[data-v-01f0416b] {\n  padding: 30upx 20upx;\n}\n.file .list[data-v-01f0416b] {\n  overflow: hidden;\n  padding-left: 10upx;\n  justify-content: flex-start;\n}\n.file .item[data-v-01f0416b] {\n  float: left;\n  width: 110upx;\n  height: 200upx;\n  border-radius: 10upx;\n  margin-right: 40upx;\n  background-color: #FFF;\n}\n.file .item .icon[data-v-01f0416b] {\n  width: 50upx;\n}\n.file .item .text[data-v-01f0416b] {\n  font-size: 1.2rem;\n  margin-top: 4upx;\n}\n.icon[data-v-01f0416b] {\n  width: 48upx;\n  height: 48upx;\n}\n.cu-list[data-v-01f0416b] {\n  margin-top: -10upx !important;\n}\n.solids-top[data-v-01f0416b]::after {\n  border-top: 1px solid #eee !important;\n}\n.overlayer[data-v-01f0416b] {\n  position: fixed;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  z-index: 10;\n}\n.vip[data-v-01f0416b] {\n  background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\n  background-size: 28upx 28upx;\n  height: 28upx !important;\n  width: 28upx !important;\n}\n.xunzhangshow[data-v-01f0416b] {\n  max-height: 32upx !important;\n  max-width: 22upx !important;\n  padding-left: 4upx;\n}\n.touxian[data-v-01f0416b] {\n  max-width: 200upx;\n  max-height: 100upx;\n  position: absolute;\n  right: 0;\n  margin-top: 50upx;\n}\n.touxian2[data-v-01f0416b] {\n  max-width: 160upx;\n  max-height: 80upx;\n  position: absolute;\n  right: 0;\n  margin-top: 40upx;\n}\n.bhh[data-v-01f0416b] {\n  display: inline-block;\n  word-wrap: break-word;\n  white-space: normal;\n}\n.hbx[data-v-01f0416b] {\n  position: relative;\n}\n.ltsp[data-v-01f0416b] {\n  line-height: 24upx;\n}\n.gzlist2[data-v-01f0416b] {\n  position: absolute;\n  background-color: transparent;\n  margin: -0upx 0 0 -28upx;\n  width: 140upx;\n  height: 140upx;\n}\n.badge[data-v-01f0416b] {\n  z-index: 9;\n}\n.gzlist3[data-v-01f0416b] {\n  position: absolute;\n  background-color: transparent;\n  margin: -13upx 0 0 -100upx;\n  width: 86upx;\n  height: 86upx;\n}\n.noborder[data-v-01f0416b] {\n  padding-top: 0px !important;\n  margin-top: 0px !important;\n}\n.noborder2[data-v-01f0416b] {\n  padding-top: 30upx;\n}\n.chacha[data-v-01f0416b] {\n  position: absolute;\n  right: 30upx;\n}\n", ""]);
 // Exports
 module.exports = exports;
 
@@ -26024,128 +26755,141 @@ var render = function() {
                                     $34
                                   ) {
                                     return [
-                                      _c(
-                                        "v-uni-view",
-                                        {
-                                          key: item["k0"],
-                                          staticClass: _vm._$g(
-                                            "51-" + $34,
-                                            "sc"
-                                          ),
-                                          staticStyle: {
-                                            "padding-top": "10upx",
-                                            "padding-bottom": "10upx"
-                                          },
-                                          attrs: { _i: "51-" + $34 }
-                                        },
-                                        [
-                                          _c(
+                                      _vm._$g("51-" + $34, "i")
+                                        ? _c(
                                             "v-uni-view",
                                             {
-                                              attrs: { _i: "52-" + $34 },
-                                              on: {
-                                                click: function($event) {
-                                                  return _vm.$handleViewEvent(
-                                                    $event
-                                                  )
-                                                }
-                                              }
+                                              key: item["k0"],
+                                              staticClass: _vm._$g(
+                                                "51-" + $34,
+                                                "sc"
+                                              ),
+                                              staticStyle: {
+                                                "padding-top": "10upx",
+                                                "padding-bottom": "10upx"
+                                              },
+                                              attrs: { _i: "51-" + $34 }
                                             },
                                             [
                                               _c(
-                                                "v-uni-text",
+                                                "v-uni-view",
                                                 {
-                                                  staticClass: _vm._$g(
-                                                    "53-" + $34,
-                                                    "sc"
-                                                  ),
-                                                  staticStyle: {
-                                                    width: "100%"
-                                                  },
-                                                  attrs: { _i: "53-" + $34 }
+                                                  attrs: { _i: "52-" + $34 },
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.$handleViewEvent(
+                                                        $event
+                                                      )
+                                                    }
+                                                  }
                                                 },
                                                 [
-                                                  _vm._v(
-                                                    _vm._$g("53-" + $34, "t0-0")
+                                                  _c(
+                                                    "v-uni-text",
+                                                    {
+                                                      staticClass: _vm._$g(
+                                                        "53-" + $34,
+                                                        "sc"
+                                                      ),
+                                                      staticStyle: {
+                                                        width: "100%"
+                                                      },
+                                                      attrs: { _i: "53-" + $34 }
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        _vm._$g(
+                                                          "53-" + $34,
+                                                          "t0-0"
+                                                        )
+                                                      )
+                                                    ]
                                                   )
-                                                ]
+                                                ],
+                                                1
+                                              ),
+                                              _c(
+                                                "v-uni-view",
+                                                { attrs: { _i: "54-" + $34 } },
+                                                [
+                                                  _c(
+                                                    "v-uni-text",
+                                                    {
+                                                      staticClass: _vm._$g(
+                                                        "55-" + $34,
+                                                        "sc"
+                                                      ),
+                                                      attrs: {
+                                                        _i: "55-" + $34
+                                                      },
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.$handleViewEvent(
+                                                            $event
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    [_vm._v("置顶")]
+                                                  ),
+                                                  _c(
+                                                    "v-uni-text",
+                                                    {
+                                                      staticClass: _vm._$g(
+                                                        "56-" + $34,
+                                                        "sc"
+                                                      ),
+                                                      attrs: {
+                                                        _i: "56-" + $34
+                                                      },
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.$handleViewEvent(
+                                                            $event
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        _vm._$g(
+                                                          "56-" + $34,
+                                                          "t0-0"
+                                                        ) +
+                                                          "  " +
+                                                          _vm._$g(
+                                                            "56-" + $34,
+                                                            "t0-1"
+                                                          ) +
+                                                          "评"
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _c("v-uni-view", {
+                                                    staticClass: _vm._$g(
+                                                      "57-" + $34,
+                                                      "sc"
+                                                    ),
+                                                    attrs: { _i: "57-" + $34 },
+                                                    on: {
+                                                      click: function($event) {
+                                                        return _vm.$handleViewEvent(
+                                                          $event
+                                                        )
+                                                      }
+                                                    }
+                                                  })
+                                                ],
+                                                1
                                               )
                                             ],
                                             1
-                                          ),
-                                          _c(
-                                            "v-uni-view",
-                                            { attrs: { _i: "54-" + $34 } },
-                                            [
-                                              _c(
-                                                "v-uni-text",
-                                                {
-                                                  staticClass: _vm._$g(
-                                                    "55-" + $34,
-                                                    "sc"
-                                                  ),
-                                                  attrs: { _i: "55-" + $34 },
-                                                  on: {
-                                                    click: function($event) {
-                                                      return _vm.$handleViewEvent(
-                                                        $event
-                                                      )
-                                                    }
-                                                  }
-                                                },
-                                                [_vm._v("置顶")]
-                                              ),
-                                              _c(
-                                                "v-uni-text",
-                                                {
-                                                  staticClass: _vm._$g(
-                                                    "56-" + $34,
-                                                    "sc"
-                                                  ),
-                                                  attrs: { _i: "56-" + $34 },
-                                                  on: {
-                                                    click: function($event) {
-                                                      return _vm.$handleViewEvent(
-                                                        $event
-                                                      )
-                                                    }
-                                                  }
-                                                },
-                                                [
-                                                  _vm._v(
-                                                    _vm._$g(
-                                                      "56-" + $34,
-                                                      "t0-0"
-                                                    ) +
-                                                      "  " +
-                                                      _vm._$g(
-                                                        "56-" + $34,
-                                                        "t0-1"
-                                                      ) +
-                                                      "评"
-                                                  )
-                                                ]
-                                              ),
-                                              _c("v-uni-view", {
-                                                staticClass: _vm._$g(
-                                                  "57-" + $34,
-                                                  "sc"
-                                                ),
-                                                attrs: { _i: "57-" + $34 },
-                                                on: {
-                                                  click: function($event) {
-                                                    return _vm.$handleViewEvent(
-                                                      $event
-                                                    )
-                                                  }
-                                                }
-                                              })
-                                            ],
-                                            1
                                           )
-                                        ],
-                                        1
-                                      )
+                                        : _vm._e()
                                     ]
                                   })
                                 ],
@@ -26164,190 +26908,92 @@ var render = function() {
                                     $35
                                   ) {
                                     return [
-                                      _c(
-                                        "v-uni-view",
-                                        {
-                                          key: item["k0"],
-                                          staticClass: _vm._$g(
-                                            "60-" + $35,
-                                            "sc"
-                                          ),
-                                          attrs: { _i: "60-" + $35 }
-                                        },
-                                        [
-                                          _c(
+                                      _vm._$g("60-" + $35, "i")
+                                        ? _c(
                                             "v-uni-view",
                                             {
+                                              key: item["k0"],
                                               staticClass: _vm._$g(
-                                                "61-" + $35,
+                                                "60-" + $35,
                                                 "sc"
                                               ),
-                                              attrs: { _i: "61-" + $35 }
+                                              attrs: { _i: "60-" + $35 }
                                             },
                                             [
                                               _c(
                                                 "v-uni-view",
                                                 {
                                                   staticClass: _vm._$g(
-                                                    "62-" + $35,
+                                                    "61-" + $35,
                                                     "sc"
                                                   ),
-                                                  attrs: { _i: "62-" + $35 },
-                                                  on: {
-                                                    click: function($event) {
-                                                      return _vm.$handleViewEvent(
-                                                        $event
-                                                      )
-                                                    }
-                                                  }
+                                                  attrs: { _i: "61-" + $35 }
                                                 },
                                                 [
                                                   _c(
                                                     "v-uni-view",
                                                     {
                                                       staticClass: _vm._$g(
-                                                        "63-" + $35,
+                                                        "62-" + $35,
                                                         "sc"
                                                       ),
-                                                      attrs: { _i: "63-" + $35 }
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        _vm._$g(
-                                                          "63-" + $35,
-                                                          "t0-0"
-                                                        )
-                                                      )
-                                                    ]
-                                                  )
-                                                ],
-                                                1
-                                              ),
-                                              _c(
-                                                "v-uni-view",
-                                                {
-                                                  staticClass: _vm._$g(
-                                                    "64-" + $35,
-                                                    "sc"
-                                                  ),
-                                                  attrs: { _i: "64-" + $35 }
-                                                },
-                                                [
-                                                  _vm._$g("65-" + $35, "i")
-                                                    ? _c("v-uni-image", {
-                                                        attrs: {
-                                                          src: _vm._$g(
-                                                            "65-" + $35,
-                                                            "a-src"
-                                                          ),
-                                                          mode: "aspectFill",
-                                                          _i: "65-" + $35
-                                                        },
-                                                        on: {
-                                                          click: function(
+                                                      attrs: {
+                                                        _i: "62-" + $35
+                                                      },
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.$handleViewEvent(
                                                             $event
-                                                          ) {
-                                                            return _vm.$handleViewEvent(
-                                                              $event
-                                                            )
-                                                          }
+                                                          )
                                                         }
-                                                      })
-                                                    : _vm._e(),
-                                                  _c(
-                                                    "v-uni-view",
-                                                    {
-                                                      staticClass: _vm._$g(
-                                                        "66-" + $35,
-                                                        "sc"
-                                                      ),
-                                                      attrs: { _i: "66-" + $35 }
+                                                      }
                                                     },
                                                     [
                                                       _c(
                                                         "v-uni-view",
                                                         {
                                                           staticClass: _vm._$g(
-                                                            "67-" + $35,
+                                                            "63-" + $35,
                                                             "sc"
                                                           ),
                                                           attrs: {
-                                                            _i: "67-" + $35
-                                                          },
-                                                          on: {
-                                                            click: function(
-                                                              $event
-                                                            ) {
-                                                              return _vm.$handleViewEvent(
-                                                                $event
-                                                              )
-                                                            }
+                                                            _i: "63-" + $35
                                                           }
                                                         },
                                                         [
                                                           _vm._v(
                                                             _vm._$g(
-                                                              "67-" + $35,
+                                                              "63-" + $35,
                                                               "t0-0"
                                                             )
                                                           )
                                                         ]
+                                                      )
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _c(
+                                                    "v-uni-view",
+                                                    {
+                                                      staticClass: _vm._$g(
+                                                        "64-" + $35,
+                                                        "sc"
                                                       ),
-                                                      _c(
-                                                        "v-uni-view",
-                                                        {
-                                                          attrs: {
-                                                            _i: "68-" + $35
-                                                          }
-                                                        },
-                                                        [
-                                                          _c(
-                                                            "v-uni-view",
-                                                            {
-                                                              staticClass: _vm._$g(
-                                                                "69-" + $35,
-                                                                "sc"
-                                                              ),
-                                                              attrs: {
-                                                                _i: "69-" + $35
-                                                              }
-                                                            },
-                                                            [
-                                                              _vm._v(
-                                                                _vm._$g(
-                                                                  "69-" + $35,
-                                                                  "t0-0"
-                                                                )
-                                                              )
-                                                            ]
-                                                          ),
-                                                          _c(
-                                                            "v-uni-view",
-                                                            {
-                                                              staticClass: _vm._$g(
-                                                                "70-" + $35,
-                                                                "sc"
-                                                              ),
-                                                              attrs: {
-                                                                _i: "70-" + $35
-                                                              }
-                                                            },
-                                                            [
-                                                              _vm._v(
-                                                                _vm._$g(
-                                                                  "70-" + $35,
-                                                                  "t0-0"
-                                                                ) + "评"
-                                                              )
-                                                            ]
-                                                          ),
-                                                          _c("v-uni-view", {
-                                                            staticClass: _vm._$g(
-                                                              "71-" + $35,
-                                                              "sc"
-                                                            ),
+                                                      attrs: { _i: "64-" + $35 }
+                                                    },
+                                                    [
+                                                      _vm._$g("65-" + $35, "i")
+                                                        ? _c("v-uni-image", {
                                                             attrs: {
-                                                              _i: "71-" + $35
+                                                              src: _vm._$g(
+                                                                "65-" + $35,
+                                                                "a-src"
+                                                              ),
+                                                              mode:
+                                                                "aspectFill",
+                                                              _i: "65-" + $35
                                                             },
                                                             on: {
                                                               click: function(
@@ -26359,6 +27005,124 @@ var render = function() {
                                                               }
                                                             }
                                                           })
+                                                        : _vm._e(),
+                                                      _c(
+                                                        "v-uni-view",
+                                                        {
+                                                          staticClass: _vm._$g(
+                                                            "66-" + $35,
+                                                            "sc"
+                                                          ),
+                                                          attrs: {
+                                                            _i: "66-" + $35
+                                                          }
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "v-uni-view",
+                                                            {
+                                                              staticClass: _vm._$g(
+                                                                "67-" + $35,
+                                                                "sc"
+                                                              ),
+                                                              attrs: {
+                                                                _i: "67-" + $35
+                                                              },
+                                                              on: {
+                                                                click: function(
+                                                                  $event
+                                                                ) {
+                                                                  return _vm.$handleViewEvent(
+                                                                    $event
+                                                                  )
+                                                                }
+                                                              }
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                _vm._$g(
+                                                                  "67-" + $35,
+                                                                  "t0-0"
+                                                                )
+                                                              )
+                                                            ]
+                                                          ),
+                                                          _c(
+                                                            "v-uni-view",
+                                                            {
+                                                              attrs: {
+                                                                _i: "68-" + $35
+                                                              }
+                                                            },
+                                                            [
+                                                              _c(
+                                                                "v-uni-view",
+                                                                {
+                                                                  staticClass: _vm._$g(
+                                                                    "69-" + $35,
+                                                                    "sc"
+                                                                  ),
+                                                                  attrs: {
+                                                                    _i:
+                                                                      "69-" +
+                                                                      $35
+                                                                  }
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    _vm._$g(
+                                                                      "69-" +
+                                                                        $35,
+                                                                      "t0-0"
+                                                                    )
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _c(
+                                                                "v-uni-view",
+                                                                {
+                                                                  staticClass: _vm._$g(
+                                                                    "70-" + $35,
+                                                                    "sc"
+                                                                  ),
+                                                                  attrs: {
+                                                                    _i:
+                                                                      "70-" +
+                                                                      $35
+                                                                  }
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    _vm._$g(
+                                                                      "70-" +
+                                                                        $35,
+                                                                      "t0-0"
+                                                                    ) + "评"
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _c("v-uni-view", {
+                                                                staticClass: _vm._$g(
+                                                                  "71-" + $35,
+                                                                  "sc"
+                                                                ),
+                                                                attrs: {
+                                                                  _i:
+                                                                    "71-" + $35
+                                                                },
+                                                                on: {
+                                                                  click: function(
+                                                                    $event
+                                                                  ) {
+                                                                    return _vm.$handleViewEvent(
+                                                                      $event
+                                                                    )
+                                                                  }
+                                                                }
+                                                              })
+                                                            ],
+                                                            1
+                                                          )
                                                         ],
                                                         1
                                                       )
@@ -26371,9 +27135,7 @@ var render = function() {
                                             ],
                                             1
                                           )
-                                        ],
-                                        1
-                                      )
+                                        : _vm._e()
                                     ]
                                   })
                                 ],
@@ -26392,190 +27154,92 @@ var render = function() {
                                     $36
                                   ) {
                                     return [
-                                      _c(
-                                        "v-uni-view",
-                                        {
-                                          key: item["k0"],
-                                          staticClass: _vm._$g(
-                                            "74-" + $36,
-                                            "sc"
-                                          ),
-                                          attrs: { _i: "74-" + $36 }
-                                        },
-                                        [
-                                          _c(
+                                      _vm._$g("74-" + $36, "i")
+                                        ? _c(
                                             "v-uni-view",
                                             {
+                                              key: item["k0"],
                                               staticClass: _vm._$g(
-                                                "75-" + $36,
+                                                "74-" + $36,
                                                 "sc"
                                               ),
-                                              attrs: { _i: "75-" + $36 }
+                                              attrs: { _i: "74-" + $36 }
                                             },
                                             [
                                               _c(
                                                 "v-uni-view",
                                                 {
                                                   staticClass: _vm._$g(
-                                                    "76-" + $36,
+                                                    "75-" + $36,
                                                     "sc"
                                                   ),
-                                                  attrs: { _i: "76-" + $36 },
-                                                  on: {
-                                                    click: function($event) {
-                                                      return _vm.$handleViewEvent(
-                                                        $event
-                                                      )
-                                                    }
-                                                  }
+                                                  attrs: { _i: "75-" + $36 }
                                                 },
                                                 [
                                                   _c(
                                                     "v-uni-view",
                                                     {
                                                       staticClass: _vm._$g(
-                                                        "77-" + $36,
+                                                        "76-" + $36,
                                                         "sc"
                                                       ),
-                                                      attrs: { _i: "77-" + $36 }
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        _vm._$g(
-                                                          "77-" + $36,
-                                                          "t0-0"
-                                                        )
-                                                      )
-                                                    ]
-                                                  )
-                                                ],
-                                                1
-                                              ),
-                                              _c(
-                                                "v-uni-view",
-                                                {
-                                                  staticClass: _vm._$g(
-                                                    "78-" + $36,
-                                                    "sc"
-                                                  ),
-                                                  attrs: { _i: "78-" + $36 }
-                                                },
-                                                [
-                                                  _vm._$g("79-" + $36, "i")
-                                                    ? _c("v-uni-image", {
-                                                        attrs: {
-                                                          src: _vm._$g(
-                                                            "79-" + $36,
-                                                            "a-src"
-                                                          ),
-                                                          mode: "aspectFill",
-                                                          _i: "79-" + $36
-                                                        },
-                                                        on: {
-                                                          click: function(
+                                                      attrs: {
+                                                        _i: "76-" + $36
+                                                      },
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.$handleViewEvent(
                                                             $event
-                                                          ) {
-                                                            return _vm.$handleViewEvent(
-                                                              $event
-                                                            )
-                                                          }
+                                                          )
                                                         }
-                                                      })
-                                                    : _vm._e(),
-                                                  _c(
-                                                    "v-uni-view",
-                                                    {
-                                                      staticClass: _vm._$g(
-                                                        "80-" + $36,
-                                                        "sc"
-                                                      ),
-                                                      attrs: { _i: "80-" + $36 }
+                                                      }
                                                     },
                                                     [
                                                       _c(
                                                         "v-uni-view",
                                                         {
                                                           staticClass: _vm._$g(
-                                                            "81-" + $36,
+                                                            "77-" + $36,
                                                             "sc"
                                                           ),
                                                           attrs: {
-                                                            _i: "81-" + $36
-                                                          },
-                                                          on: {
-                                                            click: function(
-                                                              $event
-                                                            ) {
-                                                              return _vm.$handleViewEvent(
-                                                                $event
-                                                              )
-                                                            }
+                                                            _i: "77-" + $36
                                                           }
                                                         },
                                                         [
                                                           _vm._v(
                                                             _vm._$g(
-                                                              "81-" + $36,
+                                                              "77-" + $36,
                                                               "t0-0"
                                                             )
                                                           )
                                                         ]
+                                                      )
+                                                    ],
+                                                    1
+                                                  ),
+                                                  _c(
+                                                    "v-uni-view",
+                                                    {
+                                                      staticClass: _vm._$g(
+                                                        "78-" + $36,
+                                                        "sc"
                                                       ),
-                                                      _c(
-                                                        "v-uni-view",
-                                                        {
-                                                          attrs: {
-                                                            _i: "82-" + $36
-                                                          }
-                                                        },
-                                                        [
-                                                          _c(
-                                                            "v-uni-view",
-                                                            {
-                                                              staticClass: _vm._$g(
-                                                                "83-" + $36,
-                                                                "sc"
-                                                              ),
-                                                              attrs: {
-                                                                _i: "83-" + $36
-                                                              }
-                                                            },
-                                                            [
-                                                              _vm._v(
-                                                                _vm._$g(
-                                                                  "83-" + $36,
-                                                                  "t0-0"
-                                                                )
-                                                              )
-                                                            ]
-                                                          ),
-                                                          _c(
-                                                            "v-uni-view",
-                                                            {
-                                                              staticClass: _vm._$g(
-                                                                "84-" + $36,
-                                                                "sc"
-                                                              ),
-                                                              attrs: {
-                                                                _i: "84-" + $36
-                                                              }
-                                                            },
-                                                            [
-                                                              _vm._v(
-                                                                _vm._$g(
-                                                                  "84-" + $36,
-                                                                  "t0-0"
-                                                                ) + "评"
-                                                              )
-                                                            ]
-                                                          ),
-                                                          _c("v-uni-view", {
-                                                            staticClass: _vm._$g(
-                                                              "85-" + $36,
-                                                              "sc"
-                                                            ),
+                                                      attrs: { _i: "78-" + $36 }
+                                                    },
+                                                    [
+                                                      _vm._$g("79-" + $36, "i")
+                                                        ? _c("v-uni-image", {
                                                             attrs: {
-                                                              _i: "85-" + $36
+                                                              src: _vm._$g(
+                                                                "79-" + $36,
+                                                                "a-src"
+                                                              ),
+                                                              mode:
+                                                                "aspectFill",
+                                                              _i: "79-" + $36
                                                             },
                                                             on: {
                                                               click: function(
@@ -26587,6 +27251,124 @@ var render = function() {
                                                               }
                                                             }
                                                           })
+                                                        : _vm._e(),
+                                                      _c(
+                                                        "v-uni-view",
+                                                        {
+                                                          staticClass: _vm._$g(
+                                                            "80-" + $36,
+                                                            "sc"
+                                                          ),
+                                                          attrs: {
+                                                            _i: "80-" + $36
+                                                          }
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "v-uni-view",
+                                                            {
+                                                              staticClass: _vm._$g(
+                                                                "81-" + $36,
+                                                                "sc"
+                                                              ),
+                                                              attrs: {
+                                                                _i: "81-" + $36
+                                                              },
+                                                              on: {
+                                                                click: function(
+                                                                  $event
+                                                                ) {
+                                                                  return _vm.$handleViewEvent(
+                                                                    $event
+                                                                  )
+                                                                }
+                                                              }
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                _vm._$g(
+                                                                  "81-" + $36,
+                                                                  "t0-0"
+                                                                )
+                                                              )
+                                                            ]
+                                                          ),
+                                                          _c(
+                                                            "v-uni-view",
+                                                            {
+                                                              attrs: {
+                                                                _i: "82-" + $36
+                                                              }
+                                                            },
+                                                            [
+                                                              _c(
+                                                                "v-uni-view",
+                                                                {
+                                                                  staticClass: _vm._$g(
+                                                                    "83-" + $36,
+                                                                    "sc"
+                                                                  ),
+                                                                  attrs: {
+                                                                    _i:
+                                                                      "83-" +
+                                                                      $36
+                                                                  }
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    _vm._$g(
+                                                                      "83-" +
+                                                                        $36,
+                                                                      "t0-0"
+                                                                    )
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _c(
+                                                                "v-uni-view",
+                                                                {
+                                                                  staticClass: _vm._$g(
+                                                                    "84-" + $36,
+                                                                    "sc"
+                                                                  ),
+                                                                  attrs: {
+                                                                    _i:
+                                                                      "84-" +
+                                                                      $36
+                                                                  }
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    _vm._$g(
+                                                                      "84-" +
+                                                                        $36,
+                                                                      "t0-0"
+                                                                    ) + "评"
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _c("v-uni-view", {
+                                                                staticClass: _vm._$g(
+                                                                  "85-" + $36,
+                                                                  "sc"
+                                                                ),
+                                                                attrs: {
+                                                                  _i:
+                                                                    "85-" + $36
+                                                                },
+                                                                on: {
+                                                                  click: function(
+                                                                    $event
+                                                                  ) {
+                                                                    return _vm.$handleViewEvent(
+                                                                      $event
+                                                                    )
+                                                                  }
+                                                                }
+                                                              })
+                                                            ],
+                                                            1
+                                                          )
                                                         ],
                                                         1
                                                       )
@@ -26599,9 +27381,7 @@ var render = function() {
                                             ],
                                             1
                                           )
-                                        ],
-                                        1
-                                      )
+                                        : _vm._e()
                                     ]
                                   })
                                 ],
@@ -30843,7 +31623,7 @@ var render = function() {
                     { staticClass: _vm._$g(166, "sc"), attrs: { _i: 166 } },
                     [
                       _vm._v(
-                        "如果遇到进度条100，但是APP没有正常重启，说明安装失败，版本差距过大，请去市场更新。"
+                        "如果遇到进度条100，但是APP没有正常重启，说明数据读取失败。"
                       )
                     ]
                   )
@@ -30851,17 +31631,22 @@ var render = function() {
               _c(
                 "v-uni-view",
                 { staticClass: _vm._$g(167, "sc"), attrs: { _i: 167 } },
+                [_vm._v("开源地址：github.com/konatatenshi/zdmobile")]
+              ),
+              _c(
+                "v-uni-view",
+                { staticClass: _vm._$g(168, "sc"), attrs: { _i: 168 } },
                 [
-                  _vm._$g(168, "i")
+                  _vm._$g(169, "i")
                     ? _c(
                         "v-uni-view",
-                        { staticClass: _vm._$g(168, "sc"), attrs: { _i: 168 } },
+                        { staticClass: _vm._$g(169, "sc"), attrs: { _i: 169 } },
                         [
                           _c(
                             "v-uni-button",
                             {
-                              staticClass: _vm._$g(169, "sc"),
-                              attrs: { _i: 169 },
+                              staticClass: _vm._$g(170, "sc"),
+                              attrs: { _i: 170 },
                               on: {
                                 click: function($event) {
                                   return _vm.$handleViewEvent($event)
@@ -30870,12 +31655,12 @@ var render = function() {
                             },
                             [_vm._v("取消")]
                           ),
-                          _vm._$g(170, "i")
+                          _vm._$g(171, "i")
                             ? _c(
                                 "v-uni-button",
                                 {
-                                  staticClass: _vm._$g(170, "sc"),
-                                  attrs: { _i: 170 },
+                                  staticClass: _vm._$g(171, "sc"),
+                                  attrs: { _i: 171 },
                                   on: {
                                     click: function($event) {
                                       return _vm.$handleViewEvent($event)
@@ -30898,29 +31683,29 @@ var render = function() {
           _c(
             "v-uni-view",
             {
-              staticClass: _vm._$g(171, "sc"),
-              class: _vm._$g(171, "c"),
-              attrs: { _i: 171 }
+              staticClass: _vm._$g(172, "sc"),
+              class: _vm._$g(172, "c"),
+              attrs: { _i: 172 }
             },
             [
               _c(
                 "v-uni-view",
-                { staticClass: _vm._$g(172, "sc"), attrs: { _i: 172 } },
+                { staticClass: _vm._$g(173, "sc"), attrs: { _i: 173 } },
                 [
                   _c(
                     "v-uni-view",
-                    { staticClass: _vm._$g(173, "sc"), attrs: { _i: 173 } },
+                    { staticClass: _vm._$g(174, "sc"), attrs: { _i: 174 } },
                     [
                       _c(
                         "v-uni-view",
-                        { staticClass: _vm._$g(174, "sc"), attrs: { _i: 174 } },
-                        [_vm._v("安装失败")]
+                        { staticClass: _vm._$g(175, "sc"), attrs: { _i: 175 } },
+                        [_vm._v("数据读取失败")]
                       ),
                       _c(
                         "v-uni-view",
                         {
-                          staticClass: _vm._$g(175, "sc"),
-                          attrs: { _i: 175 },
+                          staticClass: _vm._$g(176, "sc"),
+                          attrs: { _i: 176 },
                           on: {
                             click: function($event) {
                               return _vm.$handleViewEvent($event)
@@ -30929,8 +31714,8 @@ var render = function() {
                         },
                         [
                           _c("v-uni-text", {
-                            staticClass: _vm._$g(176, "sc"),
-                            attrs: { _i: 176 }
+                            staticClass: _vm._$g(177, "sc"),
+                            attrs: { _i: 177 }
                           })
                         ],
                         1
@@ -30940,22 +31725,22 @@ var render = function() {
                   ),
                   _c(
                     "v-uni-view",
-                    { staticClass: _vm._$g(177, "sc"), attrs: { _i: 177 } },
-                    [_vm._v("安装失败。可能因为版本不对。请联系管理员。")]
+                    { staticClass: _vm._$g(178, "sc"), attrs: { _i: 178 } },
+                    [_vm._v("数据读取失败。可能因为版本不对。请联系管理员。")]
                   ),
                   _c(
                     "v-uni-view",
-                    { staticClass: _vm._$g(178, "sc"), attrs: { _i: 178 } },
+                    { staticClass: _vm._$g(179, "sc"), attrs: { _i: 179 } },
                     [
                       _c(
                         "v-uni-view",
-                        { staticClass: _vm._$g(179, "sc"), attrs: { _i: 179 } },
+                        { staticClass: _vm._$g(180, "sc"), attrs: { _i: 180 } },
                         [
                           _c(
                             "v-uni-button",
                             {
-                              staticClass: _vm._$g(180, "sc"),
-                              attrs: { _i: 180 },
+                              staticClass: _vm._$g(181, "sc"),
+                              attrs: { _i: 181 },
                               on: {
                                 click: function($event) {
                                   return _vm.$handleViewEvent($event)

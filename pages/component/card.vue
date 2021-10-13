@@ -126,8 +126,8 @@
 								<text :class="loadModal1?'cuIcon-loading2 cuIconfont-spin':''"></text>{{favorite}}
 							</view>
 						</view>
-						<view class="cu-capsule flex-sub" @tap="more2(authorid,postup,pid)">
-							<text class='cuIcon-roundclose'></text>
+						<view class="cu-capsule flex-sub chacha" @tap="more2(authorid,postup,pid)">
+							<text class='text-gray cuIcon-close'></text>
 						</view>
 					</view>
 					<view class="margin-bottom-sm" style="max-height: 500rpx;" v-if="sightml!=''">
@@ -137,7 +137,7 @@
 				</view>
 				<view class="cu-list menu-avatar comment solids-top" v-for="(item,index) in huifulist" :key="index"
 					:data-id="index">
-					<view class="cu-item" v-if="!ifpingbi(item.author)&&$adminid<=0">
+					<view class="cu-item" v-if="!(ifpingbi(item.author)&&$adminid<=0)">
 						<view class="cu-avatar round" :style="[{ backgroundImage:'url(' + item.avatarlist + ')' }]" @tap="totheuid(item.authorid)">
 						</view>
 						<view class="content hbx">
@@ -847,7 +847,7 @@
 			},
 			ifpingbi(e){
 				if(this.pingbilist.indexOf(e)>=0){
-					console.log(e);
+					//console.log(e);
 					return true;
 				}else{
 					return false;
@@ -2456,5 +2456,9 @@
 	}
 	.noborder2{
 		padding-top: 30upx;
+	}
+	.chacha{
+		position: absolute;
+		right: 30upx;
 	}
 </style>

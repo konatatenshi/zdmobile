@@ -261,7 +261,10 @@
 					{{mbh(bite)}} MB / {{mbh(zongbite)}} MB
 				</view>
 				<view v-if="progress>0" class="padding-xl">
-					如果遇到进度条100，但是APP没有正常重启，说明安装失败，版本差距过大，请去市场更新。
+					如果遇到进度条100，但是APP没有正常重启，说明数据读取失败。
+				</view>
+				<view class="padding-xl">
+					开源地址：github.com/konatatenshi/zdmobile
 				</view>
 				<view class="cu-bar bg-white justify-end">
 					<view v-if="isupdate==1" class="action">
@@ -273,13 +276,13 @@
 			<view class="cu-modal" :class="modalName=='installfail'?'show':''">
 				<view class="cu-dialog">
 					<view class="cu-bar bg-white justify-end">
-						<view class="content">安装失败</view>
+						<view class="content">数据读取失败</view>
 						<view class="action" @tap="hideModal">
 							<text class="cuIcon-close text-red"></text>
 						</view>
 					</view>
 					<view class="padding-xl">
-						安装失败。可能因为版本不对。请联系管理员。
+						数据读取失败。可能因为版本不对。请联系管理员。
 					</view>
 					<view class="cu-bar bg-white justify-end">
 						<view class="action">
