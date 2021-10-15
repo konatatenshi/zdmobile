@@ -15,7 +15,7 @@
 				data-cur="component">
 				<view class="cuIcon-similar"></view> 版块
 			</view>
-			<view class="action text-gray add-action">
+			<view class="action text-gray add-action" @click="postnew()">
 				<button class="cu-btn cuIcon-add bg-green shadow"></button>
 				发布
 			</view>
@@ -177,6 +177,17 @@
 			},
 			NavChange: function(e) {
 				this.PageCur = e.currentTarget.dataset.cur;
+			},
+			postnew(){
+				if(this.$uid==0){
+					uni.redirectTo({
+						url:"../../components/ay-login/login-password"
+					})
+				}else{
+					uni.navigateTo({
+						url: '../extra/text'
+					})
+				}
 			},
 			loginchat() {
 				if(this.$uid>0 && this.$username == '游客'){

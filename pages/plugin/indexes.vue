@@ -157,7 +157,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		font-size: 1.2rem;
+		font-size: 0.8rem;
 		color: #888;
 	}
 
@@ -192,6 +192,6 @@
 		color: #fff;
 		line-height: 100upx;
 		text-align: center;
-		font-size: 2.4rem;
+		font-size: 1.7rem;
 	}
 </style>

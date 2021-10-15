@@ -67,8 +67,11 @@
 		</view>
 		<view class="cu-modal bottom-modal padding-bottom-xl" :class="modalName=='dazimode'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
+				<view class="flex flex-direction">
+					<image style="width: 100%;" src="../../static/aji.jpg">
+				</view>
 				<view class="cu-bar">
-					<view class="flex-sub text-center"><view><image src="../../static/aji.jpg"></view><view class="solid-bottom text-xxl padding"><text class="text-black text-bold"><span>大字模式<br>中老年用户的专属版本</span></text></view><view class="padding text-xl">字号变大，阅读更流畅，按钮更突出，不用担心点错啦。</view></view>
+					<view class="flex-sub text-center"><view class="solid-bottom text-xxl padding"><text class="text-black text-bold"><span>大字模式<br>中老年用户的专属版本</span></text></view><view class="padding text-xl">字号变大，阅读更流畅，按钮更突出，不用担心点错啦。</view></view>
 				</view>
 				<view class="padding flex flex-direction"><button class="cu-btn bg-red margin-tb-sm lg" @tap="dazis()">{{daziswitch}}大字模式</button></view>
 			</view>
@@ -128,13 +131,13 @@
 					data: e.detail.value,
 					success: function() {
 						if(e.detail.value == 'sm'){
-							Vue.prototype.$fontsize = uni.upx2px(14) + 'px';
-						}else if(e.detail.value == 'lg'){
 							Vue.prototype.$fontsize = uni.upx2px(26) + 'px';
-						}else if(e.detail.value == 'ex'){
+						}else if(e.detail.value == 'lg'){
 							Vue.prototype.$fontsize = uni.upx2px(30) + 'px';
+						}else if(e.detail.value == 'ex'){
+							Vue.prototype.$fontsize = uni.upx2px(40) + 'px';
 						}else{
-							Vue.prototype.$fontsize = uni.upx2px(20) + 'px';
+							Vue.prototype.$fontsize = uni.upx2px(28) + 'px';
 						}
 						//console.log(that.swiperList);
 					}
@@ -155,9 +158,9 @@
 					data: f,
 					success: function() {
 						if(f == 'ex'){
-							Vue.prototype.$fontsize = uni.upx2px(30) + 'px';
+							Vue.prototype.$fontsize = uni.upx2px(40) + 'px';
 						}else{
-							Vue.prototype.$fontsize = uni.upx2px(20) + 'px';
+							Vue.prototype.$fontsize = uni.upx2px(28) + 'px';
 						}
 						//console.log(that.swiperList);
 					}

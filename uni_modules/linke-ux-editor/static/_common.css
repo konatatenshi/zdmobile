@@ -1,0 +1,67 @@
+/*
+ * 编辑器公共样式
+ */
+
+.iconfont {
+	font-size: 36rpx;
+}
+
+.title-left {
+	font-weight: bold;
+	border-left: 5px solid #323233;
+}
+
+.title-center {
+	font-weight: bold;
+	text-align: center;
+
+}
+
+.title-style::before {
+	content: ' —— ';
+	color: grey;
+}
+
+.title-style::after {
+	content: ' —— ';
+	color: grey;
+}
+
+.title-right {
+	font-weight: bold;
+	text-align: right;
+	padding-right: 10px;
+	border-right: 5px solid #323233;
+}
+textarea{
+	border: none;
+}
+
+
+.text-right {
+	text-align: right;
+}
+
+.text-left {
+	text-align: left;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.text-bold{
+	font-weight: bold;
+}
+.text-italic{
+	font-style:italic;
+}
+.text-underline{
+	text-decoration: underline;
+}
+.text-del{
+	text-decoration: line-through;
+}
+.text-indent{
+	text-indent: 2em;
+}

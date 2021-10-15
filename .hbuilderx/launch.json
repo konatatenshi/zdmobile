@@ -14,7 +14,7 @@
      	{
      		"launchtype" : "local"
      	},
-     	"provider" : "tcb",
+     	"provider" : "aliyun",
      	"type" : "uniCloud"
      }
     ]

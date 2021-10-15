@@ -2276,12 +2276,12 @@
 <style lang="scss" scoped>
 	.text-content2 {
 		padding: 0 30upx 0;
-		font-size: 1.5rem;
+		font-size: 1.05rem;
 		margin-bottom: 20upx;
 	}
 
 	.cu-item .title {
-		font-size: 2rem;
+		font-size: 1.4rem;
 		font-weight: 900;
 		color: #333333;
 		line-height: 100upx;
@@ -2368,7 +2368,7 @@
 			}
 
 			.text {
-				font-size: 1.2rem;
+				font-size: 0.8rem;
 				margin-top: 4upx;
 			}
 		}
@@ -2438,15 +2438,15 @@
 	.ltsp {
 		line-height: 24upx;
 	}
-	.gzlist2 {		position: absolute;
-		background-color: transparent;		margin: -0upx 0 0 -28upx;
+	.gzlist2 {		position: absolute;
+		background-color: transparent;		margin: -0upx 0 0 -28upx;
 		width: 140upx;
 		height: 140upx;
 	}
-	.badge {		z-index: 9;
+	.badge {		z-index: 9;
 	}
-	.gzlist3 {		position: absolute;
-		background-color: transparent;		margin: -13upx 0 0 -100upx;
+	.gzlist3 {		position: absolute;
+		background-color: transparent;		margin: -13upx 0 0 -100upx;
 		width: 86upx;
 		height: 86upx;
 	}

@@ -546,7 +546,7 @@
 			}
 
 			.text {
-				font-size: 1.2rem;;
+				font-size: 0.8rem;;
 				margin-top: 4upx;
 			}
 		}
@@ -554,7 +554,7 @@
 
 	uni-view.author {
 		position: absolute;
-		font-size: 1rem;
+		font-size: 0.7rem;
 		color: #8799a3;
 		width: calc(100% - 160px);
 		top: -15upx;

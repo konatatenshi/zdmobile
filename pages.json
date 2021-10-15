@@ -38,7 +38,7 @@
 				
 		},
 		{
-			"path": "pages/basics/text",
+			"path": "pages/extra/text",
 			"style": {}
 		},
 		{
@@ -143,6 +143,47 @@
 		{
 			"path": "components/ay-login/login-password",
 			"style": {}
+		},
+		{
+		    "path": "uni_modules/linke-ux-editor/pages/editPic",
+		    "style": {
+		        "navigationBarTitleText": "图片编辑",
+		        "enablePullDownRefresh": false,
+				"background": "#CCCCCC",  
+				"bottom": {  
+				    "offset": "auto"  
+				}  
+		    }
+		}, {
+		    "path": "uni_modules/linke-ux-editor/pages/editTitle",
+		    "style": {
+		        "navigationBarTitleText": "标题编辑",
+		        "enablePullDownRefresh": false,
+				"background": "#CCCCCC",  
+				"bottom": {  
+				    "offset": "auto"  
+				}  
+		    }
+		}, {
+		    "path": "uni_modules/linke-ux-editor/pages/editTxt",
+		    "style": {
+		        "navigationBarTitleText": "文本编辑",
+		        "enablePullDownRefresh": false,
+				"background": "#CCCCCC",  
+				"bottom": {  
+				    "offset": "auto"  
+				}  
+		    }
+		}, {
+		    "path": "uni_modules/linke-ux-editor/pages/editVideo",
+		    "style": {
+		        "navigationBarTitleText": "视频编辑",
+		        "enablePullDownRefresh": false,
+				"background": "#CCCCCC",  
+				"bottom": {  
+				    "offset": "auto"  
+				}  
+		    }
 		}
 	],
 	"globalStyle": {

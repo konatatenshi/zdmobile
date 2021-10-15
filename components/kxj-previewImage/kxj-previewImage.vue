@@ -365,7 +365,7 @@ export default {
 		white-space: nowrap;
 		background-color: rgba(0, 0, 0, 0.5);
 		color: #fff;
-		font-size: 1.4rem;
+		font-size: 0.95rem;
 		letter-spacing: 3rpx;
 		user-select: none;
 	}

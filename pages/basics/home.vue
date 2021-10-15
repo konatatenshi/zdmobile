@@ -75,7 +75,7 @@
 									{{itemex.summary}}
 								</view>
 								<view v-else class="text-grey"
-									style="line-height:35upx; font-size: 1.2rem; padding-left: 10upx; padding-right: 100upx;padding-top: 5upx;text-overflow: -o-ellipsis-lastline;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
+									style="line-height:35upx; font-size: 0.8rem; padding-left: 10upx; padding-right: 100upx;padding-top: 5upx;text-overflow: -o-ellipsis-lastline;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
 									</img-cache>{{itemex.summary}}
 								</view>
 							</view>

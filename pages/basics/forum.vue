@@ -1078,10 +1078,10 @@
 	}
 
 	.forumtitle {
-		font-size: 1.4rem;
+		font-size: 0.95rem;
 		font-weight: 900;
 		color: #333333;
-		line-height: 1.6rem;
+		line-height: 1.1rem;
 		padding: 0 15px;
 	}
 
@@ -1132,12 +1132,12 @@
 	.padding-top2 {
 		padding-top: 26upx;
 	}
-	.gzlist2 {		position: absolute;
-		background-color: transparent;		margin: -0upx 0 0 -28upx;
+	.gzlist2 {		position: absolute;
+		background-color: transparent;		margin: -0upx 0 0 -28upx;
 		width: 140upx;
 		height: 140upx;
 	}
-	.badge {		z-index: 9;
+	.badge {		z-index: 9;
 	}
 	.chacha{
 		position: absolute;

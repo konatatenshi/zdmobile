@@ -116,8 +116,8 @@
 		align-items: flex-end;
 		justify-content: center;
 		background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.01), rgba(0, 0, 0, 0.6));
-		letter-spacing: 5px;
-		font-size: 2.5rem;
+		letter-spacing: 8upx;
+		font-size: 1.75rem;
 		opacity: 0;
 		pointer-events: none;
 		transition: all 0.4s;

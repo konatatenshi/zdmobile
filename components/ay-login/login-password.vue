@@ -924,7 +924,7 @@
 	.title2 {
 	    text-align: justify;
 	    padding-right: 20upx;
-	    font-size: 1.5rem;
+	    font-size: 1rem;
 	    position: relative;
 	    height: 100upx;
 	    line-height: 50upx;

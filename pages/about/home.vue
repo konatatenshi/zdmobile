@@ -264,7 +264,7 @@
 					如果遇到进度条100，但是APP没有正常重启，说明数据读取失败。
 				</view>
 				<view class="padding-xl">
-					开源地址：github.com/konatatenshi/zdmobile
+					开源地址：<text class="text-blue" @tap="tothegithub()">github.com/konatatenshi/zdmobile</text>
 				</view>
 				<view class="cu-bar bg-white justify-end">
 					<view v-if="isupdate==1" class="action">
@@ -373,6 +373,11 @@
 					animationType: 'pop-in',
 					animationDuration: 200
 				});
+			},
+			tothegithub(){
+				plus.runtime.openURL('https://github.com/konatatenshi/zdmobile', function(res) {  
+				                    console.log(res);  
+				                });  
 			},
 			cleanbefore(e) {
 				this.modalName = 'logout';
