@@ -755,7 +755,7 @@
 							that.mainpage++;
 							that.forumname = res.data.foruminfo1.name;
 							console.log(res.data.foruminfo2.threadtypes != false)
-							if (res.data.foruminfo2.threadtypes != false) {
+							if (res.data.foruminfo2.threadtypes != false && that.tabname.length<=4) {
 								Object.getOwnPropertyNames(res.data.foruminfo2.threadtypes.types).forEach(
 									function(key) {
 										console.log(res.data.foruminfo2.threadtypes.types[key], key)
