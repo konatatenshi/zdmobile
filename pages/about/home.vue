@@ -402,6 +402,7 @@
 						Vue.prototype.$imageswitch = 0;
 						Vue.prototype.$floorswitch = 0;
 						Vue.prototype.$nowdate = 0;
+						Vue.prototype.groupid = 0;
 						Vue.prototype.$username = '游客';
 						Vue.prototype.$avatarsmall = 'https://zd.tiangal.com/uc_server/images/randuser/small/0.jpg';
 						Vue.prototype.$avatarsmalldefault = 'https://zd.tiangal.com/uc_server/images/randuser/small/0.jpg';

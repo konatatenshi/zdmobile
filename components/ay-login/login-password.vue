@@ -533,6 +533,7 @@
 											Vue.prototype.$uid = loginvalue.uid;
 											Vue.prototype.$username = loginvalue.username;
 											Vue.prototype.$adminid = loginvalue.adminid;
+											Vue.prototype.$groupid = loginvalue.groupid;
 											let avanum = (Array(9).join("0") + loginvalue.uid).slice(-9);
 											Vue.prototype.$avatarsmall = 'https://zd.tiangal.com/uc_server/data/avatar/' + avanum
 												.substr(0, 3) + '/' + avanum.substr(3, 2) + '/' + avanum.substr(5, 2) + '/' +

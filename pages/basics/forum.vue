@@ -7,7 +7,7 @@
 			<block slot="content">{{forumname}}</block>
 			<block slot="right">
 				<view class="action">
-					<view class="cu-load cuIcon-roundadd" @tap="add()"></view>
+					<view class="cu-load cuIcon-roundadd" v-if="canpost==1" @tap="add()"></view>
 					<view class="padding-left cu-load cuIcon-refresh" @tap="refresh()"></view>
 				</view>
 			</block>
@@ -395,6 +395,7 @@
 				InputBottom: 0,
 				loadwb: 0,
 				loadProgress: 0,
+				canpost: 0,
 				pingbiauthor: "",
 				pingbitid: 0,
 				closed: 0,
@@ -751,6 +752,11 @@
 								if (res.data.post.length < 30) {
 									that.loading = '到底了。';
 								}
+							}
+							console.log(that.$groupid);
+							console.log(res.data.foruminfo2.postperm);
+							if(res.data.foruminfo2.postperm.indexOf(that.$groupid)>=0&&Object.keys(res.data.foruminfo2.postperm).length>0){
+								that.canpost = 1;
 							}
 							that.mainpage++;
 							that.forumname = res.data.foruminfo1.name;

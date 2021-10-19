@@ -1684,15 +1684,17 @@ var render = function() {
                     "v-uni-view",
                     { staticClass: _vm._$g(7, "sc"), attrs: { _i: 7 } },
                     [
-                      _c("v-uni-view", {
-                        staticClass: _vm._$g(8, "sc"),
-                        attrs: { _i: 8 },
-                        on: {
-                          click: function($event) {
-                            return _vm.$handleViewEvent($event)
-                          }
-                        }
-                      }),
+                      _vm._$g(8, "i")
+                        ? _c("v-uni-view", {
+                            staticClass: _vm._$g(8, "sc"),
+                            attrs: { _i: 8 },
+                            on: {
+                              click: function($event) {
+                                return _vm.$handleViewEvent($event)
+                              }
+                            }
+                          })
+                        : _vm._e(),
                       _c("v-uni-view", {
                         staticClass: _vm._$g(9, "sc"),
                         attrs: { _i: 9 },

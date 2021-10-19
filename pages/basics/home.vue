@@ -514,6 +514,54 @@
 						}
 					});
 				} else if (this.TabCur == 1) {
+					this.page = 0;
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:zhidingtie', //获取置顶帖子
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data);
+							that.tuijiantie = res.data.tuijiantie.data;
+							that.toplist = res.data.toplist.data;
+							that.newpost = res.data.newpost.data;
+							console.log(that.tuijiantie);
+							if (uni.getSystemInfoSync().platform == 'ios') {
+								setTimeout(function() {
+									that.setHeight("view_listnow");
+								}, 100)
+								setTimeout(function() {
+									that.setHeight("view_listnow");
+								}, 500)
+							} else {
+								setTimeout(function() {
+									that.setHeight("view_listnow");
+								}, 100)
+								setTimeout(function() {
+									that.setHeight("view_listnow");
+								}, 500)
+								setTimeout(function() {
+									that.setHeight("view_listnow");
+								}, 1000)
+							}
+							that.loadwb = 1;
+							that.tab1enabled = 1;
+							if (that.$nowdate != res.data.date && that.$token != '') {
+								that.jifenbiandong('每日登录', '金币+1，点币+1，宠物经验+1');
+								Vue.prototype.$nowdate = res.data.date;
+								uni.setStorage({
+									key: 'nowdata',
+									data: res.data.date,
+									success: function() {}
+								});
+							}
+						}
+					});
 					setTimeout(function() {
 						that.loadwb = 1;
 					}, 500)
@@ -1059,7 +1107,6 @@
 							that.setHeight("view_listnow");
 						}, 1000)
 					}
-					that.tab1e
 					that.tab1enabled = 1;
 					if (that.$nowdate != res.data.date && that.$token != '') {
 						that.jifenbiandong('每日登录', '金币+1，点币+1，宠物经验+1');

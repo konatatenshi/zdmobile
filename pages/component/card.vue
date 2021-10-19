@@ -1809,7 +1809,8 @@
 								that.cantpostmessage = res.data.message;
 								this.floorfasong = false;
 							} else {
-								that.refreshfloor(message);
+								that.jifenbiandong('楼中楼','回楼中楼成功，刷新可见');
+								that.modalName = null;
 							}
 						}
 					});

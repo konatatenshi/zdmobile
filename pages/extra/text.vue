@@ -40,6 +40,7 @@
 				title: '',
 				platform: 0,
 				picker: ['水区', '交流区', '意见区', '教程区'],
+				picker2: ['水区', '无权发帖', '意见区', '无权发帖'],
 				editable: true,
 				fasong: false
 			}
@@ -53,12 +54,9 @@
 			}
 		},
 		onReady () {
-			/**
-			 * @description 设置获取链接的方法
-			 * @param {String} type 链接的类型（img/video/audio/link）
-			 * @param {String} value 修改链接时，这里会传入旧值
-			 * @returns {Promise} 返回线上地址（type为音视频时可以返回一个数组作为源地址）
-			 */
+			if(this.$groupid == 10){
+				this.picker = this.picker2;
+			}
 		},
 		methods: {
 			PickerChange(e) {
