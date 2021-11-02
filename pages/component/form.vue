@@ -215,11 +215,7 @@
 
 <script>
 	import Vue from 'vue'
-	import mpHtml from '@/components/mp-html/mp-html'
 	export default {
-		components: {
-			mpHtml
-		},
 		data() {
 			return {
 				isCard: false,

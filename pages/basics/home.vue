@@ -477,13 +477,19 @@
 					console.log('无效')
 				}
 			},
-			shuaxinlist(){
+			shuaxinlist(e){
 				var that = this;
 				that.loadwb = 0;
 				that.LoadProgresss();
 				if (this.$token == '') {
 					uni.redirectTo({
 						url: '../../components/ay-login/login-password'
+					});
+				}
+				if(e == 1){
+					uni.pageScrollTo({
+						scrollTop: 0,
+						duration: 200
 					});
 				}
 				if (this.TabCur == 0) {
@@ -1178,9 +1184,9 @@
 	}
 
 	.nav-sm .cu-item {
-		height: 50upx;
+		height: 40upx;
 		display: inline-block;
-		line-height: 50upx;
+		line-height: 40upx;
 		margin: 0 8upx;
 		padding: 0 16upx;
 	}

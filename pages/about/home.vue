@@ -6,37 +6,41 @@
 			</view>
 			<view class="action">
 				<text class="cuIcon-scan text-black" @tap="scantologin"></text>
-				<text class="cuIcon-mobile text-black"></text>
-				<text class="cuIcon-settings text-black" @tap="settingselect" ></text>
+				<text class="cuIcon-mobile text-black" @tap="bangding()"></text>
+				<text class="cuIcon-settings text-black" @tap="settingselect"></text>
 			</view>
 		</view>
 		<view class="cu-bar bg-gray search hometop2">
-			<img-cache v-show="avatarimgLoaded" class="cu-avatar round" :src="$avatarsmall" @tap="tabSelect" data-id="0"
+			<img-cache v-show="avatarimgLoaded" class="cu-avatar round" :src="$avatarsmall" @tap="touserpage" data-id="0"
 				@load="onSuccessImg()" />
 			</img-cache>
-			<img-cache v-show="!avatarimgLoaded" class="cu-avatar round" :src="$avatarsmalldefault" @tap="tabSelect"
+			<img-cache v-show="!avatarimgLoaded" class="cu-avatar round" :src="$avatarsmalldefault" @tap="touserpage"
 				data-id="0" style="margin-left: 20upx;" />
 			</img-cache>
-			<view class="content" style="text-align: left;">
-				{{$username}}<text class="cuIcon-edit text-grey"></text>
+			<view class="content" style="text-align: left;" @tap="touserpage">
+				{{$username}}
 			</view>
 			<view class="action" @tap="touserpage">
 				个人主页<text class="cuIcon-right"></text>
 			</view>
 		</view>
-		<scroll-view scroll-x class="bg-gray nav text-center" >
+		<scroll-view scroll-x class="bg-gray nav text-center">
 			<view class="flex text-center">
 				<view class="cu-item flex-sub noline" :class="1==TabCur?'text-red cur':''" @tap="tabSelect" data-id="1">
-					<text :class="1==TabCur?'text-red':'text-gray'"><text class="cuIcon-formfill"></text>主题</text><br/>{{mytitle}}
+					<text :class="1==TabCur?'text-red':'text-gray'"><text
+							class="cuIcon-formfill"></text>用户组</text><br />{{loadlevelicon(mygroupid)}}
 				</view>
 				<view class="cu-item flex-sub noline" :class="2==TabCur?'text-red cur':''" @tap="tabSelect" data-id="2">
-					<text :class="2==TabCur?'text-red':'text-gray'"><text class="cuIcon-likefill"></text>获赞</text><br/>{{myagree}}
+					<text :class="2==TabCur?'text-red':'text-gray'"><text
+							class="cuIcon-likefill"></text>UID</text><br />{{$uid}}
 				</view>
 				<view class="cu-item flex-sub noline" :class="3==TabCur?'text-red cur':''" @tap="tabSelect" data-id="3">
-					<text :class="3==TabCur?'text-red':'text-gray'"> <text class="cuIcon-newshotfill"></text>粉丝</text><br/>{{myfans}}
+					<text :class="3==TabCur?'text-red':'text-gray'"> <text
+							class="cuIcon-newshotfill"></text>消息</text><br /><text :class="mynewpm>0?'text-red':''">{{mynewpm}}</text>
 				</view>
 				<view class="cu-item flex-sub noline" :class="4==TabCur?'text-red cur':''" @tap="tabSelect" data-id="4">
-					<text :class="4==TabCur?'text-red':'text-gray'"><text class="cuIcon-favorfill"></text>关注</text><br/>{{mylike}}
+					<text :class="4==TabCur?'text-red':'text-gray'"><text
+							class="cuIcon-favorfill"></text>提醒</text><br /><text :class="mynewprompt>0?'text-red':''">{{mynewprompt}}</text>
 				</view>
 			</view>
 		</scroll-view>
@@ -64,33 +68,21 @@
 			</view>
 			<view class="cu-item" @click="toqiandao">
 				<view class="cuIcon-squarecheckfill text-yellow">
-					<view class="cu-tag badge" v-if="this.mynewpm!=0">
-						<block v-if="this.mynewpm!=1">{{this.mynewpm>99?'99+':this.mynewpm}}</block>
-					</view>
 				</view>
 				<text>签到</text>
 			</view>
 			<view class="cu-item" @click="messageclick">
 				<view class="cuIcon-questionfill text-green">
-					<view class="cu-tag badge" v-if="this.mynewpm!=0">
-						<block v-if="this.mynewpm!=1">{{this.mynewpm>99?'99+':this.mynewpm}}</block>
-					</view>
 				</view>
 				<text>答题</text>
 			</view>
 			<view class="cu-item" @click="yaoyao">
 				<view class="cuIcon-presentfill text-blue">
-					<view class="cu-tag badge" v-if="this.mynewpm!=0">
-						<block v-if="this.mynewpm!=1">{{this.mynewpm>99?'99+':this.mynewpm}}</block>
-					</view>
 				</view>
 				<text>摇摇</text>
 			</view>
 			<view class="cu-item" @click="paihang">
 				<view class="cuIcon-upstagefill text-cyan">
-					<view class="cu-tag badge" v-if="this.mynewpm!=0">
-						<block v-if="this.mynewpm!=1">{{this.mynewpm>99?'99+':this.mynewpm}}</block>
-					</view>
 				</view>
 				<text>排行</text>
 			</view>
@@ -300,7 +292,7 @@
 	export default {
 		data() {
 			return {
-                iStatusBarHeight:0,
+				iStatusBarHeight: 0,
 				TabCur: 0,
 				version: '',
 				downfile: '',
@@ -322,6 +314,7 @@
 				myagree: 0,
 				myfans: 0,
 				mylike: 0,
+				mygroupid: 0,
 				progress: 0,
 				bite: 0,
 				zongbite: 0,
@@ -336,6 +329,11 @@
 			hideModal(e) {
 				this.modalName = null
 			},
+			toguestlogin(e) {
+				uni.redirectTo({
+					url: '../../components/ay-login/login-password'
+				});
+			},
 			cancelupdate(e) {
 				this.modalName = null;
 				this.cancel = 1;
@@ -345,96 +343,123 @@
 				this.modalName = 'update';
 			},
 			mbh(e) {
-				e = e/1024/1024;
+				e = e / 1024 / 1024;
 				return e.toFixed(2);
 			},
-			backhome(){      
-				this.$emit("returnDat","basics")//传递的值
-				 //returnDate接收的方法名  
+			backhome() {
+				this.$emit("returnDat", "basics") //传递的值
+				//returnDate接收的方法名  
 			},
-			toqiandao(){
+			toqiandao() {
+				if (this.$token == '') {
+					this.toguestlogin();
+					return;
+				}
 				uni.navigateTo({
 					url: '../basics/icon'
 				})
 			},
-			yaoyao(){
+			yaoyao() {
+				if (this.$token == '') {
+					this.toguestlogin();
+					return;
+				}
 				uni.navigateTo({
 					url: '../basics/progress'
 				})
 			},
-			paihang(){
+			paihang() {
+				if (this.$token == '') {
+					this.toguestlogin();
+					return;
+				}
 				uni.navigateTo({
 					url: '../basics/shadow'
 				})
 			},
-			touserpage(){
+			bangding() {
+				if (this.$token == '') {
+					this.toguestlogin();
+					return;
+				}
+				uni.navigateTo({
+					url: '../extra/mobilebind/mobilebind'
+				})
+			},
+			touserpage() {
+				if (this.$token == '') {
+					this.toguestlogin();
+					return;
+				}
 				uni.navigateTo({
 					url: '../component/list?uid=' + this.$uid,
 					animationType: 'pop-in',
 					animationDuration: 200
 				});
 			},
-			tothegithub(){
-				plus.runtime.openURL('https://github.com/konatatenshi/zdmobile', function(res) {  
-				                    console.log(res);  
-				                });  
+			tothegithub() {
+				plus.runtime.openURL('https://github.com/konatatenshi/zdmobile', function(res) {
+					console.log(res);
+				});
 			},
 			cleanbefore(e) {
 				this.modalName = 'logout';
 			},
 			cleanlogin() {
-			var that = this;
-			this.$token = '';
-			uni.removeStorage({
-				key: 'userlogininfo',
-				success: function(res) {
-					console.log(res)
-					if (uni.getSystemInfoSync().platform == 'ios') {
-						Vue.prototype.$chatid =0;
-						Vue.prototype.$chatuid = 0;
-						Vue.prototype.$auth = "";
-						Vue.prototype.$htauth = "";
-						Vue.prototype.$chatswitch = 0;
-						Vue.prototype.$token = '';
-						Vue.prototype.$cookies = '';
-						Vue.prototype.$uid = 0;
-						Vue.prototype.$adminid = 0;
-						Vue.prototype.$imageswitch = 0;
-						Vue.prototype.$floorswitch = 0;
-						Vue.prototype.$nowdate = 0;
-						Vue.prototype.groupid = 0;
-						Vue.prototype.$username = '游客';
-						Vue.prototype.$avatarsmall = 'https://zd.tiangal.com/uc_server/images/randuser/small/0.jpg';
-						Vue.prototype.$avatarsmalldefault = 'https://zd.tiangal.com/uc_server/images/randuser/small/0.jpg';
-						that.$emit("returnDat","login")//传递的值
-					} else {
-						plus.runtime.restart();//PS:Android不知为何不能正确传值，只能重启程序
+				var that = this;
+				this.$token = '';
+				uni.removeStorage({
+					key: 'userlogininfo',
+					success: function(res) {
+						console.log(res)
+						if (uni.getSystemInfoSync().platform == 'ios') {
+							Vue.prototype.$chatid = 0;
+							Vue.prototype.$chatuid = 0;
+							Vue.prototype.$auth = "";
+							Vue.prototype.$htauth = "";
+							Vue.prototype.$chatswitch = 0;
+							Vue.prototype.$token = '';
+							Vue.prototype.$cookies = '';
+							Vue.prototype.$uid = 0;
+							Vue.prototype.$adminid = 0;
+							Vue.prototype.$imageswitch = 0;
+							Vue.prototype.$floorswitch = 0;
+							Vue.prototype.$nowdate = 0;
+							Vue.prototype.$groupid = 0;
+							Vue.prototype.$username = '游客';
+							Vue.prototype.$avatarsmall =
+								'https://zd.tiangal.com/uc_server/images/randuser/small/0.jpg';
+							Vue.prototype.$avatarsmalldefault =
+								'https://zd.tiangal.com/uc_server/images/randuser/small/0.jpg';
+							that.$emit("returnDat", "login") //传递的值
+						} else {
+							plus.runtime.restart(); //PS:Android不知为何不能正确传值，只能重启程序
+						}
 					}
-				}
-			});
+				});
 			},
 			messageclick(index) {
 				console.log(index)
 			},
 			tologin(e) {
 				uni.navigateTo({
-					url: '../basics/button?sessionid=' +e
+					url: '../basics/button?sessionid=' + e
 				});
 			},
-			scantologin(){
+			scantologin() {
 				uni.scanCode({
-				    success: function (res) {
-				        //console.log('条码类型：' + res.scanType);
+					success: function(res) {
+						//console.log('条码类型：' + res.scanType);
 						var scantxt = JSON.parse(res.result);
-				        console.log(scantxt);
-						if(scantxt.code==200&&scantxt.method=='scantologin'){
+						console.log(scantxt);
+						if (scantxt.code == 200 && scantxt.method == 'scantologin') {
 							uni.navigateTo({
-								url: '../basics/button?sessionid=' +scantxt.session,
+								url: '../basics/button?sessionid=' + scantxt.session,
 								animationType: 'pop-in',
 								animationDuration: 200
 							});
 						}
-				    }
+					}
 				});
 			},
 			onSuccessImg() {
@@ -455,82 +480,289 @@
 					animationDuration: 200
 				});
 			},
-			AppStore(){
-				var that=this;
-				plus.runtime.getProperty(plus.runtime.appid, function(widgetInfo) {  
+			AppStore() {
+				var that = this;
+				plus.runtime.getProperty(plus.runtime.appid, function(widgetInfo) {
 					console.log(widgetInfo.version);
 					console.log(widgetInfo.name);
-				    uni.request({  
-				        url: getApp().globalData.zddomain + 'api/checkapi.php', //升级地址
-				        data: {  
-				            version: widgetInfo.version,  
-				            name: widgetInfo.name  
-				        },  
-				        success: (result) => {  
-				            var data = result.data;  
+					uni.request({
+						url: getApp().globalData.zddomain + 'api/checkapi.php', //升级地址
+						data: {
+							version: widgetInfo.version,
+							name: widgetInfo.name
+						},
+						success: (result) => {
+							var data = result.data;
 							console.log(data);
 							that.downfile = data.StoreID;
-				            if (data.update == 200 && data.StoreID) {  
+							if (data.update == 200 && data.StoreID) {
 								that.update = '(有更新)';
 								that.isupdate = 1;
-				            } else if (data.update === 201) {
+							} else if (data.update === 201) {
 								that.update = '(最新版)';
 							} else if (data.update === 202) {
 								that.update = '(请去市场更新)';
 							}
-				        }  
-				    });  
-				});  
+						}
+				 });
+				});
 			},
-			chechabout(){
-				this.bite=1;
-				this.zongbite=1;
+			loadlevelicon(e, f) {
+				if (e == 7) {
+					if (f == 1) {
+						return 'line-gray';
+					} else {
+						return '游客';
+					}
+				} else if (e == 9) {
+					if (f == 1) {
+						return 'line-gray';
+					} else {
+						return 'Lv0';
+					}
+				} else if (e == 10) {
+					if (f == 1) {
+						return 'line-gray';
+					} else {
+						return 'Lv1';
+					}
+				} else if (e == 29) {
+					if (f == 1) {
+						return 'light bg-grey';
+					} else {
+						return 'Lv2';
+					}
+				} else if (e == 30) {
+					if (f == 1) {
+						return 'light bg-olive';
+					} else {
+						return 'Lv3';
+					}
+				} else if (e == 31) {
+					if (f == 1) {
+						return 'light bg-cyan';
+					} else {
+						return 'Lv4';
+					}
+				} else if (e == 32) {
+					if (f == 1) {
+						return 'light bg-blue';
+					} else {
+						return 'Lv5';
+					}
+				} else if (e == 33) {
+					if (f == 1) {
+						return 'light bg-purple';
+					} else {
+						return 'Lv6';
+					}
+				} else if (e == 34) {
+					if (f == 1) {
+						return 'light bg-mauve';
+					} else {
+						return 'Lv7';
+					}
+				} else if (e == 35) {
+					if (f == 1) {
+						return 'light bg-pink';
+					} else {
+						return 'Lv8';
+					}
+				} else if (e == 36) {
+					if (f == 1) {
+						return 'light bg-brown';
+					} else {
+						return 'Lv9';
+					}
+				} else if (e == 37) {
+					if (f == 1) {
+						return 'light bg-yellow';
+					} else {
+						return 'Lv10';
+					}
+				} else if (e == 38) {
+					if (f == 1) {
+						return 'light bg-orange';
+					} else {
+						return 'Lv11';
+					}
+				} else if (e == 52) {
+					if (f == 1) {
+						return 'light bg-red';
+					} else {
+						return 'Lv12';
+					}
+				} else if (e == 54) {
+					if (f == 1) {
+						return 'light bg-blue';
+					} else {
+						return 'Lv13';
+					}
+				} else if (e == 4) {
+					if (f == 1) {
+						return 'light bg-grey';
+					} else {
+						return '禁言';
+					}
+				} else if (e == 5) {
+					if (f == 1) {
+						return 'light bg-grey';
+					} else {
+						return '封禁';
+					}
+				} else if (e == 6) {
+					if (f == 1) {
+						return 'light bg-grey';
+					} else {
+						return 'IP禁止';
+					}
+				} else if (e == 8) {
+					if (f == 1) {
+						return 'light bg-gray';
+					} else {
+						return 'QQ游客';
+					}
+				} else if (e == 41) {
+					if (f == 1) {
+						return 'light bg-mauve';
+					} else {
+						return '摸鱼组';
+					}
+				} else if (e == 42) {
+					if (f == 1) {
+						return 'light bg-pink';
+					} else {
+						return '宣传组';
+					}
+				} else if (e == 50) {
+					if (f == 1) {
+						return 'light bg-cyan';
+					} else {
+						return '测试组';
+					}
+				} else if (e == 44 || e == 51) {
+					if (f == 1) {
+						return 'vip';
+					} else {
+						return '';
+					}
+				} else if (e == 1) {
+					if (f == 1) {
+						return 'bg-blue';
+					} else {
+						return '管理员';
+					}
+				} else if (e == 2) {
+					if (f == 1) {
+						return 'bg-cyan';
+					} else {
+						return '超版';
+					}
+				} else if (e == 3) {
+					if (f == 1) {
+						return 'bg-green';
+					} else {
+						return '版主';
+					}
+				} else if (e == 16) {
+					if (f == 1) {
+						return 'bg-grey';
+					} else {
+						return '见习版主';
+					}
+				} else if (e == 17) {
+					if (f == 1) {
+						return 'bg-orange';
+					} else {
+						return '总编辑';
+					}
+				} else if (e == 18) {
+					if (f == 1) {
+						return 'bg-red';
+					} else {
+						return '信息监管';
+					}
+				} else if (e == 45) {
+					if (f == 1) {
+						return 'bg-olive';
+					} else {
+						return '副版主';
+					}
+				} else if (e == 19) {
+					if (f == 1) {
+						return 'bg-red';
+					} else {
+						return '审核员';
+					}
+				} else if (e == 47) {
+					if (f == 1) {
+						return 'bg-mauve';
+					} else {
+						return '元素魔法使';
+					}
+				} else if (e == 57) {
+					if (f == 1) {
+						return 'bg-yellow';
+					} else {
+						return '编辑';
+					}
+				} else {
+					if (f == 1) {
+						return 'line-gray';
+					} else {
+						return '游客';
+					}
+				}
+			},
+			chechabout() {
+				this.bite = 1;
+				this.zongbite = 1;
 				console.log(this.downfile);
-				var that=this;
-				const conclude = uni.downloadFile({  
-				    url: that.downfile,
-				    success: (downloadResult) => {  
+				var that = this;
+				const conclude = uni.downloadFile({
+					url: that.downfile,
+					success: (downloadResult) => {
 						console.log(downloadResult);
-				        if (downloadResult.statusCode === 200) {  
-				            plus.runtime.install(downloadResult.tempFilePath, {  
-				                force: false  
-				            }, function() {  
-								plus.nativeUI.alert("您已是最新版本了哦！",function(){
-								    plus.runtime.restart();
+						if (downloadResult.statusCode === 200) {
+							plus.runtime.install(downloadResult.tempFilePath, {
+								force: false
+							}, function() {
+								plus.nativeUI.alert("您已是最新版本了哦！", function() {
+									plus.runtime.restart();
 								});
-				            }, function(e) {  
+							}, function(e) {
 								plus.nativeUI.closeWaiting();
-								console.log("错误代码：["+e.code+"]："+e.message);
-								plus.nativeUI.alert("错误代码["+e.code+"]："+e.message);
-				            });  
-				        }
-				    }
-				});  
+								console.log("错误代码：[" + e.code + "]：" + e.message);
+								plus.nativeUI.alert("错误代码[" + e.code + "]：" + e.message);
+							});
+						}
+					}
+				});
 				conclude.onProgressUpdate((res) => {
 					that.progress = res.progress;
 					that.bite = res.totalBytesWritten;
 					that.zongbite = res.totalBytesExpectedToWrite;
 					// 测试条件，取消下载任务。  
-					if (that.cancel == 1) {  
-					    conclude.abort();  
+					if (that.cancel == 1) {
+						conclude.abort();
 						that.progress = 0;
 						that.bite = 0;
 						that.zongbite = 0;
-					}  
+					}
 				});
 			}
 		},
 		created() {
-            this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight;
+			this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight;
 			//this.version = plus.runtime.version;
 			var that = this;
-			plus.runtime.getProperty(plus.runtime.appid, function(wgtinfo){  
+			plus.runtime.getProperty(plus.runtime.appid, function(wgtinfo) {
 				that.version = wgtinfo.version;
-			    console.log(that.version);  
+				console.log(that.version);
 			});
 			plus.navigator.setStatusBarStyle('dark');
-			void plus.runtime.setBadgeNumber(0);//桌面角标设置为0
-			const clientInfo = plus.push.getClientInfo();//获取CID推送
+			void plus.runtime.setBadgeNumber(0); //桌面角标设置为0
+			const clientInfo = plus.push.getClientInfo(); //获取CID推送
 			console.log(clientInfo);
 			console.log(this.iStatusBarHeight);
 			if (Vue.prototype.$token != '') {
@@ -544,31 +776,31 @@
 						getApp().globalData.mygroupexpiry = res.data.groupexpiry;
 						getApp().globalData.myregdate = res.data.regdate;
 						getApp().globalData.mycredits = res.data.credits;
-						getApp().globalData.mynewpm = res.data.newpm;
-						getApp().globalData.mynewprompt = res.data.newprompt;
+						getApp().globalData.mynewpm = parseInt(res.data.newpm);
+						getApp().globalData.mynewprompt = parseInt(res.data.newprompt);
 						getApp().globalData.myfreeze = res.data.freeze;
 						getApp().globalData.onlyacceptfriendpm = res.data.onlyacceptfriendpm;
 						getApp().globalData.myinfoprompt = parseInt(res.data.newpm) + parseInt(res.data
 							.newprompt);
 						that.mynewpm = getApp().globalData.mynewpm;
-						that.mynewprompt = getApp().globalData.newprompt;
+						that.mynewprompt = getApp().globalData.mynewprompt;
 						that.myinfoprompt = getApp().globalData.myinfoprompt;
 						that.mycredits = getApp().globalData.mycredits;
+						that.mygroupid = getApp().globalData.mygroupid;
 						//console.log(that.mynewpm);
-						console.log(that.myinfoprompt);
+						console.log(that.mynewprompt);
 						console.log(that.$token);
 						Vue.prototype.$username = getApp().globalData.myusername;
 					}
 				});
 			};
 		},
-		onshow: function() {
-		}
+		onshow: function() {}
 	}
 </script>
 
 <style>
-	uni-view.cu-item.noline{
-		    line-height: 33upx;
+	uni-view.cu-item.noline {
+		line-height: 33upx;
 	}
 </style>

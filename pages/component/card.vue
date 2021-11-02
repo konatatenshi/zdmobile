@@ -185,7 +185,7 @@
 							</view>
 							<view class="margin-top-sm flex justify-between">
 								<view v-if="animation[index]">
-									<text class="cuIcon-appreciatefill text-red">{{dianzannumber[index]}}</text>
+									<text class="cuIcon-appreciatefill" :class="animation[index]==1?'text-red':'text-gray'" @tap="zanpo(item.pid,index,item.support,dianzannumber[index])"><text v-if="dianzannumber[index]>0">{{dianzannumber[index]}}</text></text>
 									<text class="cuIcon-messagefill text-gray margin-left-sm"
 										@tap="lzpo(item.pid,index)"></text>
 								</view>
@@ -655,11 +655,7 @@
 
 <script>
 	import Vue from 'vue'
-	import mpHtml from '@/components/mp-html/mp-html'
 	export default {
-		components: {
-			mpHtml
-		},
 		data() {
 			return {
 				isCard: false,
@@ -1170,6 +1166,9 @@
 							that.loadthread(that.tid);
 						} else if (res.data.code == 202) {
 							that.jifenbiandong('点赞失败', '您已经点赞了此帖子');
+						} else if (res.data.code == 201) {
+							that.jifenbiandong('取消成功', '您取消点赞了此帖子');
+							that.ding = parseInt(that.ding) - 1;
 						}
 						that.loadModal2 = false;
 					}
@@ -1293,9 +1292,6 @@
 				this.modalName = 'siliao';
 			},
 			zanpo(f, g, h, i) {
-				if (i == 1) {
-					return;
-				}
 				console.log(f);
 				let that = this;
 				//this.toPID = f;
@@ -1315,12 +1311,36 @@
 						console.log(res.data)
 					}
 				});
-				this.shake(g, parseInt(h));
+				if (i == 1) {
+					this.unshake(g, parseInt(h));
+				}else{
+					this.shake(g, parseInt(h));
+				}
 			},
 			shake(e, f) {
 				console.log(f);
 				Vue.set(this.animation, e, 1);
 				Vue.set(this.dianzannumber, e, f + 1);
+				if (this.platform == 1) { //iOS自带触感反馈
+					var UIImpactFeedbackGenerator = plus.ios.importClass(
+						'UIImpactFeedbackGenerator'
+					)
+					var impact = new UIImpactFeedbackGenerator()
+					impact.prepare()
+					impact.init(1)
+					impact.impactOccurred()
+				} else { //Android只能用震动模拟
+					uni.vibrateShort({
+						success: function() {
+							console.log('success');
+						}
+					});
+				}
+			},
+			unshake(e, f) {
+				console.log(f);
+				Vue.set(this.animation, e, 2);
+				Vue.set(this.dianzannumber, e, f - 1);
 				if (this.platform == 1) { //iOS自带触感反馈
 					var UIImpactFeedbackGenerator = plus.ios.importClass(
 						'UIImpactFeedbackGenerator'

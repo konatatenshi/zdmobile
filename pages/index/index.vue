@@ -176,6 +176,9 @@
 				console.log(val);
 			},
 			NavChange: function(e) {
+				if(this.PageCur==e.currentTarget.dataset.cur){
+					this.$refs.basics.shuaxinlist(1);
+				}
 				this.PageCur = e.currentTarget.dataset.cur;
 			},
 			postnew(){
@@ -208,7 +211,7 @@
 					"auth": this.$auth,
 					"cmd": "login"
 				};
-				console.log(data);
+				//console.log(data);
 				this.$socket.send(JSON.stringify(data));
 			}
 		}
@@ -234,8 +237,8 @@
 		position: fixed;
 		left: 0;
 		right: 0;
-		height: 60upx;
-		top: calc(var(--status-bar-height) + 72upx);
+		height: 40upx;
+		top: calc(var(--status-bar-height) + 75upx);
 		/* #endif */
 	}
 
@@ -257,7 +260,7 @@
 
 	.hometop3 {
 		/* #ifdef APP-PLUS */
-		margin-top: calc(var(--status-bar-height) + 132upx);
+		margin-top: calc(var(--status-bar-height) + 115upx);
 		/* #endif */
 	}
 </style>

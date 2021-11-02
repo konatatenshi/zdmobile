@@ -27,7 +27,7 @@
 								<view class="solid-bottom article text-df"
 									style="padding-top: 10upx; padding-bottom: 10upx;" v-if="item.displayorder>0&&!(ifpingbi(item.author)&&$adminid<=0)">
 									<view @tap="topost(item.tid)">
-										<text class="text-black text-cut" style="width: 100%;">{{item.subject}}</text>
+										<text class="text-black text-cut" style="width: 100%;" :style="geshihua(item.highlight)">{{item.subject}}</text>
 									</view>
 									<view> <text class="text-sm text-red padding-sm">置顶</text> <text
 											class="text-sm text-gray padding-sm">{{item.author}}&nbsp&nbsp{{item.replies}}评</text>
@@ -80,7 +80,7 @@
 													</view>
 												</view>
 											</view>
-											<view class="forumtitle text-cut" @tap="topost(item.tid)">
+											<view class="forumtitle text-cut" :style="geshihua(item.highlight)" @tap="topost(item.tid)">
 												{{item.subject}}
 											</view>
 											<view class="text-content text-red flex justify-center float"
@@ -157,38 +157,6 @@
 													<text class="cuIcon-messagefill margin-lr-xs"></text>
 													{{item.replies}}
 													<text class="text-gray cuIcon-close margin-lr-xs" @tap="more2(item.author,item.tid)"></text>
-												</view>
-											</view>
-										</view>
-									</view>
-								</view>
-							</block>
-						</view>
-						<view v-if="newpost.length > 0">
-							<block v-for="(item,index3) in newpost" :key="index3" @tap="tourl(item.url)">
-								<view class="solid-bottom cu-card article no-card">
-									<view class="cu-item shadow">
-										<view class="title">
-											<view class="text-cut">{{item.title}}</view>
-										</view>
-										<view class="content">
-											<image v-if="item.img != 'static/image/common/nophoto.gif'" :src="item.img"
-												mode="aspectFill"></image>
-											<view class="desc">
-												<view class="text-content text-red flex justify-center float"
-													v-if="item.readperm>0" @tap="topost(item.tid)">
-													<view
-														style="overflow: hidden;border: 1px dashed #FF9A9A;margin: 8px 0;padding: 10px;zoom: 1;width: 100%;text-align: center;">
-														需要阅读权限：{{item.readperm}}</view>
-												</view>
-												<view v-else class="text-content">
-													{{item.summary}}
-												</view>
-												<view>
-													<view class="cu-tag bg-red light sm round">{{item.author}}
-													</view>
-													<view class="cu-tag bg-green light sm round">{{item.replies}}评
-													</view>
 												</view>
 											</view>
 										</view>
@@ -377,7 +345,6 @@
 				swiperList: [],
 				threadlist: [],
 				threadlisttitle: [],
-				newpost: [],
 				pingbilist: [],
 				tabname: ["新帖", "全部", "热门", "精华"],
 				tabarray: [0, 1, 2, 3],
@@ -458,6 +425,62 @@
 				uni.previewImage({
 					urls: [url], //这里一定是数组，不然就报错
 				});
+			},
+			geshihua(f){
+				if(f==0){
+					return '';
+				}
+				var shiwei = f.substr(0, 1);
+				var gewei = f.substr(1, 1);
+				var css = '';
+				shiwei = parseInt(shiwei).toString(2); 
+				if(parseInt(shiwei/100)==1){
+					css = 'font-weight:bolder;';
+				}
+				if(parseInt((shiwei)/10)==1){
+					css = css + 'font-style:italic;';
+				}
+				if(parseInt(shiwei%10)==1){
+					if(Math.round(Math.random())<1){
+						css = css + 'color: #2897C5;';
+					}else{
+						css = css + 'color: #EE1B2E;';
+					}
+				}
+				//console.log(gewei);
+				switch (gewei) {
+					case '0':
+						break;
+					case '1':
+						css = css + 'color:#000;';
+						break;
+					case '2':
+						css = css + 'color:#EE1B2E;';
+						break;
+					case '3':
+						css = css + 'color:#EE5023;';
+						break;
+					case '4':
+						css = css + 'color:#996600;';
+						break;
+					case '5':
+						css = css + 'color:#3C9D40;';
+						break;
+					case '6':
+						css = css + 'color:#2897C5;';
+						break;
+					case '7':
+						css = css + 'color:#2B65B7;';
+						break;
+					case '8':
+						css = css + 'color:#8F2A90;';
+						break;
+					case '9':
+						css = css + 'color:#EC1282;';
+						break;
+				}
+				//console.log(css);
+				return css;
 			},
 			loadlevelicon(e, f) {
 				if (e == 7) {
