@@ -186,6 +186,220 @@
 					</view>
 				</view>
 			</scroll-view>
+			<scroll-view v-else-if="TabCur==2" class="list">
+				<view class="view_listnow">
+					<view class="hometop3">
+					</view>
+					<view v-if="rebangpost.length > 0">
+						<block v-for="(itemex,indexe1) in rebangpost" :key="indexe1">
+							<view class="solid-bottom text-df article text-min"
+								style="padding-top: 10upx; padding-bottom: 10upx;">
+								<view style="margin-right: 20upx;padding-left: 80upx;" class="text-black text-cut" @tap="tourl(itemex.url)">
+									{{itemex.title}}</view>
+								<view style="padding-left: 80upx;">
+									<view>
+										<img-cache class="cu-avatar round gzlist" :src="itemex.avatar" />
+										</img-cache>
+										<img-cache class="cu-avatar round gzlist2" v-if="itemex.touxiangkuanglist != ''"
+											:src="itemex.touxiangkuanglist" />
+										</img-cache>
+									</view>
+									<view class="cu-tag padding-left-xs padding-right-xs"
+										:class="loadlevelicon2(itemex.fid)">
+										{{itemex.bkname}}
+									</view><text class="text-sm text-gray"
+										style="padding-left: 8upx;">{{itemex.author}}&nbsp&nbsp{{itemex.replies}}评&nbsp&nbsp{{itemex.nowdate}}</text>
+									<img-cache v-if="itemex.img!='static/image/common/nophoto.gif'" mode="aspectFill"
+										class="gzlist3" :src="itemex.img" />
+								</view>
+								<view class="chacha text-gray cuIcon-close" @tap="more2(itemex.author,itemex.url)">
+								</view>
+								<view v-if="itemex.img=='static/image/common/nophoto.gif'" class="text-grey"
+									style="padding-left: 10upx;padding-top: 5upx;"  @tap="tourl(itemex.url)">
+									{{itemex.summary}}
+								</view>
+								<view v-else class="text-grey" @tap="tourl(itemex.url)"
+									style="line-height:35upx; font-size: 0.8rem; padding-left: 10upx; padding-right: 100upx;padding-top: 5upx;text-overflow: -o-ellipsis-lastline;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
+									</img-cache>{{itemex.summary}}
+								</view>
+							</view>
+						</block>
+					</view>
+					<view>
+						<block>
+							<view class="padding-xs flex align-center bg-gray">
+								<view class="flex-sub text-center">
+									<view class="text-xs padding">
+										<text class="text-black">{{loading}}</text>
+									</view>
+								</view>
+							</view>
+						</block>
+					</view>
+				</view>
+			</scroll-view>
+			<scroll-view v-else-if="TabCur==3" class="list">
+				<view class="view_listnow">
+					<view class="hometop3">
+					</view>
+					<view v-if="zixunpost.length > 0">
+						<block v-for="(itemex,indexe1) in zixunpost" :key="indexe1">
+							<view class="solid-bottom text-df article text-min"
+								style="padding-top: 10upx; padding-bottom: 10upx;">
+								<view style="margin-right: 20upx;padding-left: 80upx;" class="text-black text-cut" @tap="tourl(itemex.url)">
+									{{itemex.title}}</view>
+								<view style="padding-left: 80upx;">
+									<view>
+										<img-cache class="cu-avatar round gzlist" :src="itemex.avatar" />
+										</img-cache>
+										<img-cache class="cu-avatar round gzlist2" v-if="itemex.touxiangkuanglist != ''"
+											:src="itemex.touxiangkuanglist" />
+										</img-cache>
+									</view>
+									<view class="cu-tag padding-left-xs padding-right-xs"
+										:class="loadlevelicon2(itemex.fid)">
+										{{itemex.bkname}}
+									</view><text class="text-sm text-gray"
+										style="padding-left: 8upx;">{{itemex.author}}&nbsp&nbsp{{itemex.replies}}评&nbsp&nbsp{{itemex.nowdate}}</text>
+									<img-cache v-if="itemex.img!='static/image/common/nophoto.gif'" mode="aspectFill"
+										class="gzlist3" :src="itemex.img" />
+								</view>
+								<view class="chacha text-gray cuIcon-close" @tap="more2(itemex.author,itemex.url)">
+								</view>
+								<view v-if="itemex.img=='static/image/common/nophoto.gif'" class="text-grey"
+									style="padding-left: 10upx;padding-top: 5upx;" @tap="tourl(itemex.url)">
+									{{itemex.summary}}
+								</view>
+								<view v-else class="text-grey" @tap="tourl(itemex.url)"
+									style="line-height:35upx; font-size: 0.8rem; padding-left: 10upx; padding-right: 100upx;padding-top: 5upx;text-overflow: -o-ellipsis-lastline;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
+									</img-cache>{{itemex.summary}}
+								</view>
+							</view>
+						</block>
+					</view>
+					<view>
+						<block>
+							<view class="padding-xs flex align-center bg-gray">
+								<view class="flex-sub text-center">
+									<view class="text-xs padding">
+										<text class="text-black">{{loading}}</text>
+									</view>
+								</view>
+							</view>
+						</block>
+					</view>
+				</view>
+			</scroll-view>
+			<scroll-view v-else-if="TabCur==4" class="list">
+				<view class="view_listnow">
+					<view class="hometop3">
+					</view>
+					<view v-if="taolunpost.length > 0">
+						<block v-for="(itemex,indexe1) in taolunpost" :key="indexe1">
+							<view class="solid-bottom text-df article text-min"
+								style="padding-top: 10upx; padding-bottom: 10upx;">
+								<view style="margin-right: 20upx;padding-left: 80upx;" class="text-black text-cut" @tap="tourl(itemex.url)">
+									{{itemex.title}}</view>
+								<view style="padding-left: 80upx;">
+									<view>
+										<img-cache class="cu-avatar round gzlist" :src="itemex.avatar" />
+										</img-cache>
+										<img-cache class="cu-avatar round gzlist2" v-if="itemex.touxiangkuanglist != ''"
+											:src="itemex.touxiangkuanglist" />
+										</img-cache>
+									</view>
+									<view class="cu-tag padding-left-xs padding-right-xs"
+										:class="loadlevelicon2(itemex.fid)">
+										{{itemex.bkname}}
+									</view><text class="text-sm text-gray"
+										style="padding-left: 8upx;">{{itemex.author}}&nbsp&nbsp{{itemex.replies}}评&nbsp&nbsp{{itemex.nowdate}}</text>
+									<img-cache v-if="itemex.img!='static/image/common/nophoto.gif'" mode="aspectFill"
+										class="gzlist3" :src="itemex.img" />
+								</view>
+								<view class="chacha text-gray cuIcon-close" @tap="more2(itemex.author,itemex.url)">
+								</view>
+								<view v-if="itemex.img=='static/image/common/nophoto.gif'" class="text-grey"
+									style="padding-left: 10upx;padding-top: 5upx;" @tap="tourl(itemex.url)">
+									{{itemex.summary}}
+								</view>
+								<view v-else class="text-grey" @tap="tourl(itemex.url)"
+									style="line-height:35upx; font-size: 0.8rem; padding-left: 10upx; padding-right: 100upx;padding-top: 5upx;text-overflow: -o-ellipsis-lastline;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
+									</img-cache>{{itemex.summary}}
+								</view>
+							</view>
+						</block>
+					</view>
+					<view>
+						<block>
+							<view class="padding-xs flex align-center bg-gray">
+								<view class="flex-sub text-center">
+									<view class="text-xs padding">
+										<text class="text-black">{{loading}}</text>
+									</view>
+								</view>
+							</view>
+						</block>
+					</view>
+				</view>
+			</scroll-view>
+			<scroll-view v-else-if="TabCur==5" class="list">
+				<view class="view_listnow">
+					<view class="hometop3">
+					</view>
+					<view v-if="meitupost.length > 0" id="waterfull">
+						<view v-for="(itemex,indexe1) in meitupost" :key="indexe1">
+							<view class="item">
+								<img-cache v-if="itemex.img!='static/image/common/nophoto.gif'" mode="aspectFill"
+									class="itemImg" :src="itemex.img" @tap="tourl(itemex.url)"></img-cache><image v-else class="itemImg" src="../../static/img/loadzd.gif" @tap="tourl(itemex.url)"></image>
+								<view class="userInfo">
+									<img-cache class="avatar round" :src="itemex.avatar"  @tap="tourl(itemex.url)">
+									</img-cache>
+									<img-cache class="avatar round" v-if="itemex.touxiangkuanglist != ''"
+										:src="itemex.touxiangkuanglist"  @tap="tourl(itemex.url)">
+									</img-cache>
+									<text class="username text-df article text-gray" @tap="tourl(itemex.url)">{{itemex.author}}</text><text class="text-df article text-black text-cut" @tap="tourl(itemex.url)">{{itemex.title}}</text>
+									<view class="chacha text-gray cuIcon-close" @tap="more2(itemex.author,itemex.url)">
+									</view>
+								</view>
+							</view>
+						</view>
+					</view>
+					<view>
+						<block>
+							<view class="padding-xs flex align-center bg-gray">
+								<view class="flex-sub text-center">
+									<view class="text-xs padding">
+										<text class="text-black">{{loading}}</text>
+									</view>
+								</view>
+							</view>
+						</block>
+					</view>
+				</view>
+			</scroll-view>
+			<scroll-view v-else-if="TabCur==6" class="list">
+				<view class="view_listnow">
+					<view class="hometop3">
+					</view>
+					<view v-if="labapost.length > 0">
+						<view v-for="(itemex,indexe1) in labapost" :key="indexe1">
+							<view v-if="itemex.level=='all'" class="padding-xs radius shadow bg-white margin-top-xs text-black"><button class="cu-btn bg-green padding0">全站</button><text class="text-blue">{{itemex.username}}</text><text class="lg text-gray cuIcon-time"></text><text class="text-gray">{{itemex.dateline}}</text><rich-text :nodes="itemex.content"></rich-text></view>
+							<view v-else-if="itemex.level=='system'" class="padding-xs radius shadow bg-red margin-top-xs text-black"><button class="cu-btn bg-red padding0">系统</button><text class="text-blue">{{itemex.username}}</text><text class="lg text-gray cuIcon-time"></text><text class="text-gray">{{itemex.dateline}}</text><rich-text :nodes="itemex.content"></rich-text></view>
+						</view>
+					</view>
+					<view>
+						<block>
+							<view class="padding-xs flex align-center bg-gray">
+								<view class="flex-sub text-center">
+									<view class="text-xs padding">
+										<text class="text-black">{{loading}}</text>
+									</view>
+								</view>
+							</view>
+						</block>
+					</view>
+				</view>
+			</scroll-view>
 		</view>
 		<view class="cu-modal" :class="modalName=='pingbi'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
@@ -312,6 +526,11 @@
 				iStatusBarHeight: 0,
 				page: 0,
 				page0: 0,
+				page2: 0,
+				page3: 0,
+				page4: 0,
+				page5: 0,
+				page6: 1,
 				tab0enabled: 0,
 				tab1enabled: 0,
 				tab2enabled: 0,
@@ -335,6 +554,11 @@
 				newpost: [],
 				pingbilist: [],
 				guanzhupost: [],
+				rebangpost: [],
+				zixunpost: [],
+				taolunpost: [],
+				meitupost: [],
+				labapost: [],
 				scrollht: [0, 0, 0, 0, 0, 0, 0, 0],
 				tabname: ["关注", "推荐", "热榜", "资讯", "讨论", "美图", "喇叭"],
 				avatarimgLoaded: false,
@@ -361,6 +585,7 @@
 			},
 			tothebottom(push) {
 				var that = this;
+				this.loading = '加载中……';
 				that.loadwb = 0;
 				that.LoadProgresss();
 				if (this.$token == '') {
@@ -431,6 +656,165 @@
 							that.loadwb = 1;
 						}
 					});
+				} else if (that.TabCur == 2) {
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取轮播列表
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							typeid: 5,
+							page: that.page2,
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(that.page2);
+							push = res.data.post;
+							console.log(push);
+							if (push.length > 0) {
+								for (let i = 0; i < push.length; ++i) {
+									that.rebangpost.push(push[i]);
+								}
+							}
+							if (push.length < 30) {
+								that.loading = '竟然到底了！';
+							}
+							that.page2++;
+							setTimeout(function() {
+								that.setHeight("view_listnow");
+							}, 100)
+							that.loadwb = 1;
+						}
+					});
+				} else if (that.TabCur == 3) {
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取轮播列表
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							typeid: 6,
+							page: that.page3,
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(that.page3);
+							push = res.data.post;
+							console.log(push);
+							if (push.length > 0) {
+								for (let i = 0; i < push.length; ++i) {
+									that.zixunpost.push(push[i]);
+								}
+							}
+							if (push.length < 30) {
+								that.loading = '竟然到底了！';
+							}
+							that.page3++;
+							setTimeout(function() {
+								that.setHeight("view_listnow");
+							}, 100)
+							that.loadwb = 1;
+						}
+					});
+				} else if (that.TabCur == 4) {
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取轮播列表
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							typeid: 7,
+							page: that.page4,
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(that.page4);
+							push = res.data.post;
+							console.log(push);
+							if (push.length > 0) {
+								for (let i = 0; i < push.length; ++i) {
+									that.taolunpost.push(push[i]);
+								}
+							}
+							if (push.length < 30) {
+								that.loading = '竟然到底了！';
+							}
+							that.page4++;
+							setTimeout(function() {
+								that.setHeight("view_listnow");
+							}, 100)
+							that.loadwb = 1;
+						}
+					});
+				} else if (that.TabCur == 5) {
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取轮播列表
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							typeid: 8,
+							page: that.page5,
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(that.page5);
+							push = res.data.post;
+							console.log(push);
+							if (push.length > 0) {
+								for (let i = 0; i < push.length; ++i) {
+									that.meitupost.push(push[i]);
+								}
+							}
+							if (push.length < 30) {
+								that.loading = '竟然到底了！';
+							}
+							that.page5++;
+							setTimeout(function() {
+								that.setHeight("view_listnow");
+							}, 100)
+							that.loadwb = 1;
+						}
+					});
+				}else if (that.TabCur == 6) {
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:laba', //获取轮播列表
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							page: that.page6,
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(that.page6);
+							push = res.data;
+							console.log(push);
+							if (push.length > 0) {
+								for (let i = 0; i < push.length; ++i) {
+									that.labapost.push(push[i]);
+								}
+							}
+							if (push.length < 30) {
+								that.loading = '竟然到底了！';
+							}
+							that.page6++;
+							setTimeout(function() {
+								that.setHeight("view_listnow");
+							}, 100)
+							that.loadwb = 1;
+						}
+					});
 				}
 				console.log("到底了");
 			},
@@ -456,7 +840,9 @@
 					this.scrollht[this.TabCur] = this.$scrollheight;
 					if(this.TabCur>0){
 						this.TabCur --;
-						this.shuaxinlist();
+						if((this.TabCur==0&&this.page0==0)||(this.TabCur==2&&this.page2==0)||(this.TabCur==3&&this.page3==0)||(this.TabCur==4&&this.page4==0)||(this.TabCur==5&&this.page5==0)||(this.TabCur==6&&this.page6==1)){
+							this.shuaxinlist();
+						}
 					}
 					uni.pageScrollTo({
 						scrollTop: this.scrollht[this.TabCur],
@@ -467,7 +853,9 @@
 					this.scrollht[this.TabCur] = this.$scrollheight;
 					if(this.TabCur<6){
 						this.TabCur ++;
-						this.shuaxinlist();
+						if((this.TabCur==0&&this.page0==0)||(this.TabCur==2&&this.page2==0)||(this.TabCur==3&&this.page3==0)||(this.TabCur==4&&this.page4==0)||(this.TabCur==5&&this.page5==0)||(this.TabCur==6&&this.page6==1)){
+							this.shuaxinlist();
+						}
 					}
 					uni.pageScrollTo({
 						scrollTop: this.scrollht[this.TabCur],
@@ -494,6 +882,7 @@
 				}
 				if (this.TabCur == 0) {
 					this.page0 = 0;
+					this.loading = '加载中……';
 					uni.request({
 						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取轮播列表
 						method: 'GET',
@@ -521,6 +910,7 @@
 					});
 				} else if (this.TabCur == 1) {
 					this.page = 0;
+					this.loading = '加载中……';
 					uni.request({
 						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:zhidingtie', //获取置顶帖子
 						method: 'GET',
@@ -571,7 +961,146 @@
 					setTimeout(function() {
 						that.loadwb = 1;
 					}, 500)
-				}
+				}else if (this.TabCur == 2) {
+					this.page2 = 0;
+					this.loading = '加载中……';
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取轮播列表
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							typeid: 5,
+							page: that.page2,
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data.post);
+							that.rebangpost = res.data.post;
+							if (res.data.length < 30) {
+								that.loading = '竟然到底了！';
+							}
+							that.page2++;
+							setTimeout(function() {
+								that.setHeight("view_listnow");
+							}, 100)
+							that.loadwb = 1;
+						}
+					});
+				} else if (this.TabCur == 3) {
+					this.page3 = 0;
+					this.loading = '加载中……';
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取轮播列表
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							typeid: 6,
+							page: that.page3,
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data.post);
+							that.zixunpost = res.data.post;
+							if (res.data.length < 30) {
+								that.loading = '竟然到底了！';
+							}
+							that.page3++;
+							setTimeout(function() {
+								that.setHeight("view_listnow");
+							}, 100)
+							that.loadwb = 1;
+						}
+					});
+				} else if (this.TabCur == 4) {
+					this.page4 = 0;
+					this.loading = '加载中……';
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取轮播列表
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							typeid: 7,
+							page: that.page4,
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data.post);
+							that.taolunpost = res.data.post;
+							if (res.data.length < 30) {
+								that.loading = '竟然到底了！';
+							}
+							that.page4++;
+							setTimeout(function() {
+								that.setHeight("view_listnow");
+							}, 100)
+							that.loadwb = 1;
+						}
+					});
+				} else if (this.TabCur == 5) {
+					this.page5 = 0;
+					this.loading = '加载中……';
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取轮播列表
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							typeid: 8,
+							page: that.page5,
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data.post);
+							that.meitupost = res.data.post;
+							if (res.data.length < 30) {
+								that.loading = '竟然到底了！';
+							}
+							that.page5++;
+							setTimeout(function() {
+								that.setHeight("view_listnow");
+							}, 100)
+							that.loadwb = 1;
+						}
+					});
+				} else if (this.TabCur == 6) {
+					this.page6 = 1;
+					this.loading = '加载中……';
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:laba', //获取轮播列表
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							page: that.page6,
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data);
+							that.labapost = res.data;
+							if (res.data.length < 30) {
+								that.loading = '竟然到底了！';
+							}
+							that.page6++;
+							setTimeout(function() {
+								that.setHeight("view_listnow");
+							}, 100)
+							that.loadwb = 1;
+						}
+					});
+				} 
 			},
 			setHeight(e) {
 				var query = uni.createSelectorQuery();
@@ -749,6 +1278,9 @@
 			},
 			tabSelect(e) {
 				let that = this;
+				this.loading = '加载中……';
+				this.loadwb = 0;
+				this.LoadProgresss();
 				if (this.$scrollheight > 0) {
 					this.scrollht[this.TabCur] = this.$scrollheight;
 				} else {
@@ -790,6 +1322,140 @@
 								that.loading = '竟然到底了！';
 							}
 							that.page0++;
+							setTimeout(function() {
+								that.setHeight("view_listnow");
+							}, 100)
+							that.loadwb = 1;
+						}
+					});
+				}
+				if (e.currentTarget.dataset.id == 2 && that.page2 == 0) {
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取轮播列表
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							typeid: 5,
+							page: that.page2,
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data.post);
+							that.rebangpost = res.data.post;
+							if (res.data.length < 30) {
+								that.loading = '竟然到底了！';
+							}
+							that.page2++;
+							setTimeout(function() {
+								that.setHeight("view_listnow");
+							}, 100)
+							that.loadwb = 1;
+						}
+					});
+				}
+				if (e.currentTarget.dataset.id == 3 && that.page3 == 0) {
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取轮播列表
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							typeid: 6,
+							page: that.page3,
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data.post);
+							that.zixunpost = res.data.post;
+							if (res.data.length < 30) {
+								that.loading = '竟然到底了！';
+							}
+							that.page3++;
+							setTimeout(function() {
+								that.setHeight("view_listnow");
+							}, 100)
+							that.loadwb = 1;
+						}
+					});
+				}
+				if (e.currentTarget.dataset.id == 4 && that.page4 == 0) {
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取轮播列表
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							typeid: 7,
+							page: that.page4,
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data.post);
+							that.taolunpost = res.data.post;
+							if (res.data.length < 30) {
+								that.loading = '竟然到底了！';
+							}
+							that.page4++;
+							setTimeout(function() {
+								that.setHeight("view_listnow");
+							}, 100)
+							that.loadwb = 1;
+						}
+					});
+				}
+				if (e.currentTarget.dataset.id == 5 && that.page5 == 0) {
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取轮播列表
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							typeid: 8,
+							page: that.page5,
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data.post);
+							that.meitupost = res.data.post;
+							if (res.data.length < 30) {
+								that.loading = '竟然到底了！';
+							}
+							that.page5++;
+							setTimeout(function() {
+								that.setHeight("view_listnow");
+							}, 100)
+							that.loadwb = 1;
+						}
+					});
+				}
+				if (e.currentTarget.dataset.id == 6 && that.page6 == 1) {
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:laba', //获取轮播列表
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							page: that.page6,
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data.post);
+							that.labapost = res.data;
+							if (res.data.length < 30) {
+								that.loading = '竟然到底了！';
+							}
+							that.page6++;
 							setTimeout(function() {
 								that.setHeight("view_listnow");
 							}, 100)
@@ -1237,5 +1903,47 @@
 	.noborder{
 		padding-top: 0px!important;
 		margin-top: 0px!important;
+	}
+	#waterfull {
+	     margin: 0 auto;
+	     width: 100%;
+	     column-count: 1;
+	     column-width: 90%;
+	     column-gap: 20upx;
+	}
+	/* 每一列图片包含层 */
+	.item {
+	     margin-bottom: 15upx;
+	     /* 防止多列布局，分页媒体和多区域上下文中的意外中断 */
+	     break-inside: avoid;
+	     background: #fff;
+	}
+	.item:hover {
+	     box-shadow: 3upx 3upx 3upx rgba(0, 0, 0, .5);
+	}
+	/* 图片 */
+	.itemImg {
+	     width: 100%;
+	     vertical-align: middle;
+	}
+	/* 图片下的信息包含层 */
+	.userInfo {
+	     padding: 8upx 12upx;
+	}
+	.avatar {
+	     vertical-align: middle;
+	     width: 40upx;
+	     height: 40upx;
+	     border-radius: 50%;
+	}
+	.username {
+	     margin-left: 8upx;
+	     text-shadow: 3upx 3upx 3upx rgba(0, 0, 0, .3);
+	}
+	.padding0{
+		padding:0 4upx 0 4upx;
+		margin:0 4upx 0 4upx;
+		height: 32upx;
+		font-size: 0.8rem;
 	}
 </style>

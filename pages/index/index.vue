@@ -57,7 +57,7 @@
 			uni.$on('websocketmessage', (websocketmessage) => {
 				this.websocketmessage = websocketmessage;
 				var jsonget = JSON.parse(this.websocketmessage.data)
-				console.log(jsonget);
+				//console.log(jsonget);
 				if (jsonget.cmd == "onlinecheck" && jsonget.type == "group") {
 					if (this.PageCur == "plugin") {
 						this.$refs.message.groupchatupdate(jsonget.status);
@@ -237,8 +237,8 @@
 		position: fixed;
 		left: 0;
 		right: 0;
-		height: 40upx;
-		top: calc(var(--status-bar-height) + 75upx);
+		height: 42upx;
+		top: calc(var(--status-bar-height) + 73upx);
 		/* #endif */
 	}
 
