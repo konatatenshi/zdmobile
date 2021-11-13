@@ -83,7 +83,7 @@
 			//console.log(this.$socket)
 			if (Vue.prototype.$token != '') {
 				uni.request({
-					url: getApp().globalData.zddomain + 'plugin.php?id=xinxiu_network:user', //获取用户基本信息。
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:user', //获取用户基本信息。
 					method: 'GET',
 					timeout: 10000,
 					data: {

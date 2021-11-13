@@ -39,7 +39,7 @@
 				thread: '',
 				title: '',
 				platform: 0,
-				picker: ['水区', '交流区', '意见区', '教程区'],
+				picker: ['水区', '交流区', '意见区', '教程区', '喇叭'],
 				picker2: ['水区', '无权发帖', '意见区', '无权发帖'],
 				editable: true,
 				fasong: false
@@ -60,10 +60,16 @@
 		},
 		methods: {
 			PickerChange(e) {
-				console.log(e.detail);
 				console.log(this.picker[e.detail.value]);
 				this.thread = this.picker[e.detail.value];
 				this.index = e.detail.value;
+				console.log(this.index);
+				if(this.index==4){
+					console.log('laba');
+					uni.redirectTo({
+						url: 'postlaba',
+					})
+				}
 			},
 			post(){
 				console.log(this.content);

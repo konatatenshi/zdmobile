@@ -10,8 +10,8 @@
 		</view>
 		<swiper class="screen-swiper round-dot" :indicator-dots="true" :circular="true" :autoplay="true" interval="5000"
 		 duration="500">
-			<swiper-item v-for="(item,index) in 4" :key="index">
-				<image :src="'https://ossweb-img.qq.com/images/lol/web201310/skin/big3900'+index+ '.jpg'" mode="aspectFill"></image>
+			<swiper-item v-for="(item,index) in swiperList" :key="index" @tap="toforum(item.url)">
+				<img-cache :src="item.src" mode="aspectFill"></img-cache>
 			</swiper-item>
 		</swiper>
 		<view class="VerticalBox">
@@ -94,6 +94,11 @@
 		data() {
 			return {
 				list: [],
+				swiperList: [{
+					"id": 0,
+					"src": "https://m.qpic.cn/psc?/1e7d52d4-3a3a-4dd5-9e87-78bdf6ab672f/TmEUgtj9EK6.7V8ajmQrEMuIXV7MakyKKRc9J6ulEu3GyXoFmGzTtX66rijMZpsM3PeZNN1OOhUQqkU7jc6HRD435usBKxrmLcfQRQGyGr0!/b&bo=AAXQAgAAAAADN8U!&rf=viewer_4",
+					"url": 50
+				}],
 				fuplist: [],
 				forumlist: [],
 				forumdata: [],
@@ -150,6 +155,7 @@
 		},
 		mounted() {
 			plus.navigator.setStatusBarStyle('light'); //改变系统标题颜色
+			console.log(this.swiperList)
 		},
 		methods: {
 			hideModal(e) {

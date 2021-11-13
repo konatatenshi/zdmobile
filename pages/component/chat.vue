@@ -282,7 +282,7 @@
 				this.$socket.send(JSON.stringify(data));
 			},
 			scrollToBottom: function() {
-				if(this.stopload){
+				if(this.stopload>1){
 					return ;
 				}
 				let that = this;
@@ -350,6 +350,7 @@
 			getchatmessage(e) {
 				var that = this;
 				this.stopload++;
+				console.log(this.stopload);
 				this.loadingmore = true;
 				uni.request({
 					url: 'https://lt.zdfx.net:8089/index.php?m=im&a=chatlog&from=bbs.zdfx.net&id=-1&type=group', //获取轮播列表

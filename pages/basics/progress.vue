@@ -69,7 +69,7 @@
 				this.platform = 2;
 			}
 			var urlon = encodeURIComponent(getApp().globalData.zddomain + 'plugin.php?id=yinxingfei_zzza:yinxingfei_zzza_hall&app=1&mobile=2');
-			this.url = getApp().globalData.zddomain + 'plugin.php?id=xinxiu_network:extend&token=' + this.$token +
+			this.url = getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:tourl&token=' + this.$token +
 				'&action=send_url&url=' + urlon;
 			console.log(this.url)
 			console.log(e.url)

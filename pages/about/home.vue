@@ -644,7 +644,7 @@
 					if (f == 1) {
 						return 'vip';
 					} else {
-						return '';
+						return '懒人组';
 					}
 				} else if (e == 1) {
 					if (f == 1) {

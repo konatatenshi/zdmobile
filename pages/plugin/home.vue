@@ -69,6 +69,13 @@
 								</view>
 							</view>
 							<view class="cu-list menu-avatar">
+								<scroll-view scroll-x class="bg-white nav">
+									<view class="flex text-center">
+										<view class="cu-item flex-sub" :class="index==MessageTabCur?'text-orange cur':''" v-for="(item,index) in tabjson" :key="index" @tap="MtabSelect" :data-id="index">
+											{{item}}
+										</view>
+									</view>
+								</scroll-view>
 							</view>
 						</view>
 					</scroll-view>
@@ -137,12 +144,12 @@
 					</view>
 				</view>
 				<view class="padding-xl">
-					您似乎已经和聊天服务器断开连接，是否重连？
+					您似乎已经和聊天服务器断开连接，建议重启APP以重新连接。
 				</view>
 				<view class="cu-bar bg-white justify-end">
 					<view class="action">
-						<button class="cu-btn line-green text-green" @tap="hideModal">取消</button>
-						<button class="cu-btn bg-green margin-left" @tap="restart">确定</button>
+						<button class="cu-btn line-green text-green" @tap="restart">重启</button>
+						<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
 					</view>
 				</view>
 			</view>
@@ -164,6 +171,7 @@
 				swiperList: [],
 				toplist: [],
 				tuijiantie: [],
+				tabjson: ['全部','系统','帖子','点评','@我'],
 				modalName: "",
 				chatmessage: "",
 				chattime: "00:00",
@@ -171,6 +179,7 @@
 				avatarimgLoaded: false,
 				modalName: null,
 				TabCur: 1,
+				MessageTabCur: 1,
 				radio: 'A',
 				switchA: false,
 				switchB: true,
@@ -263,6 +272,11 @@
 			},
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;
+				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60;
+				console.log(this.swiperheight)
+			},
+			MtabSelect(e) {
+				this.MessageTabCur = e.currentTarget.dataset.id;
 				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60;
 				console.log(this.swiperheight)
 			},

@@ -1,10 +1,10 @@
-<!-- 手机绑定 -->
+<!-- 发喇叭 -->
 <template>
 	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
 			<block slot="backText">返回</block>
-			<block slot="content">手机绑定</block>
+			<block slot="content">发喇叭</block>
 		</cu-custom>
 		<web-view :src="url"></web-view>
 	</view>
@@ -16,7 +16,7 @@
 			return {
 				url: '',
 				platform: 0,
-				title: "手机绑定"
+				title: "发喇叭"
 			};
 		},
 		methods: {
@@ -24,16 +24,15 @@
 				var that = this;
 				var currentWebview = this.$scope.$getAppWebview();
 				var thisurl = currentWebview.children()[0].getURL();
-				var re = /\/thread-(\d*)*/i;
+				console.log(thisurl);
+				var re = /action=add/i;
 				var found = thisurl.match(re);
 
-				//console.log(found);
+				console.log(found);
 				if (found) {
-					uni.redirectTo({
-						url: '../component/card?tid=' + found[1],
-						animationType: 'pop-in',
-						animationDuration: 200
-					});
+					uni.reLaunch({
+						url:'../index/index'
+					})
 				}
 				setTimeout(function() {
 					if (found == null){
@@ -50,7 +49,7 @@
 			} else {
 				this.platform = 2;
 			}
-			var urlon = encodeURIComponent(getApp().globalData.zddomain + 'plugin.php?id=jzsjiale_sms:mobile&act=bangding');
+			var urlon = encodeURIComponent(getApp().globalData.zddomain + 'plugin.php?id=ahome_laba:add&fid=0&tid=0&plugin=1&app=1');
 			this.url = getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:tourl&token=' + this.$token +
 				'&action=send_url&url=' + urlon;
 			console.log(this.url)

@@ -409,7 +409,7 @@
 				</view>
 				<view class="cu-load load-modal" v-if="loadModal==100">
 					<!-- <view class="cuIcon-emojifill text-orange"></view> -->
-					<image src="/static/19.gif" style="border-radius: 50%;" mode="aspectFit"></image>
+					<image src="../../static/img/loadzd.gif" style="border-radius: 50%;" mode="aspectFit"></image>
 					<view class="gray-text">检测中...</view>
 				</view>
 				<view class="cu-modal" :class="modalName=='floorpost'?'show':''"  @tap="hideModal">

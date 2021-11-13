@@ -30,6 +30,9 @@
 				<view class="form-input" style="display: none;">
 					<input type="text" name="answer" :value="yanzhengput" placeholder="安全回答" />
 				</view>
+				<view class="form-input" style="display: none;">
+					<input type="text" name="authcode" :value="authcode" placeholder="验证码" />
+				</view>
 				<view class="flex">
 					<button :disabled="formsub2?true:false" class="flex-sub cu-btn line-cyan lg shadow"
 						@click="register"><text
@@ -80,7 +83,27 @@
 						<input placeholder="请输入验证回答" name="input" :value="yanzhengput" @input="changeanswer"></input>
 					</view>
 					<view class="padding flex flex-direction">
-						<button class="cu-btn bg-blue" @tap="hideModal">完成</button>
+						<button class="cu-btn bg-blue" @tap="hideModal">点此关闭窗口并重新点击登录框</button>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="cu-modal" :class="modalName=='yanzhengcode'?'show':''">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">Google身份验证器</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl">
+					<view class="cu-form-group">
+						<view class="title">验证码</view>
+						<input type="number" placeholder="请输入6位数验证码" name="input" :value="authcode" @input="changeauth"></input>
+					</view>
+					<view class="text-gray text-sm"><text class="cuIcon-infofill margin-right-xs"></text>帮助：你的账号已开启Google身份验证，请输入Google身份验证器里的6位验证码登录。如不小心遗忘了验证器，请点击手机重置密码即可。</view>
+					<view class="padding flex flex-direction">
+						<button class="cu-btn bg-blue" @tap="hideModal">点此关闭窗口并重新点击登录框</button>
 					</view>
 				</view>
 			</view>
@@ -153,7 +176,7 @@
 		</view>
 		<view class="cu-load load-modal" v-if="loadModal">
 			<!-- <view class="cuIcon-emojifill text-orange"></view> -->
-			<image src="/static/19.gif" style="border-radius: 50%;" mode="aspectFit"></image>
+			<image src="../../static/img/loadzd.gif" style="border-radius: 50%;" mode="aspectFit"></image>
 			<view class="gray-text">登录中...</view>
 		</view>
 		<view class="flex padding justify-between foot">
@@ -212,6 +235,7 @@
 				checkResult: {},
 				modalName: '',
 				error: Array,
+				authcode: '',
 				slideCode_show: false, //图形验证码是否显示
 				slideCode_yanzheng: false, //图形验证码是否验证通过
 				slideCode_x: 10, //图形验证码的水平偏移值
@@ -423,6 +447,9 @@
 			changeanswer(e) {
 				this.yanzhengput = e.detail.value
 			},
+			changeauth(e) {
+				this.authcode = e.detail.value
+			},
 			changephonenumber(e) {
 				this.phonenumber = e.detail.value
 			},
@@ -472,7 +499,7 @@
 				this.LoadModal(e);
 				uni.request({
 					url: getApp().globalData.zddomain +
-						'plugin.php?id=xinxiu_network:login', //仅为示例，并非真实接口地址。
+						'plugin.php?id=ts2t_qqavatar:login', //仅为示例，并非真实接口地址。
 					method: 'GET',
 					timeout: 10000,
 					data: {
@@ -481,7 +508,8 @@
 						username: e.detail.value.text,
 						password: e.detail.value.password,
 						questionid: e.detail.value.questionid,
-						answer: e.detail.value.answer
+						answer: e.detail.value.answer,
+						authcode: e.detail.value.authcode
 
 					},
 					header: {
@@ -501,6 +529,9 @@
 							} else if (res.data.result == 'error0011') {
 								this.modalName = 'loginerror';
 								this.error.reason = '您输入的用户登陆名不存在';
+							} else if (res.data.result == 'error00112') {
+								this.modalName = 'loginerror';
+								this.error.reason = '您输入的用户名不存在';
 							} else if (res.data.result == 'error0012') {
 								this.modalName = 'loginerror';
 								this.error.reason = '您输入的密码错误';
@@ -513,6 +544,12 @@
 							} else if (res.data.result == 'error06:username') {
 								this.error.reason = '您还未输入用户名';
 								this.modalName = 'loginerror';
+							} else if (res.data.result == 'error01004') {
+								this.error.reason = '因验证失败次数过多，用户已锁定，请通过手机找回密码解锁';
+								this.modalName = 'loginerror';
+							} else if (res.data.result == 'error01005') {
+								this.error.reason = '验证码错误，请输入验证码以继续';
+								this.modalName = 'yanzhengcode';
 							}
 							this.formsub = false;
 							console.log(this.modalName);

@@ -193,7 +193,7 @@
 					<view v-if="rebangpost.length > 0">
 						<block v-for="(itemex,indexe1) in rebangpost" :key="indexe1">
 							<view class="solid-bottom text-df article text-min"
-								style="padding-top: 10upx; padding-bottom: 10upx;">
+								style="padding-top: 10upx; padding-bottom: 10upx;" v-if="!(ifpingbi(itemex.author)&&$adminid<=0)">
 								<view style="margin-right: 20upx;padding-left: 80upx;" class="text-black text-cut" @tap="tourl(itemex.url)">
 									{{itemex.title}}</view>
 								<view style="padding-left: 80upx;">
@@ -245,7 +245,7 @@
 					<view v-if="zixunpost.length > 0">
 						<block v-for="(itemex,indexe1) in zixunpost" :key="indexe1">
 							<view class="solid-bottom text-df article text-min"
-								style="padding-top: 10upx; padding-bottom: 10upx;">
+								style="padding-top: 10upx; padding-bottom: 10upx;" v-if="!(ifpingbi(itemex.author)&&$adminid<=0)">
 								<view style="margin-right: 20upx;padding-left: 80upx;" class="text-black text-cut" @tap="tourl(itemex.url)">
 									{{itemex.title}}</view>
 								<view style="padding-left: 80upx;">
@@ -297,7 +297,7 @@
 					<view v-if="taolunpost.length > 0">
 						<block v-for="(itemex,indexe1) in taolunpost" :key="indexe1">
 							<view class="solid-bottom text-df article text-min"
-								style="padding-top: 10upx; padding-bottom: 10upx;">
+								style="padding-top: 10upx; padding-bottom: 10upx;" v-if="!(ifpingbi(itemex.author)&&$adminid<=0)">
 								<view style="margin-right: 20upx;padding-left: 80upx;" class="text-black text-cut" @tap="tourl(itemex.url)">
 									{{itemex.title}}</view>
 								<view style="padding-left: 80upx;">
@@ -347,19 +347,17 @@
 					<view class="hometop3">
 					</view>
 					<view v-if="meitupost.length > 0" id="waterfull">
-						<view v-for="(itemex,indexe1) in meitupost" :key="indexe1">
+						<view v-for="(itemex,indexe1) in meitupost" :key="indexe1" v-if="!(ifpingbi(itemex.author)&&$adminid<=0)">
 							<view class="item">
 								<img-cache v-if="itemex.img!='static/image/common/nophoto.gif'" mode="aspectFill"
 									class="itemImg" :src="itemex.img" @tap="tourl(itemex.url)"></img-cache><image v-else class="itemImg" src="../../static/img/loadzd.gif" @tap="tourl(itemex.url)"></image>
 								<view class="userInfo">
 									<img-cache class="avatar round" :src="itemex.avatar"  @tap="tourl(itemex.url)">
 									</img-cache>
-									<img-cache class="avatar round" v-if="itemex.touxiangkuanglist != ''"
-										:src="itemex.touxiangkuanglist"  @tap="tourl(itemex.url)">
-									</img-cache>
-									<text class="username text-df article text-gray" @tap="tourl(itemex.url)">{{itemex.author}}</text><text class="text-df article text-black text-cut" @tap="tourl(itemex.url)">{{itemex.title}}</text>
-									<view class="chacha text-gray cuIcon-close" @tap="more2(itemex.author,itemex.url)">
-									</view>
+									<text class="username text-df article text-gray" @tap="tourl(itemex.url)">{{itemex.author}}</text>
+									<text class="text-gray cuIcon-close" @tap="more2(itemex.author,itemex.url)">
+									</text>
+									<view class="text-df article text-black text-cut" @tap="tourl(itemex.url)">{{itemex.title}}</view>
 								</view>
 							</view>
 						</view>
@@ -382,9 +380,15 @@
 					<view class="hometop3">
 					</view>
 					<view v-if="labapost.length > 0">
-						<view v-for="(itemex,indexe1) in labapost" :key="indexe1">
-							<view v-if="itemex.level=='all'" class="padding-xs radius shadow bg-white margin-top-xs text-black"><button class="cu-btn bg-green padding0">全站</button><text class="text-blue">{{itemex.username}}</text><text class="lg text-gray cuIcon-time"></text><text class="text-gray">{{itemex.dateline}}</text><rich-text :nodes="itemex.content"></rich-text></view>
-							<view v-else-if="itemex.level=='system'" class="padding-xs radius shadow bg-red margin-top-xs text-black"><button class="cu-btn bg-red padding0">系统</button><text class="text-blue">{{itemex.username}}</text><text class="lg text-gray cuIcon-time"></text><text class="text-gray">{{itemex.dateline}}</text><rich-text :nodes="itemex.content"></rich-text></view>
+						<view v-for="(itemexs,indexe1) in labapost" :key="indexe1">
+							<view v-if="!(ifpingbi(itemexs.author)&&$adminid<=0)">
+								<view v-if="itemexs.level=='all'" class="padding-xs radius shadow bg-white margin-top-xs text-black"><button class="cu-btn bg-green padding0">全站</button>
+										<image class="avatar round" :src="itemexs.avatarlist"  @tap="touserpage(itemexs.uid)">
+										</image><text class="text-blue"  @tap="touserpage(itemexs.uid)">{{itemexs.username}}</text><text class="lg text-gray cuIcon-time"></text><text class="text-gray">{{itemexs.dateline}}</text><rich-text :nodes="itemexs.content"></rich-text></view>
+								<view v-else-if="itemexs.level=='system'" class="padding-xs radius shadow bg-red margin-top-xs text-black"><button class="cu-btn bg-red padding0">系统</button><text class="text-blue">{{itemexs.username}}</text><text class="lg text-gray cuIcon-time"></text><text class="text-gray">{{itemexs.dateline}}</text><rich-text :nodes="itemexs.content"></rich-text></view>
+								<view class="chacha text-gray cuIcon-close" @tap="more2(itemexs.username,itemexs.id,1)">
+								</view>
+							</view>
 						</view>
 					</view>
 					<view>
@@ -432,10 +436,15 @@
 							<view class="text-gray text-sm noborder">拉黑后，他将不能回复和私聊你任何信息。</view>
 						</view>
 					</view>
-					<view class="cu-item" @tap="jubaota(pingbitid)">
+					<view class="cu-item" v-if="jubaovalue==1" @tap="jubaota(pingbitid)">
 						<view class="content">
 							<text class="text-grey noborder2"><text class="cuIcon-info"></text>举报此内容</text>
 							<view class="text-gray text-sm noborder">标题夸张，内容质量差等。</view>
+						</view>
+					</view>
+					<view class="cu-item" v-if="$adminid>0&&jubaovalue==0" @tap="deletelaba(pingbitid)">
+						<view class="content">
+							<text class="text-grey noborder2"><text class="cuIcon-info"></text>删除此喇叭</text>
 						</view>
 					</view>
 				</view>
@@ -545,6 +554,7 @@
 				pingbitid: 0,
 				modalName: null,
 				laheivar: 0,
+				jubaovalue: 0,
 				laheitext: '拉黑作者',
 				loadwb: 0,
 				radio: 'A',
@@ -819,12 +829,12 @@
 				console.log("到底了");
 			},
 			start(e) {
-				console.log("开始下滑坐标", e.changedTouches[0].clientY)
+				//console.log("开始下滑坐标", e.changedTouches[0].clientY)
 				this.startData.clientX = e.changedTouches[0].clientX;
 				this.startData.clientY = e.changedTouches[0].clientY;
 			},
 			end(e) {
-				console.log("结束下滑坐标", e.changedTouches[0].clientY)
+				//console.log("结束下滑坐标", e.changedTouches[0].clientY)
 				const subX = e.changedTouches[0].clientX - this.startData.clientX;
 				const subY = e.changedTouches[0].clientY - this.startData.clientY;
 				if (subY < -50) {
@@ -1169,6 +1179,21 @@
 				this.InputBottom = 0;
 				this.searchstyle = "none";
 			},
+			touserpage(e) {
+				if (this.$token == '') {
+					uni.redirectTo({
+						url: '../../components/ay-login/login-password',
+						animationType: 'pop-in',
+						animationDuration: 200
+					});
+					return;
+				}
+				uni.navigateTo({
+					url: '../component/list?uid=' + e,
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
+			},
 			searchconfirm(e) {
 				this.searchstyle = "none";
 				if (e.detail.value == '') {
@@ -1328,8 +1353,7 @@
 							that.loadwb = 1;
 						}
 					});
-				}
-				if (e.currentTarget.dataset.id == 2 && that.page2 == 0) {
+				}else if (e.currentTarget.dataset.id == 2 && that.page2 == 0) {
 					uni.request({
 						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取轮播列表
 						method: 'GET',
@@ -1355,8 +1379,7 @@
 							that.loadwb = 1;
 						}
 					});
-				}
-				if (e.currentTarget.dataset.id == 3 && that.page3 == 0) {
+				}else if (e.currentTarget.dataset.id == 3 && that.page3 == 0) {
 					uni.request({
 						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取轮播列表
 						method: 'GET',
@@ -1382,8 +1405,7 @@
 							that.loadwb = 1;
 						}
 					});
-				}
-				if (e.currentTarget.dataset.id == 4 && that.page4 == 0) {
+				}else if (e.currentTarget.dataset.id == 4 && that.page4 == 0) {
 					uni.request({
 						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取轮播列表
 						method: 'GET',
@@ -1409,8 +1431,7 @@
 							that.loadwb = 1;
 						}
 					});
-				}
-				if (e.currentTarget.dataset.id == 5 && that.page5 == 0) {
+				}else if (e.currentTarget.dataset.id == 5 && that.page5 == 0) {
 					uni.request({
 						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取轮播列表
 						method: 'GET',
@@ -1436,8 +1457,7 @@
 							that.loadwb = 1;
 						}
 					});
-				}
-				if (e.currentTarget.dataset.id == 6 && that.page6 == 1) {
+				}else if (e.currentTarget.dataset.id == 6 && that.page6 == 1) {
 					uni.request({
 						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:laba', //获取轮播列表
 						method: 'GET',
@@ -1462,6 +1482,10 @@
 							that.loadwb = 1;
 						}
 					});
+				}else{
+					setTimeout(function() {
+						that.loadwb = 1;
+					}, 100)
 				}
 				this.TabCur = e.currentTarget.dataset.id;
 				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60;
@@ -1529,11 +1553,16 @@
 					animationDuration: 200
 				});
 			},
-			more2(e,f) {
+			more2(e,f,g) {
 				let that = this;
 				this.pingbiauthor = e;
 				this.pingbitid = f;
 				this.modalName = 'pingbi';
+				if(g==1){
+					this.jubaovalue = 0;
+				}else{
+					this.jubaovalue = 1;
+				}
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:guanzhu', //获取置顶帖子
 					method: 'GET',
@@ -1740,7 +1769,7 @@
 						data: res.data.data,
 						success: function() {
 							that.swiperList = res.data.data;
-							//console.log(that.swiperList);
+							console.log(that.swiperList);
 						}
 					});
 				}
@@ -1907,9 +1936,6 @@
 	#waterfull {
 	     margin: 0 auto;
 	     width: 100%;
-	     column-count: 1;
-	     column-width: 90%;
-	     column-gap: 20upx;
 	}
 	/* 每一列图片包含层 */
 	.item {
@@ -1917,6 +1943,9 @@
 	     /* 防止多列布局，分页媒体和多区域上下文中的意外中断 */
 	     break-inside: avoid;
 	     background: #fff;
+		 width: 49%;
+		 float: left;
+		 margin-right: 8upx;
 	}
 	.item:hover {
 	     box-shadow: 3upx 3upx 3upx rgba(0, 0, 0, .5);

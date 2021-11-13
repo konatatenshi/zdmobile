@@ -69,7 +69,7 @@
 			}
 			var urlon = encodeURIComponent(getApp().globalData.zddomain + 'forum.php?mod=post&action=newthread&fid=' + e
 				.url + '&app=' + this.platform + '&mobile=2');
-			this.url = getApp().globalData.zddomain + 'plugin.php?id=xinxiu_network:extend&token=' + this.$token +
+			this.url = getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:tourl&token=' + this.$token +
 				'&action=send_url&url=' + urlon;
 			console.log(this.url)
 			console.log(e.url)
