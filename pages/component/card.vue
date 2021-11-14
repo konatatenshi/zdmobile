@@ -22,7 +22,8 @@
 							<view v-show="sex==1" class="cu-tag badge cuIcon-male bg-blue"></view>
 							<view v-show="sex==2" class="cu-tag badge cuIcon-female bg-pink"></view>
 						</view>
-						<img-cache class="cu-avatar round gzlist2" v-if="touxiangkuanglist != ''" :src="touxiangkuanglist"/>
+						<img-cache class="cu-avatar round gzlist2" v-if="touxiangkuanglist != ''"
+							:src="touxiangkuanglist" />
 						<view class="content flex-sub hbx">
 							<view v-if="isImage">
 								<img-cache class="touxian" :src="touxian"></img-cache>
@@ -56,7 +57,7 @@
 				</view>
 				<view class="text-content2">
 					<view v-if="content==''" class="cu-load text-gray loading"></view>
-					<mp-html :content="content" @linktap="linktap"  selectable="true" />
+					<mp-html :content="content" @linktap="linktap" selectable="true" />
 					<view v-if="jiance.type>0" class="text-center" @tap="jiancequery()">
 						<view v-if="jiance.type==1"
 							class="padding-xs radius shadow shadow-lg bg-cyan margin-top text-sm ltsp"><text
@@ -138,13 +139,15 @@
 				<view class="cu-list menu-avatar comment solids-top" v-for="(item,index) in huifulist" :key="index"
 					:data-id="index">
 					<view class="cu-item" v-if="!(ifpingbi(item.author)&&$adminid<=0)">
-						<view class="cu-avatar round" :style="[{ backgroundImage:'url(' + item.avatarlist + ')' }]" @tap="totheuid(item.authorid)">
+						<view class="cu-avatar round" :style="[{ backgroundImage:'url(' + item.avatarlist + ')' }]"
+							@tap="totheuid(item.authorid)">
 						</view>
 						<view class="content hbx">
 							<view v-if="isImage">
 								<img-cache class="touxian2" :src="item.touxian"></img-cache>
 							</view>
-							<img-cache class="cu-avatar round gzlist3" v-if="item.touxiangkuanglist" :src="item.touxiangkuanglist"/>
+							<img-cache class="cu-avatar round gzlist3" v-if="item.touxiangkuanglist"
+								:src="item.touxiangkuanglist" />
 							<view class="flex justify-between" @tap="totheuid(item.authorid)">
 								<view :style="[{ color: item.groupid==51?randomcolor():'text-gray'}]">
 									{{item.author}}<text
@@ -156,7 +159,8 @@
 										v-for="(xxzitem,xxzindex) in item.xunzhanglist.slice(0, 6)">
 										<img-cache v-if="xxzitem.id>0" class="cu-tag xunzhangshow" :src="xxzitem.url">
 										</img-cache>
-									</span></view>
+									</span>
+								</view>
 								<view v-show="item.dateline!='刚刚'" class="text-grey text-sm">{{item.position}}楼</view>
 							</view>
 							<view class="flex justify-start">
@@ -168,7 +172,8 @@
 								<view v-else-if="item.status&8" class="text-xs text-gray cuIcon-mobile">来自手机网页版</view>
 							</view>
 							<mp-html v-if="item.status&1" class="text-content text-df float"
-								:class="isfloat[index]?'show':'hide'" :content="pingbi" @linktap="linktap" selectable="true" />
+								:class="isfloat[index]?'show':'hide'" :content="pingbi" @linktap="linktap"
+								selectable="true" />
 							<mp-html v-else-if="!isfloat[index]" class="text-content text-df float"
 								:class="isfloat[index]?'show':'hide'" :content="item.html.substr(0,140)"
 								@linktap="linktap" selectable="true" />
@@ -185,7 +190,10 @@
 							</view>
 							<view class="margin-top-sm flex justify-between">
 								<view v-if="animation[index]">
-									<text class="cuIcon-appreciatefill" :class="animation[index]==1?'text-red':'text-gray'" @tap="zanpo(item.pid,index,item.support,dianzannumber[index])"><text v-if="dianzannumber[index]>0">{{dianzannumber[index]}}</text></text>
+									<text class="cuIcon-appreciatefill"
+										:class="animation[index]==1?'text-red':'text-gray'"
+										@tap="zanpo(item.pid,index,item.support,dianzannumber[index])"><text
+											v-if="dianzannumber[index]>0">{{dianzannumber[index]}}</text></text>
 									<text class="cuIcon-messagefill text-gray margin-left-sm"
 										@tap="lzpo(item.pid,index)"></text>
 								</view>
@@ -197,7 +205,8 @@
 										@tap="lzpo(item.pid,index)"></text>
 								</view>
 								<view>
-									<text class="cuIcon-close text-gray margin-right-sm" @tap="more2(item.authorid,item.author,item.pid)"></text>
+									<text class="cuIcon-close text-gray margin-right-sm"
+										@tap="more2(item.authorid,item.author,item.pid)"></text>
 								</view>
 							</view>
 							<view v-if="item.reply>0" class="bg-gray padding-sm radius margin-top-sm  text-sm">
@@ -299,13 +308,15 @@
 							</view>
 							<view class="cu-item" v-else-if="!ifpingbi(pingbiauthor)" @tap="pingbiadd(pingbiauthor)">
 								<view class="content noborder2">
-									<text class="text-grey"><text class="cuIcon-roundclose"></text>屏蔽作者：{{pingbiauthor}}</text>
+									<text class="text-grey"><text
+											class="cuIcon-roundclose"></text>屏蔽作者：{{pingbiauthor}}</text>
 									<view class="text-gray text-sm noborder">屏蔽后，你将不会收到他的信息。</view>
 								</view>
 							</view>
 							<view class="cu-item" v-else @tap="pingbiremove(pingbiauthor)">
 								<view class="content noborder2">
-									<text class="text-grey"><text class="cuIcon-roundclose"></text>取消屏蔽：{{pingbiauthor}}</text>
+									<text class="text-grey"><text
+											class="cuIcon-roundclose"></text>取消屏蔽：{{pingbiauthor}}</text>
 									<view class="text-gray text-sm noborder">屏蔽后，你将不会收到他的信息。</view>
 								</view>
 							</view>
@@ -316,7 +327,8 @@
 							</view>
 							<view class="cu-item" v-else @tap="lahei()">
 								<view class="content noborder2">
-									<text class="text-grey"><text class="cuIcon-attentionforbid"></text>{{laheitext}}：{{pingbiauthor}}</text>
+									<text class="text-grey"><text
+											class="cuIcon-attentionforbid"></text>{{laheitext}}：{{pingbiauthor}}</text>
 									<view class="text-gray text-sm noborder">拉黑后，他将不能回复和私聊你任何信息。</view>
 								</view>
 							</view>
@@ -412,7 +424,7 @@
 					<image src="../../static/img/loadzd.gif" style="border-radius: 50%;" mode="aspectFit"></image>
 					<view class="gray-text">检测中...</view>
 				</view>
-				<view class="cu-modal" :class="modalName=='floorpost'?'show':''"  @tap="hideModal">
+				<view class="cu-modal" :class="modalName=='floorpost'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
 						<view class="cu-bar bg-white justify-end">
 							<view class="content">楼中楼回复</view>
@@ -433,7 +445,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="cu-modal" :class="modalName=='siliao'?'show':''"  @tap="hideModal">
+				<view class="cu-modal" :class="modalName=='siliao'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
 						<view class="cu-bar bg-white justify-end">
 							<view class="content">私聊给{{postup}}</view>
@@ -454,7 +466,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="cu-modal" :class="modalName=='siliao2'?'show':''"  @tap="hideModal">
+				<view class="cu-modal" :class="modalName=='siliao2'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
 						<view class="cu-bar bg-white justify-end">
 							<view class="content">私聊给{{pingbiauthor}}</view>
@@ -475,7 +487,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="cu-modal" :class="modalName=='jubaoxinxi'?'show':''"  @tap="hideModal">
+				<view class="cu-modal" :class="modalName=='jubaoxinxi'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
 						<view class="cu-bar bg-white justify-end">
 							<view class="content">请输入举报理由</view>
@@ -487,23 +499,28 @@
 							<radio-group class="block" @change="RadioChange">
 								<view class="cu-form-group">
 									<view class="text-xl">广告垃圾</view>
-									<radio :class="radio=='A'?'checked':''" :checked="radio=='A'?true:false" value="A"></radio>
+									<radio :class="radio=='A'?'checked':''" :checked="radio=='A'?true:false" value="A">
+									</radio>
 								</view>
 								<view class="cu-form-group">
 									<view class="text-xl">违规内容</view>
-									<radio :class="radio=='B'?'checked':''" :checked="radio=='B'?true:false" value="B"></radio>
+									<radio :class="radio=='B'?'checked':''" :checked="radio=='B'?true:false" value="B">
+									</radio>
 								</view>
 								<view class="cu-form-group">
 									<view class="text-xl">恶意灌水</view>
-									<radio :class="radio=='C'?'checked':''" :checked="radio=='C'?true:false" value="C"></radio>
+									<radio :class="radio=='C'?'checked':''" :checked="radio=='C'?true:false" value="C">
+									</radio>
 								</view>
 								<view class="cu-form-group">
 									<view class="text-xl">重复内容</view>
-									<radio :class="radio=='D'?'checked':''" :checked="radio=='D'?true:false" value="D"></radio>
+									<radio :class="radio=='D'?'checked':''" :checked="radio=='D'?true:false" value="D">
+									</radio>
 								</view>
 								<view class="cu-form-group">
 									<view class="text-xl">其他</view>
-									<radio :class="radio=='E'?'checked':''" :checked="radio=='E'?true:false" value="E"></radio>
+									<radio :class="radio=='E'?'checked':''" :checked="radio=='E'?true:false" value="E">
+									</radio>
 								</view>
 							</radio-group>
 							<view class="cu-form-group align-start" v-if="radio=='E'">
@@ -517,7 +534,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="cu-modal" :class="modalName=='dashang'?'show':''"  @tap="hideModal">
+				<view class="cu-modal" :class="modalName=='dashang'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
 						<view class="cu-bar bg-white justify-end">
 							<view class="content">请输入打赏金币的数目</view>
@@ -799,10 +816,10 @@
 						} else if (res.data.code == 404) {
 							that.guanzhutext = '关注作者';
 							that.guanzhuvar = 1;
-						} 
-						if(res.data.pm == 1){
+						}
+						if (res.data.pm == 1) {
 							that.pm = 1;
-						}else{
+						} else {
 							that.sixintxt = '私信作者（无权限使用）';
 						}
 						that.jiazai = 0;
@@ -810,7 +827,7 @@
 					}
 				});
 			},
-			pingbiremove(e){
+			pingbiremove(e) {
 				var that = this;
 				this.pingbilist.splice(this.pingbilist.indexOf(e), 1);
 				console.log(this.pingbilist)
@@ -825,7 +842,7 @@
 					this.modalName = null;
 				}, 200)
 			},
-			pingbiadd(e){
+			pingbiadd(e) {
 				var that = this;
 				console.log(this.pingbilist);
 				console.log(e);
@@ -841,15 +858,15 @@
 					this.modalName = null;
 				}, 200)
 			},
-			ifpingbi(e){
-				if(this.pingbilist.indexOf(e)>=0){
+			ifpingbi(e) {
+				if (this.pingbilist.indexOf(e) >= 0) {
 					//console.log(e);
 					return true;
-				}else{
+				} else {
 					return false;
 				}
 			},
-			more2(e,f,g) {
+			more2(e, f, g) {
 				let that = this;
 				this.pingbiuid = e;
 				this.pingbiauthor = f;
@@ -877,17 +894,17 @@
 						} else if (res.data.code == 404) {
 							that.guanzhutext = '关注作者';
 							that.guanzhuvar = 1;
-						} 
+						}
 						if (res.data.blacklist == 1) {
 							that.laheitext = '取消拉黑';
 							that.laheivar = 1;
-						}else{
+						} else {
 							that.laheitext = '拉黑作者';
 							that.laheivar = 0;
 						}
-						if(res.data.pm == 1){
+						if (res.data.pm == 1) {
 							that.pm = 1;
-						}else{
+						} else {
 							that.sixintxt = '私信作者（无权限使用）';
 						}
 						that.jiazai = 0;
@@ -914,12 +931,12 @@
 						console.log(res.data)
 						if (res.data.code == 200) {
 							that.modalName = null;
-							if(that.guanzhuvar==1){
+							if (that.guanzhuvar == 1) {
 								that.jifenbiandong('关注成功', '恭喜，你已关注该作者');
-							}else{
+							} else {
 								that.jifenbiandong('取关成功', '你已不再关注该作者');
 							}
-						} else{
+						} else {
 							that.modalName = null;
 							that.jifenbiandong('关注失败', '关注失败');
 						}
@@ -953,7 +970,7 @@
 							that.laheitext = '拉黑作者';
 							that.laheivar = 0;
 							that.jifenbiandong('拉黑取消', that.pingbiauthor + '已移除黑名单');
-						} else{
+						} else {
 							that.jifenbiandong('拉黑失败', res.data.message);
 						}
 						that.jiazai = 0;
@@ -1049,10 +1066,10 @@
 					this.tofloor(e);
 				}
 			},
-			louindex(e){
-				if(this.daoxu==0){
+			louindex(e) {
+				if (this.daoxu == 0) {
 					return e + 2;
-				}else{
+				} else {
 					return this.replies - e + 1;
 				}
 			},
@@ -1313,7 +1330,7 @@
 				});
 				if (i == 1) {
 					this.unshake(g, parseInt(h));
-				}else{
+				} else {
 					this.shake(g, parseInt(h));
 				}
 			},
@@ -1383,9 +1400,34 @@
 						animationType: 'pop-in',
 						animationDuration: 200
 					});
+				} else if (e.target == 'down') {
+					uni.downloadFile({
+						url: e.apphref,
+						filePath: '_doc/app_down/' + e.name,
+						success: (res) => {
+							console.log(res);
+							if (res.statusCode === 200) {
+								uni.showToast({
+									icon: 'none',
+									mask: true,
+									title: '文件已保存：' + res.tempFilePath, //保存路径
+									duration: 300,
+								});
+								setTimeout(() => {
+									//打开文档查看
+									uni.openDocument({
+										filePath: res.tempFilePath,
+										success: function(res) {
+											// console.log('打开文档成功');
+										}
+									});
+								}, 300)
+							}
+						}
+					});
 				} else if (e.innerText.indexOf("@") == 0) {
 					uni.navigateTo({
-						url: '../component/list?uid=' + e.href.replace(/[^0-9]/ig,""),
+						url: '../component/list?uid=' + e.href.replace(/[^0-9]/ig, ""),
 						animationType: 'pop-in',
 						animationDuration: 200
 					});
@@ -1829,7 +1871,7 @@
 								that.cantpostmessage = res.data.message;
 								this.floorfasong = false;
 							} else {
-								that.jifenbiandong('楼中楼','回楼中楼成功，刷新可见');
+								that.jifenbiandong('楼中楼', '回楼中楼成功，刷新可见');
 								that.modalName = null;
 							}
 						}
@@ -1865,15 +1907,15 @@
 						},
 						success: (res) => {
 							console.log(res.data)
-							if (res.data.code ==400) {
+							if (res.data.code == 400) {
 								that.modalName = "needlogin";
 							} else if (res.data.code == 200) {
 								that.modalName = null;
-								that.jifenbiandong('私信成功','你的私信发送完毕。');
+								that.jifenbiandong('私信成功', '你的私信发送完毕。');
 								that.siliaotxt = '';
-							} else{
+							} else {
 								that.modalName = null;
-								that.jifenbiandong('私信失败',res.data.message);
+								that.jifenbiandong('私信失败', res.data.message);
 							}
 						}
 					});
@@ -1908,15 +1950,15 @@
 						},
 						success: (res) => {
 							console.log(res.data)
-							if (res.data.code ==400) {
+							if (res.data.code == 400) {
 								that.modalName = "needlogin";
 							} else if (res.data.code == 200) {
 								that.modalName = null;
-								that.jifenbiandong('私信成功','你的私信发送完毕。')
+								that.jifenbiandong('私信成功', '你的私信发送完毕。')
 								that.siliaotxt = '';
-							} else{
+							} else {
 								that.modalName = null;
-								that.jifenbiandong('私信失败',res.data.message);
+								that.jifenbiandong('私信失败', res.data.message);
 							}
 						}
 					});
@@ -1933,15 +1975,15 @@
 				}
 				if (!this.floorfasong) {
 					that.floorfasong = true;
-					if(that.radio=='A'){
+					if (that.radio == 'A') {
 						var message = encodeURI('广告垃圾');
-					}else if(that.radio=='B'){
+					} else if (that.radio == 'B') {
 						var message = encodeURI('违规内容');
-					}else if(that.radio=='C'){
+					} else if (that.radio == 'C') {
 						var message = encodeURI('恶意灌水');
-					}else if(that.radio=='D'){
+					} else if (that.radio == 'D') {
 						var message = encodeURI('重复发帖');
-					}else if(that.radio=='E'){
+					} else if (that.radio == 'E') {
 						var message = encodeURI(that.jubaomessage);
 					}
 					console.log(that.jubaomessage);
@@ -1962,15 +2004,15 @@
 							console.log(res.data);
 							that.floorfasong = false;
 							that.jubaomessage = '';
-							if (res.data.code ==400) {
+							if (res.data.code == 400) {
 								that.modalName = "needlogin";
 							} else if (res.data.code == 200) {
 								that.modalName = null;
-								that.jifenbiandong('举报成功','你的举报发送完毕。')
+								that.jifenbiandong('举报成功', '你的举报发送完毕。')
 								that.siliaotxt = '';
-							} else{
+							} else {
 								that.modalName = null;
-								that.jifenbiandong('举报失败',res.data.message);
+								that.jifenbiandong('举报失败', res.data.message);
 							}
 						}
 					});
@@ -2227,6 +2269,7 @@
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 					},
 					success: (res) => {
+						console.log(res.data);
 						if (res.data.code == 404) {
 							that.modalName = "needlogin";
 						} else if (res.data.code == 401) {
@@ -2310,9 +2353,10 @@
 	}
 
 	.cu-modal .cu-item .content {
-		border-bottom: 1upx solid #ccc!important;
+		border-bottom: 1upx solid #ccc !important;
 		padding-bottom: 20upx;
 	}
+
 	.float {
 		display: -webkit-box;
 		word-break: break-all;
@@ -2459,26 +2503,37 @@
 	.ltsp {
 		line-height: 24upx;
 	}
-	.gzlist2 {		position: absolute;
-		background-color: transparent;		margin: -0upx 0 0 -28upx;
+
+	.gzlist2 {
+		position: absolute;
+		background-color: transparent;
+		margin: -0upx 0 0 -28upx;
 		width: 140upx;
 		height: 140upx;
 	}
-	.badge {		z-index: 9;
+
+	.badge {
+		z-index: 9;
 	}
-	.gzlist3 {		position: absolute;
-		background-color: transparent;		margin: -13upx 0 0 -100upx;
+
+	.gzlist3 {
+		position: absolute;
+		background-color: transparent;
+		margin: -13upx 0 0 -100upx;
 		width: 86upx;
 		height: 86upx;
 	}
-	.noborder{
-		padding-top: 0px!important;
-		margin-top: 0px!important;
+
+	.noborder {
+		padding-top: 0px !important;
+		margin-top: 0px !important;
 	}
-	.noborder2{
+
+	.noborder2 {
 		padding-top: 30upx;
 	}
-	.chacha{
+
+	.chacha {
 		position: absolute;
 		right: 30upx;
 	}
