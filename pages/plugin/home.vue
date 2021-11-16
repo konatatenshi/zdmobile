@@ -191,7 +191,7 @@
 				this.modalName = null
 			},
 			chonglian(e) {
-				this.modalName = 'dxcl';
+				//this.modalName = 'dxcl';
 			},
 			restart(e) {
 				plus.runtime.restart();
