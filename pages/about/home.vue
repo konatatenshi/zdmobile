@@ -750,6 +750,12 @@
 						that.zongbite = 0;
 					}
 				});
+			},
+			shuaxinlist(){
+				uni.pageScrollTo({
+					scrollTop: 0,
+					duration: 200
+				});
 			}
 		},
 		created() {
@@ -794,6 +800,64 @@
 					}
 				});
 			};
+			if (Vue.prototype.$token != '') {
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:user', //获取用户基本信息。
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: Vue.prototype.$token,
+						action: 'user_info'
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						//console.log(res.data);
+						var that = this;
+						uni.setStorage({
+							key: 'myuserinfo',
+							data: res.data.data,
+							success: function() {
+								//console.log('success');
+							}
+						});
+						uni.getStorage({
+							key: 'myuserinfo',
+							success: function(res) {
+								console.log(res);
+								if(res.data.status==0&&res.data.freeze==0){
+									getApp().globalData.myusername = res.data.username;
+									getApp().globalData.myadminid = res.data.adminid;
+									getApp().globalData.mygroupid = res.data.groupid;
+									getApp().globalData.mygroupexpiry = res.data.groupexpiry;
+									getApp().globalData.myregdate = res.data.regdate;
+									getApp().globalData.mycredits = res.data.credits;
+									getApp().globalData.mynewpm = res.data.newpm;
+									getApp().globalData.mynewprompt = res.data.newprompt;
+									getApp().globalData.myfreeze = res.data.freeze;
+									getApp().globalData.onlyacceptfriendpm = res.data
+										.onlyacceptfriendpm;
+									getApp().globalData.myinfoprompt = parseInt(res.data.newpm) +
+										parseInt(res.data.newprompt);
+									that.mynewpm = getApp().globalData.mynewpm;
+									that.myinfoprompt = getApp().globalData.myinfoprompt;
+									that.mynewprompt = getApp().globalData.mynewprompt;
+									that.mycredits = getApp().globalData.mycredits;
+									that.mygroupid = getApp().globalData.mygroupid;
+									uni.$emit('chosenSex', that.myinfoprompt);
+								}else{
+									uni.redirectTo({
+										url: '../../components/ay-login/login-password'
+									});
+								}
+								//console.log(that.mynewpm);
+								//console.log(that.myinfoprompt);
+							}
+						});
+					},
+				});
+			}
 		},
 		onshow: function() {}
 	}

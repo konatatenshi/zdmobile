@@ -14,7 +14,7 @@
 		<scroll-view scroll-x class="bg-white nav-sm hometop1" scroll-with-animation :scroll-left="scrollLeft">
 			<view class="cu-item" :class="index==TabCur?'text-green cur':''" v-for="(item,index) in 4" :key="index"
 				@tap="tabSelect" :data-id="index">
-				<text class="cuIcon-title text-orange" v-if="index<2"></text>{{tabname[index]}}
+				<text class="cuIcon-title text-orange" v-if="(index==0&&mynewpm>0)||(index==1&&mynewprompt>0)"></text>{{tabname[index]}}
 			</view>
 		</scroll-view>
 
@@ -72,10 +72,34 @@
 								<scroll-view scroll-x class="bg-white nav">
 									<view class="flex text-center">
 										<view class="cu-item flex-sub" :class="index==MessageTabCur?'text-orange cur':''" v-for="(item,index) in tabjson" :key="index" @tap="MtabSelect" :data-id="index">
-											{{item}}
+											{{item}}<text v-if="index==0&&allnum>0" class="cu-tag round bg-orange sm">{{allnum}}</text><text v-if="index==1&&sysnum>0" class="cu-tag round bg-orange sm">{{sysnum}}</text><text v-else-if="index==2&&postnum>0" class="cu-tag round bg-orange sm">{{postnum}}</text><text v-else-if="index==3&&hudongnum>0" class="cu-tag round bg-orange sm">{{hudongnum}}</text><text v-else-if="index==4&&atnum>0" class="cu-tag round bg-orange sm">{{atnum}}</text>
 										</view>
 									</view>
 								</scroll-view>
+								<view class="cu-item" v-for="(itemmessage,indexm) in messagearray" :key="indexm">
+									<view class="cu-avatar round lg" :style="{'background-image': 'url('+ itemicon(itemmessage.type) + ')'}">
+										<view v-if="itemmessage.new==1&&syschange[indexm]!=1" class="cu-tag badge"></view>
+									</view>
+									<view class="content">
+										<view class="text-grey">{{todate(itemmessage.dateline)}}<text class="cuIcon-roundrightfill text-green margin-left-xs margin-right-xs"><text v-if="itemmessage.new==1&&syschange[indexm]!=1" class="text-xs" @tap="shownotification(itemmessage.note,indexm,'system')">点击查看详情</text><text v-else class="text-xs" @tap="shownotification(itemmessage.note,-1,'system')">点击查看详情</text></text></view>
+										<view class="text-gray text-sm flex">
+											<view class="text-cut2">
+												{{totext(itemmessage.note)}}
+											</view>
+										</view>
+									</view>
+								</view>
+							</view>
+							<view>
+								<block>
+									<view class="padding-xs flex align-center bg-gray">
+										<view class="flex-sub text-center">
+											<view class="text-xs padding">
+												<text class="text-black">{{loading}}</text>
+											</view>
+										</view>
+									</view>
+								</block>
 							</view>
 						</view>
 					</scroll-view>
@@ -92,6 +116,11 @@
 								<view class="title">公共群组消息开关</view>
 								<switch class='cyan' @change="SwitchB" :class="switchB?'checked':''"
 									:checked="switchB?true:false"></switch>
+							</view>
+							<view class="cu-form-group">
+								<view class="title">只看未读消息</view>
+								<switch class='cyan' @change="SwitchC" :class="switchC?'checked':''"
+									:checked="switchC?true:false"></switch>
 							</view>
 						</view>
 					</scroll-view>
@@ -154,6 +183,24 @@
 				</view>
 			</view>
 		</view>
+		<view class="cu-modal" :class="modalName=='shownotifi'?'show':''"  @tap="hideModal">
+			<view class="cu-dialog" @tap.stop>
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">提醒查看</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl">
+					<mp-html :content="notifimessage" @linktap="linktap" />
+				</view>
+				<view class="cu-bar bg-white justify-end">
+					<view class="action">
+						<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
+					</view>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -171,18 +218,31 @@
 				swiperList: [],
 				toplist: [],
 				tuijiantie: [],
-				tabjson: ['全部','系统','帖子','点评','@我'],
+				messagearray: [],
+				syschange: [],
+				loading: '加载中……',
+				tabjson: ['全部','系统','帖子','互动','@我'],
 				modalName: "",
 				chatmessage: "",
+				notifimessage: "",
 				chattime: "00:00",
 				tabname: ["私人消息", "公共消息", "消息设置", "发送消息"],
 				avatarimgLoaded: false,
 				modalName: null,
 				TabCur: 1,
+				page: 0,
 				MessageTabCur: 1,
+				mynewprompt: 0,
+				mynewpm: 0,
+				allnum: 0,
+				sysnum: 0,
+				postnum: 0,
+				hudongnum: 0,
+				atnum: 0,
 				radio: 'A',
 				switchA: false,
 				switchB: true,
+				switchC: false,
 				swiperheight: 1000, //高度
 			};
 		},
@@ -192,6 +252,11 @@
 			},
 			chonglian(e) {
 				//this.modalName = 'dxcl';
+				uni.showToast({
+					title: '您似乎已断线，可以试着重启APP重连',
+					icon:'none',
+					duration: 2000
+				});
 			},
 			restart(e) {
 				plus.runtime.restart();
@@ -270,6 +335,23 @@
 					}
 				});
 			},
+			SwitchC(e) {
+				this.switchC = e.detail.value
+				if (e.detail.value) {
+					this.switchcvalue = 1;
+				} else {
+					this.switchcvalue = 0;
+				}
+				let that = this;
+				uni.setStorage({
+					key: 'weiduswitch',
+					data: that.switchcvalue,
+					success: function() {
+						Vue.prototype.$switchcvalue = that.switchcvalue
+						console.log(Vue.prototype.$switchcvalue);
+					}
+				});
+			},
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;
 				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60;
@@ -324,7 +406,131 @@
 			},
 			tourl(e) {
 				console.log(this.swiperheight)
+			},
+			itemicon(e){
+				if(e=='system'){
+					return '../../static/systempm.png';
+				}else if(e=='magic'){
+					return '../../static/systempm.png';
+				}else if(e=='report'){
+					return '../../static/systempm.png';
+				}else if(e=='task'){
+					return '../../static/task.gif';
+				}
+			},
+			todate(e){
+				let date = new Date(e*1000);
+				let Y = date.getFullYear() + '-';
+				let M = (date.getMonth()+1 < 10 ? ''+(date.getMonth()+1) : date.getMonth()+1) + '-';
+				let D = date.getDate() + ' ';
+				let h = date.getHours() + ':';
+				let m = date.getMinutes() + ':';
+				let s = date.getSeconds(); 
+				//console.log(Y+M+D+h+m+s);
+				return Y+M+D+h+m+s;
+			},
+			totext(e){
+				e = e.replace(/&nbsp;/ig, '');
+				e = e.replace(/&rsaquo;/ig, '');
+				return e.replace(/<[^>]+>/g,"");
+			},
+			shuaxinlist(){
+				uni.pageScrollTo({
+					scrollTop: 0,
+					duration: 200
+				});
+			},
+			shownotification(e,f,g){
+				e = e.replace(/&nbsp;/ig, '');
+				e = e.replace(/&rsaquo;/ig, '');
+				e = e.replace(/\<a href/ig, '<a apphref');
+				this.notifimessage = e;
+				this.modalName = 'shownotifi';
+				if(f>=0){
+					if(g=='system'){
+						this.syschange[f]=1;
+					}
+				}
+			},
+			setHeight(e) {
+				var query = uni.createSelectorQuery();
+				query.select('.' + e).boundingClientRect(rect => {
+					if (rect) {
+						//console.log(e + ".height = " + rect.height)
+						this.swiperheight = rect.height + uni.upx2px(200); //页面可见区域 - 头部高度
+						//console.log("this.height = " + this.swiperheight)
+					}
+				}).exec();
+			},
+			heightset(e){
+				var that=this;
+				if (uni.getSystemInfoSync().platform == 'ios') {
+					setTimeout(function() {
+						that.setHeight(e);
+						setTimeout(function() {
+							that.setHeight(e);
+							setTimeout(function() {
+								that.setHeight(e);
+								setTimeout(function() {
+									that.setHeight(e);
+									setTimeout(function() {
+										that.setHeight(e);
+									}, 100);
+								}, 100);
+							}, 100);
+						}, 100);
+					}, 100);
+				} else {
+					setTimeout(function() {
+						that.setHeight(e);
+						setTimeout(function() {
+							that.setHeight(e);
+							setTimeout(function() {
+								that.setHeight(e);
+								setTimeout(function() {
+									that.setHeight(e);
+									setTimeout(function() {
+										that.setHeight(e);
+									}, 200);
+								}, 200);
+							}, 200);
+						}, 200);
+					}, 200);
+				}
+			},
+			tothebottom(push) {
+				var that = this;
+				this.loading = '加载中……';
+			},
+			linktap(e) {
+				console.log(e);
+				let indexpd = e.apphref.indexOf("thread-");
+				let indexpe = e.apphref.indexOf("mod=redirect");
+				if (indexpd >0) {
+					let href = e.apphref.match(/^(\D*)(\d+)(.*)$/).slice(1);
+					uni.navigateTo({
+						url: '../component/card?tid=' + href[1],
+						animationType: 'pop-in',
+						animationDuration: 200
+					});
+				}else if (indexpe >0) {
+					let href = e.apphref.match(/^(\D*)(\d+)(.*)$/).slice(1);
+					let href2 = href[2].match(/^(\D*)(\d+)(.*)$/).slice(1);
+					uni.navigateTo({
+						url: '../component/card?tid=' + href2[1],
+						animationType: 'pop-in',
+						animationDuration: 200
+					});
+				} else if (e.target == 'forum') {
+					let href = e.apphref.match(/^(\D*)(\d+)(.*)$/).slice(1);
+					uni.navigateTo({
+						url: '../basics/forum?forumid=' + href[1],
+						animationType: 'pop-in',
+						animationDuration: 200
+					});
+				}
 			}
+			
 		},
 		created() {
 			if (this.$token == "") {
@@ -352,10 +558,51 @@
 				}
 			});
 			uni.getStorage({
-				key: 'lunbolist',
+				key: 'weiduswitch',
 				success: function(res) {
-					that.swiperList = res.data.data;
-					//console.log(that.swiperList);
+					if (res.data == 1) {
+						that.switchC = true;
+					}
+				}
+			});
+			uni.request({
+				url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:notification', //获取置顶帖子
+				method: 'GET',
+				timeout: 10000,
+				data: {
+					token: that.$token,
+					page: that.page,
+					type: 'system'
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+				},
+				success: (res) => {
+					console.log(res.data);
+					that.messagearray = res.data;
+					that.mynewprompt = 0;
+					that.heightset('view_listnow');
+				}
+			});
+			uni.request({
+				url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:notification', //获取置顶帖子
+				method: 'GET',
+				timeout: 10000,
+				data: {
+					token: that.$token,
+					page: that.page,
+					type: 'num'
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+				},
+				success: (res) => {
+					console.log(res.data);
+					that.allnum = res.data.all;
+					that.sysnum = res.data.sys;
+					that.postnum = res.data.post;
+					that.hudongnum = res.data.hudong;
+					that.atnum = res.data.at;
 				}
 			});
 		},
@@ -397,5 +644,22 @@
 		line-height: 30px;
 		margin: 0 5px;
 		padding: 0 11px;
+	}
+	.cu-list.menu-avatar>.cu-item .content {
+	    width: 100%;
+	}
+	.cu-list.menu-avatar>.cu-item {
+		border-bottom: 1px solid #ddd;
+		border-radius: inherit;
+	}
+	.cu-list.menu-avatar>.cu-item .flex .text-cut2 {
+		max-width: 590upx!important;
+	}
+	.text-cut2 {
+	    text-overflow: ellipsis;
+	    overflow: hidden;
+		height: 3.2em;
+		line-height: 1.6;
+		display: block;
 	}
 </style>

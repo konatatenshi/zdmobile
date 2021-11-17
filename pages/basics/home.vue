@@ -147,7 +147,7 @@
 					</view>
 					<view v-if="newpost.length > 0">
 						<block v-for="(item,index3) in newpost" :key="index3">
-							<view class="solid-bottom cu-card article no-card"  v-if="!ifpingbi(item.author)&&$adminid<=0">
+							<view class="solid-bottom cu-card article no-card"  v-if="!(ifpingbi(item.author)&&$adminid<=0)">
 								<view class="cu-item shadow">
 									<view class="title" @tap="tourl(item.url)">
 										<view class="text-cut">{{item.title}}</view>
@@ -1789,7 +1789,8 @@
 					that.tuijiantie = res.data.tuijiantie.data;
 					that.toplist = res.data.toplist.data;
 					that.newpost = res.data.newpost.data;
-					console.log(that.tuijiantie);
+					//console.log(that.tuijiantie);
+					//console.log(that.newpost);
 					if (uni.getSystemInfoSync().platform == 'ios') {
 						setTimeout(function() {
 							that.setHeight("view_listnow");

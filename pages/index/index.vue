@@ -3,9 +3,9 @@
 	<view class="bg-gray">
 		<basics v-if="PageCur=='basics'" ref="basics" @returnDat='returnDate'></basics>
 		<components v-if="PageCur=='component'"></components>
-		<plugin v-if="PageCur=='plugin'" ref="message"></plugin>
-		<about v-if="PageCur=='about'" @returnDat='returnDate'></about>
-		<login v-if="PageCur=='login'" @returnDat='returnDate'></login>
+		<plugin v-if="PageCur=='plugin'" ref="message" @returnDat='returnDate'></plugin>
+		<about v-if="PageCur=='about'" ref="about" @returnDat='returnDate'></about>
+		<login v-if="PageCur=='login'" ref="login" @returnDat='returnDate'></login>
 		<view v-else class="status_bar cu-bar tabbar bg-white shadow foot">
 			<view :class="PageCur=='basics'?'action text-green':'action text-gray'" @click="NavChange"
 				data-cur="basics">
@@ -54,6 +54,7 @@
 			if (this.$token == '') {
 				//this.PageCur = 'login';
 			};
+			uni.$on('chosenSex', this.changeprompt);
 			uni.$on('websocketmessage', (websocketmessage) => {
 				this.websocketmessage = websocketmessage;
 				var jsonget = JSON.parse(this.websocketmessage.data)
@@ -76,6 +77,7 @@
 		onUnload() {
 			// 移除监听事件  
 			uni.$off('onsocket');
+			uni.$off('chosenSex');
 			uni.$off('websocketmessage');
 			console.log("移除监听");
 		},
@@ -165,6 +167,9 @@
 			if (this.PageCur == "basics") {
 				this.$refs.basics.tothebottom();
 			};
+			if (this.PageCur == "plugin") {
+				this.$refs.message.tothebottom();
+			};
 		},
 		onPageScroll(res){
 			Vue.prototype.$scrollheight =res.scrollTop;
@@ -176,8 +181,12 @@
 				console.log(val);
 			},
 			NavChange: function(e) {
-				if(this.PageCur==e.currentTarget.dataset.cur){
+				if(this.PageCur=='basics'){
 					this.$refs.basics.shuaxinlist(1);
+				}else if(this.PageCur=='plugin'){
+					this.$refs.message.shuaxinlist(1);
+				}else if(this.PageCur=='about'){
+					this.$refs.about.shuaxinlist(1);
 				}
 				this.PageCur = e.currentTarget.dataset.cur;
 			},
@@ -213,6 +222,9 @@
 				};
 				//console.log(data);
 				this.$socket.send(JSON.stringify(data));
+			},
+			changeprompt(data){
+				this.myinfoprompt = data;
 			}
 		}
 	}
