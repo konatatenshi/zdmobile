@@ -50,7 +50,7 @@
 			</view>
 		</view>
 		<view class="cu-list grid col-3 no-border">
-			<view class="cu-item" @click="messageclick">
+			<view class="cu-item" @click="tomessage">
 				<view class="cuIcon-messagefill text-red">
 					<view class="cu-tag badge" v-if="this.mynewpm!=0">
 						<block v-if="this.mynewpm!=1">{{this.mynewpm>99?'99+':this.mynewpm}}</block>
@@ -58,7 +58,7 @@
 				</view>
 				<text>消息</text>
 			</view>
-			<view class="cu-item" @click="messageclick">
+			<view class="cu-item" @click="tonotifi">
 				<view class="cuIcon-noticefill text-orange">
 					<view class="cu-tag badge" v-if="this.mynewprompt!=0">
 						<block v-if="this.mynewprompt!=1">{{this.mynewprompt>99?'99+':this.mynewprompt}}</block>
@@ -348,6 +348,16 @@
 			},
 			backhome() {
 				this.$emit("returnDat", "basics") //传递的值
+				//returnDate接收的方法名  
+			},
+			tonotifi() {
+				this.$emit("returnDat", "plugin") //传递的值
+				uni.$emit('chosenSex', -8879);
+				//returnDate接收的方法名  
+			},
+			tomessage() {
+				this.$emit("returnDat", "plugin") //传递的值
+				uni.$emit('chosenSex', -8878);
 				//returnDate接收的方法名  
 			},
 			toqiandao() {

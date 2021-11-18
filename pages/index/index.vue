@@ -176,7 +176,8 @@
 			//console.log(res.scrollTop);//距离页面顶部距离
 		},
 		methods: {
-			returnDate(val) {
+			returnDate(val,f) {
+				let that = this;
 				this.PageCur = val;
 				console.log(val);
 			},
@@ -224,7 +225,18 @@
 				this.$socket.send(JSON.stringify(data));
 			},
 			changeprompt(data){
+				let that =this;
 				this.myinfoprompt = data;
+				if(data==-8878){
+					setTimeout(() => {
+						that.$refs.message.tomessage();
+					}, 100)
+				}
+				if(data==-8879){
+					setTimeout(() => {
+						that.$refs.message.tonofi();
+					}, 100)
+				}
 			}
 		}
 	}
