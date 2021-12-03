@@ -779,8 +779,10 @@
 			plus.navigator.setStatusBarStyle('dark');
 			void plus.runtime.setBadgeNumber(0); //桌面角标设置为0
 			const clientInfo = plus.push.getClientInfo(); //获取CID推送
+			const signature = plus.navigator.getSignature();
 			console.log(clientInfo);
-			console.log(this.iStatusBarHeight);
+			//console.log(this.iStatusBarHeight);
+			//console.log(signature);
 			if (Vue.prototype.$token != '') {
 				var that = this;
 				uni.getStorage({
@@ -817,13 +819,14 @@
 					timeout: 10000,
 					data: {
 						token: Vue.prototype.$token,
+						cid: clientInfo.clientid,
 						action: 'user_info'
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 					},
 					success: (res) => {
-						//console.log(res.data);
+						console.log(res.data);
 						var that = this;
 						uni.setStorage({
 							key: 'myuserinfo',

@@ -200,6 +200,8 @@
 		captchaCreater,
 		describeCaptchaResult
 	} from '@/js_sdk/tencentcloud-plugin-captcha';
+	import AES from '../../js_sdk/ar-aes/ar-aes.js';
+	import w_md5 from "../../js_sdk/zww-md5/w_md5.js"
 	export default {
 		data() {
 			return {
@@ -225,6 +227,7 @@
 				loadModal: false,
 				phonenumber: 0,
 				yanzhengma: 0,
+				version: '',
 				ticketnew: '',
 				randstrnew: '',
 				newpasswd: '',
@@ -244,6 +247,11 @@
 		},
 		mounted() {
 			this.getJob();
+			var that = this;
+			plus.runtime.getProperty(plus.runtime.appid, function(wgtinfo) {
+				that.version = wgtinfo.version;
+				console.log('version：' + that.version);
+			});
 		},
 		methods: {
 			async showCaptcha() {
@@ -486,6 +494,7 @@
 				this.error.reasoncode = 0;
 			},
 			formSubmit(e) {
+				let that = this;
 				if(!this.checked){
 					this.error.reasoncode = 'error0300';
 					this.modalName = 'loginerror';
@@ -493,8 +502,11 @@
 					this.formsub2 = false;
 					return;
 				}
+				const signature = plus.navigator.getSignature();
+				const signe = AES.AES.encrypt(signature,w_md5.hex_md5_16(this.version),w_md5.hex_md5_16(e.detail.value.text));
 				this.formsub = true;
-				console.log('form发生了submit事件，携带数据为：' + JSON.stringify(e.detail.value.text));
+				console.log('version：' + this.version);
+				console.log('signe：' + signe);
 				let status = -1;
 				this.LoadModal(e);
 				uni.request({
@@ -509,8 +521,9 @@
 						password: e.detail.value.password,
 						questionid: e.detail.value.questionid,
 						answer: e.detail.value.answer,
-						authcode: e.detail.value.authcode
-
+						authcode: e.detail.value.authcode,
+						sign : signe,
+						version: this.version
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
@@ -550,6 +563,9 @@
 							} else if (res.data.result == 'error01005') {
 								this.error.reason = '验证码错误，请输入验证码以继续';
 								this.modalName = 'yanzhengcode';
+							} else {
+								this.error.reason = res.data.reason;
+								this.modalName = 'loginerror';
 							}
 							this.formsub = false;
 							console.log(this.modalName);

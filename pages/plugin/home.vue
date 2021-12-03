@@ -14,7 +14,8 @@
 		<scroll-view scroll-x class="bg-white nav-sm hometop1" scroll-with-animation :scroll-left="scrollLeft">
 			<view class="cu-item" :class="index==TabCur?'text-green cur':''" v-for="(item,index) in 5" :key="index"
 				@tap="tabSelect" :data-id="index">
-				<text class="cuIcon-title text-orange" v-if="(index==0&&mynewpm>0)||(index==1&&allnum>0)"></text>{{tabname[index]}}
+				<text class="cuIcon-title text-orange"
+					v-if="(index==0&&mynewpm>0)||(index==1&&publicnum>0)||(index==2&&allnum>0)"></text>{{tabname[index]}}
 			</view>
 		</scroll-view>
 
@@ -22,11 +23,43 @@
 			<swiper class="swiper-box" :style="'height: ' + swiperheight +'px;'" :current="TabCur" @change="tabChange">
 				<swiper-item key="1">
 					<scroll-view class="list">
-						<view v-if="1 > 0">
-							<!-- 	图文列表
-							<block v-for="(item,index1) in items.list" :key="index1">
-								<view>{{item}}</view>
-							</block> -->
+						<view class="view_listnow listnow0">
+							<view class="cu-list menu-avatar margin-top hometop3">
+								<view v-if="pvarray.length>0" class="cu-item" v-for="(pvmessage,indexv) in pvarray"
+									:key="indexv">
+									<view class="cu-avatar round lg"
+										:style="{'background-image': 'url('+ itemicon( 'private',pvmessage.avatarlist ) + ')'}" @tap="topm(pvmessage.plid,pvmessage.lastmessage.lastauthor)">
+										<view v-if="pvmessage.new==1&&syschange[indexv]!=MessageTabCur"
+											class="cu-tag badge"></view>
+									</view>
+									<img-cache class="cu-avatar round gzlist2" v-if="pvmessage.touxiangkuanglist != ''"
+										:src="pvmessage.touxiangkuanglist" />
+									<view class="content" @tap="topm(pvmessage.plid,pvmessage.lastmessage.lastauthor)">
+										<view class="text-grey">{{todate(pvmessage.lastdateline)}}<text
+												class="cuIcon-roundrightfill text-green margin-left-xs margin-right-xs"><text
+													v-if="pvmessage.new==1&&syschange[indexv]!=MessageTabCur"
+													class="text-xs">{{tomessage(pvmessage.lastmessage.lastauthor,pvmessage.lastmessage.lastauthorid,pvmessage.authorid)}}</text><text
+													v-else class="text-xs">{{tomessage(pvmessage.lastmessage.lastauthor,pvmessage.lastmessage.lastauthorid,pvmessage.authorid)}}</text></text>
+										</view>
+										<view class="text-gray text-sm flex">
+											<view class="text-cut2">
+												<text style="font-weight:700">标题：{{pvmessage.subject}}</text><text class="lg text-gray cuIcon-wenzi"></text>：{{totext(pvmessage.lastmessage.lastsummary)}}
+											</view>
+										</view>
+									</view>
+								</view>
+							</view>
+							<view>
+								<block>
+									<view class="padding-xs flex align-center bg-gray">
+										<view class="flex-sub text-center" @tap="tothebottom()">
+											<view class="text-xs padding">
+												<text class="text-black">{{loading}}</text>
+											</view>
+										</view>
+									</view>
+								</block>
+							</view>
 						</view>
 					</scroll-view>
 				</swiper-item>
@@ -34,7 +67,7 @@
 				<swiper-item key="2">
 					<scroll-view class="list">
 						<view class="view_listnow listnow1">
-							<view class="cu-bar bg-white solid-bottom margin-top hometop3">
+							<view class="cu-bar bg-white solid-bottom hometop3">
 								<view class="action">
 									群组消息
 								</view>
@@ -69,13 +102,24 @@
 								</view>
 							</view>
 							<view class="cu-list menu-avatar">
-								<view v-if="publicarray.length>0" class="cu-item" v-for="(pbmessage,indexp) in publicarray" :key="indexp">
-									<view class="cu-avatar round lg" :style="{'background-image': 'url('+ itemicon('system') + ')'}">
-										<view v-if="pbmessage.new==1&&syschange[indexp]!=MessageTabCur" class="cu-tag badge"></view>
+								<view v-if="publicarray.length>0" class="cu-item"
+									v-for="(pbmessage,indexp) in publicarray" :key="indexp">
+									<view class="cu-avatar round lg"
+										:style="{'background-image': 'url('+ itemicon('system') + ')'}">
+										<view v-if="pbmessage.status==0&&puchange[indexp]!=1"
+											class="cu-tag badge"></view>
 									</view>
-									<img-cache class="cu-avatar round gzlist2" v-if="pbmessage.touxiangkuanglist != ''" :src="pbmessage.touxiangkuanglist" />
+									<img-cache class="cu-avatar round gzlist2" v-if="pbmessage.touxiangkuanglist != ''"
+										:src="pbmessage.touxiangkuanglist" />
 									<view class="content">
-										<view class="text-grey">{{todate(pbmessage.dateline)}}<text class="cuIcon-roundrightfill text-green margin-left-xs margin-right-xs"><text v-if="pbmessage.new==1&&syschange[indexp]!=MessageTabCur" class="text-xs" @tap="shownotification(pbmessage.message,indexp,'system')">点击查看详情</text><text v-else class="text-xs" @tap="shownotification(pbmessage.message,-1,'system')">点击查看详情</text></text></view>
+										<view class="text-grey">{{todate(pbmessage.dateline)}}<text
+												class="cuIcon-roundrightfill text-green margin-left-xs margin-right-xs"><text
+													v-if="pbmessage.status==0&&puchange[indexp]!=1"
+													class="text-xs"
+													@tap="shownotification(pbmessage.message,indexp,10)">点击查看详情</text><text
+													v-else class="text-xs"
+													@tap="shownotification(pbmessage.message,-1,10)">点击查看详情</text></text>
+										</view>
 										<view class="text-gray text-sm flex">
 											<view class="text-cut2">
 												{{totext(pbmessage.message)}}
@@ -104,21 +148,47 @@
 							<view class="cu-list menu-avatar margin-top hometop3">
 								<scroll-view scroll-x class="bg-white nav">
 									<view class="flex text-center">
-										<view class="cu-item flex-sub" :class="index==MessageTabCur?'text-orange cur':''" v-for="(item,index) in tabjson" :key="index" @tap="MtabSelect" :data-id="index">
-											{{item}}<text v-if="index==0&&allnum>0" class="cu-tag round bg-orange sm">{{allnum}}</text><text v-if="index==1&&sysnum>0" class="cu-tag round bg-orange sm">{{sysnum}}</text><text v-else-if="index==2&&postnum>0" class="cu-tag round bg-orange sm">{{postnum}}</text><text v-else-if="index==3&&hudongnum>0" class="cu-tag round bg-orange sm">{{hudongnum}}</text><text v-else-if="index==4&&atnum>0" class="cu-tag round bg-orange sm">{{atnum}}</text>
+										<view class="cu-item flex-sub"
+											:class="index==MessageTabCur?'text-orange cur':''"
+											v-for="(item,index) in tabjson" :key="index" @tap="MtabSelect"
+											:data-id="index">
+											{{item}}<text v-if="index==0&&allnum>0"
+												class="cu-tag round bg-orange sm">{{allnum}}</text><text
+												v-if="index==1&&sysnum>0"
+												class="cu-tag round bg-orange sm">{{sysnum}}</text><text
+												v-else-if="index==2&&postnum>0"
+												class="cu-tag round bg-orange sm">{{postnum}}</text><text
+												v-else-if="index==3&&hudongnum>0"
+												class="cu-tag round bg-orange sm">{{hudongnum}}</text><text
+												v-else-if="index==4&&atnum>0"
+												class="cu-tag round bg-orange sm">{{atnum}}</text>
 										</view>
 									</view>
 								</scroll-view>
-								<view v-if="messagearray.length>0"  class="cu-item" v-for="(itemmessage,indexm) in messagearray" :key="indexm">
-									<view v-if="itemmessage.avatarlist==0" class="cu-avatar round lg" :style="{'background-image': 'url('+ itemicon(itemmessage.type) + ')'}">
-										<view v-if="itemmessage.new==1&&syschange[indexm]!=MessageTabCur" class="cu-tag badge"></view>
+								<view v-if="messagearray.length>0" class="cu-item"
+									v-for="(itemmessage,indexm) in messagearray" :key="indexm">
+									<view v-if="itemmessage.avatarlist==0" class="cu-avatar round lg"
+										:style="{'background-image': 'url('+ itemicon(itemmessage.type) + ')'}">
+										<view v-if="itemmessage.new==1&&syschange[indexm]!=MessageTabCur"
+											class="cu-tag badge"></view>
 									</view>
-									<view v-else class="cu-avatar round lg" :style="{'background-image': 'url('+ itemicon(itemmessage.type,itemmessage.avatarlist) + ')'}">
-										<view v-if="itemmessage.new==1&&syschange[indexm]!=MessageTabCur" class="cu-tag badge"></view>
+									<view v-else class="cu-avatar round lg"
+										:style="{'background-image': 'url('+ itemicon(itemmessage.type,itemmessage.avatarlist) + ')'}">
+										<view v-if="itemmessage.new==1&&syschange[indexm]!=MessageTabCur"
+											class="cu-tag badge"></view>
 									</view>
-									<img-cache class="cu-avatar round gzlist2" v-if="itemmessage.touxiangkuanglist != ''" :src="itemmessage.touxiangkuanglist" />
+									<img-cache class="cu-avatar round gzlist2"
+										v-if="itemmessage.touxiangkuanglist != ''"
+										:src="itemmessage.touxiangkuanglist" />
 									<view class="content">
-										<view class="text-grey">{{todate(itemmessage.dateline)}}<text class="cuIcon-roundrightfill text-green margin-left-xs margin-right-xs"><text v-if="itemmessage.new==1&&syschange[indexm]!=MessageTabCur" class="text-xs" @tap="shownotification(itemmessage.note,indexm,'system')">点击查看详情</text><text v-else class="text-xs" @tap="shownotification(itemmessage.note,-1,'system')">点击查看详情</text></text></view>
+										<view class="text-grey">{{todate(itemmessage.dateline)}}<text
+												class="cuIcon-roundrightfill text-green margin-left-xs margin-right-xs"><text
+													v-if="itemmessage.new==1&&syschange[indexm]!=MessageTabCur"
+													class="text-xs"
+													@tap="shownotification(itemmessage.note,indexm,'system')">点击查看详情</text><text
+													v-else class="text-xs"
+													@tap="shownotification(itemmessage.note,-1,'system')">点击查看详情</text></text>
+										</view>
 										<view class="text-gray text-sm flex">
 											<view class="text-cut2">
 												{{totext(itemmessage.note)}}
@@ -220,7 +290,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="cu-modal" :class="modalName=='shownotifi'?'show':''"  @tap="hideModal">
+		<view class="cu-modal" :class="modalName=='shownotifi'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar bg-white justify-end">
 					<view class="content">查看详情</view>
@@ -259,9 +329,12 @@
 				tuijiantie: [],
 				messagearray: [],
 				publicarray: [],
+				pvarray: [],
 				syschange: [],
+				puchange: [],
+				pvchange: [],
 				loading: '点击可加载更多',
-				tabjson: ['全部','系统','帖子','互动','@我'],
+				tabjson: ['全部', '系统', '帖子', '互动', '@我'],
 				modalName: "",
 				chatmessage: "",
 				notifimessage: "",
@@ -273,6 +346,7 @@
 				TabCur: 1,
 				page: 0,
 				pagepu: 0,
+				pagepv: 0,
 				MessageTabCur: 1,
 				mynewprompt: 0,
 				mynewpm: 0,
@@ -292,17 +366,15 @@
 			hideModal(e) {
 				this.modalName = null
 			},
-			tomessage(e) {
-				this.TabCur = 0;
-			},
 			tonofi(e) {
+				let that = this;
 				this.TabCur = 2;
 			},
 			chonglian(e) {
 				//this.modalName = 'dxcl';
 				uni.showToast({
 					title: '您似乎已断线，正在尝试重连',
-					icon:'none',
+					icon: 'none',
 					duration: 2000
 				});
 				//chonglian
@@ -314,9 +386,10 @@
 						Vue.prototype.$htauth = res.data.htauth;
 						//console.log(Vue.prototype.$auth);
 						//console.log(Vue.prototype.$chatuid);
-						if(Vue.prototype.$chatuid != Vue.prototype.$uid){
+						if (Vue.prototype.$chatuid != Vue.prototype.$uid) {
 							uni.request({
-								url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:ltauth', //获取用户基本信息。
+								url: getApp().globalData.zddomain +
+									'plugin.php?id=ts2t_qqavatar:ltauth', //获取用户基本信息。
 								method: 'GET',
 								timeout: 10000,
 								data: {
@@ -343,9 +416,10 @@
 							});
 						}
 					},
-					fail:function(){
+					fail: function() {
 						uni.request({
-							url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:ltauth', //获取用户基本信息。
+							url: getApp().globalData.zddomain +
+							'plugin.php?id=ts2t_qqavatar:ltauth', //获取用户基本信息。
 							method: 'GET',
 							timeout: 10000,
 							data: {
@@ -493,13 +567,13 @@
 						page: that.page,
 						type: 'system',
 						new: that.switchcvalue
-						
+
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 					},
 					success: (res) => {
-						if(res.data.code==404){
+						if (res.data.code == 404) {
 							that.loading = '暂无新消息。';
 							that.messagearray = [];
 							return;
@@ -511,16 +585,16 @@
 					}
 				});
 			},
-			tabheight(e){
-				if(e==0){
-					
-				}else if(e==1){
+			tabheight(e) {
+				if (e == 0) {
+					this.heightset('listnow0');
+				} else if (e == 1) {
 					this.heightset('listnow1');
-				}else if(e==2){
+				} else if (e == 2) {
 					this.heightset('listnow2');
-				}else if(e==3){
+				} else if (e == 3) {
 					this.swiperheight = uni.upx2px(1200);
-				}else if(e==4){
+				} else if (e == 4) {
 					this.swiperheight = uni.upx2px(1200);
 				}
 			},
@@ -537,15 +611,15 @@
 				this.page = 0;
 				this.loading = '正在加载中……';
 				this.messagearray = [];
-				if(this.MessageTabCur==0){
+				if (this.MessageTabCur == 0) {
 					this.requestnoti('all');
-				}else if(this.MessageTabCur==1){
+				} else if (this.MessageTabCur == 1) {
 					this.requestnoti('system');
-				}else if(this.MessageTabCur==2){
+				} else if (this.MessageTabCur == 2) {
 					this.requestnoti('post');
-				}else if(this.MessageTabCur==3){
+				} else if (this.MessageTabCur == 3) {
 					this.requestnoti('hudong');
-				}else if(this.MessageTabCur==4){
+				} else if (this.MessageTabCur == 4) {
 					this.requestnoti('at');
 				}
 			},
@@ -571,7 +645,7 @@
 					success: (res) => {
 						let chatmess = JSON.parse(res.data.substr(1, (res.data.length - 2)));
 						console.log(that.$chatid);
-						if(that.$chatid == 0){
+						if (that.$chatid == 0) {
 							uni.setStorage({
 								key: 'chatchannel',
 								data: chatmess[4].cid,
@@ -580,9 +654,11 @@
 									//console.log(Vue.prototype.$switchbvalue);
 								}
 							});
-						}else{
-							that.chatnumber =  chatmess[4].cid - that.$chatid;
-							if(that.chatnumber > 99){that.chatnumber = "99+";}
+						} else {
+							that.chatnumber = chatmess[4].cid - that.$chatid;
+							if (that.chatnumber > 99) {
+								that.chatnumber = "99+";
+							}
 							that.chatmessage = chatmess[4].username + ":" + chatmess[4].content
 							that.chattime = chatmess[4].timestamp.substr(0, chatmess[4].timestamp.length - 3);
 						}
@@ -594,61 +670,80 @@
 			tourl(e) {
 				console.log(this.swiperheight)
 			},
-			itemicon(e,f){
-				if(e=='system'){
+			itemicon(e, f) {
+				if (e == 'system') {
 					return '../../static/systempm.png';
-				}else if(e=='magic'){
+				} else if (e == 'magic') {
 					return '../../static/systempm.png';
-				}else if(e=='report'){
+				} else if (e == 'report') {
 					return '../../static/systempm.png';
-				}else if(e=='task'){
+				} else if (e == 'task') {
 					return '../../static/task.gif';
-				}else{
+				} else {
 					return f;
 				}
 			},
-			todate(e){
-				let date = new Date(e*1000);
+			todate(e) {
+				let date = new Date(e * 1000);
+				let nowdate = new Date();
 				let Y = date.getFullYear() + '-';
-				let M = (date.getMonth()+1 < 10 ? ''+(date.getMonth()+1) : date.getMonth()+1) + '-';
+				let M = (date.getMonth() + 1 < 10 ? '' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
 				let D = date.getDate() + ' ';
-				let h = date.getHours() + ':';
-				let m = date.getMinutes() + ':';
-				let s = date.getSeconds(); 
+				let NY = nowdate.getFullYear() + '-';
+				let NM = (nowdate.getMonth() + 1 < 10 ? '' + (nowdate.getMonth() + 1) : nowdate.getMonth() + 1) + '-';
+				let ND = nowdate.getDate() + ' ';
+				let h = date.getHours()< 10 ?  '0'  + date.getHours() + ':': date.getHours() + ':';
+				let m = date.getMinutes()< 10 ?  '0'  + date.getMinutes() + ':': date.getMinutes() + ':';
+				let s = date.getSeconds()< 10 ?  '0'  + date.getSeconds(): date.getSeconds();
 				//console.log(Y+M+D+h+m+s);
-				return Y+M+D+h+m+s;
+				if(Y==NY&&M==NM&&D==ND){
+					return h + m + s;
+				}else{
+					return Y + M + D + h + m + s;
+				}
 			},
-			totext(e){
+			totext(e) {
 				e = e.replace(/&nbsp;/ig, '');
 				e = e.replace(/&rsaquo;/ig, '');
-				return e.replace(/<[^>]+>/g,"");
+				return e.replace(/<[^>]+>/g, "");
 			},
-			shuaxinlist(){
+			tomessage(e,f,g){
+				if(f!=g){
+					return '你对' + e + '说';
+				}else{
+					return e + '对你说';
+				}
+			},
+			shuaxinlist() {
 				uni.pageScrollTo({
 					scrollTop: 0,
 					duration: 200
 				});
 			},
-			shownotification(e,f,g){
+			shownotification(e, f, g) {
 				e = e.replace(/&nbsp;/ig, '');
 				e = e.replace(/&rsaquo;/ig, '');
 				e = e.replace(/\href=/ig, 'apphref=');
 				this.notifimessage = e;
 				this.modalName = 'shownotifi';
-				if(f>=0){
-					this.syschange[f]=this.MessageTabCur;
-					if(this.MessageTabCur == 1){
+				if(g == 10){
+					this.publicnum--;
+					this.puchange[f] = 1;
+				}
+				if (f >= 0) {
+					this.syschange[f] = this.MessageTabCur;
+					if (this.MessageTabCur == 1) {
 						this.sysnum--;
 						this.allnum--;
-					}else if(this.MessageTabCur == 0){
+					} else if (this.MessageTabCur == 0) {
 						this.allnum--;
-					}else if(this.MessageTabCur == 2){
+					} else if (this.MessageTabCur == 2) {
 						this.postnum--;
 						this.allnum--;
-					}else if(this.MessageTabCur == 3){
+					} else if (this.MessageTabCur == 3) {
 						this.hudongnum--;
 						this.allnum--;
-					}else if(this.MessageTabCur == 4){
+					} else if (this.MessageTabCur == 4) {
 						this.atnum--;
 						this.allnum--;
 					}
@@ -662,17 +757,17 @@
 						//console.log(e + ".height = " + rect.height)
 						let a = uni.upx2px(1200);
 						let b = uni.upx2px(1000);
-						if(this.swiperheight > a || rect.height > b ){
+						if (this.swiperheight > a || rect.height > b) {
 							this.swiperheight = rect.height + uni.upx2px(200); //页面可见区域 - 头部高度
-						}else if(this.swiperheight<a||rect.height<b){
+						} else if (this.swiperheight < a || rect.height < b) {
 							this.swiperheight = uni.upx2px(1200);
 						}
 						//console.log("this.height = " + this.swiperheight)
 					}
 				}).exec();
 			},
-			heightset(e){
-				var that=this;
+			heightset(e) {
+				var that = this;
 				if (uni.getSystemInfoSync().platform == 'ios') {
 					setTimeout(function() {
 						that.setHeight(e);
@@ -711,26 +806,29 @@
 				console.log('到底了')
 				var that = this;
 				this.loading = '加载中……';
-				if(this.TabCur==1){
+				if (this.TabCur == 0) {
+					this.pvread();
+				}
+				if (this.TabCur == 1) {
 					this.publishread();
 				}
-				if(this.TabCur==2){
-					if(this.MessageTabCur==0){
+				if (this.TabCur == 2) {
+					if (this.MessageTabCur == 0) {
 						this.requestnoti('all');
-					}else if(this.MessageTabCur==1){
+					} else if (this.MessageTabCur == 1) {
 						this.requestnoti('system');
-					}else if(this.MessageTabCur==2){
+					} else if (this.MessageTabCur == 2) {
 						this.requestnoti('post');
-					}else if(this.MessageTabCur==3){
+					} else if (this.MessageTabCur == 3) {
 						this.requestnoti('hudong');
-					}else if(this.MessageTabCur==4){
+					} else if (this.MessageTabCur == 4) {
 						this.requestnoti('at');
 					}
 				}
 			},
-			requestnoti(e){
+			requestnoti(e) {
 				var that = this;
-				if(this.nowtype == e){
+				if (this.nowtype == e) {
 					that.page++
 				}
 				this.nowtype = e;
@@ -748,8 +846,8 @@
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 					},
 					success: (res) => {
-						if(that.page==0){
-							if(res.data.code==404){
+						if (that.page == 0) {
+							if (res.data.code == 404) {
 								that.loading = '暂无新消息。';
 								that.messagearray = [];
 								return;
@@ -759,18 +857,18 @@
 							that.heightset('listnow2');
 							if (res.data.length < 30) {
 								that.loading = '消息到底了。';
-							}else{
+							} else {
 								that.loading = '点击可加载更多';
 							}
-						}else{
+						} else {
 							if (res.data.length > 0) {
 								for (let i = 0; i < res.data.length; ++i) {
 									that.messagearray.push(res.data[i]);
 								}
 							}
-							if (res.data.length < 30||res.data.code==404) {
+							if (res.data.length < 30 || res.data.code == 404) {
 								that.loading = '消息到底了！';
-							}else{
+							} else {
 								that.loading = '点击可加载更多';
 							}
 							that.heightset('listnow2');
@@ -778,7 +876,7 @@
 					}
 				});
 			},
-			publishread(){
+			publishread() {
 				let that = this;
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:pmview', //获取置顶帖子
@@ -794,8 +892,8 @@
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 					},
 					success: (res) => {
-						if(that.pagepu==0){
-							if(res.data.code==404){
+						if (that.pagepu == 0) {
+							if (res.data.code == 404) {
 								that.loading = '暂无新消息。';
 								that.publicarray = [];
 								return;
@@ -803,12 +901,12 @@
 							console.log(res.data);
 							that.publicarray = res.data;
 							that.heightset('listnow1');
-							if (res.data.length < 30||res.data.code==404) {
+							if (res.data.length < 30 || res.data.code == 404) {
 								that.loading = '消息到底了。';
-							}else{
+							} else {
 								that.loading = '点击可加载更多';
 							}
-						}else{
+						} else {
 							if (res.data.length > 0) {
 								for (let i = 0; i < res.data.length; ++i) {
 									that.publicarray.push(res.data[i]);
@@ -816,10 +914,101 @@
 							}
 							if (res.data.length < 30) {
 								that.loading = '消息到底了！';
-							}else{
+							} else {
 								that.loading = '点击可加载更多';
 							}
 							that.heightset('listnow1');
+						}
+					}
+				});
+			},
+			pvread() {
+				let that = this;
+				console.log(this.pagepv);
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:pmview', //获取置顶帖子
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token,
+						page: ++that.pagepv,
+						type: 'private',
+						new: that.$switchcvalue
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						if (that.pagepv == 0) {
+							if (res.data.code == 404) {
+								that.loading = '暂无新消息。';
+								that.pvarray = [];
+								return;
+							}
+							console.log(res.data);
+							that.pvarray = res.data;
+							that.heightset('listnow0');
+							if (res.data.length < 30 || res.data.code == 404) {
+								that.loading = '消息到底了。';
+							} else {
+								that.loading = '点击可加载更多';
+							}
+						} else {
+							if (res.data.length > 0) {
+								for (let i = 0; i < res.data.length; ++i) {
+									that.pvarray.push(res.data[i]);
+								}
+							}
+							if (res.data.length < 30) {
+								that.loading = '消息到底了！';
+							} else {
+								that.loading = '点击可加载更多';
+							}
+							that.heightset('listnow0');
+						}
+					}
+				});
+			},
+			addfriend(e) {
+				var that = this;
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:friend', //获取置顶帖子
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token,
+						fuid: e,
+						action: "pass"
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						if (res.data.code == 200) {
+							uni.showToast({
+								title: '添加成功',
+								duration: 2000
+							});
+						} else {
+							if (res.data.result == 'error0032') {
+								uni.showToast({
+									title: '好友申请不存在',
+									icon: 'error',
+									duration: 2000
+								});
+							} else if (res.data.result == 'error0031') {
+								uni.showToast({
+									title: '好友申请重复',
+									icon: 'error',
+									duration: 2000
+								});
+							} else {
+								uni.showToast({
+									title: '好友通过失败',
+									icon: 'error',
+									duration: 2000
+								});
+							}
 						}
 					}
 				});
@@ -829,14 +1018,16 @@
 				let indexpd = e.apphref.indexOf("thread-");
 				let indexpe = e.apphref.indexOf("mod=redirect");
 				let indexpf = e.apphref.indexOf("mod=space");
-				if (indexpd >0) {
+				let indexpg = e.apphref.indexOf("ac=friend");
+				let indexph = e.apphref.indexOf("op=add");
+				if (indexpd > 0) {
 					let href = e.apphref.match(/^(\D*)(\d+)(.*)$/).slice(1);
 					uni.navigateTo({
 						url: '../component/card?tid=' + href[1],
 						animationType: 'pop-in',
 						animationDuration: 200
 					});
-				}else if (indexpe >0) {
+				} else if (indexpe > 0) {
 					let href = e.apphref.split('tid=');
 					let href2 = href[1].match(/^(\D*)(\d+)(.*)$/).slice(1);
 					uni.navigateTo({
@@ -844,9 +1035,13 @@
 						animationType: 'pop-in',
 						animationDuration: 200
 					});
-				} else if (indexpf >0) {
+				} else if (indexpf > 0) {
 					let href = e.apphref.split('uid=');
 					let href2 = href[1].match(/^(\D*)(\d+)(.*)$/).slice(1);
+					if (indexpg > 0 && indexph > 0) {
+						this.addfriend(href2[1]);
+						return;
+					}
 					uni.navigateTo({
 						url: '../component/list?uid=' + href2[1],
 						animationType: 'pop-in',
@@ -860,8 +1055,15 @@
 						animationDuration: 200
 					});
 				}
-			}
-			
+			},
+			topm(e,f) {
+				console.log(e);
+				uni.navigateTo({
+					url: '../extra/pm?touid=' + e + '&username=' + f,
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
+			},
 		},
 		created() {
 			if (this.$token == "") {
@@ -878,7 +1080,7 @@
 			if (getApp().globalData.onlyacceptfriendpm == 1) {
 				this.switchA = true;
 			};
-			plus.navigator.setStatusBarStyle('light');//改变系统标题颜色
+			plus.navigator.setStatusBarStyle('light'); //改变系统标题颜色
 			var that = this;
 			uni.getStorage({
 				key: 'chatswitch',
@@ -910,16 +1112,19 @@
 					'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 				},
 				success: (res) => {
-					if(res.data.code==404){
+					if (res.data.code == 404) {
 						that.loading = '暂无新消息。';
 						that.messagearray = [];
 						return;
 					}
 					console.log(res.data);
+					if (that.TabCur == 2) {
+						that.heightset('listnow2');
+					}
 					that.messagearray = res.data;
-					if(res.data.length<30){
+					if (res.data.length < 30) {
 						that.loading = '暂无更多提醒';
-					}else{
+					} else {
 						that.loading = '点击可加载更多';
 					}
 				}
@@ -938,17 +1143,50 @@
 					'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 				},
 				success: (res) => {
-					if(res.data.code==404){
+					if (res.data.code == 404) {
 						that.loading = '暂无新消息。';
 						that.publicarray = [];
 						return;
 					}
 					console.log(res.data);
 					that.publicarray = res.data;
-					that.heightset('listnow1');
-					if(res.data.length<30){
+					if (that.TabCur == 1) {
+						that.heightset('listnow1');
+					}
+					if (res.data.length < 30) {
 						that.loading = '暂无更多消息';
-					}else{
+					} else {
+						that.loading = '点击可加载更多';
+					}
+				}
+			});
+			uni.request({
+				url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:pmview', //获取置顶帖子
+				method: 'GET',
+				timeout: 10000,
+				data: {
+					token: that.$token,
+					page: that.pagepv,
+					type: 'private',
+					new: that.$switchcvalue
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+				},
+				success: (res) => {
+					if (res.data.code == 404) {
+						that.loading = '暂无新消息。';
+						that.pvarray = [];
+						return;
+					}
+					console.log(res.data);
+					that.pvarray = res.data;
+					if (that.TabCur == 0) {
+						that.heightset('listnow0');
+					}
+					if (res.data.length < 30) {
+						that.loading = '暂无更多消息';
+					} else {
 						that.loading = '点击可加载更多';
 					}
 				}
@@ -1002,10 +1240,10 @@
 				}
 			})
 			plus.navigator.setStatusBarStyle('dark'); //改变系统标题颜色
-			var that=this;
+			var that = this;
 			setTimeout(function() {
 				console.log(that.chatonline);
-				if(that.chatonline==0){
+				if (that.chatonline == 0) {
 					that.chonglian();
 				}
 			}, 2000)
@@ -1033,23 +1271,28 @@
 		margin: 0 5px;
 		padding: 0 11px;
 	}
+
 	.cu-list.menu-avatar>.cu-item .content {
-	    width: 100%;
+		width: 100%;
 	}
+
 	.cu-list.menu-avatar>.cu-item {
 		border-bottom: 1px solid #ddd;
 		border-radius: inherit;
 	}
+
 	.cu-list.menu-avatar>.cu-item .flex .text-cut2 {
-		max-width: 590upx!important;
+		max-width: 590upx !important;
 	}
+
 	.text-cut2 {
-	    text-overflow: ellipsis;
-	    overflow: hidden;
+		text-overflow: ellipsis;
+		overflow: hidden;
 		height: 3.2em;
 		line-height: 1.6;
 		display: block;
 	}
+
 	.gzlist2 {
 		position: absolute;
 		background-color: transparent;
