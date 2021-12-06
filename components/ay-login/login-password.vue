@@ -306,6 +306,8 @@
 					//这里你就可以自由的发送验证码了【下方代码仅做参考】
 					console.log(this.addressData.countrycode);
 					console.log(this.phonenumber);
+					console.log(this.session_id);
+					console.log(this.slideCode_x);
 					uni.request({
 						method: 'get',
 						dataType: 'json',
@@ -318,7 +320,7 @@
 						},
 						success: (res) => {
 							console.log(res.data);
-							if (res.data.code === 2001) { //发送成功
+							if (res.data.code == 2001) { //发送成功
 								this.formsub3 = false;
 								let time = 60
 								this.codeTxt = '重新获取' + time
@@ -705,8 +707,8 @@
 					method: 'GET',
 					timeout: 10000,
 					data: {
-						ticket: this.ticketnew,
-						randstr: this.randstrnew,
+						ticket: this.slideCode_x,
+						randstr: this.session_id,
 						phone: this.phonenumber,
 						newpassword: this.newpasswd,
 						yzm: this.yanzhengma,
@@ -716,6 +718,8 @@
 					},
 					success: (res) => {
 						console.log(res.data);
+						console.log(this.session_id);
+						console.log(this.slideCode_x);
 						this.yzFlag = true;
 						if (res.data.code == 200) {
 							this.modalName = 'yzcg';

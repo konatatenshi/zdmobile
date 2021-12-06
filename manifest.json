@@ -2,8 +2,8 @@
     "name" : "终点论坛",
     "appid" : "__UNI__0D1E511",
     "description" : "",
-    "versionName" : "0.3.8",
-    "versionCode" : 35,
+    "versionName" : "0.3.9",
+    "versionCode" : 36,
     "transformPx" : false,
     "app-plus" : {
         /* 5+App特有相关 */
@@ -23,6 +23,7 @@
                     "<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>",
                     "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
                     "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+                    "<uses-permission android:name=\"android.permission.CAMERA\"/>",
                     "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
                     "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
                     "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
@@ -44,7 +45,7 @@
                 "privacyDescription" : {
                     "NSPhotoLibraryUsageDescription" : "应用需要读取您的相册，以便为您选择上传的图片",
                     "NSPhotoLibraryAddUsageDescription" : "应用需要写入您的相册，以便将图片保存到本地手机",
-                    "NSCameraUsageDescription" : "应用需要使用您的相机，以便将拍摄图片用于发布信息"
+                    "NSCameraUsageDescription" : "应用需要使用您的相机，以便将拍摄图片用于发布信息或扫描二维码登录信息"
                 }
             },
             /* ios打包配置 */
