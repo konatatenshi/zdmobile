@@ -95,7 +95,7 @@
 			</view>
 		</view>
 		<view class="cu-list menu" :class="[menuBorder?'sm-border':'',menuCard?'card-menu margin-top':'']">
-			<view class="cu-item" :class="menuArrow?'arrow':''">
+			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="mycredit()">
 				<view class="content">
 					<text class="cuIcon-moneybagfill text-mauve"></text>
 					<text class="text-grey">我的积分</text>
@@ -367,6 +367,15 @@
 				}
 				uni.navigateTo({
 					url: '../basics/icon'
+				})
+			},
+			mycredit() {
+				if (this.$token == '') {
+					this.toguestlogin();
+					return;
+				}
+				uni.navigateTo({
+					url: '../extra/mycredit'
 				})
 			},
 			yaoyao() {

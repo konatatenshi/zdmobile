@@ -196,6 +196,8 @@
 											v-if="dianzannumber[index]>0">{{dianzannumber[index]}}</text></text>
 									<text class="cuIcon-messagefill text-gray margin-left-sm"
 										@tap="lzpo(item.pid,index)"></text>
+									<text v-if="item.authorid==$uid" class="cuIcon-writefill text-gray margin-left-sm"
+										@tap="edithuifu(item.pid)"></text>
 								</view>
 								<view v-else>
 									<text class="cuIcon-appreciatefill" :class="item.zan?'text-red':'text-gray'"
@@ -203,6 +205,8 @@
 											v-if="item.support>0">{{item.support}}</text></text>
 									<text class="cuIcon-messagefill text-gray margin-left-sm"
 										@tap="lzpo(item.pid,index)"></text>
+									<text v-if="item.authorid==$uid" class="cuIcon-writefill text-gray margin-left-sm"
+										@tap="edithuifu(item.pid)"></text>
 								</view>
 								<view>
 									<text class="cuIcon-close text-gray margin-right-sm"
@@ -293,6 +297,11 @@
 							<view class="cu-item" @tap="jubaota(jubaopid)">
 								<view class="content">
 									<text class="text-grey"><text class="cuIcon-info"></text>举报此帖</text>
+								</view>
+							</view>
+							<view class="cu-item" v-if="authorid==$uid" @tap="editpost()">
+								<view class="content">
+									<text class="text-grey"><text class="cuIcon-attention"></text>编辑此帖</text>
 								</view>
 							</view>
 						</view>
@@ -1281,6 +1290,28 @@
 						}
 						that.loadModal4 = false;
 					}
+				});
+			},
+			editpost() {
+				let that=this;
+				console.log(that.fid);
+				console.log(that.tid);
+				console.log(that.pid);
+				uni.navigateTo({
+					url: '../extra/editor?fid=' + that.fid + '&tid=' + that.tid + '&pid=' +that.pid,
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
+			},
+			edithuifu(e) {
+				let that=this;
+				console.log(that.fid);
+				console.log(that.tid);
+				console.log(e);
+				uni.navigateTo({
+					url: '../extra/editor?fid=' + that.fid + '&tid=' + that.tid + '&pid=' +e,
+					animationType: 'pop-in',
+					animationDuration: 200
 				});
 			},
 			lzlpo(e, f, g) {
