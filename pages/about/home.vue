@@ -104,7 +104,7 @@
 					<text class="text-sm text-cyan">总积分：{{mycredits}}</text>
 				</view>
 			</view>
-			<view class="cu-item" :class="menuArrow?'arrow':''">
+			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="myquest()">
 				<view class="content">
 					<image src="/static/task.gif" class="png" mode="aspectFit"></image>
 					<text class="text-grey">我的任务</text>
@@ -378,6 +378,15 @@
 					url: '../extra/mycredit'
 				})
 			},
+			myquest() {
+				if (this.$token == '') {
+					this.toguestlogin();
+					return;
+				}
+				uni.navigateTo({
+					url: '../extra/quest'
+				})
+			},
 			yaoyao() {
 				if (this.$token == '') {
 					this.toguestlogin();
@@ -458,7 +467,9 @@
 				});
 			},
 			messageclick(index) {
-				console.log(index)
+				uni.navigateTo({
+					url: '../extra/dati'
+				});
 			},
 			tologin(e) {
 				uni.navigateTo({

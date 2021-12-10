@@ -1,0 +1,100 @@
+/* index */
+.bgt{position: fixed;width: 100%; height: calc(100vh - 47px);left: 0;top: 0;z-index: -1;}
+.btn image{position: fixed;bottom: calc( 100% - 67%);width: 60%; left: 50%;transform: translateX(-50%); z-index:100}
+.tip .text{text-align:center;font-size:12px;position: fixed;bottom: calc( 1% + 27%);width:100%;z-index:100;color:#fff;}
+.tip2 .text{text-align:center;font-size:12px;position: fixed;bottom: 55px;width:100%;z-index:100;color:#fff;}
+.bottom-tabbar{width: 100%;position: fixed;bottom: 0;left: 0;display: flex;align-items: center;justify-content: space-between;background: #fff; padding-top: .3em;}
+.bottom-tabbar .box{flex: 1; color: #333333;}
+.bottom-tabbar .active{color: #27a2ef;}
+.bottom-tabbar .box image{width: 1.8em; height: 1.8em; margin: 0 auto;display: block;}
+.bottom-tabbar .box .text{text-align: center;font-size: .9em;padding: .1em 0;}
+
+.intro-box{
+	width: 85%;
+	margin: 0 auto;
+	margin-top: 6em;
+	
+	position: relative;
+	border-radius: .7em;
+	background: #fff;
+}
+
+.info {
+    text-align: center;
+    height: 34px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: -17px;
+    font-size: 18px;
+  }
+  .info .span text{padding: 0 .2em;}
+  .info .span {
+    height: 34px;
+    line-height: 34px;
+    background-color: #ffc704;
+    display: inline-block;
+    padding: 0 40px;
+    color: #fff;
+    position: relative;
+  }
+  .info .span:after {
+    display: block;
+    content: "";
+    position: absolute;
+    right: -10px;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-bottom: 17px solid #ffc704;
+    border-top: 17px solid #ffc704;
+    border-right: 11px solid transparent;
+  }
+  .info .span:before {
+    display: block;
+    content: "";
+    position: absolute;
+    left: -10px;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-bottom: 17px solid #ffc704;
+    border-top: 17px solid #ffc704;
+    border-left: 11px solid transparent;
+  }
+ .explain_content{
+	background-color: #fff;
+	border-radius: .7em;
+	padding: 2em .9em 1.5em;
+ }
+ .prized-box{
+	 background-color: #fff;
+	 border-radius: .7em;
+	 padding: 2em .9em 1.5em;
+ }
+ 
+ .explain_content view{
+	 padding: .6em 0;
+	 line-height: 1.5em;
+	 font-size: 1em;
+ }
+ .prized-box .title{color: rgb(151, 72, 6); text-align: center;}
+ .prized-box .img-btn{
+	 width: 45%;
+	 margin: 0 auto;
+	 padding-top: 3em;
+ }
+ .prized-box  .img-btn image{
+	 width: 100%;
+ }
+ .prized-box .tip {text-align: center;padding: .9em 0;font-size: 1em; color: #333; }
+ .prized-box .tip text text{color: rgb(151, 72, 6);}
+ .prized-box .text{color: #333;text-align: center;padding: 1.25em 0;font-size: 1em;}
+ .prized-box .texta{color: rgb(151, 72, 6);text-align: center;padding: 1.25em 0;font-size: 1em;}
+ 
+ .answer-main{width: 100%;box-sizing: border-box;padding: 1em 0;}
+ .answer-main .name{padding-bottom: 1em;font-size: 1.1em;color: #000;}
+ .answer-main .u-radio{padding: .5em 0;}
+ .answer-main .u-radio .u-radio__label {margin-left: 1em;}
+ .prized-box .time-box{margin: 0 auto;text-align: center;}
+ .btnsub{display: block;position: fixed;bottom: 0; left: 0;width: 100%;padding: .9em 0; background: #ffc704;text-align: center;color: #fff;}
