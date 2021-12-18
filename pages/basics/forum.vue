@@ -132,7 +132,11 @@
 														class="cu-tag line-red padding-left-xs padding-right-xs">新人帖</text>
 													<text v-if="item.attachment>2"
 														class="cu-tag line-green padding-left-xs padding-right-xs">图文帖</text>
-													<text v-if="item.heats>9999"
+													<text v-if="item.replycredit>999" 
+														class="cu-tag line-purple padding-left-xs padding-right-xs">回帖奖励:1k+</text>
+													<text v-else-if="item.replycredit>0"
+														class="cu-tag line-pink padding-left-xs padding-right-xs">回帖奖励:{{item.heats}}</text>
+													<text v-else-if="item.heats>9999"
 														class="cu-tag line-purple padding-left-xs padding-right-xs">热度:1w+</text>
 													<text v-else-if="item.heats>999"
 														class="cu-tag line-purple padding-left-xs padding-right-xs">热度:1k+</text>

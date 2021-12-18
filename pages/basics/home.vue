@@ -1811,7 +1811,7 @@
 					}
 					that.tab1enabled = 1;
 					if (that.$nowdate != res.data.date && that.$token != '') {
-						that.jifenbiandong('每日登录', '金币+1，点币+1，宠物经验+1');
+						that.jifenbiandong('每日登录', '宠物经验+1');
 						Vue.prototype.$nowdate = res.data.date;
 						uni.setStorage({
 							key: 'nowdata',

@@ -57,6 +57,9 @@
 				</view>
 				<view class="text-content2">
 					<view v-if="content==''" class="cu-load text-gray loading"></view>
+					<view v-if="replycredit>0"
+						class="padding-xs radius shadow shadow-lg bg-yellow text-xs ltsp text-red">
+						回帖奖励还剩：{{replycredit}}金币，每人限{{membertimes}}次<text v-if="rprandom>0">，概率为{{rprandom}}%</text>。</view>
 					<mp-html :content="content" @linktap="linktap" selectable="true" />
 					<view v-if="jiance.type>0" class="text-center" @tap="jiancequery()">
 						<view v-if="jiance.type==1"
@@ -171,6 +174,9 @@
 									class="text-xs text-green cuIcon-mobile">来自Android客户端</view>
 								<view v-else-if="item.status&8" class="text-xs text-gray cuIcon-mobile">来自手机网页版</view>
 							</view>
+							<view v-if="item.replycredit>0"
+								class="padding-xs radius shadow shadow-lg bg-yellow text-xs ltsp text-red">
+								回帖奖励： +{{item.replycredit}}金币</view>
 							<mp-html v-if="item.status&1" class="text-content text-df float"
 								:class="isfloat[index]?'show':'hide'" :content="pingbi" @linktap="linktap"
 								selectable="true" />
@@ -341,7 +347,7 @@
 									<view class="text-gray text-sm noborder">拉黑后，他将不能回复和私聊你任何信息。</view>
 								</view>
 							</view>
-							<view v-if="pm==1&&jubaopid!=pid" class="cu-item" @tap="siliaozuozhe">
+							<view v-if="pm==1&&jubaopid!=pid" class="cu-item" @tap="siliaozuozhe2">
 								<view class="content">
 									<text class="text-grey"><text class="cuIcon-mark"></text>私信作者</text>
 								</view>
@@ -717,6 +723,9 @@
 				luckyme: [],
 				jiance: [],
 				iStatusBarHeight: 0,
+				replycredit: 0,
+				membertimes: 0,
+				rprandom: 0,
 				isImage: 0,
 				sex: 0,
 				status: 0,
@@ -1338,6 +1347,9 @@
 			},
 			siliaozuozhe() {
 				this.modalName = 'siliao';
+			},
+			siliaozuozhe2() {
+				this.modalName = 'siliao2';
 			},
 			zanpo(f, g, h, i) {
 				console.log(f);
@@ -2209,6 +2221,9 @@
 							that.daoxu = res.data.daoxu;
 							that.replies = res.data.replies;
 							that.sightml = res.data.userinfo.sightml;
+							that.replycredit = res.data.replycredit;
+							that.membertimes = res.data.membertimes;
+							that.rprandom = res.data.rprandom;
 							if (that.dashang > 0) {
 								that.dashang = "+" + that.dashang;
 							}

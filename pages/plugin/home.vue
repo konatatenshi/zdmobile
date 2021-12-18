@@ -1021,6 +1021,7 @@
 				let indexpg = e.apphref.indexOf("ac=friend");
 				let indexph = e.apphref.indexOf("op=add");
 				if (indexpd > 0) {
+					console.log(1);
 					let href = e.apphref.match(/^(\D*)(\d+)(.*)$/).slice(1);
 					uni.navigateTo({
 						url: '../component/card?tid=' + href[1],
@@ -1028,14 +1029,43 @@
 						animationDuration: 200
 					});
 				} else if (indexpe > 0) {
+					console.log(2);
 					let href = e.apphref.split('tid=');
 					let href2 = href[1].match(/^(\D*)(\d+)(.*)$/).slice(1);
-					uni.navigateTo({
-						url: '../component/card?tid=' + href2[1],
-						animationType: 'pop-in',
-						animationDuration: 200
-					});
+					if(e.apphref.indexOf("pid=")){
+						let href = e.apphref.split('pid=');
+						let href2 = href[1].match(/^(\D*)(\d+)(.*)$/).slice(1);
+						 uni.showLoading({
+							title: '加载中'
+						});
+						uni.request({
+							url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:pidtotid', //获取轮播列表
+							method: 'GET',
+							timeout: 10000,
+							data: {
+								pid: href2[1]
+							},
+							header: {
+								'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+							},
+							success: (res) => {
+								uni.navigateTo({
+									url: '../component/card?tid=' + res.data.tid,
+									animationType: 'pop-in',
+									animationDuration: 200
+								});
+								uni.hideLoading();
+							}
+						});
+					}else{
+						uni.navigateTo({
+							url: '../component/card?tid=' + href2[1],
+							animationType: 'pop-in',
+							animationDuration: 200
+						});
+					}
 				} else if (indexpf > 0) {
+					console.log(3);
 					let href = e.apphref.split('uid=');
 					let href2 = href[1].match(/^(\D*)(\d+)(.*)$/).slice(1);
 					if (indexpg > 0 && indexph > 0) {

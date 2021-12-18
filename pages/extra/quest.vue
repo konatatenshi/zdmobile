@@ -23,22 +23,22 @@
 				var that = this;
 				var currentWebview = this.$scope.$getAppWebview();
 				var thisurl = currentWebview.children()[0].getURL();
+				console.log(thisurl);
 				var re = /mod=forumdisplay(.*)fid=(\d*)*/i;
 				var found = thisurl.match(re);
-
-				console.log(found);
-				if (found) {
-					uni.redirectTo({
-						url: '../basics/forum?forumid=' + found[2],
-						animationType: 'pop-in',
-						animationDuration: 200
-					});
-				}
-				setTimeout(function() {
-					if (found == null){
-						that.webviewurl();
+				var wv = currentWebview.children()[0];
+				wv.overrideUrlLoading({mode: 'allow',match: '.*mod=task.*'}, function(e) {
+				    console.log('reject url: ' + e.url);
+					var found = e.url.match(re);
+					if (found) {
+						uni.redirectTo({
+							url: '../basics/forum?forumid=' + found[2],
+							animationType: 'pop-in',
+							animationDuration: 200
+						});
 					}
-				}, 500); //如页面初始化调用需要写延迟
+					console.log(found);
+				});
 			},
 		},
 		onLoad(e) {

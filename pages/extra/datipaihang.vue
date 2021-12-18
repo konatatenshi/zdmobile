@@ -20,10 +20,10 @@
 			</view>
 			<view v-for="(itemex,indexe1) in datilist" :key="indexe1">
 				<view class="grid text-center col-3">
-					<view class="wid1" style="text-align: left;"><image class="margin-left-sm" style="width: 40upx;height: 40upx;" :src="'https://zd.tiangal.com/uc_server/avatar.php?uid=' + itemex.uid + '&size=small'"></image>{{itemex.username}}</view>
-					<view class="wid2">{{itemex.total}}</view>
-					<view class="wid2">{{itemex.bingo}}</view>
-					<view class="wid2">{{itemex.combo}}</view>
+					<view class="wid1" :class="itemex.uid==$uid?'text-red':''" style="text-align: left;"><image class="margin-left-sm" style="width: 40upx;height: 40upx;" :src="'https://zd.tiangal.com/uc_server/avatar.php?uid=' + itemex.uid + '&size=small'"></image>{{itemex.username}}</view>
+					<view class="wid2" :class="itemex.uid==$uid?'text-red':''">{{itemex.total}}</view>
+					<view class="wid2" :class="itemex.uid==$uid?'text-red':''">{{itemex.bingo}}</view>
+					<view class="wid2" :class="itemex.uid==$uid?'text-red':''">{{itemex.combo}}</view>
 				</view>
 			</view>
 		</view>
