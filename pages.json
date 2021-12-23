@@ -275,6 +275,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/extra/qiandao",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"mp-alipay": {

@@ -565,6 +565,9 @@
 							} else if (res.data.result == 'error01005') {
 								this.error.reason = '验证码错误，请输入验证码以继续';
 								this.modalName = 'yanzhengcode';
+							} else if (res.data.result == 'error01006') {
+								this.error.reason = '安全锁定：您需要手机重置密码才可以继续登录。';
+								this.modalName = 'loginerror';
 							} else {
 								this.error.reason = res.data.reason;
 								this.modalName = 'loginerror';

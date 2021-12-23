@@ -702,7 +702,7 @@
 		onLoad: function(option) {
 			this.uid = option.uid;
 			//this.uid = 19;
-			//console.log(option.uid); //打印出上个页面传递的参数。
+			console.log(option.uid); //打印出上个页面传递的参数。
 			//this.loadthread(this.uid);
 			this.shuaxinlist();
 			console.log(this.avatar);

@@ -366,7 +366,8 @@
 					return;
 				}
 				uni.navigateTo({
-					url: '../basics/icon'
+					//url: '../basics/icon'
+					url: '../extra/qiandao'
 				})
 			},
 			mycredit() {
