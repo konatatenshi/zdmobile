@@ -605,14 +605,15 @@
 				</view>
 				<view class="cu-modal" :class="isShowVaptcha?'show':''">
 					<view class="cu-dialog" style="width: 100%;">
-						<view>
+						<view class="yzbg">
 							<sliding-image-verification v-if="isShowVaptcha"
 								style="width: 100%;height: 60vw;z-index: 9999;" :bgImg=bgimg :successNumber=randomunmber
 								:allowError="3" :canvasH="10" @success="sendmessage" @refresh="refreshyzm">
 							</sliding-image-verification>
 						</view>
 						<view class="padding-xl">
-							请滑动上图的滑块来验证回复，避免回帖机器人。
+							请左右滑动上图的滑块来完成拼图以便认证真人操作。
+							<button class="cu-btn bg-green margin-left" @tap="reshow()">重置</button>
 						</view>
 					</view>
 				</view>
@@ -765,6 +766,7 @@
 				randomunmber: 0,
 				platform: 0,
 				loadwb: 0,
+				csss: 0,
 				guanzhutext: '关注作者',
 				jubaomessage: '',
 				guanzhuvar: 1,
@@ -1782,6 +1784,14 @@
 					this.showmove = true;
 				}, 1000)
 			},
+			reshow(){
+				let that = this;
+				this.isShowVaptcha = false;
+				this.bgimg = '../../static/img/loading2.gif';
+				setTimeout(function() {
+					that.showVaptcha();
+				},200)
+			},
 			showVaptcha() {
 				this.isShowVaptcha = true;
 				this.bgimg = 'http://bbs.zdfx.net/img/style/i/yzm_pic/' + Math.floor(Math.random() * 218) + '.jpg';
@@ -1796,10 +1806,16 @@
 				// #endif
 			},
 			refreshyzm() {
-				uni.showToast({
-					icon: "none",
-					title: "重试"
-				})
+				if(this.csss<3){
+					uni.showToast({
+						icon: "none",
+						title: "重试"
+					});
+					this.csss++;
+				}else{
+					this.csss = 0;
+					this.reshow();
+				}
 			},
 			handleMessage(res) {
 				this.isShowVaptcha = false
@@ -2582,5 +2598,10 @@
 	.chacha {
 		position: absolute;
 		right: 30upx;
+	}
+	
+	.yzbg {
+		background-image: url(../../static/img/loading2.gif);
+		background-size:contain;
 	}
 </style>

@@ -1,90 +1,264 @@
 <template>
 	<view>
-		<cu-custom bgColor="bg-gradual-pink" :isBack="true"><block slot="backText">返回</block><block slot="content">导航栏</block></cu-custom>
-		<view v-for="(item,index) in 10" :key="index" v-if="index==TabCur" class="bg-grey padding margin text-center">
-			Tab{{index}}
-		</view>
-		<view class="cu-bar bg-white solid-bottom">
-			<view class="action">
-				<text class="cuIcon-title text-orange"></text> 默认
-			</view>
-		</view>
-		<scroll-view scroll-x class="bg-white nav" scroll-with-animation :scroll-left="scrollLeft">
-			<view class="cu-item" :class="index==TabCur?'text-green cur':''" v-for="(item,index) in 10" :key="index" @tap="tabSelect" :data-id="index">
-				Tab{{index}}
-			</view>
-		</scroll-view>
-
-		<view class="cu-bar bg-white margin-top solid-bottom">
-			<view class="action">
-				<text class="cuIcon-title text-orange"></text> 居中
-			</view>
-		</view>
-		<scroll-view scroll-x class="bg-white nav text-center">
-			<view class="cu-item" :class="index==TabCur?'text-blue cur':''" v-for="(item,index) in 3" :key="index" @tap="tabSelect" :data-id="index">
-				Tab{{index}}
-			</view>
-		</scroll-view>
-
-		<view class="cu-bar bg-white margin-top solid-bottom">
-			<view class="action">
-				<text class="cuIcon-title text-orange"></text> 平分
-			</view>
-		</view>
-		<scroll-view scroll-x class="bg-white nav">
-			<view class="flex text-center">
-				<view class="cu-item flex-sub" :class="index==TabCur?'text-orange cur':''" v-for="(item,index) in 4" :key="index" @tap="tabSelect" :data-id="index">
-					Tab{{index}}
+		<cu-custom bgColor="bg-gradual-pink" :isBack="true"><block slot="backText">返回</block><block slot="content">摇奖抽卡</block></cu-custom>
+		<qyq-luckDraw @lottoLuckDraw="lottoLuckDraw" :cardList="cardList"></qyq-luckDraw>
+		
+		<view class="cu-card article">
+			<view class="cu-item shadow">
+				<view class="title"><view class="text-cut">每日翻翻卡统计信息</view></view>
+				<view class="content">
+					<view class="desc">
+						<view v-if="xingyun==1">
+							<view class="cu-tag bg-yellow light sm round">超级幸运！此次抽奖必翻倍，金额必定大于等于16！</view>
+						</view>
+						<view>
+							<view class="cu-tag bg-red light sm round">今日排名：{{jrpm}} 翻出：{{fc}}点币</view>
+						</view>
+						<view>
+							<view class="cu-tag bg-green light sm round">连续排名：{{lxpm}} 连翻：{{lf}}天</view>
+						</view>
+						<view>
+							<view class="cu-tag bg-cyan light sm round">累计排名：{{ljpm}} 总翻：{{zf}}天 累计：{{lj}}点币 第{{pm}}名</view>
+						</view>
+						<view class="text-brown">翻到金色卡牌翻倍！如果连续30次翻卡均未抽中≥16的数字，则开启超级幸运模式，下次翻卡必翻倍，最终必获得≥16点币。（PS:每日前10名翻卡额外奖励50%点币。）</view>
+					<view class="text-center">
+						<button class="cu-btn block bg-blue lg margin-xs" type="" @tap="phb()">查看排行榜/旧版摇奖</button>
+					</view>
+					</view>
 				</view>
 			</view>
-		</scroll-view>
-		<view class="cu-bar bg-white margin-top solid-bottom">
-			<view class="action">
-				<text class="cuIcon-title text-orange"></text> 背景
+		</view>
+		<view class="cu-modal" :class="modalName=='chushihua'?'show':''" @tap.stop>
+			<view class="cu-dialog" @tap.stop>
+				<view class="text-content text-xl padding">保留奖池提醒</view>
+				<view class="text-content text-cyan padding">你上次摇奖还未初始化，是保留上次摇奖奖池还是继续抽奖？奖池还剩：{{jiangchi}}</view>
+				<view class="cu-bar bg-white justify-end">
+					<view class="action">
+						<button class="cu-btn bg-red" @tap="chongzhi" :disabled="isloading?true:false"><text class="cuIconfont-spin" :class="isloading1?'cuIcon-loading2':''"></text>重置</button>
+						<button class="cu-btn bg-green margin-left" @tap="baoliu()" :disabled="isloading?true:false"><text class="cuIconfont-spin" :class="isloading2?'cuIcon-loading2':''"></text>保留</button>
+					</view>
+				</view>
 			</view>
 		</view>
-		<scroll-view scroll-x class="bg-red nav text-center">
-			<view class="cu-item" :class="index==TabCur?'text-white cur':''" v-for="(item,index) in 3" :key="index" @tap="tabSelect" :data-id="index">
-				Tab{{index}}
-			</view>
-		</scroll-view>
-		<view class="cu-bar bg-white margin-top solid-bottom">
-			<view class="action">
-				<text class="cuIcon-title text-orange"></text> 图标
-			</view>
-		</view>
-		<scroll-view scroll-x class="bg-green nav text-center">
-			<view class="cu-item" :class="0==TabCur?'text-white cur':''" @tap="tabSelect" data-id="0">
-				<text class="cuIcon-camerafill"></text> 数码
-			</view>
-			<view class="cu-item" :class="1==TabCur?'text-white cur':''" @tap="tabSelect" data-id="1">
-				<text class="cuIcon-upstagefill"></text> 排行榜
-			</view>
-			<view class="cu-item" :class="2==TabCur?'text-white cur':''" @tap="tabSelect" data-id="2">
-				<text class="cuIcon-clothesfill"></text> 皮肤
-			</view>
-		</scroll-view>
-
 	</view>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				TabCur: 0,
-				scrollLeft: 0
-			};
+    import luckDraw from '../../components/qyq-luckDraw/qyq-luckDraw.vue'
+    export default {
+        data() {
+            return {
+                //卡片数组，reward为奖励，info为奖励信息
+                cardList:[
+                    {
+                        reward:"载入中",
+                        info:"金币"
+                    },
+                    {
+                        reward:"载入中",
+                        info:"金币"
+                    },
+                    {
+                        reward:"载入中",
+                        info:"金币"
+                    },
+                    {
+                        reward:"载入中",
+                        info:"金币"
+                    },
+                    {
+                        reward:"载入中",
+                        info:"金币"
+                    },
+                    {
+                        reward:"载入中",
+                        info:"金币"
+                    },
+                    {
+                        reward:"载入中",
+                        info:"金币"
+                    },
+                    {
+                        reward:"载入中",
+                        info:"金币"
+                    },
+                    {
+                        reward:"载入中",
+                        info:"金币"
+                    }
+                ],
+                cardList2:[
+                    {
+                        reward:"载入中",
+                        info:"金币"
+                    },
+                    {
+                        reward:"载入中",
+                        info:"金币"
+                    },
+                    {
+                        reward:"载入中",
+                        info:"金币"
+                    },
+                    {
+                        reward:"载入中",
+                        info:"金币"
+                    },
+                    {
+                        reward:"载入中",
+                        info:"金币"
+                    },
+                    {
+                        reward:"载入中",
+                        info:"金币"
+                    },
+                    {
+                        reward:"载入中",
+                        info:"金币"
+                    },
+                    {
+                        reward:"载入中",
+                        info:"金币"
+                    },
+                    {
+                        reward:"载入中",
+                        info:"金币"
+                    }
+                ],
+				xingyun: 0,
+				jrpm: 0,
+				fc: 0,
+				lxpm: 0,
+				lf: 0,
+				ljpm :0,
+				zf: 0,
+				lj: 0,
+				pm: 0,
+				jz: 0,
+				modalName: null,
+				jiangchi: '',
+				isloading: false,
+				isloading1: false,
+				isloading2: false,
+            }
+        },
+        components:{
+            luckDraw
+        },
+		onLoad: function(option) {
+			//this.uid = 19;
+			//console.log(option.uid); //打印出上个页面传递的参数。
+			//this.loadthread(this.uid);
+			this.shuaxinlist();
 		},
-		methods: {
-			tabSelect(e) {
-				this.TabCur = e.currentTarget.dataset.id;
-				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
-			}
-		}
-	}
+        methods: {
+            //翻牌抽奖
+            lottoLuckDraw(index){
+				let that = this;
+                console.log(index)
+				setTimeout(()=>{
+					that.shuaxinlist();
+				},3000)
+            },
+			showModal(e) {
+				this.modalName = e.currentTarget.dataset.target
+			},
+			hideModal(e) {
+				this.modalName = null
+			},
+			shuaxinlist() {
+				var that = this;
+				that.loading = '载入中...';
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=yinxingfei_zzza:yaoyao', //获取轮播列表
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							apptoken: that.$token,
+							relatedid: 1
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data);
+							that.xingyun = res.data.lucky;
+							that.jrpm = res.data.todaypm;
+							that.fc = res.data.todayfc;
+							that.lxpm = res.data.lianxupm;
+							that.lf = res.data.lianfan;
+							that.ljpm = res.data.leijipm;
+							that.zf = res.data.zongfan;
+							that.pm = res.data.jifenpm;
+							that.lj = res.data.leiji;
+							if(res.data.yjcs ==0){
+								that.modalName = 'chushihua';
+								that.jiangchi = res.data.jc;
+							}
+							if(res.data.left!=''&&that.jz==0){
+								that.cardList = res.data.left;
+								that.jz = 1;
+							}
+						}
+					});
+			},
+			chongzhi() {
+				var that = this;
+				that.isloading = true;
+				that.isloading1 = true;
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=yinxingfei_zzza:yaoyao', //获取轮播列表
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							apptoken: that.$token,
+							relatedid: 2
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							that.cardList = that.cardList2;
+							that.modalName = null;
+							console.log(res.data);
+							uni.showToast({
+							title: '已重置',
+							duration: 2000
+							});
+						}
+					});
+			},
+			baoliu() {
+				var that = this;
+				that.isloading = true;
+				that.isloading2 = true;
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=yinxingfei_zzza:yaoyao', //获取轮播列表
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							apptoken: that.$token,
+							relatedid: 3
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							that.modalName = null;
+							console.log(res.data)
+							uni.showToast({
+							title: '已保留',
+							duration: 2000
+							});
+						}
+					});
+			},
+        }
+    }
 </script>
 
 <style>
-
+uni-view.title {
+    line-height: 60upx!important;
+}
 </style>

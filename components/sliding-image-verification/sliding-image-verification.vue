@@ -14,16 +14,9 @@
 				:style="{top: getPersentageH(canvasH) +'px', left: slidX+'px',width: sliderBlockWidth + 'rpx', height: sliderBlockWidth +'rpx'}" 
 				style="background-color: #f8f8f8;"
 				canvas-id="myCanvas"></canvas>
+				<view class="yzfk"><image class="tup" src="../../static/img/huakuai.png"></image></view>
 			</movable-view>
 		</movable-area>
-		
-		<view 
-		:style="{
-		top: getPersentageH(canvasH) +'px', 
-		left: getSlideW(successNumber) +'px',
-		width: sliderBlockWidth + 'rpx', 
-		height: sliderBlockWidth +'rpx'}" 
-		 class="showPic"></view>
     </view>
 	
 </template>
@@ -166,7 +159,16 @@
 		// color: #fff;
 		z-index: 2;
 	}
-	
+	.yzfk{
+		display: flex;
+		position: relative;
+		margin-top: 700upx;
+		z-index: 2;
+	}
+	.tup{
+		height: 70upx;
+		width: 140upx;
+	}
 	movable-area {
 		height: 50%;
 		width: 100%;
@@ -178,6 +180,8 @@
 		position: absolute;
 		/* background-color: #20B2AA; */
 		z-index: 1;
+		background-image: url("../../static/img/loadzd.gif");
+		background-size:contain;
 	}
 	
 	.showPic {

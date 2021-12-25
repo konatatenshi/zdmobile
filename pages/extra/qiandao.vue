@@ -216,7 +216,8 @@
 							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 						},
 						success: (res) => {
-							console.log(res.data.list)
+							that.qdtext = '签到';
+							//console.log(res.data.list)
 							that.guanzhupost = res.data.list;
 							if (res.data.list.length < 30) {
 								that.loading = '已经到底了！';
@@ -234,7 +235,6 @@
 								} 
 							}
 							that.page0++;
-							that.qdtext = '签到';
 							setTimeout(function() {
 								//that.setHeight("view_listnow");
 							}, 100)

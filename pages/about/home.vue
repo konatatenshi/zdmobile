@@ -79,7 +79,7 @@
 			<view class="cu-item" @click="yaoyao">
 				<view class="cuIcon-presentfill text-blue">
 				</view>
-				<text>摇摇</text>
+				<text>抽卡</text>
 			</view>
 			<view class="cu-item" @click="paihang">
 				<view class="cuIcon-upstagefill text-cyan">
@@ -394,7 +394,8 @@
 					return;
 				}
 				uni.navigateTo({
-					url: '../basics/progress'
+					//url: '../basics/progress'
+					url: '../component/nav'
 				})
 			},
 			paihang() {
