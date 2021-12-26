@@ -52,77 +52,77 @@
                 cardList:[
                     {
                         reward:"载入中",
-                        info:"金币"
+                        info:"点币"
                     },
                     {
                         reward:"载入中",
-                        info:"金币"
+                        info:"点币"
                     },
                     {
                         reward:"载入中",
-                        info:"金币"
+                        info:"点币"
                     },
                     {
                         reward:"载入中",
-                        info:"金币"
+                        info:"点币"
                     },
                     {
                         reward:"载入中",
-                        info:"金币"
+                        info:"点币"
                     },
                     {
                         reward:"载入中",
-                        info:"金币"
+                        info:"点币"
                     },
                     {
                         reward:"载入中",
-                        info:"金币"
+                        info:"点币"
                     },
                     {
                         reward:"载入中",
-                        info:"金币"
+                        info:"点币"
                     },
                     {
                         reward:"载入中",
-                        info:"金币"
+                        info:"点币"
                     }
                 ],
                 cardList2:[
                     {
                         reward:"载入中",
-                        info:"金币"
+                        info:"点币"
                     },
                     {
                         reward:"载入中",
-                        info:"金币"
+                        info:"点币"
                     },
                     {
                         reward:"载入中",
-                        info:"金币"
+                        info:"点币"
                     },
                     {
                         reward:"载入中",
-                        info:"金币"
+                        info:"点币"
                     },
                     {
                         reward:"载入中",
-                        info:"金币"
+                        info:"点币"
                     },
                     {
                         reward:"载入中",
-                        info:"金币"
+                        info:"点币"
                     },
                     {
                         reward:"载入中",
-                        info:"金币"
+                        info:"点币"
                     },
                     {
                         reward:"载入中",
-                        info:"金币"
+                        info:"点币"
                     },
                     {
                         reward:"载入中",
-                        info:"金币"
+                        info:"点币"
                     }
                 ],
 				xingyun: 0,
@@ -165,6 +165,11 @@
 			},
 			hideModal(e) {
 				this.modalName = null
+			},
+			phb() {
+				uni.navigateTo({
+					url: '../basics/progress'
+				})
 			},
 			shuaxinlist() {
 				var that = this;

@@ -17,6 +17,13 @@
 				<view class="yzfk"><image class="tup" src="../../static/img/huakuai.png"></image></view>
 			</movable-view>
 		</movable-area>
+				<view 
+		:style="{
+		top: getPersentageH(canvasH) +'px', 
+		left: getSlideW(successNumber) +'px',
+		width: sliderBlockWidth + 'rpx', 
+		height: sliderBlockWidth +'rpx'}" 
+		 class="showPic"></view>
     </view>
 	
 </template>

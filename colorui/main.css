@@ -3583,6 +3583,29 @@ scroll-view.cu-steps .cu-item {
 	color: #ffffff;
 }
 
+.bg-gradual-cyan {
+	background-image: linear-gradient(45deg, #38a8a8, #21ded5);
+	color: #ffffff;
+}
+
+.bg-gradual-gray {
+	background-image: linear-gradient(45deg, #38a8a8, #21ded5);
+	color: #ffffff;
+}
+
+.bg-gradual-grey {
+	background-image: linear-gradient(45deg, #0081ff, #1cbbb4);
+	color: #ffffff;
+}
+
+.bg-gradual-black {
+	background-image: linear-gradient(45deg, #000000, #626262);
+	color: #ffffff;
+}
+.bg-gradual-white {
+	background-image: linear-gradient(45deg, #dedede, #ffffff);
+	color: #ffffff;
+}
 .shadow[class*="-red"] {
 	box-shadow: 6upx 6upx 8upx rgba(204, 69, 59, 0.2);
 }

@@ -1,16 +1,16 @@
 <template name="about">
-	<view>
-		<view class="cu-bar bg-gray hometop">
+	<view :class="'bg-'+themeColor.name">
+		<view class="cu-bar hometop" :class="'bg-'+themeColor.name">
 			<view class="action">
-				<text class="cuIcon-home text-black" @tap="backhome"></text>
+				<text class="cuIcon-home" @tap="backhome"></text>
 			</view>
 			<view class="action">
-				<text class="cuIcon-scan text-black" @tap="scantologin"></text>
-				<text class="cuIcon-mobile text-black" @tap="bangding()"></text>
-				<text class="cuIcon-settings text-black" @tap="settingselect"></text>
+				<text class="cuIcon-scan" @tap="scantologin"></text>
+				<text class="cuIcon-mobile" @tap="bangding()"></text>
+				<text class="cuIcon-settings" @tap="settingselect"></text>
 			</view>
 		</view>
-		<view class="cu-bar bg-gray search hometop2">
+		<view class="cu-bar search hometop2" :class="'bg-'+themeColor.name">
 			<img-cache v-show="avatarimgLoaded" class="cu-avatar round" :src="$avatarsmall" @tap="touserpage" data-id="0"
 				@load="onSuccessImg()" />
 			</img-cache>
@@ -24,7 +24,7 @@
 				个人主页<text class="cuIcon-right"></text>
 			</view>
 		</view>
-		<scroll-view scroll-x class="bg-gray nav text-center">
+		<scroll-view scroll-x class="nav text-center" :class="'bg-'+themeColor.name">
 			<view class="flex text-center">
 				<view class="cu-item flex-sub noline" :class="1==TabCur?'text-red cur':''" @tap="tabSelect" data-id="1">
 					<text :class="1==TabCur?'text-red':'text-gray'"><text
@@ -44,12 +44,12 @@
 				</view>
 			</view>
 		</scroll-view>
-		<view class="cu-bar bg-white solid-bottom">
+		<view class="cu-bar solid-bottom" :class="'bg-'+themeColor.name">
 			<view class="action">
 				<text v-if="myinfoprompt>0" class="cuIcon-title text-orange "></text> 快捷信息
 			</view>
 		</view>
-		<view class="cu-list grid col-3 no-border">
+		<view class="cu-list grid col-3 no-border" :class="'bg-'+themeColor.name">
 			<view class="cu-item" @click="tomessage">
 				<view class="cuIcon-messagefill text-red">
 					<view class="cu-tag badge" v-if="this.mynewpm!=0">
@@ -89,12 +89,12 @@
 		</view>
 
 
-		<view class="cu-bar bg-white solid-bottom margin-top">
+		<view class="cu-bar solid-bottom margin-top" :class="'bg-'+themeColor.name">
 			<view class="action">
 				<text v-if="mysetprompt>0" class="cuIcon-title text-orange"></text> 设置列表
 			</view>
 		</view>
-		<view class="cu-list menu" :class="[menuBorder?'sm-border':'',menuCard?'card-menu margin-top':'']">
+		<view class="cu-list menu" :class="'bg-'+themeColor.name">
 			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="mycredit()">
 				<view class="content">
 					<text class="cuIcon-moneybagfill text-mauve"></text>
@@ -110,7 +110,13 @@
 					<text class="text-grey">我的任务</text>
 				</view>
 			</view>
-			<view class="cu-item" :class="menuArrow?'arrow':''">
+			<view v-if="month==1" class="cu-item" :class="menuArrow?'arrow':''">
+				<button class="cu-btn content" open-type="contact">
+					<text class="cuIcon-evaluate_fill text-red"></text>
+					<text class="text-red">年度总结</text>
+				</button>
+			</view>
+			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="tostyle()">
 				<button class="cu-btn content" open-type="contact">
 					<text class="cuIcon-discoverfill text-olive"></text>
 					<text class="text-grey">风格设置</text>
@@ -178,7 +184,7 @@
 			<view class="cu-item">
 				<view class="content padding-tb-sm">
 					<view>
-						<text class="cuIcon-notification text-blue margin-right-xs"></text> 消息提醒
+						<text class="cuIcon-notification text-blue margin-right-xs">消息提醒</text>
 					</view>
 					<view class="text-gray text-sm">
 						<text class="cuIcon-infofill margin-right-xs"></text> 消息提醒还没打开！
@@ -200,7 +206,7 @@
 					<text class="text-grey">版本信息</text>
 				</button>
 			</view>
-			<view class="padding-xs flex align-center bg-gray" :style="{'height': iStatusBarHeight+'upx'}">
+			<view class="padding-xs flex align-center" :class="'bg-'+themeColor.name" :style="{'height': iStatusBarHeight+'upx'}">
 				<view class="flex-sub text-center">
 					<view class="text-xs padding">
 						<text class="text-white">终点论坛 @2021</text>
@@ -306,6 +312,7 @@
 				menuBorder: false,
 				listTouchStart: 0,
 				mynewpm: 0,
+				month : 0,
 				myinfoprompt: 0,
 				mysetprompt: 0,
 				mynewprompt: 0,
@@ -386,6 +393,11 @@
 				}
 				uni.navigateTo({
 					url: '../extra/quest'
+				})
+			},
+			tostyle() {
+				uni.navigateTo({
+					url: '../component/steps'
 				})
 			},
 			yaoyao() {
@@ -798,6 +810,8 @@
 				that.version = wgtinfo.version;
 				console.log(that.version);
 			});
+			var date = new Date();
+			that.month = date.getMonth() + 1;
 			plus.navigator.setStatusBarStyle('dark');
 			void plus.runtime.setBadgeNumber(0); //桌面角标设置为0
 			const clientInfo = plus.push.getClientInfo(); //获取CID推送
@@ -901,5 +915,17 @@
 <style>
 	uni-view.cu-item.noline {
 		line-height: 33upx;
+	}
+	.cu-list.bg-red{
+		background-color: #ffdbca!important;
+	}
+	.cu-list.bg-red.cu-list.menu>.cu-item{
+		background-color: #ffdbca!important;
+	}
+	.cu-list.bg-black{
+		background-color: #747474!important;
+	}
+	.cu-list.bg-black.cu-list.menu>.cu-item{
+		background-color: #747474!important;
 	}
 </style>

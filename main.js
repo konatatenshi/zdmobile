@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App'
+import store from './store'
 
 import basics from './pages/basics/home.vue'
 Vue.component('basics',basics)
@@ -22,8 +23,18 @@ Vue.component('cu-custom',cuCustom)
 Vue.config.productionTip = false
 
 App.mpType = 'app'
+Vue.prototype.$store = store
+
+Vue.mixin({
+	computed: {
+		themeColor() {
+			return this.$store.state.themeColor
+		}
+	}
+})
 
 const app = new Vue({
+	store,
     ...App
 })
 app.$mount()

@@ -1,6 +1,6 @@
 <template name="components">
 	<view>
-		<view class="cu-bar bg-white hometop">
+		<view class="cu-bar hometop" :class="'bg-'+themeColor.name">
 			<view class="action">
 				<text class="cuIcon-homefill text-gray"></text> 首页
 			</view>
@@ -11,7 +11,7 @@
 				<text class="cuIcon-peoplefill text-grey"></text>
 			</view>
 		</view>
-		<scroll-view scroll-x class="bg-white nav-sm hometop1" scroll-with-animation :scroll-left="scrollLeft">
+		<scroll-view scroll-x class="nav-sm hometop1" :class="'bg-'+themeColor.name" scroll-with-animation :scroll-left="scrollLeft">
 			<view class="cu-item" :class="index==TabCur?'text-green cur':''" v-for="(item,index) in 5" :key="index"
 				@tap="tabSelect" :data-id="index">
 				<text class="cuIcon-title text-orange"
@@ -67,7 +67,7 @@
 				<swiper-item key="2">
 					<scroll-view class="list">
 						<view class="view_listnow listnow1">
-							<view class="cu-bar bg-white solid-bottom hometop3">
+							<view class="cu-bar solid-bottom hometop3" :class="'bg-'+themeColor.name">
 								<view class="action">
 									群组消息
 								</view>
@@ -96,7 +96,7 @@
 									</view>
 								</view>
 							</view>
-							<view class="cu-bar bg-white solid-bottom margin-top">
+							<view class="cu-bar solid-bottom margin-top" :class="'bg-'+themeColor.name">
 								<view class="action">
 									群发消息
 								</view>
@@ -146,7 +146,7 @@
 					<scroll-view class="list">
 						<view class="view_listnow listnow2">
 							<view class="cu-list menu-avatar margin-top hometop3">
-								<scroll-view scroll-x class="bg-white nav">
+								<scroll-view scroll-x class="nav" :class="'bg-'+themeColor.name">
 									<view class="flex text-center">
 										<view class="cu-item flex-sub"
 											:class="index==MessageTabCur?'text-orange cur':''"
@@ -236,7 +236,7 @@
 		</view>
 		<view class="cu-modal" :class="modalName=='modify'?'show':''">
 			<view class="cu-dialog">
-				<view class="cu-bar bg-white justify-end">
+				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="content">修改成功</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
@@ -245,7 +245,7 @@
 				<view class="padding-xl">
 					修改成功，点击确定关闭。
 				</view>
-				<view class="cu-bar bg-white justify-end">
+				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
 						<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
 					</view>
@@ -254,7 +254,7 @@
 		</view>
 		<view class="cu-modal" :class="modalName=='needlogin'?'show':''">
 			<view class="cu-dialog">
-				<view class="cu-bar bg-white justify-end">
+				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="content">需要登录</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
@@ -263,7 +263,7 @@
 				<view class="padding-xl">
 					你需要登录才可以使用此功能。
 				</view>
-				<view class="cu-bar bg-white justify-end">
+				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
 						<button class="cu-btn line-green text-green" @tap="hideModal">取消</button>
 						<button class="cu-btn bg-green margin-left" @tap="tologin">确定</button>
@@ -273,7 +273,7 @@
 		</view>
 		<view class="cu-modal" :class="modalName=='dxcl'?'show':''">
 			<view class="cu-dialog">
-				<view class="cu-bar bg-white justify-end">
+				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="content">断线重连</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
@@ -282,7 +282,7 @@
 				<view class="padding-xl">
 					您似乎已经和聊天服务器断开连接，建议重启APP以重新连接。
 				</view>
-				<view class="cu-bar bg-white justify-end">
+				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
 						<button class="cu-btn line-green text-green" @tap="restart">重启</button>
 						<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
@@ -292,7 +292,7 @@
 		</view>
 		<view class="cu-modal" :class="modalName=='shownotifi'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
-				<view class="cu-bar bg-white justify-end">
+				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="content">查看详情</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
@@ -301,7 +301,7 @@
 				<view class="padding-xl">
 					<mp-html :content="notifimessage" @linktap="linktap" />
 				</view>
-				<view class="cu-bar bg-white justify-end">
+				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
 						<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
 					</view>

@@ -2,7 +2,7 @@
 	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<view class="box">
-			<view class="cu-bar bg-cyan search hometop">
+			<view class="cu-bar bg-cyan search hometop"  :class="'bt-'+themeColor.name">
 				<view>
 					<img-cache v-show="avatarimgLoaded" class="cu-avatar round" :src="$avatarsmall" @tap="userinfo"
 						data-id="0" @load="onSuccessImg()" />
@@ -11,14 +11,14 @@
 						@tap="userinfo" data-id="0" style="margin-left: 11px;" />
 					</img-cache>
 				</view>
-				<view class="search-form radius">
+				<view class="search-form radius"  :class="'bt-'+themeColor.name">
 					<text class="cuIcon-search"></text>
 					<input @focus="InputFocus" @blur="InputBlur" @confirm="searchconfirm" :adjust-position="false"
 						type="text" placeholder="搜索图片、文章、视频"></input>
 				</view>
 			</view>
 		</view>
-		<scroll-view scroll-x class="bg-white nav-sm hometop0" scroll-with-animation :scroll-left="scrollLeft">
+		<scroll-view scroll-x class="nav-sm bg-gray hometop0" scroll-with-animation :scroll-left="scrollLeft" :class="'bg-light-'+themeColor.name">
 			<view class="cu-item" :class="index==TabCur?'text-green cur':''" v-for="(item,index) in 7" :key="index"
 				@tap="tabSelect" :data-id="index">
 				{{tabname[index]}}
@@ -45,14 +45,14 @@
 		<!-- 搜索历史 -->
 		<view class="view_head" @touchstart="start" @touchend="end">
 			<scroll-view v-if="TabCur==0" class="list">
-				<view class="view_listnow">
+				<view class="view_listnow"  :class="'bg-'+themeColor.name">
 					<view class="hometop3">
 					</view>
 					<view v-if="guanzhupost.length > 0">
 						<block v-for="(itemex,indexe1) in guanzhupost" :key="indexe1">
-							<view class="solid-bottom text-df article text-min"
+							<view class="solid-bottom text-df article text-min"  :class="'bg-'+themeColor.name"
 								style="padding-top: 10upx; padding-bottom: 10upx;" @tap="tourl(itemex.url)">
-								<view style="margin-right: 20upx;padding-left: 80upx;" class="text-black text-cut">
+								<view style="margin-right: 20upx;padding-left: 80upx;" class="text-black text-cut" :class="'bt-'+themeColor.name">
 									{{itemex.title}}</view>
 								<view style="padding-left: 80upx;">
 									<view>
@@ -70,11 +70,11 @@
 									<img-cache v-if="itemex.img!='static/image/common/nophoto.gif'" mode="aspectFill"
 										class="gzlist3" :src="itemex.img" />
 								</view>
-								<view v-if="itemex.img=='static/image/common/nophoto.gif'" class="text-grey"
+								<view v-if="itemex.img=='static/image/common/nophoto.gif'" class="text-content" :class="'bt-'+themeColor.name"
 									style="padding-left: 10upx;padding-top: 5upx;">
 									{{itemex.summary}}
 								</view>
-								<view v-else class="text-grey"
+								<view v-else class="text-content" :class="'bt-'+themeColor.name"
 									style="line-height:35upx; font-size: 0.8rem; padding-left: 10upx; padding-right: 100upx;padding-top: 5upx;text-overflow: -o-ellipsis-lastline;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
 									</img-cache>{{itemex.summary}}
 								</view>
@@ -105,10 +105,10 @@
 					</swiper>
 					<view v-if="toplist.length > 0">
 						<block v-for="(item,index1) in toplist" :key="index1">
-							<view class="solid-bottom text-df article"
+							<view class="solid-bottom text-df article"  :class="'bg-'+themeColor.name"
 								style="padding-top: 10upx; padding-bottom: 10upx;"  v-if="!(ifpingbi(item.author)&&$adminid<=0)">
 								<view @tap="tourl(item.url)">
-									<text class="text-black text-cut" style="width: 100%;">{{item.title}}</text>
+									<text class="text-black text-cut" :class="'bt-'+themeColor.name" style="width: 100%;">{{item.title}}</text>
 								</view>
 								<view> <text class="text-sm text-red padding-sm" @tap="tourl(item.url)">置顶</text> <text
 										class="text-sm text-gray padding-sm" @tap="tourl(item.url)">{{item.author}}&nbsp&nbsp{{item.replies}}评</text>
@@ -121,14 +121,14 @@
 					<view v-if="tuijiantie.length > 0">
 						<block v-for="(item,index2) in tuijiantie" :key="index2">
 							<view class="solid-bottom cu-card article no-card"  v-if="!(ifpingbi(item.author)&&$adminid<=0)">
-								<view class="cu-item shadow">
+								<view class="cu-item shadow"  :class="'bg-'+themeColor.name">
 									<view class="title" @tap="tourl(item.url)">
-										<view class="text-cut">{{item.title}}</view>
+										<view class="text-cut text-black" :class="'bt-'+themeColor.name">{{item.title}}</view>
 									</view>
 									<view class="content">
 										<image v-if="isImage" :src="item.img" mode="aspectFill" @tap="tourl(item.url)"></image>
 										<view class="desc">
-											<view class="text-content" @tap="tourl(item.url)">
+											<view class="text-content"  :class="'bt-'+themeColor.name" @tap="tourl(item.url)">
 												{{item.summary}}
 											</view>
 											<view>
@@ -148,15 +148,15 @@
 					<view v-if="newpost.length > 0">
 						<block v-for="(item,index3) in newpost" :key="index3">
 							<view class="solid-bottom cu-card article no-card"  v-if="!(ifpingbi(item.author)&&$adminid<=0)">
-								<view class="cu-item shadow">
+								<view class="cu-item shadow"  :class="'bg-'+themeColor.name">
 									<view class="title" @tap="tourl(item.url)">
-										<view class="text-cut">{{item.title}}</view>
+										<view class="text-cut text-black" :class="'bt-'+themeColor.name">{{item.title}}</view>
 									</view>
 									<view class="content">
 										<image v-if="item.img != 'static/image/common/nophoto.gif'&&isImage"
 											:src="item.img" mode="aspectFill" @tap="tourl(item.url)"></image>
 										<view class="desc">
-											<view class="text-content" @tap="tourl(item.url)">
+											<view class="text-content"  :class="'bt-'+themeColor.name" @tap="tourl(item.url)">
 												{{item.summary}}
 											</view>
 											<view>
@@ -192,9 +192,9 @@
 					</view>
 					<view v-if="rebangpost.length > 0">
 						<block v-for="(itemex,indexe1) in rebangpost" :key="indexe1">
-							<view class="solid-bottom text-df article text-min"
+							<view class="solid-bottom text-df article text-min"  :class="'bg-'+themeColor.name"
 								style="padding-top: 10upx; padding-bottom: 10upx;" v-if="!(ifpingbi(itemex.author)&&$adminid<=0)">
-								<view style="margin-right: 20upx;padding-left: 80upx;" class="text-black text-cut" @tap="tourl(itemex.url)">
+								<view style="margin-right: 20upx;padding-left: 80upx;" class="text-black text-cut" :class="'bt-'+themeColor.name" @tap="tourl(itemex.url)">
 									{{itemex.title}}</view>
 								<view style="padding-left: 80upx;">
 									<view>
@@ -214,11 +214,11 @@
 								</view>
 								<view class="chacha text-gray cuIcon-close" @tap="more2(itemex.author,itemex.url)">
 								</view>
-								<view v-if="itemex.img=='static/image/common/nophoto.gif'" class="text-grey"
+								<view v-if="itemex.img=='static/image/common/nophoto.gif'" class="text-content"  :class="'bt-'+themeColor.name"
 									style="padding-left: 10upx;padding-top: 5upx;"  @tap="tourl(itemex.url)">
 									{{itemex.summary}}
 								</view>
-								<view v-else class="text-grey" @tap="tourl(itemex.url)"
+								<view v-else class="text-content" :class="'bt-'+themeColor.name" @tap="tourl(itemex.url)"
 									style="line-height:35upx; font-size: 0.8rem; padding-left: 10upx; padding-right: 100upx;padding-top: 5upx;text-overflow: -o-ellipsis-lastline;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
 									</img-cache>{{itemex.summary}}
 								</view>
@@ -244,9 +244,9 @@
 					</view>
 					<view v-if="zixunpost.length > 0">
 						<block v-for="(itemex,indexe1) in zixunpost" :key="indexe1">
-							<view class="solid-bottom text-df article text-min"
+							<view class="solid-bottom text-df article text-min"  :class="'bg-'+themeColor.name"
 								style="padding-top: 10upx; padding-bottom: 10upx;" v-if="!(ifpingbi(itemex.author)&&$adminid<=0)">
-								<view style="margin-right: 20upx;padding-left: 80upx;" class="text-black text-cut" @tap="tourl(itemex.url)">
+								<view style="margin-right: 20upx;padding-left: 80upx;" class="text-black text-cut" :class="'bt-'+themeColor.name" @tap="tourl(itemex.url)">
 									{{itemex.title}}</view>
 								<view style="padding-left: 80upx;">
 									<view>
@@ -266,11 +266,11 @@
 								</view>
 								<view class="chacha text-gray cuIcon-close" @tap="more2(itemex.author,itemex.url)">
 								</view>
-								<view v-if="itemex.img=='static/image/common/nophoto.gif'" class="text-grey"
+								<view v-if="itemex.img=='static/image/common/nophoto.gif'" class="text-content"   :class="'bt-'+themeColor.name"
 									style="padding-left: 10upx;padding-top: 5upx;" @tap="tourl(itemex.url)">
 									{{itemex.summary}}
 								</view>
-								<view v-else class="text-grey" @tap="tourl(itemex.url)"
+								<view v-else class="text-content"  :class="'bt-'+themeColor.name" @tap="tourl(itemex.url)"
 									style="line-height:35upx; font-size: 0.8rem; padding-left: 10upx; padding-right: 100upx;padding-top: 5upx;text-overflow: -o-ellipsis-lastline;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
 									</img-cache>{{itemex.summary}}
 								</view>
@@ -296,9 +296,9 @@
 					</view>
 					<view v-if="taolunpost.length > 0">
 						<block v-for="(itemex,indexe1) in taolunpost" :key="indexe1">
-							<view class="solid-bottom text-df article text-min"
+							<view class="solid-bottom text-df article text-min"  :class="'bg-'+themeColor.name"
 								style="padding-top: 10upx; padding-bottom: 10upx;" v-if="!(ifpingbi(itemex.author)&&$adminid<=0)">
-								<view style="margin-right: 20upx;padding-left: 80upx;" class="text-black text-cut" @tap="tourl(itemex.url)">
+								<view style="margin-right: 20upx;padding-left: 80upx;" class="text-black text-cut" :class="'bt-'+themeColor.name" @tap="tourl(itemex.url)">
 									{{itemex.title}}</view>
 								<view style="padding-left: 80upx;">
 									<view>
@@ -318,11 +318,11 @@
 								</view>
 								<view class="chacha text-gray cuIcon-close" @tap="more2(itemex.author,itemex.url)">
 								</view>
-								<view v-if="itemex.img=='static/image/common/nophoto.gif'" class="text-grey"
+								<view v-if="itemex.img=='static/image/common/nophoto.gif'" class="text-content"  :class="'bt-'+themeColor.name"
 									style="padding-left: 10upx;padding-top: 5upx;" @tap="tourl(itemex.url)">
 									{{itemex.summary}}
 								</view>
-								<view v-else class="text-grey" @tap="tourl(itemex.url)"
+								<view v-else class="text-content"  :class="'bt-'+themeColor.name" @tap="tourl(itemex.url)"
 									style="line-height:35upx; font-size: 0.8rem; padding-left: 10upx; padding-right: 100upx;padding-top: 5upx;text-overflow: -o-ellipsis-lastline;overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
 									</img-cache>{{itemex.summary}}
 								</view>
@@ -351,13 +351,13 @@
 							<view class="item">
 								<img-cache v-if="itemex.img!='static/image/common/nophoto.gif'" mode="aspectFill"
 									class="itemImg" :src="itemex.img" @tap="tourl(itemex.url)"></img-cache><image v-else class="itemImg" src="../../static/img/loadzd.gif" @tap="tourl(itemex.url)"></image>
-								<view class="userInfo">
+								<view class="userInfo" :class="'bg-light-'+themeColor.name">
 									<img-cache class="avatar round" :src="itemex.avatar"  @tap="tourl(itemex.url)">
 									</img-cache>
-									<text class="username text-df article text-gray" @tap="tourl(itemex.url)">{{itemex.author}}</text>
+									<text class="username text-df article text-gray" :class="'bg-light-'+themeColor.name" @tap="tourl(itemex.url)">{{itemex.author}}</text>
 									<text class="text-gray cuIcon-close" @tap="more2(itemex.author,itemex.url)">
 									</text>
-									<view class="text-df article text-black text-cut" @tap="tourl(itemex.url)">{{itemex.title}}</view>
+									<view class="text-df article text-black text-cut" :class="'bg-light-'+themeColor.name" @tap="tourl(itemex.url)">{{itemex.title}}</view>
 								</view>
 							</view>
 						</view>
@@ -382,7 +382,7 @@
 					<view v-if="labapost.length > 0">
 						<view v-for="(itemexs,indexe1) in labapost" :key="indexe1">
 							<view v-if="!(ifpingbi(itemexs.author)&&$adminid<=0)">
-								<view v-if="itemexs.level=='all'" class="padding-xs radius shadow bg-white margin-top-xs text-black"><button class="cu-btn bg-green padding0">全站</button>
+								<view v-if="itemexs.level=='all'" class="padding-xs radius shadow margin-top-xs text-black" :class="'bg-light-'+themeColor.name"><button class="cu-btn bg-green padding0">全站</button>
 										<image class="avatar round" :src="itemexs.avatarlist"  @tap="touserpage(itemexs.uid)">
 										</image><text class="text-blue"  @tap="touserpage(itemexs.uid)">{{itemexs.username}}</text><text class="lg text-gray cuIcon-time"></text><text class="text-gray">{{itemexs.dateline}}</text><rich-text :nodes="itemexs.content"></rich-text></view>
 								<view v-else-if="itemexs.level=='system'" class="padding-xs radius shadow bg-red margin-top-xs text-black"><button class="cu-btn bg-red padding0">系统</button><text class="text-blue">{{itemexs.username}}</text><text class="lg text-gray cuIcon-time"></text><text class="text-gray">{{itemexs.dateline}}</text><rich-text :nodes="itemexs.content"></rich-text></view>
@@ -407,42 +407,42 @@
 		</view>
 		<view class="cu-modal" :class="modalName=='pingbi'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
-				<view class="cu-list menu text-left solid-top">
-					<view class="cu-item" v-if="pingbiauthor==$username">
+				<view class="cu-list menu text-left solid-top" :class="'bg-'+themeColor.name">
+					<view class="cu-item"  :class="'bg-'+themeColor.name" v-if="pingbiauthor==$username">
 						<view class="content">
 							<text class="text-gray"><text class="cuIcon-roundclose"></text>屏蔽自己</text>
 						</view>
 					</view>
-					<view class="cu-item" v-else-if="!ifpingbi(pingbiauthor)" @tap="pingbiadd(pingbiauthor)">
+					<view class="cu-item"  :class="'bg-'+themeColor.name" v-else-if="!ifpingbi(pingbiauthor)" @tap="pingbiadd(pingbiauthor)">
 						<view class="content noborder2">
 							<text class="text-grey"><text class="cuIcon-roundclose"></text>屏蔽作者：{{pingbiauthor}}</text>
 							<view class="text-gray text-sm noborder">屏蔽后，你将不会收到他的信息。</view>
 						</view>
 					</view>
-					<view class="cu-item" v-else @tap="pingbiremove(pingbiauthor)">
+					<view class="cu-item" :class="'bg-'+themeColor.name" v-else @tap="pingbiremove(pingbiauthor)">
 						<view class="content noborder2">
 							<text class="text-grey"><text class="cuIcon-roundclose"></text>取消屏蔽：{{pingbiauthor}}</text>
 							<view class="text-gray text-sm noborder">屏蔽后，你将不会收到他的信息。</view>
 						</view>
 					</view>
-					<view class="cu-item" v-if="pingbiauthor==$username">
+					<view class="cu-item" :class="'bg-'+themeColor.name" v-if="pingbiauthor==$username">
 						<view class="content">
 							<text class="text-gray"><text class="cuIcon-attentionforbid"></text>拉黑自己</text>
 						</view>
 					</view>
-					<view class="cu-item" v-else @tap="lahei(pingbitid)">
+					<view class="cu-item" :class="'bg-'+themeColor.name" v-else @tap="lahei(pingbitid)">
 						<view class="content noborder2">
 							<text class="text-grey"><text class="cuIcon-attentionforbid"></text>{{laheitext}}：{{pingbiauthor}}</text>
 							<view class="text-gray text-sm noborder">拉黑后，他将不能回复和私聊你任何信息。</view>
 						</view>
 					</view>
-					<view class="cu-item" v-if="jubaovalue==1" @tap="jubaota(pingbitid)">
+					<view class="cu-item" :class="'bg-'+themeColor.name" v-if="jubaovalue==1" @tap="jubaota(pingbitid)">
 						<view class="content">
 							<text class="text-grey noborder2"><text class="cuIcon-info"></text>举报此内容</text>
 							<view class="text-gray text-sm noborder">标题夸张，内容质量差等。</view>
 						</view>
 					</view>
-					<view class="cu-item" v-if="$adminid>0&&jubaovalue==0" @tap="deletelaba(pingbitid)">
+					<view class="cu-item" :class="'bg-'+themeColor.name" v-if="$adminid>0&&jubaovalue==0" @tap="deletelaba(pingbitid)">
 						<view class="content">
 							<text class="text-grey noborder2"><text class="cuIcon-info"></text>删除此喇叭</text>
 						</view>
@@ -452,7 +452,7 @@
 		</view>
 		<view class="cu-modal" :class="modalName=='jubaoxinxi'?'show':''"  @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
-				<view class="cu-bar bg-white justify-end">
+				<view class="cu-bar justify-end":class="'bg-light-'+themeColor.name">
 					<view class="content">请输入举报理由</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
@@ -485,7 +485,7 @@
 						<textarea maxlength="-1" v-model="jubaomessage" placeholder="请在此输入想要说的话"></textarea>
 					</view>
 				</view>
-				<view class="cu-bar bg-white justify-end">
+				<view class="cu-bar justify-end" :class="'bg-light-'+themeColor.name">
 					<view v-if="closed==0" class="action">
 						<button class="cu-btn bg-green margin-left" @tap="sendjbxx">发送</button>
 					</view>
@@ -494,7 +494,7 @@
 		</view>
 		<view class="cu-modal" :class="modalName=='cantpost'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
-				<view class="cu-bar bg-white justify-end">
+				<view class="cu-bar justify-end" :class="'bg-light-'+themeColor.name">
 					<view class="content">举报错误</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
@@ -503,7 +503,7 @@
 				<view class="padding-xl">
 					无法举报，错误提示：{{cantpostmessage}}
 				</view>
-				<view class="cu-bar bg-white justify-end">
+				<view class="cu-bar justify-end" :class="'bg-light-'+themeColor.name">
 					<view class="action">
 						<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
 					</view>
@@ -1848,14 +1848,14 @@
 
 <style>
 	.cu-card>.cu-item {
-		background-color: #FFFFFF !important;
+		background-color: #FFFFFF;
 		border-radius: 4%;
 		background-position-y: 9%;
 		margin: 0;
 	}
 
 	.text-df {
-		background-color: #FFFFFF !important;
+		background-color: #FFFFFF;
 		border-radius: 4%;
 		background-position-y: 9%;
 		margin: 0;
@@ -1975,5 +1975,41 @@
 		margin:0 4upx 0 4upx;
 		height: 32upx;
 		font-size: 0.8rem;
+	}
+	.bg-light-red{
+		background-color: #ffdbca!important;
+	}
+	.bg-red.text-df{
+		background-color: #ffdbca!important;
+	}
+	.bg-red.cu-item{
+		background-color: #ffdbca!important;
+	}
+	.bg-light-black{
+		background-color: #747474!important;
+		color: #fff;
+	}
+	.bg-black.text-df{
+		background-color: #747474!important;
+		color: #fff;
+	}
+	.bg-black.cu-item{
+		background-color: #747474!important;
+		color: #fff;
+	}
+	.text-black.bt-black{
+		color: #fff!important;
+	}
+	.text-content.bt-black{
+		color: #c8c8c8!important;
+	}
+	.search-form.bt-gray{
+		background-color: #fff!important;
+	}
+	.search-form.bt-grey{
+		background-color: #fff!important;
+	}
+	.bg-cyan.bt-black{
+		background-color: #393939!important;
 	}
 </style>

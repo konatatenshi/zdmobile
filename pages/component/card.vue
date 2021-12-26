@@ -2,7 +2,7 @@
 <template>
 	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
-		<cu-custom class="statustop" bgColor="bg-gradual-pink" :isBack="true">
+		<cu-custom class="statustop" :bgColor="'bg-gradual-'+themeColor.name" :isBack="true">
 			<block slot="backText">返回</block>
 			<block slot="content">{{postname}}</block>
 			<block slot="right">
@@ -13,11 +13,11 @@
 		</cu-custom>
 		<view class="cu-card dynamic no-card" :style="'margin-top: -' + iStatusBarHeight +'px;'">
 			<view class="cu-item shadow">
-				<view class="title">
-					<view class="text-cut">{{postname}}</view>
+				<view class="title" :class="'bt-'+themeColor.name">
+					<view class="text-cu">{{postname}}</view>
 				</view>
 				<view class="cu-list menu-avatar" @tap="totheuid(authorid)">
-					<view class="cu-item">
+					<view class="cu-item" :class="'bt-'+themeColor.name">
 						<view class="cu-avatar round lg" :style="[{ backgroundImage:'url(' + avatarlist + ')' }]">
 							<view v-show="sex==1" class="cu-tag badge cuIcon-male bg-blue"></view>
 							<view v-show="sex==2" class="cu-tag badge cuIcon-female bg-pink"></view>
@@ -55,7 +55,7 @@
 						</view>
 					</view>
 				</view>
-				<view class="text-content2">
+				<view class="text-content2" :class="'bt-'+themeColor.name">
 					<view v-if="content==''" class="cu-load text-gray loading"></view>
 					<view v-if="replycredit>0"
 						class="padding-xs radius shadow shadow-lg bg-yellow text-xs ltsp text-red">
@@ -141,7 +141,7 @@
 				</view>
 				<view class="cu-list menu-avatar comment solids-top" v-for="(item,index) in huifulist" :key="index"
 					:data-id="index">
-					<view class="cu-item" v-if="!(ifpingbi(item.author)&&$adminid<=0)">
+					<view class="cu-item" :class="'bt-'+themeColor.name" v-if="!(ifpingbi(item.author)&&$adminid<=0)">
 						<view class="cu-avatar round" :style="[{ backgroundImage:'url(' + item.avatarlist + ')' }]"
 							@tap="totheuid(item.authorid)">
 						</view>
@@ -152,7 +152,7 @@
 							<img-cache class="cu-avatar round gzlist3" v-if="item.touxiangkuanglist"
 								:src="item.touxiangkuanglist" />
 							<view class="flex justify-between" @tap="totheuid(item.authorid)">
-								<view :style="[{ color: item.groupid==51?randomcolor():'text-gray'}]">
+								<view class="txtf" :style="[{ color: item.groupid==51?randomcolor():'color: #636363;'}]" :class="'bt-'+themeColor.name">
 									{{item.author}}<text
 										:style="[{ padding: item.groupid==51?'0 0 0 4upx':'0 0 0 10upx'}]"></text><span
 										class="cu-tag padding-left-xs padding-right-xs"
@@ -181,10 +181,10 @@
 								:class="isfloat[index]?'show':'hide'" :content="pingbi" @linktap="linktap"
 								selectable="true" />
 							<mp-html v-else-if="!isfloat[index]" class="text-content text-df float"
-								:class="isfloat[index]?'show':'hide'" :content="item.html.substr(0,140)"
+								:class="isfloat[index]?'show':'hide'" :content="(mphtmlis(1) + item.html.substr(0,140) + mphtmlis(2))"
 								@linktap="linktap" selectable="true" />
 							<mp-html v-else class="text-content text-df float" :class="isfloat[index]?'show':'hide'"
-								:content="item.html" @linktap="linktap" selectable="true" />
+								:content="(mphtmlis(1) + item.html + mphtmlis(2))" @linktap="linktap" selectable="true" />
 							<view class="text-blue" v-if="Letter(item.html).length>70&&isfloat[index]!= true"
 								@tap="loadmore(index)">展开</view>
 							<view v-if="item.luckypost.key>=0" class="text-center">
@@ -647,7 +647,7 @@
 		</view>
 		<view v-if="InputBottom!=0" class="overlayer" @touchmove.stop.prevent="doNothing">
 		</view>
-		<view class="cu-bar foot input button__box" :style="[{bottom:InputBottom+'px'}]"
+		<view class="cu-bar foot input button__box" :class="'bt-'+themeColor.name" :style="[{bottom:InputBottom+'px'}]"
 			@touchmove.stop.prevent="doNothing">
 			<input class="solid-bottom" :adjust-position="false" :focus="false" maxlength="1000" cursor-spacing="10"
 				@focus="InputFocus" @blur="InputBlur" v-model="contenthuifu"></input>
@@ -1210,6 +1210,21 @@
 						that.loadModal2 = false;
 					}
 				});
+			},
+			mphtmlis(e){
+				if(e==1){
+					if(this.themeColor.name == 'black'){
+						return '<font color="#ffffff">';
+					}else{
+						return '';
+					}
+				}else if(e==2){
+					if(this.themeColor.name == 'black'){
+						return '</font>';
+					}else{
+						return '';
+					}
+				}
 			},
 			dashangadd() {
 				if (this.loadModal3 == true) {
@@ -2218,7 +2233,11 @@
 							that.authorid = res.data.authorid;
 							that.postname = res.data.subject;
 							that.replykey = res.data.replykey;
-							that.content = res.data.html;
+							if(that.themeColor.name == 'black'){
+								that.content = '<font color="#ffffff">' + res.data.html + '</font>'
+							}else{
+								that.content = res.data.html;
+							}
 							that.avatarlist = res.data.userinfo.avatarlist;
 							that.nowdate = res.data.nowdate;
 							that.sex = res.data.userinfo.sex;
@@ -2601,7 +2620,26 @@
 	}
 	
 	.yzbg {
-		background-image: url(../../static/img/loading2.gif);
-		background-size:contain;
+		background-image: url(../../static/loadyz.gif);
+		background-size:100%;
+		background-repeat:no-repeat;
+		background-position:top;
+	}
+	.cu-item.bt-black{
+		background-color: #484848!important;
+	}
+	.title.bt-black{
+		background-color: #484848!important;
+		color: #fff!important;
+	}
+	.text-content2.bt-black{
+		background-color: #747474!important;
+	}
+	.txtf.bt-black{
+		color: #cacaca!important;
+	}
+	.cu-bar.input.bt-black{
+		background-color: #484848!important;
+		color: #fff!important;
 	}
 </style>

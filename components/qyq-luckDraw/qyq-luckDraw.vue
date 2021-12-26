@@ -99,18 +99,31 @@
 								if(res.data.success){
 									that.fanbei = res.data.fanbei;
 									that.cardList = res.data.list;
-									//that.$emit("lottoLuckDraw",count)
+										//that.$emit("lottoLuckDraw",count)
 									that.activeIndex = count;
 									that.realIndex = count;
 									setTimeout(function() {
 										that.activeIndex = 10;
 									}, 1500)
 								}else{
-									uni.showToast({
-										title: '今日已翻',
-										icon:'error',
-										duration: 2000
-									})
+									if(res.data.token=='fail'){
+										uni.showToast({
+											title: '验证失败，跳转到旧版摇摇中',
+											icon:'none',
+											duration: 2000
+										})
+										setTimeout(function() {
+											uni.navigateTo({
+												url: '../basics/progress'
+											})
+										}, 2000)
+									}else{
+										uni.showToast({
+											title: '今日已翻',
+											icon:'error',
+											duration: 2000
+										})
+									}
 								}
 				// if(res.data.code==0){
 				// 	uni.showToast({

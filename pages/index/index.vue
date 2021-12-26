@@ -6,7 +6,7 @@
 		<plugin v-if="PageCur=='plugin'" ref="message" @returnDat='returnDate'></plugin>
 		<about v-if="PageCur=='about'" ref="about" @returnDat='returnDate'></about>
 		<login v-if="PageCur=='login'" ref="login" @returnDat='returnDate'></login>
-		<view v-else class="status_bar cu-bar tabbar bg-white shadow foot">
+		<view v-else class="status_bar bg-white cu-bar tabbar shadow foot" :class="'bt-'+themeColor.name">
 			<view :class="PageCur=='basics'?'action text-green':'action text-gray'" @click="NavChange"
 				data-cur="basics">
 				<view class="cuIcon-homefill"></view> 首页
@@ -286,5 +286,8 @@
 		/* #ifdef APP-PLUS */
 		margin-top: calc(var(--status-bar-height) + 115upx);
 		/* #endif */
+	}
+	.bg-white.bt-black{
+		background-color: #393939!important;
 	}
 </style>

@@ -311,7 +311,12 @@
 				}else if(e=='MRC'){
 					return '道具随机获取积分'
 				}else if(f!= ''){
-					return f;
+					//console.log(f);
+					if(f=='进入每日摇摇乐大厅,完成任务摇奖即可获得奖励'){
+						return '摇奖/翻卡';
+					}else{
+						return f;
+					}
 				}
 			},
 			xiangqingtap(e,f){

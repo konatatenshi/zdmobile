@@ -36,6 +36,10 @@
 			<view class="title">大字模式</view>
 			<switch class="blue" disabled="true" :class="fontsize=='ex'?'checked':''" :checked="fontsize=='ex'?true:false"></switch>
 		</view>
+		<view class="cu-form-group">
+			<view class="title">关闭发帖际遇</view>
+			<switch class="blue" @change="jiyuset" :class="jiyu=='1'?'checked':''" :checked="jiyu=='1'?true:false"></switch>
+		</view>
 		<view class="cu-form-group" @tap="bottommod()">
 			<view class="title">清理软件缓存</view>
 			<view class="cu-item">
@@ -95,6 +99,7 @@
 				bordersize: '',
 				cacheSize: '',
 				fontsize: '',
+				jiyu: 0,
 				daziswitch: '开启'
 			};
 		},
@@ -110,6 +115,16 @@
 						//console.log(that.swiperList);
 					}
 				});
+			},
+			jiyuset(e) {
+				console.log(e.detail.value);
+				if(e.detail.value){
+					this.jiyu = 1;
+					this.setting('jiyu',1);
+				}else{
+					this.jiyu = 0;
+					this.setting('jiyu',0);
+				}
 			},
 			Setfloor(e) {
 				var that = this;
@@ -145,6 +160,48 @@
 				uni.redirectTo({
 					url: 'design'
 				})
+			},
+			loadsetting(){
+				let that = this;
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:setting', //获取置顶帖子
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data);
+						that.jiyu = res.data.jiyu;
+					}
+				});
+			},
+			setting(e,f){
+					let that = this;
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:setting', //获取置顶帖子
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							setting : 1,
+							[e] : f
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data);
+							if(res.data.code==200){
+								uni.showToast({
+									title: "设置成功"
+								})
+							}
+						}
+					});
 			},
 			dazis() {
 				if(this.fontsize=='ex'){
@@ -230,6 +287,7 @@
 				}
 			});// #ifdef APP-PLUS
 			var self = this;
+			that.loadsetting();
 			plus.cache.calculate(function(size) { //size是多少个字节单位是b
 				//做下面相应的处理
 				if (size < 1024) {
