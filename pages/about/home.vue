@@ -110,7 +110,7 @@
 					<text class="text-grey">我的任务</text>
 				</view>
 			</view>
-			<view v-if="month==1" class="cu-item" :class="menuArrow?'arrow':''">
+			<view v-if="month==1" class="cu-item" :class="menuArrow?'arrow':''" @tap="verti()">
 				<button class="cu-btn content" open-type="contact">
 					<text class="cuIcon-evaluate_fill text-red"></text>
 					<text class="text-red">年度总结</text>
@@ -128,27 +128,13 @@
 					<text class="text-grey">个人资料</text>
 				</navigator>
 			</view>
-			<view class="cu-item" :class="menuArrow?'arrow':''">
+			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="haoyou()">
 				<view class="content">
 					<text class="cuIcon-emojiflashfill text-pink"></text>
 					<text class="text-grey">好友</text>
 				</view>
 				<view class="action">
-					<view class="cu-avatar-group">
-						<view class="cu-avatar round sm"
-							style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg);">
-						</view>
-						<view class="cu-avatar round sm"
-							style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big81005.jpg);">
-						</view>
-						<view class="cu-avatar round sm"
-							style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big25002.jpg);">
-						</view>
-						<view class="cu-avatar round sm"
-							style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big91012.jpg);">
-						</view>
-					</view>
-					<text class="text-grey text-sm">4 人</text>
+					<text class="text-grey text-sm">管理好友列表</text>
 				</view>
 			</view>
 			<view class="cu-item" :class="menuArrow?'arrow':''">
@@ -395,6 +381,11 @@
 					url: '../extra/quest'
 				})
 			},
+			verti() {
+				uni.navigateTo({
+					url: '../plugin/verticalnav'
+				})
+			},
 			tostyle() {
 				uni.navigateTo({
 					url: '../component/steps'
@@ -417,6 +408,15 @@
 				}
 				uni.navigateTo({
 					url: '../basics/shadow'
+				})
+			},
+			haoyou() {
+				if (this.$token == '') {
+					this.toguestlogin();
+					return;
+				}
+				uni.navigateTo({
+					url: '../plugin/indexes'
 				})
 			},
 			bangding() {

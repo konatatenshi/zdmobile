@@ -217,6 +217,7 @@
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 					},
 					success: (res) => {
+						console.log(res.data)
 						if (res.data.code == 404) {
 							that.loading = '暂无新消息。';
 							that.loadingmore = false;

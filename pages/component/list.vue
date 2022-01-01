@@ -3,10 +3,10 @@
 	<view>
 		<cu-custom bgColor="bg-white" :isBack="true" class="text-shadow1">
 				<block slot="backText">返回</block>
-				<block slot="right">
+				<block slot="right" v-if="uid!=$uid">
 					<view class="action">
-						<view class="cu-load cuIcon-mail padding-left-sm text-shadow1" @tap="more()"></view>
-						<view class="cu-load cuIcon-more padding-left-sm text-shadow1" @tap="more()"></view>
+						<view class="cu-load cuIcon-mail padding-left-sm text-shadow1" @tap="topm()"></view>
+						<view class="cu-load cuIcon-more padding-left-sm text-shadow1" @tap="showfriendlist()"></view>
 					</view>
 				</block>
 		</cu-custom>
@@ -189,6 +189,98 @@
 							class="text-xl text-white text-shadow">{{jifenbiangeng}}</text>
 					</button>
 				</view>
+				<view class="cu-modal" :class="modalName=='friendlist'?'show':''" @tap="hideModal">
+					<view class="cu-dialog" @tap.stop>
+						<view class="cu-list menu text-left solid-top">
+							<view class="cu-item" v-if="isfriend">
+								<view class="content">
+									<text class="text-gray"><text class="cuIcon-roundclose"></text>解除好友</text>
+								</view>
+							</view>
+							<view class="cu-item" v-else @tap="showaddfirend()">
+								<view class="content noborder2">
+									<text class="text-grey"><text class="cuIcon-friendadd"></text>加为好友</text>
+								</view>
+							</view>
+							<view class="cu-item" v-if="isfriend">
+								<view class="content">
+									<text class="text-gray"><text class="cuIcon-profile"></text>设置备注</text>
+								</view>
+							</view>
+							<view class="cu-item" v-if="isfriend">
+								<view class="content">
+									<text class="text-gray"><text class="cuIcon-profile"></text>设置分组</text>
+								</view>
+							</view>
+							<view class="cu-item" @tap="jubaota()">
+								<view class="content">
+									<text class="text-grey noborder2"><text class="cuIcon-info"></text>举报此人</text>
+								</view>
+							</view>
+						</view>
+					</view>
+				</view>
+				<view class="cu-modal" :class="modalName=='friendadd'?'show':''"  @tap="hideModal">
+					<view class="cu-dialog" @tap.stop>
+						<view class="cu-bar bg-white justify-end">
+							<view class="content">请输入要添加好友的理由</view>
+							<view class="action" @tap="hideModal">
+								<text class="cuIcon-close text-red"></text>
+							</view>
+						</view>
+						<view class="padding-sm">
+							<radio-group class="block" @change="RadioChange">
+								<view class="cu-form-group">
+									<view class="text-xl">你好，很高兴认识你，能交个朋友吗？</view>
+									<radio :class="radio=='A'?'checked':''" :checked="radio=='A'?true:false" value="A"></radio>
+								</view>
+								<view class="cu-form-group">
+									<view class="text-xl">你的头像很漂亮，能加个好友聊聊天吗？</view>
+									<radio :class="radio=='B'?'checked':''" :checked="radio=='B'?true:false" value="B"></radio>
+								</view>
+								<view class="cu-form-group">
+									<view class="text-xl">今天很无聊，想找个人聊聊天，可以吗？</view>
+									<radio :class="radio=='C'?'checked':''" :checked="radio=='C'?true:false" value="C"></radio>
+								</view>
+								<view class="cu-form-group">
+									<view class="text-xl">一个人逛论坛好累，你是我找寻的另一个人吗？</view>
+									<radio :class="radio=='D'?'checked':''" :checked="radio=='D'?true:false" value="D"></radio>
+								</view>
+								<view class="cu-form-group">
+									<view class="text-xl">其他</view>
+									<radio :class="radio=='E'?'checked':''" :checked="radio=='E'?true:false" value="E"></radio>
+								</view>
+							</radio-group>
+							<view class="cu-form-group align-start" v-if="radio=='E'">
+								<textarea maxlength="-1" v-model="friendaddmessage" placeholder="请在此输入想要说的话"></textarea>
+							</view>
+						</view>
+						<view class="cu-bar bg-white justify-end">
+							<view v-if="closed==0" class="action">
+								<button class="cu-btn bg-green margin-left" @tap="sendfriendadd">发送</button>
+							</view>
+						</view>
+					</view>
+				</view>
+				
+				<view class="cu-modal" :class="modalName=='cantpost'?'show':''" @tap="hideModal">
+					<view class="cu-dialog" @tap.stop>
+						<view class="cu-bar bg-white justify-end">
+							<view class="content">添加错误</view>
+							<view class="action" @tap="hideModal">
+								<text class="cuIcon-close text-red"></text>
+							</view>
+						</view>
+						<view class="padding-xl">
+							错误提示：{{cantpostmessage}}
+						</view>
+						<view class="cu-bar bg-white justify-end">
+							<view class="action">
+								<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
+							</view>
+						</view>
+					</view>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -204,19 +296,23 @@
 				menuArrow: false,
 				menuCard: false,
 				skin: false,
+				radio: 'A',
 				listTouchStart: 0,
 				page0: 0,
 				page1: 0,
 				Page:[0,0,0,0,0,0,0,0],
 				uid: 0,
 				age: 0,
+				closed: 0,
 				fatie: 0,
 				fensi: 0,
 				guanzhu: 0,
 				huitie: 0,
 				groupid: 0,
 				iconlist: "",
+				friendaddmessage: "",
 				sex: 0,
+				isfriend: 0,
 				sig: '加载中……',
 				username: "加载中……",
 				touxiangkuanglist: '',
@@ -228,7 +324,9 @@
 				guanzhupost: [],
 				huifupost: [],
 				loading: '加载中……',
+				cantpostmessage: '',
 				listTouchDirection: null,
+				floorfasong: false,
 				TabCur: 0,
 				jifenbiangeng: '积分名+1',
 				jifenshuoming: '积分变更',
@@ -262,6 +360,94 @@
 					return e.replace("small", "big");
 				}
 			},
+			jubaota(){
+				 
+			},
+			topm() {
+				let that = this;
+				console.log(e);
+				uni.navigateTo({
+					url: '../extra/pm?touid=' + that.uid + '&username=' + that.username,
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
+			},
+			showaddfirend(){
+				this.modalName = 'friendadd';
+			},
+			showfriendlist(){
+				this.modalName = 'friendlist';
+			},
+			sendfriendadd() {
+				var that = this;
+				this.closed = 1;
+				console.log(that.friendaddmessage.length);
+				if (that.friendaddmessage.length < 2 && that.radio == 'E') {
+					that.modalName = "cantpost";
+					that.cantpostmessage = '请输入大于等于2个字的加好友信息。';
+					this.floorfasong = false;
+					return;
+				}
+				if (!this.floorfasong) {
+					that.floorfasong = true;
+					if(that.radio=='A'){
+						var message = encodeURI('你好，很高兴认识你，能交个朋友吗？');
+					}else if(that.radio=='B'){
+						var message = encodeURI('你的头像很漂亮，能加个好友聊聊天吗？');
+					}else if(that.radio=='C'){
+						var message = encodeURI('今天很无聊，想找个人聊聊天，可以吗？');
+					}else if(that.radio=='D'){
+						var message = encodeURI('一个人逛论坛好累，你是我找寻的另一个人吗？');
+					}else if(that.radio=='E'){
+						var message = encodeURI(that.friendaddmessage);
+					}
+					console.log(message);
+					//console.log(that.pingbitid);
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:friend', //获取置顶帖子
+						method: 'POST',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							action: 'add',
+							message: message,
+							fuid: that.uid
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data);
+							that.floorfasong = false;
+							that.friendaddmessage = '';
+							if (res.data.code ==400) {
+								that.modalName = "cantpost";
+								that.cantpostmessage = res.data.result;
+							} else if (res.data.code ==406) {
+								that.modalName = "cantpost";
+								that.cantpostmessage = '你已发送验证请求，请等待Ta回应。';
+							} else if (res.data.code ==407) {
+								that.modalName = "cantpost";
+								that.cantpostmessage = '今日你已发送太多好友请求，请明日再来。';
+							} else if (res.data.code == 200) {
+								that.modalName = null;
+								uni.showToast({
+									title: '发送成功',
+									duration: 2000
+								})
+							} else{
+								that.modalName = null;
+								uni.showToast({
+									title: '发送失败',
+									icon: 'error',
+									duration: 2000
+								})
+							}
+							that.closed = 0;
+						}
+					});
+				}
+			},
 			shuaxinlist() {
 				var that = this;
 				that.loading = '载入中...';
@@ -281,7 +467,8 @@
 							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 						},
 						success: (res) => {
-							console.log(res.data.post);
+							console.log(res.data.userinfo.friends);
+							console.log(JSON.stringify(res.data.userinfo.friends));
 							console.log(res.data.userinfo);
 							that.guanzhupost = res.data.post;
 							if (res.data.post.length < 30) {
@@ -305,6 +492,12 @@
 								that.avatar = that.getavatar(res.data.userinfo.avatarlist);
 								that.woguanzhu = res.data.userinfo.woguanzhu;
 								that.groupid = res.data.userinfo.groupid;
+								if(JSON.stringify(res.data.userinfo.friends) != '[]'){
+									that.isfriend = 1;
+									if(res.data.userinfo.friends.note!=''){
+										that.sig = res.data.userinfo.friends.note;
+									}
+								}
 							}
 							console.log(that.touxiangkuanglist);
 							that.page0++;
@@ -346,6 +539,9 @@
 				}
 			},
 			setHeight(e) {
+			},
+			RadioChange(e) {
+				this.radio = e.detail.value;
 			},
 			loadlevelicon2(e) {
 				if (e % 10 == 0) {
