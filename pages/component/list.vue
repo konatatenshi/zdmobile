@@ -423,6 +423,9 @@
 							if (res.data.code ==400) {
 								that.modalName = "cantpost";
 								that.cantpostmessage = res.data.result;
+							} else if (res.data.code ==403) {
+								that.modalName = "cantpost";
+								that.cantpostmessage = '你的等级不允许添加好友。';
 							} else if (res.data.code ==406) {
 								that.modalName = "cantpost";
 								that.cantpostmessage = '你已发送验证请求，请等待Ta回应。';

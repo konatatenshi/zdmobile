@@ -11,8 +11,8 @@
 			</view>
 		</view>
 		<view class="cu-bar search hometop2" :class="'bg-'+themeColor.name">
-			<img-cache v-show="avatarimgLoaded" class="cu-avatar round" :src="$avatarsmall" @tap="touserpage" data-id="0"
-				@load="onSuccessImg()" />
+			<img-cache v-show="avatarimgLoaded" class="cu-avatar round" :src="$avatarsmall" @tap="touserpage"
+				data-id="0" @load="onSuccessImg()" />
 			</img-cache>
 			<img-cache v-show="!avatarimgLoaded" class="cu-avatar round" :src="$avatarsmalldefault" @tap="touserpage"
 				data-id="0" style="margin-left: 20upx;" />
@@ -36,11 +36,13 @@
 				</view>
 				<view class="cu-item flex-sub noline" :class="3==TabCur?'text-red cur':''" @tap="tabSelect" data-id="3">
 					<text :class="3==TabCur?'text-red':'text-gray'"> <text
-							class="cuIcon-newshotfill"></text>消息</text><br /><text :class="mynewpm>0?'text-red':''">{{mynewpm}}</text>
+							class="cuIcon-newshotfill"></text>消息</text><br /><text
+						:class="mynewpm>0?'text-red':''">{{mynewpm}}</text>
 				</view>
 				<view class="cu-item flex-sub noline" :class="4==TabCur?'text-red cur':''" @tap="tabSelect" data-id="4">
 					<text :class="4==TabCur?'text-red':'text-gray'"><text
-							class="cuIcon-favorfill"></text>提醒</text><br /><text :class="mynewprompt>0?'text-red':''">{{mynewprompt}}</text>
+							class="cuIcon-favorfill"></text>提醒</text><br /><text
+						:class="mynewprompt>0?'text-red':''">{{mynewprompt}}</text>
 				</view>
 			</view>
 		</scroll-view>
@@ -139,11 +141,17 @@
 			</view>
 			<view class="cu-item" :class="menuArrow?'arrow':''">
 				<view class="content">
-					<text class="cuIcon-btn text-green"></text>
-					<text class="text-grey">头像</text>
+					<view>
+						<text class="cuIcon-btn text-green margin-right-xs"></text><text class="text-grey">头像上传</text></view>
+					<view class="cu-progress round sm striped" v-if="percent==100">
+						<text class="text-grey text-sm">头像上传完毕，请等待缓存刷新后更新头像。</text>
+					</view>
+					<view class="cu-progress round sm striped" v-else-if="percent>0">
+						<view class="bg-green" :style="[{ width:percent?percent + '%':'0'}]"></view>
+					</view>
 				</view>
 				<view class="action">
-					<button class="cu-btn round bg-green shadow">
+					<button class="cu-btn round bg-green shadow" @tap="uploadimg()">
 						<text class="cuIcon-upload"></text> 上传</button>
 				</view>
 			</view>
@@ -192,7 +200,8 @@
 					<text class="text-grey">版本信息</text>
 				</button>
 			</view>
-			<view class="padding-xs flex align-center" :class="'bg-'+themeColor.name" :style="{'height': iStatusBarHeight+'upx'}">
+			<view class="padding-xs flex align-center" :class="'bg-'+themeColor.name"
+				:style="{'height': iStatusBarHeight+'upx'}">
 				<view class="flex-sub text-center">
 					<view class="text-xs padding">
 						<text class="text-white">终点论坛 @2021</text>
@@ -298,7 +307,8 @@
 				menuBorder: false,
 				listTouchStart: 0,
 				mynewpm: 0,
-				month : 0,
+				month: 0,
+				percent: 0,
 				myinfoprompt: 0,
 				mysetprompt: 0,
 				mynewprompt: 0,
@@ -548,7 +558,7 @@
 								that.update = '(请去市场更新)';
 							}
 						}
-				 });
+					});
 				});
 			},
 			loadlevelicon(e, f) {
@@ -795,7 +805,39 @@
 					}
 				});
 			},
-			shuaxinlist(){
+			uploadimg() {
+				let _self = this;
+				uni.chooseImage({
+					count: 1,
+					sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+					sourceType: ['album'], //从相册选择
+					success: function(res) {
+						const tempFilePaths = res.tempFilePaths;
+						const uploadTask = uni.uploadFile({
+							url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:uploadavatar',
+							filePath: tempFilePaths[0],
+							name: 'file',
+							formData: {
+								'token': _self.$token
+							},
+							success: function(uploadFileRes) {
+								console.log(uploadFileRes.data);
+							}
+						});
+
+						uploadTask.onProgressUpdate(function(res) {
+				   _self.percent = res.progress;
+							console.log('上传进度' + res.progress);
+							console.log('已经上传的数据长度' + res.totalBytesSent);
+							console.log('预期需要上传的数据总长度' + res.totalBytesExpectedToSend);
+						});
+				 },
+					error: function(e) {
+						console.log(e);
+					}
+				});
+			},
+			shuaxinlist() {
 				uni.pageScrollTo({
 					scrollTop: 0,
 					duration: 200
@@ -875,7 +917,7 @@
 							key: 'myuserinfo',
 							success: function(res) {
 								console.log(res);
-								if(res.data.status==0&&res.data.freeze==0){
+								if (res.data.status == 0 && res.data.freeze == 0) {
 									getApp().globalData.myusername = res.data.username;
 									getApp().globalData.myadminid = res.data.adminid;
 									getApp().globalData.mygroupid = res.data.groupid;
@@ -895,7 +937,7 @@
 									that.mycredits = getApp().globalData.mycredits;
 									that.mygroupid = getApp().globalData.mygroupid;
 									uni.$emit('chosenSex', that.myinfoprompt);
-								}else{
+								} else {
 									uni.redirectTo({
 										url: '../../components/ay-login/login-password'
 									});
@@ -916,16 +958,23 @@
 	uni-view.cu-item.noline {
 		line-height: 33upx;
 	}
-	.cu-list.bg-red{
-		background-color: #ffdbca!important;
+
+	.cu-list.bg-red {
+		background-color: #ffdbca !important;
 	}
-	.cu-list.bg-red.cu-list.menu>.cu-item{
-		background-color: #ffdbca!important;
+
+	.cu-list.bg-red.cu-list.menu>.cu-item {
+		background-color: #ffdbca !important;
 	}
-	.cu-list.bg-black{
-		background-color: #747474!important;
+
+	.cu-list.bg-black {
+		background-color: #747474 !important;
 	}
-	.cu-list.bg-black.cu-list.menu>.cu-item{
-		background-color: #747474!important;
+
+	.cu-list.bg-black.cu-list.menu>.cu-item {
+		background-color: #747474 !important;
+	}
+	.cu-progress {
+	    background-color: transparent!important;
 	}
 </style>
