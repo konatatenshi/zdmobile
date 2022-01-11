@@ -2,7 +2,7 @@
 <template name="basics">
 	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
-		<cu-custom class="statustop" bgColor="bg-gradual-pink" :isBack="true">
+		<cu-custom class="statustop" :bgColor="'bg-gradual-'+themeColor.name" :isBack="true">
 			<block slot="backText">返回</block>
 			<block slot="content">{{forumname}}</block>
 			<block slot="right">
@@ -12,9 +12,9 @@
 				</view>
 			</block>
 		</cu-custom>
-		<scroll-view scroll-x class="bg-white nav-sm" :style="'margin-top: -' + iStatusBarHeight +'px;'"
+		<scroll-view scroll-x class="nav-sm" :class="'bg-'+themeColor.name" :style="'margin-top: -' + iStatusBarHeight +'px;'"
 			scroll-with-animation :scroll-left="scrollLeft">
-			<view class="cu-item" :class="index==TabCur?'text-green cur':''" v-for="(item,index) in tabarray"
+			<view class="cu-item black" :class="index==TabCur?'text-green cur bg-'+themeColor.name:'bg-'+themeColor.name" v-for="(item,index) in tabarray"
 				:key="index" @tap="tabSelect" :data-id="index">
 				{{tabname[index]}}
 			</view>
@@ -25,7 +25,7 @@
 						<view v-if="threadlist.length > 0">
 							<block v-for="(item,index2) in threadlist" :key="index2">
 								<view class="solid-bottom article text-df"
-									style="padding-top: 10upx; padding-bottom: 10upx;" v-if="item.displayorder>0&&!(ifpingbi(item.author)&&$adminid<=0)">
+									style="padding-top: 10upx; padding-bottom: 10upx;" :class="'bg-'+themeColor.name" v-if="item.displayorder>0&&!(ifpingbi(item.author)&&$adminid<=0)">
 									<view @tap="topost(item.tid)">
 										<text class="text-black text-cut" style="width: 100%;" :style="geshihua(item.highlight)">{{item.subject}}</text>
 									</view>
@@ -37,9 +37,9 @@
 								</view>
 								<view class="cu-card article no-card" v-else-if="!(ifpingbi(item.author)&&$adminid<=0)">
 									<view class="cu-card dynamic solid-bottom">
-										<view class="cu-item shadow">
+										<view class="cu-item shadow" :class="'bg-'+themeColor.name">
 											<view class="cu-list menu-avatar">
-												<view class="cu-item">
+												<view class="cu-item" :class="'bg-'+themeColor.name">
 													<view class="cu-avatar round lg"
 														:style="[{ backgroundImage:'url(' + item.userinfo.avatarlist + ')' }]">
 														</img-cache>
@@ -184,7 +184,7 @@
 		</view>
 		<view class="cu-modal" :class="modalName=='needlogin'?'show':''">
 			<view class="cu-dialog">
-				<view class="cu-bar bg-white justify-end">
+				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="content">需要登录</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
@@ -193,7 +193,7 @@
 				<view class="padding-xl">
 					你需要登录才可以使用此功能。
 				</view>
-				<view class="cu-bar bg-white justify-end">
+				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
 						<button class="cu-btn line-green text-green" @tap="hideModal">取消</button>
 						<button class="cu-btn bg-green margin-left" @tap="tologin">确定</button>
@@ -203,7 +203,7 @@
 		</view>
 		<view class="cu-modal" :class="modalName=='cantview'?'show':''">
 			<view class="cu-dialog">
-				<view class="cu-bar bg-white justify-end">
+				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="content">权限不足</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
@@ -212,7 +212,7 @@
 				<view class="padding-xl">
 					无法进入板块，错误提示：{{cantviewmessage}}
 				</view>
-				<view class="cu-bar bg-white justify-end">
+				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
 						<button class="cu-btn line-green text-green" @tap="hideModal">取消</button>
 						<button class="cu-btn bg-green margin-left" @tap="back">确定</button>
@@ -224,35 +224,35 @@
 		<view class="cu-modal" :class="modalName=='pingbi'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-list menu text-left solid-top">
-					<view class="cu-item" v-if="pingbiauthor==$username">
+					<view class="cu-item" v-if="pingbiauthor==$username" :class="'bg-'+themeColor.name">
 						<view class="content">
 							<text class="text-gray"><text class="cuIcon-roundclose"></text>屏蔽自己</text>
 						</view>
 					</view>
-					<view class="cu-item" v-else-if="!ifpingbi(pingbiauthor)" @tap="pingbiadd(pingbiauthor)">
+					<view class="cu-item" v-else-if="!ifpingbi(pingbiauthor)" @tap="pingbiadd(pingbiauthor)" :class="'bg-'+themeColor.name">
 						<view class="content noborder2">
 							<text class="text-grey"><text class="cuIcon-roundclose"></text>屏蔽作者：{{pingbiauthor}}</text>
 							<view class="text-gray text-sm noborder">屏蔽后，你将不会收到他的信息。</view>
 						</view>
 					</view>
-					<view class="cu-item" v-else @tap="pingbiremove(pingbiauthor)">
+					<view class="cu-item" v-else @tap="pingbiremove(pingbiauthor)" :class="'bg-'+themeColor.name">
 						<view class="content noborder2">
 							<text class="text-grey"><text class="cuIcon-roundclose"></text>取消屏蔽：{{pingbiauthor}}</text>
 							<view class="text-gray text-sm noborder">屏蔽后，你将不会收到他的信息。</view>
 						</view>
 					</view>
-					<view class="cu-item" v-if="pingbiauthor==$username">
+					<view class="cu-item" v-if="pingbiauthor==$username" :class="'bg-'+themeColor.name">
 						<view class="content">
 							<text class="text-gray"><text class="cuIcon-attentionforbid"></text>拉黑自己</text>
 						</view>
 					</view>
-					<view class="cu-item" v-else @tap="lahei(pingbitid)">
+					<view class="cu-item" v-else @tap="lahei(pingbitid)" :class="'bg-'+themeColor.name">
 						<view class="content noborder2">
 							<text class="text-grey"><text class="cuIcon-attentionforbid"></text>{{laheitext}}：{{pingbiauthor}}</text>
 							<view class="text-gray text-sm noborder">拉黑后，他将不能回复和私聊你任何信息。</view>
 						</view>
 					</view>
-					<view class="cu-item" @tap="jubaota(pingbitid)">
+					<view class="cu-item" @tap="jubaota(pingbitid)" :class="'bg-'+themeColor.name">
 						<view class="content">
 							<text class="text-grey noborder2"><text class="cuIcon-info"></text>举报此内容</text>
 							<view class="text-gray text-sm noborder">标题夸张，内容质量差等。</view>
@@ -263,7 +263,7 @@
 		</view>
 		<view class="cu-modal" :class="modalName=='jubaoxinxi'?'show':''"  @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
-				<view class="cu-bar bg-white justify-end">
+				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="content">请输入举报理由</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
@@ -296,7 +296,7 @@
 						<textarea maxlength="-1" v-model="jubaomessage" placeholder="请在此输入想要说的话"></textarea>
 					</view>
 				</view>
-				<view class="cu-bar bg-white justify-end">
+				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view v-if="closed==0" class="action">
 						<button class="cu-btn bg-green margin-left" @tap="sendjbxx">发送</button>
 					</view>
@@ -312,7 +312,7 @@
 		</view>
 		<view class="cu-modal" :class="modalName=='cantpost'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
-				<view class="cu-bar bg-white justify-end">
+				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="content">举报错误</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
@@ -321,7 +321,7 @@
 				<view class="padding-xl">
 					无法举报，错误提示：{{cantpostmessage}}
 				</view>
-				<view class="cu-bar bg-white justify-end">
+				<view class="cu-bar justify-end :class="'bg-'+themeColor.name"">
 					<view class="action">
 						<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
 					</view>
@@ -1072,14 +1072,14 @@
 
 <style>
 	.cu-card>.cu-item {
-		background-color: #FFFFFF !important;
+		background-color: #FFFFFF;
 		border-radius: 4%;
 		background-position-y: 9%;
 		margin: 0;
 	}
 
 	.text-df {
-		background-color: #FFFFFF !important;
+		background-color: #FFFFFF;
 		border-radius: 4%;
 		background-position-y: 9%;
 		margin: 0;
@@ -1176,5 +1176,45 @@
 		position: absolute;
 		margin: -30upx 0 0 0;
 		right: 20upx;
+	}
+	.cu-item.bg-black {
+		background-color: #747474 !important;
+	}
+	
+	.VerticalNav.nav.bc-black .bg-black.cu-item.cur::after {
+		background-color: #c3c3c3 !important;
+	}
+	.bc-black {
+		background-color: #747474 !important;
+	}
+	.cu-item.text-green.cur.bg-black {
+	    background-color: #c3c3c3! important;
+	}
+	.black.cu-item.bg-black{
+		background-color: #333333! important;
+	}
+	.bg-light-red{
+		background-color: #ffdbca!important;
+	}
+	.bg-red.text-df{
+		background-color: #ffdbca!important;
+	}
+	.bg-red.cu-item{
+		background-color: #ffdbca!important;
+	}
+	.bg-light-black{
+		background-color: #747474!important;
+		color: #fff;
+	}
+	.bg-black.text-df{
+		background-color: #747474!important;
+		color: #fff;
+	}
+	.bg-black.cu-item{
+		background-color: #747474!important;
+		color: #fff;
+	}
+	.bg-cyan.bt-black{
+		background-color: #393939!important;
 	}
 </style>

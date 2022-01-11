@@ -1,7 +1,7 @@
 <!-- 板块列表页 -->
 <template name="components">
 	<page-meta :root-font-size="$fontsize"></page-meta>
-	<view>
+	<view :class="'bc-'+themeColor.name">
 		<view class="fixed">
 			<cu-custom :isBack="false" bgColor="bg-shadeTop text-white">
 				<block slot="backText">返回</block>
@@ -16,15 +16,15 @@
 		</swiper>
 		<view class="VerticalBox">
 			<scroll-view class="VerticalNav nav" scroll-y scroll-with-animation :scroll-top="verticalNavTop" style="height:calc(100vh - 375upx);">
-				<view class="cu-item text-cut" :class="index==tabCur?'text-green cur':''" v-for="(item,index) in list" :key="index" @tap="TabSelect"
+				<view class="cu-item text-cut" :class="index==tabCur?'text-green cur bg-'+themeColor.name:'bg-'+themeColor.name" v-for="(item,index) in list" :key="index" @tap="TabSelect"
 				 :data-id="index" style="padding: 0 3px;">
 					{{item.name}}
 				</view>
 			</scroll-view>
-			<scroll-view class="VerticalMain" scroll-y scroll-with-animation style="height:calc(100vh - 375upx)"
+			<scroll-view class="VerticalMain" :class="'bc-'+themeColor.name" scroll-y scroll-with-animation style="height:calc(100vh - 375upx)"
 			 :scroll-into-view="'main-'+mainCur" @scroll="VerticalMain">
 				<view class="padding-top padding-lr" v-for="(item,index) in list" :key="index" :id="'main-'+index">
-					<view class="cu-bar solid-bottom bg-white">
+					<view class="cu-bar solid-bottom" :class="'bg-'+themeColor.name">
 						<view class="action" v-if="item.name == null">
 							<text class="cuIcon-title text-green"></text> 版块列表
 						</view>
@@ -33,7 +33,7 @@
 						</view>
 					</view>
 					<view class="cu-list menu-avatar" v-for="(item,index2) in fuplist[index]" :key="index2">
-						<view class="cu-item" v-if="item.name == null">
+						<view class="cu-item" v-if="item.name == null" :class="'bg-'+themeColor.name">
 							<view class="content">
 								<view class="text-gray text-sm">
 									<text class="text-cut">
@@ -42,7 +42,7 @@
 								</view>
 							</view>
 						</view>
-						<view class="cu-item" v-else @tap="toforum(item.fid)">
+						<view class="cu-item" v-else @tap="toforum(item.fid)" :class="'bg-'+themeColor.name">
 							<view class="cu-avatar radius lg" :style="{'background-image': 'url(' +item.icon+')'}">
 								<view class="cu-tag badge">{{item.todayposts}}</view>
 							</view>
@@ -67,7 +67,7 @@
 		</view>
 		<view class="cu-modal" :class="modalName=='needlogin'?'show':''">
 			<view class="cu-dialog">
-				<view class="cu-bar bg-white justify-end">
+				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="content">需要登录</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
@@ -76,7 +76,7 @@
 				<view class="padding-xl">
 					你需要登录才可以使用此功能。
 				</view>
-				<view class="cu-bar bg-white justify-end">
+				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
 						<button class="cu-btn line-green text-green" @tap="hideModal">取消</button>
 						<button class="cu-btn bg-green margin-left" @tap="tologin">确定</button>
@@ -335,5 +335,19 @@
 	.VerticalMain {
 		background-color: #f1f1f1;
 		flex: 1;
+	}
+	
+	.cu-item.bg-black {
+		background-color: #747474 !important;
+	}
+	
+	.VerticalNav.nav.bc-black .bg-black.cu-item.cur::after {
+		background-color: #c3c3c3 !important;
+	}
+	.bc-black {
+		background-color: #adadad !important;
+	}
+	.cu-item.text-green.cur.bg-black {
+	    background-color: #c3c3c3! important;
 	}
 </style>
