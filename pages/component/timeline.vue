@@ -1,88 +1,11 @@
 <template>
+	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
-		<cu-custom bgColor="bg-gradual-pink" :isBack="true"><block slot="backText">返回</block><block slot="content">时间轴</block></cu-custom>
-		<view class="cu-timeline">
-			<view class="cu-time">昨天</view>
-			<view class="cu-item cur cuIcon-noticefill">
-				<view class="content bg-green shadow-blur">
-					<text>22:22</text> 【广州市】快件已到达地球
-				</view>
-			</view>
-			<view class="cu-item text-red cuIcon-attentionforbidfill">
-				<view class="content bg-red shadow-blur">
-					这是第一次，我家的铲屎官走了这么久。久到足足有三天！！
-				</view>
-			</view>
-			<view class="cu-item text-grey cuIcon-evaluate_fill">
-				<view class="content bg-grey shadow-blur">
-					这是第一次，我家的铲屎官走了这么久。
-				</view>
-			</view>
-			<view class="cu-item text-blue">
-				<view class="bg-blue content">
-					<text>20:00</text> 【月球】快件已到达月球，准备发往地球
-				</view>
-				<view class="bg-cyan content">
-					<text>10:00</text> 【银河系】快件已到达银河系，准备发往月球
-				</view>
-			</view>
-		</view>
-
-		<view class="cu-timeline">
-			<view class="cu-time">06-17</view>
-			<view class="cu-item">
-				<view class="content">
-					<text>01:30</text> 【喵星】 MX-12138 已揽收，准备发往银河系
-				</view>
-			</view>
-		</view>
-
-		<view class="cu-timeline">
-			<view class="cu-time">06-17</view>
-			<view class="cu-item">
-				<view class="content">
-					<view class="cu-capsule radius">
-						<view class="cu-tag bg-cyan">上午</view>
-						<view class="cu-tag line-cyan">10:00</view>
-					</view>
-					<view class="margin-top">这是第一次，我家的铲屎官走了这么久。久到足足有三天！！ 在听到他的脚步声响在楼梯间的那一刻，我简直想要破门而出，对着他狠狠地吼上10分钟，然后再看心情要不要他进门。</view>
-				</view>
-			</view>
-			<view class="cu-item text-blue">
-				<view class="bg-blue shadow-blur content">
-					<view class="cu-list menu-avatar radius">
-						<view class="cu-item">
-							<view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);"></view>
-							<view class="content">
-								<view class="text-grey">文晓港</view>
-								<view class="text-gray text-sm">
-									<text class="cuIcon-infofill text-red"></text> 消息未送达</view>
-							</view>
-							<view class="action">
-								<view class="text-grey text-xs">22:20</view>
-								<view class="cu-tag round bg-grey sm">5</view>
-							</view>
-						</view>
-						<view class="cu-item">
-							<view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);">
-								<view class="cu-tag badge">99+</view>
-							</view>
-							<view class="content">
-								<view class="text-grey">文晓港
-									<view class="cu-tag round orange sm">SVIP</view>
-								</view>
-								<view class="text-gray text-sm">
-									<text class="cuIcon-redpacket_fill text-red"></text> 收到红包</view>
-							</view>
-							<view class="action">
-								<view class="text-grey text-xs">22:20</view>
-								<text class="cuIcon-notice_forbid_fill text-gray"></text>
-							</view>
-						</view>
-					</view>
-				</view>
-			</view>
-		</view>
+		<cu-custom :bgColor="'bg-'+themeColor.name" :isBack="true">
+			<block slot="backText">返回</block>
+			<block slot="content">开宝箱</block>
+		</cu-custom>
+		<web-view :src="url"></web-view>
 	</view>
 </template>
 
@@ -90,12 +13,68 @@
 	export default {
 		data() {
 			return {
-
+				url: '',
+				platform: 0,
+				title: "开宝箱"
 			};
+		},
+		methods: {
+			webviewurl() {
+				var that = this;
+				var currentWebview = this.$scope.$getAppWebview();
+				var thisurl = currentWebview.children()[0].getURL();
+				console.log(thisurl);
+				var re = /mod=forumdisplay(.*)fid=(\d*)*/i;
+				var found = thisurl.match(re);
+				var wv = currentWebview.children()[0];
+				wv.overrideUrlLoading({mode: 'allow',match: '.*id=e6_box.*'}, function(e) {
+				    console.log('reject url: ' + e.url);
+					var found = e.url.match(re);
+					if (found) {
+						uni.redirectTo({
+							url: '../basics/forum?forumid=' + found[2],
+							animationType: 'pop-in',
+							animationDuration: 200
+						});
+					}
+					console.log(found);
+				});
+			},
+		},
+		onLoad(e) {
+			// 获取传递过来的链接
+			if (uni.getSystemInfoSync().platform == 'ios') {
+				this.platform = 1;
+			} else {
+				this.platform = 2;
+			}
+			var urlon = encodeURIComponent(getApp().globalData.zddomain + 'plugin.php?id=e6_box');
+			this.url = getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:tourl&token=' + this.$token +
+				'&action=send_url&url=' + urlon;
+			console.log(this.url)
+			console.log(e.url)
+		},
+		onReady() {
+			var that = this;
+			var height = 0; //定义动态的高度变量，如高度为定值，可以直接写
+			var statusBarHeight = 0;
+			uni.getSystemInfo({
+				//成功获取的回调函数，返回值为系统信息
+				success: (sysinfo) => {
+					height = sysinfo.windowHeight - 45 - sysinfo.statusBarHeight; //自行修改，自己需要的高度
+					statusBarHeight = sysinfo.statusBarHeight;
+				},
+				complete: () => {}
+			});
+			var currentWebview = this.$scope.$getAppWebview(); //获取当前web-view
+			setTimeout(function() {
+				var wv = currentWebview.children()[0];
+				wv.setStyle({ //设置web-view距离顶部的距离以及自己的高度，单位为px
+					top: 45 + statusBarHeight,
+					height: height
+				})
+				that.webviewurl();
+			}, 500); //如页面初始化调用需要写延迟
 		}
 	}
 </script>
-
-<style>
-
-</style>

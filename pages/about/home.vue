@@ -157,16 +157,17 @@
 			</view>
 			<view class="cu-item" :class="menuArrow?'arrow':''">
 				<view class="content">
-					<text class="cuIcon-tagfill text-red  margin-right-xs"></text>
-					<text class="text-grey">标签</text>
+					<text class="cuIcon-presentfill text-red  margin-right-xs"></text>
+					<text class="text-grey">道具</text>
 				</view>
 				<view class="action">
-					<view class="cu-tag round bg-orange light">音乐</view>
-					<view class="cu-tag round bg-olive light">电影</view>
-					<view class="cu-tag round bg-blue light">旅行</view>
+					<button class="cu-btn round bg-cyan shadow" @tap="openbox()">
+						<text class="cuIcon-pick"></text>开箱子</button>
+					<button class="cu-btn round bg-cyan shadow margin-left-sm" @tap="daoju()">
+						<text class="cuIcon-shop"></text>道具商店</button>
 				</view>
 			</view>
-			<view class="cu-item" :class="menuArrow?'arrow':''">
+			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="tomm()">
 				<view class="content">
 					<text class="cuIcon-settingsfill text-green"></text>
 					<text class="text-grey">密码安全</text>
@@ -493,6 +494,21 @@
 			messageclick(index) {
 				uni.navigateTo({
 					url: '../extra/dati'
+				});
+			},
+			daoju(e) {
+				uni.navigateTo({
+					url: '../component/swiper'
+				});
+			},
+			openbox(e){
+				uni.navigateTo({
+					url: '../component/timeline'
+				});
+			},
+			tomm(e){
+				uni.navigateTo({
+					url: '../plugin/animation'
 				});
 			},
 			tologin(e) {

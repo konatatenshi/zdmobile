@@ -37,9 +37,9 @@
 								</view>
 								<view class="cu-card article no-card" v-else-if="!(ifpingbi(item.author)&&$adminid<=0)">
 									<view class="cu-card dynamic solid-bottom">
-										<view class="cu-item shadow" :class="'bg-'+themeColor.name">
+										<view class="cu-item shadow white" :class="'bg-'+themeColor.name">
 											<view class="cu-list menu-avatar">
-												<view class="cu-item" :class="'bg-'+themeColor.name">
+												<view class="cu-item white" :class="'bg-'+themeColor.name">
 													<view class="cu-avatar round lg"
 														:style="[{ backgroundImage:'url(' + item.userinfo.avatarlist + ')' }]">
 														</img-cache>
@@ -1143,7 +1143,9 @@
 		max-width: 22upx !important;
 		padding-left: 4upx;
 	}
-
+	.cu-item.white{
+		color: #666;
+	}
 	.touxian {
 		max-width: 200upx;
 		max-height: 100upx;

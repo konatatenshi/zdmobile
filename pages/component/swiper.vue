@@ -1,53 +1,11 @@
 <template>
+	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
-		<cu-custom bgColor="bg-gradual-pink" :isBack="true"><block slot="backText">返回</block>
-			<block slot="content">轮播图</block>
+		<cu-custom :bgColor="'bg-'+themeColor.name" :isBack="true">
+			<block slot="backText">返回</block>
+			<block slot="content">我的道具</block>
 		</cu-custom>
-		<view class="cu-bar bg-white">
-			<view class="action">
-				<text class="cuIcon-title text-pink"></text> 全屏限高轮播
-			</view>
-			<view class="action">
-				<switch @change="DotStyle" :class="dotStyle?'checked':''" :checked="dotStyle?true:false"></switch>
-			</view>
-		</view>
-		<swiper class="screen-swiper" :class="dotStyle?'square-dot':'round-dot'" :indicator-dots="true" :circular="true"
-		 :autoplay="true" interval="5000" duration="500">
-			<swiper-item v-for="(item,index) in swiperList" :key="index">
-				<image :src="item.url" mode="aspectFill" v-if="item.type=='image'"></image>
-				<video :src="item.url" autoplay loop muted :show-play-btn="false" :controls="false" objectFit="cover" v-if="item.type=='video'"></video>
-			</swiper-item>
-		</swiper>
-		<!-- #ifndef MP-ALIPAY -->
-		<view class="cu-bar bg-white margin-top">
-			<view class="action">
-				<text class="cuIcon-title text-pink"></text> 卡片式轮播
-			</view>
-		</view>
-		<swiper class="card-swiper" :class="dotStyle?'square-dot':'round-dot'" :indicator-dots="true" :circular="true"
-		 :autoplay="true" interval="5000" duration="500" @change="cardSwiper" indicator-color="#8799a3"
-		 indicator-active-color="#0081ff">
-			<swiper-item v-for="(item,index) in swiperList" :key="index" :class="cardCur==index?'cur':''">
-				<view class="swiper-item">
-					<image :src="item.url" mode="aspectFill" v-if="item.type=='image'"></image>
-					<video :src="item.url" autoplay loop muted :show-play-btn="false" :controls="false" objectFit="cover" v-if="item.type=='video'"></video>
-				</view>
-			</swiper-item>
-		</swiper>
-		<view class="cu-bar bg-white margin-top">
-			<view class="action">
-				<text class="cuIcon-title text-pink"></text> 堆叠式轮播 
-			</view>
-		</view>
-		<view class="tower-swiper" @touchmove="TowerMove" @touchstart="TowerStart" @touchend="TowerEnd">
-			<view class="tower-item" :class="item.zIndex==1?'none':''" v-for="(item,index) in swiperList" :key="index" :style="[{'--index': item.zIndex,'--left':item.mLeft}]" :data-direction="direction">
-				<view class="swiper-item">
-					<image :src="item.url" mode="aspectFill" v-if="item.type=='image'"></image>
-					<video :src="item.url" autoplay loop muted :show-play-btn="false" :controls="false" objectFit="cover" v-if="item.type=='video'"></video>
-				</view>
-			</view>
-		</view>
-		<!-- #endif -->
+		<web-view :src="url"></web-view>
 	</view>
 </template>
 
@@ -55,108 +13,68 @@
 	export default {
 		data() {
 			return {
-				cardCur: 0,
-				swiperList: [{
-					id: 0,
-					type: 'image',
-					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big84000.jpg'
-				}, {
-					id: 1,
-					type: 'image',
-					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big37006.jpg',
-				}, {
-					id: 2,
-					type: 'image',
-					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big39000.jpg'
-				}, {
-					id: 3,
-					type: 'image',
-					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg'
-				}, {
-					id: 4,
-					type: 'image',
-					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg'
-				}, {
-					id: 5,
-					type: 'image',
-					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big21016.jpg'
-				}, {
-					id: 6,
-					type: 'image',
-					url: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big99008.jpg'
-				}],
-				dotStyle: false,
-				towerStart: 0,
-				direction: ''
+				url: '',
+				platform: 0,
+				title: "我的道具"
 			};
 		},
-		onLoad() {
-			this.TowerSwiper('swiperList');
-			// 初始化towerSwiper 传已有的数组名即可
-		},
 		methods: {
-			DotStyle(e) {
-				this.dotStyle = e.detail.value
-			},
-			// cardSwiper
-			cardSwiper(e) {
-				this.cardCur = e.detail.current
-			},
-			// towerSwiper
-			// 初始化towerSwiper
-			TowerSwiper(name) {
-				let list = this[name];
-				for (let i = 0; i < list.length; i++) {
-					list[i].zIndex = parseInt(list.length / 2) + 1 - Math.abs(i - parseInt(list.length / 2))
-					list[i].mLeft = i - parseInt(list.length / 2)
-				}
-				this.swiperList = list
-			},
-
-			// towerSwiper触摸开始
-			TowerStart(e) {
-				this.towerStart = e.touches[0].pageX
-			},
-
-			// towerSwiper计算方向
-			TowerMove(e) {
-				this.direction = e.touches[0].pageX - this.towerStart > 0 ? 'right' : 'left'
-			},
-
-			// towerSwiper计算滚动
-			TowerEnd(e) {
-				let direction = this.direction;
-				let list = this.swiperList;
-				if (direction == 'right') {
-					let mLeft = list[0].mLeft;
-					let zIndex = list[0].zIndex;
-					for (let i = 1; i < this.swiperList.length; i++) {
-						this.swiperList[i - 1].mLeft = this.swiperList[i].mLeft
-						this.swiperList[i - 1].zIndex = this.swiperList[i].zIndex
+			webviewurl() {
+				var that = this;
+				var currentWebview = this.$scope.$getAppWebview();
+				var thisurl = currentWebview.children()[0].getURL();
+				console.log(thisurl);
+				var re = /mod=forumdisplay(.*)fid=(\d*)*/i;
+				var found = thisurl.match(re);
+				var wv = currentWebview.children()[0];
+				wv.overrideUrlLoading({mode: 'allow',match: '.*mod=magic.*'}, function(e) {
+				    console.log('reject url: ' + e.url);
+					var found = e.url.match(re);
+					if (found) {
+						uni.redirectTo({
+							url: '../basics/forum?forumid=' + found[2],
+							animationType: 'pop-in',
+							animationDuration: 200
+						});
 					}
-					this.swiperList[list.length - 1].mLeft = mLeft;
-					this.swiperList[list.length - 1].zIndex = zIndex;
-				} else {
-					let mLeft = list[list.length - 1].mLeft;
-					let zIndex = list[list.length - 1].zIndex;
-					for (let i = this.swiperList.length - 1; i > 0; i--) {
-						this.swiperList[i].mLeft = this.swiperList[i - 1].mLeft
-						this.swiperList[i].zIndex = this.swiperList[i - 1].zIndex
-					}
-					this.swiperList[0].mLeft = mLeft;
-					this.swiperList[0].zIndex = zIndex;
-				}
-				this.direction = ""
-				this.swiperList = this.swiperList
+					console.log(found);
+				});
 			},
+		},
+		onLoad(e) {
+			// 获取传递过来的链接
+			if (uni.getSystemInfoSync().platform == 'ios') {
+				this.platform = 1;
+			} else {
+				this.platform = 2;
+			}
+			var urlon = encodeURIComponent(getApp().globalData.zddomain + 'home.php?mod=magic&app=1');
+			this.url = getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:tourl&token=' + this.$token +
+				'&action=send_url&url=' + urlon;
+			console.log(this.url)
+			console.log(e.url)
+		},
+		onReady() {
+			var that = this;
+			var height = 0; //定义动态的高度变量，如高度为定值，可以直接写
+			var statusBarHeight = 0;
+			uni.getSystemInfo({
+				//成功获取的回调函数，返回值为系统信息
+				success: (sysinfo) => {
+					height = sysinfo.windowHeight - 45 - sysinfo.statusBarHeight; //自行修改，自己需要的高度
+					statusBarHeight = sysinfo.statusBarHeight;
+				},
+				complete: () => {}
+			});
+			var currentWebview = this.$scope.$getAppWebview(); //获取当前web-view
+			setTimeout(function() {
+				var wv = currentWebview.children()[0];
+				wv.setStyle({ //设置web-view距离顶部的距离以及自己的高度，单位为px
+					top: 45 + statusBarHeight,
+					height: height
+				})
+				that.webviewurl();
+			}, 500); //如页面初始化调用需要写延迟
 		}
 	}
 </script>
-
-<style>
-	.tower-swiper .tower-item {
-		transform: scale(calc(0.5 + var(--index) / 10));
-		margin-left: calc(var(--left) * 100upx - 150upx);
-		z-index: var(--index);
-	}
-</style>

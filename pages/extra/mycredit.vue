@@ -71,7 +71,7 @@
 				</view>
 				<view class="cu-modal" :class="modalName=='dianbi'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
-						<view class="text-content text-xl padding">点币来源：每日登录+1，每日签到，摇摇乐是最主要来源，获得1-60不等，另外发帖被评为精华帖更是可以获得10点币。</view>
+						<view class="text-content text-xl padding">点币来源：每日签到，翻卡是最主要来源，获得1-60不等，答题连对10道亦可+1，另外发帖被评为精华帖更是可以获得10点币。</view>
 						<view class="cu-bar bg-white">
 							<view class="action margin-0 flex-sub  solid-left" @tap="hideModal">我知道了</view>
 						</view>
@@ -87,7 +87,7 @@
 							</view>
 						</view>
 						<view class="cu-bar bg-white">
-							<view class="action margin-0 flex-sub  solid-left" @tap="chongzhi()">使用金币卡</view>
+							<view class="action padding-bottom-sm padding-top-sm flex-sub cu-btn round bg-blue solid-left" @tap="chongzhi()">使用金币卡</view>
 						</view>
 					</view>
 				</view>

@@ -95,7 +95,7 @@
 		},
 		data() {
 			return {
-				zhutuPic: '../../static/loading2.gif',//主图
+				zhutuPic: '../../static/img/loading2.gif',//主图
 				futuPic: '',//缺口图
 				x: 10,//默认的位置
 				msg: '安全验证',//提示信息

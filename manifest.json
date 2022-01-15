@@ -2,8 +2,8 @@
     "name" : "终点论坛",
     "appid" : "__UNI__0D1E511",
     "description" : "",
-    "versionName" : "0.4.3",
-    "versionCode" : 46,
+    "versionName" : "0.5.1",
+    "versionCode" : 48,
     "transformPx" : false,
     "app-plus" : {
         /* 5+App特有相关 */
@@ -104,7 +104,22 @@
         "uniStatistics" : {
             "enable" : true
         },
-        "nativePlugins" : {}
+        "nativePlugins" : {
+            "gui-google" : {
+                "__plugin_info__" : {
+                    "name" : "谷歌授权登录Androoid版插件，Google登录Android版插件",
+                    "description" : "Google/谷歌授权登录",
+                    "platforms" : "Android",
+                    "url" : "https://ext.dcloud.net.cn/plugin?id=5720",
+                    "android_package_name" : "bbs.zdfx.net",
+                    "ios_bundle_id" : "",
+                    "isCloud" : true,
+                    "bought" : 1,
+                    "pid" : "5720",
+                    "parameters" : {}
+                }
+            }
+        }
     },
     /* SDK配置 */
     "quickapp" : {},

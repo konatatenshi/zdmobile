@@ -16,7 +16,7 @@
 		</swiper>
 		<view class="VerticalBox">
 			<scroll-view class="VerticalNav nav" scroll-y scroll-with-animation :scroll-top="verticalNavTop" style="height:calc(100vh - 375upx);">
-				<view class="cu-item text-cut" :class="index==tabCur?'text-green cur bg-'+themeColor.name:'bg-'+themeColor.name" v-for="(item,index) in list" :key="index" @tap="TabSelect"
+				<view class="cu-item white text-cut" :class="index==tabCur?'text-green cur bg-'+themeColor.name:'bg-'+themeColor.name" v-for="(item,index) in list" :key="index" @tap="TabSelect"
 				 :data-id="index" style="padding: 0 3px;">
 					{{item.name}}
 				</view>
@@ -33,7 +33,7 @@
 						</view>
 					</view>
 					<view class="cu-list menu-avatar" v-for="(item,index2) in fuplist[index]" :key="index2">
-						<view class="cu-item" v-if="item.name == null" :class="'bg-'+themeColor.name">
+						<view class="cu-item white" v-if="item.name == null" :class="'bg-'+themeColor.name">
 							<view class="content">
 								<view class="text-gray text-sm">
 									<text class="text-cut">
@@ -42,7 +42,7 @@
 								</view>
 							</view>
 						</view>
-						<view class="cu-item" v-else @tap="toforum(item.fid)" :class="'bg-'+themeColor.name">
+						<view class="cu-item white" v-else @tap="toforum(item.fid)" :class="'bg-'+themeColor.name">
 							<view class="cu-avatar radius lg" :style="{'background-image': 'url(' +item.icon+')'}">
 								<view class="cu-tag badge">{{item.todayposts}}</view>
 							</view>
@@ -124,7 +124,7 @@
 					that.forumdata = res.data.data;
 					that.listNumber = res.data.number;
 					that.forummount();
-					//console.log(that.forumdata);
+					console.log(that.forumdata);
 				}
 			});
 			uni.request({
@@ -337,8 +337,12 @@
 		flex: 1;
 	}
 	
+	.cu-item.white{
+		color: #666;
+	}
 	.cu-item.bg-black {
 		background-color: #747474 !important;
+		color: #fff;
 	}
 	
 	.VerticalNav.nav.bc-black .bg-black.cu-item.cur::after {

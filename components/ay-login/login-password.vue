@@ -37,13 +37,17 @@
 					<button :disabled="formsub2?true:false" class="flex-sub cu-btn line-cyan lg shadow"
 						@click="register"><text
 							:class="formsub2?'cuIcon-loading2 cuIconfont-spin':''"></text>注册</button>
-					<button :disabled="formsub?true:false" class="flex-sub cu-btn bg-blue lg shadow"
+					<button :disabled="formsub&&type==0?true:false" class="flex-sub cu-btn bg-blue lg shadow"
 						form-type="submit"><text
-							:class="formsub?'cuIcon-loading2 cuIconfont-spin':''"></text>登录</button>
+							:class="formsub&&type==0?'cuIcon-loading2 cuIconfont-spin':''"></text>登录</button>
 				</view>
 				<view class="padding-top">
-					<button class="grid margin-bottom text-center col-1 cu-btn line-green lg shadow"
+					<button class="grid text-center col-1 cu-btn line-green lg shadow"
 						@click="visitor"></text>游客浏览</button>
+				</view>
+				<view class="padding-top" v-if="platform==2">
+					<button :disabled="formsub&&type==1?true:false" class="grid text-center cu-btn bg-green shadow" @tap="googlelogin"><text
+							:class="formsub&&type==1?'cuIcon-loading2 cuIconfont-spin':''"></text><image class="google" src="../../static/img/google.svg"></image>点击通过Google登录</button>
 				</view>
 			</form>
 		</view>
@@ -174,20 +178,77 @@
 				</view>
 			</view>
 		</view>
+		<view class="cu-modal displaygoogle" :class="modalName=='displaygoogle'?'show':''" @tap="hideModal">
+			<view class="cu-dialog" @tap.stop>
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">注册新账号</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl">
+					<view class="cu-avatar xl round margin-left" :style="'background-image:url(' + useravatar + ');'"></view>
+					<view class="cu-form-group margin-top">
+						<view class="title">用户名</view>
+						<input placeholder="请输入用户名" v-model="displayname" type="text" name="input"></input>
+					</view>
+					<view class="cu-form-group">
+						<view class="title">密码</view>
+						<input placeholder="请输入你的密码(≥8位)" v-model="passwords" type="password" name="input"></input>
+					</view>
+					
+						<view class="cu-form-group">
+							<view class="title">手机号</view>
+							<input type="tel" placeholder="请输入手机号" name="mobilenum" v-model="phonenumber" value=""
+								@input="changephonenumber"></input>
+							<picker class="shoujiquma" @change="Pickcountry" :value="addressData.countryid"
+								:range="countryList">
+								<view class="cu-capsule radius">
+									<view class='cu-tag bg-blue '>
+										+{{addressData.countrycode}}
+									</view>
+									<view class="cu-tag line-blue">
+										{{countryList[addressData.countryid]}}
+									</view>
+								</view>
+							</picker>
+						</view>
+						<view class="cu-form-group">
+							<view class="title">验证码</view>
+							<input type="number" placeholder="输入验证码" name="yanzhengma" maxlength="6" v-model="yanzhengma"
+								value="" @input="shuruyanzhengma"></input>
+							<button class='cu-btn bg-green shadow' @click="yzm" :disabled="codeFlag?false:true"
+								:class="{activeCode:codeFlag}"><text
+									:class="formsub3?'cuIcon-loading2 cuIconfont-spin':''"></text>{{codeTxt}}</button>
+						</view>
+						<xlg-slideCode :session_id="session_id" v-if="slideCode_show" @close="slideCode_show = false"
+							@success="slideCode_success"></xlg-slideCode>
+						<view v-if="errortext!=''" class="cu-form-group justify-center">
+							<view class="text-red">{{errortext}}</view>
+						</view>
+				</view>
+				<view class="cu-bar bg-white justify-end">
+					<view class="action">
+						<button class="cu-btn bg-green margin-left" @tap="registnew">确定</button>
+						<button class="cu-btn bg-gray margin-left" @tap="hideModal">取消</button>
+					</view>
+				</view>
+			</view>
+		</view>
 		<view class="cu-load load-modal" v-if="loadModal">
 			<!-- <view class="cuIcon-emojifill text-orange"></view> -->
 			<image src="../../static/img/loadzd.gif" style="border-radius: 50%;" mode="aspectFit"></image>
 			<view class="gray-text">登录中...</view>
 		</view>
-		<view class="flex padding justify-between foot">
+		<view class="flex padding-top padding-left padding-right justify-between foot">
 			<checkbox-group class="block" @change="CheckboxChange">
-				<view class="cu-form-group margin-top">
+				<view class="cu-form-group">
 					<checkbox :class="checked?'checked':''" :checked="checked?true:false" value="A"></checkbox>
 					<view class="title2">我已认真阅读并同意<a href="#" @tap="about">《用户服务协议》</a>及<a href="#2" @tap="private">《隐私政策》</a>全部条款。</view>
 				</view>
 			</checkbox-group>
 		</view>
-		<view class="flex padding justify-between foot">
+		<view class="flex padding-left justify-between foot">
 			<view class="padding-sm margin-xs radius" @tap="resetpass">手机重置密码</view>
 			<!-- <view class="padding-sm margin-xs radius" @tap="qqlogin">QQ登录(外部跳转)</view> -->
 		</view>
@@ -195,6 +256,9 @@
 </template>
 
 <script>
+	// #ifdef APP-PLUS
+	const LoginGoogle = uni.requireNativePlugin('gui-google_login');
+	// #endif
 	import Vue from 'vue'
 	import {
 		captchaCreater,
@@ -208,7 +272,9 @@
 				index: 0,
 				checked: false,
 				yanzhengput: '',
+				errortext: '',
 				displaynewpass: '',
+				passwords: '',
 				countryList: [],
 				countryListId: [],
 				addressData: {
@@ -225,8 +291,9 @@
 				formsub3: false,
 				formsub4: false,
 				loadModal: false,
-				phonenumber: 0,
-				yanzhengma: 0,
+				phonenumber: '',
+				yanzhengma: '',
+				platform: 2,
 				version: '',
 				ticketnew: '',
 				randstrnew: '',
@@ -235,10 +302,16 @@
 				codeFlag: true, // 控制按钮是否可点击
 				yzFlag: true,
 				result: {},
+				type: 0,
 				checkResult: {},
 				modalName: '',
 				error: Array,
 				authcode: '',
+				mail: '',
+				googletoken: '',
+				userid: '',
+				displayname: '用户名读取失败',
+				useravatar: '',
 				slideCode_show: false, //图形验证码是否显示
 				slideCode_yanzheng: false, //图形验证码是否验证通过
 				slideCode_x: 10, //图形验证码的水平偏移值
@@ -252,10 +325,15 @@
 				that.version = wgtinfo.version;
 				console.log('version：' + that.version);
 			});
+			if (uni.getSystemInfoSync().platform == 'ios') {
+				this.platform = 1;
+			} else {
+				this.platform = 2;
+			}
 		},
 		methods: {
 			async showCaptcha() {
-				if (this.phonenumber == 0) {
+				if (this.phonenumber == '') {
 					this.error.reasoncode = 'error0200';
 					this.modalName = 'loginerror';
 					this.error.reason = '你还未输入手机号';
@@ -287,7 +365,7 @@
 				}
 			},
 			yzm: function() {
-				if (this.phonenumber == 0) {
+				if (this.phonenumber == '') {
 					this.error.reasoncode = 'error0200';
 					this.modalName = 'loginerror';
 					this.error.reason = '你还未输入手机号';
@@ -316,6 +394,7 @@
 							gh: this.addressData.countrycode,
 							phone: this.phonenumber,
 							session_id: this.session_id,
+							type: this.type,
 							x: this.slideCode_x
 						},
 						success: (res) => {
@@ -349,7 +428,11 @@
 								this.slideCode_yanzheng = false
 								this.error.reasoncode = 'error0204';
 								this.modalName = 'loginerror';
-								this.error.reason = '号码不存在，无法找回';
+								if(this.type==0){
+									this.error.reason = '号码不存在，无法找回';
+								}else{
+									this.error.reason = '号码已存在，无法注册';
+								}
 								this.formsub3 = false;
 								this.codeFlag = true;
 								this.phonenumber = '';
@@ -657,6 +740,252 @@
 					}
 				});
 			},
+			registnew(e) {
+				if(this.passwords.length<8){
+					this.error.reasoncode = 'error0220';
+					this.modalName = 'loginerror';
+					this.error.reason = '密码需要大于8个字符';
+					this.formsub2 = false;
+					return;
+				}
+				let that = this;
+				this.formsub2 = true;
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:changepassword', //获取是否开放注册
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						key: getApp().globalData.zdserverkey,
+						type: 5,
+						googletoken: that.googletoken,
+						email:that.mail,
+						userid:that.userid,
+						name:that.displayname,
+						avatar:that.useravatar,
+						phone:that.phonenumber,
+						yanzhengma:that.yanzhengma,
+						password:that.passwords
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data);
+						console.log(res.data.code);
+						if (res.data.code == 502) {
+							this.error.reasoncode = 'error0217';
+							this.modalName = 'loginerror';
+							this.error.reason = '注册失败，可能关闭了注册。';
+							this.formsub2 = false;
+						}else if (res.data.code == 503) {
+							this.error.reasoncode = 'error0218';
+							this.modalName = 'loginerror';
+							this.error.reason = '注册失败，验证码错误。';
+							this.formsub2 = false;
+						}else if (res.data.code == 504) {
+							this.error.reasoncode = 'error0219';
+							this.modalName = 'loginerror';
+							this.error.reason = '注册失败，Google Token超时。请尝试重新登录';
+							this.formsub2 = false;
+						}else{
+							that.formsub2 = false;
+							that.modalName = null;
+							uni.showToast({
+								title: '注册成功',
+								duration: 2000
+							});
+						}
+						this.text = 'request success';
+					},
+					fail: (res) => {
+						console.log(res.data);
+					}
+				});
+			},
+			savegoogle(e,f,g,h,i){
+				this.type = 1;
+				let that = this;
+				const signature = plus.navigator.getSignature();
+				const signe = AES.AES.encrypt(signature,w_md5.hex_md5_16(this.version),w_md5.hex_md5_16(f));
+				that.formsub = true;
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:changepassword', //获取置顶帖子
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							key: getApp().globalData.zdserverkey,
+							type: 4,
+							googletoken: e,
+							email:f,
+							userid:g,
+							name:h,
+							avatar:i,
+							sign : signe,
+							version: that.version
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data);
+							that.formsub = false;
+							if (res.data.code == 200) {//未开启
+								uni.setStorage({
+									key: 'userlogininfo',
+									data: res.data.data,
+									success: function() {
+										console.log(res.data.data);
+										try {
+											const loginvalue = uni.getStorageSync('userlogininfo');
+											if (loginvalue) {
+												Vue.prototype.$token = loginvalue.token;
+												Vue.prototype.$uid = loginvalue.uid;
+												Vue.prototype.$username = loginvalue.username;
+												Vue.prototype.$adminid = loginvalue.adminid;
+												Vue.prototype.$groupid = loginvalue.groupid;
+												let avanum = (Array(9).join("0") + loginvalue.uid).slice(-9);
+												Vue.prototype.$avatarsmall = 'https://zd.tiangal.com/uc_server/data/avatar/' + avanum
+													.substr(0, 3) + '/' + avanum.substr(3, 2) + '/' + avanum.substr(5, 2) + '/' +
+													avanum.substr(7, 2) + '_avatar_small.jpg';
+												Vue.prototype.$avatarsmalldefault = 'https://zd.tiangal.com/uc_server/images/randuser/small/' + avanum.substr(-1) + '.jpg';
+												//this.$emit("returnDat", "basics");
+												uni.redirectTo({
+													url: '/pages/index/index'
+												});
+											}
+										} catch (e) {
+											// error
+										}
+									}
+								});
+							}else if (res.data.code == 500) {
+								this.error.reason = '此Google账号邮箱已注册，但未绑定账号。请登录账号前往密码安全绑定Google即可登录。';
+								this.modalName = 'loginerror';
+								this.error.reasoncode = 'error0209';
+							}else if (res.data.code == 501) {
+								this.googletoken = e;
+								this.mail = f;
+								this.userid = g;
+								this.displayname = h.replace(/\s+/g, "");
+								this.useravatar = i.replace(/https\/\//, "https://");
+								this.modalName = 'displaygoogle';
+								console.log(this.useravatar);
+								console.log(this.mail);
+								console.log(this.userid);
+							}else{
+								console.log('fail')
+							}
+						}
+					});
+			},
+			savegoogle2(e,f,g,h,i){
+				let that = this;
+				const signature = plus.navigator.getSignature();
+				const signe = AES.AES.encrypt(signature,w_md5.hex_md5_16(this.version),w_md5.hex_md5_16(e.detail.value.text));
+				this.formsub = true;
+				console.log('version：' + this.version);
+				console.log('signe：' + signe);
+				let status = -1;
+				this.LoadModal(e);
+				uni.request({
+					url: getApp().globalData.zddomain +
+						'plugin.php?id=ts2t_qqavatar:changepassword', //仅为示例，并非真实接口地址。
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						type: 4,
+						googletoken: e,
+						email:f,
+						userid:g,
+						name:h,
+						avatar:i,
+						key: getApp().globalData.zdserverkey,
+						sign : signe,
+						version: that.version
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data);
+						if (res.data.code == 200) {
+							let status = res.data.status;
+						}
+						if (res.data.code == 500) {
+							this.error.reason = '您的邮箱已经注册，但您未绑定Google账号，请登录你的邮箱并绑定再尝试登录吧。';
+							this.modalName = 'loginerror';
+							this.error.reasoncode = 'error0208';
+							this.formsub = false;
+						} else if (res.data.code == 501) {
+							this.modalName = 'zhucename';
+						} else if (status == 1) {
+							this.error.reason = '您的账号被禁止登入';
+							this.modalName = 'loginerror';
+							this.error.reasoncode = 'error0102';
+						} else if (res.data.code == 200) {
+							uni.setStorage({
+								key: 'userlogininfo',
+								data: res.data.data,
+								success: function() {
+									console.log(res.data.data);
+									try {
+									    const loginvalue = uni.getStorageSync('userlogininfo');
+									    if (loginvalue) {
+											Vue.prototype.$token = loginvalue.token;
+											Vue.prototype.$uid = loginvalue.uid;
+											Vue.prototype.$username = loginvalue.username;
+											Vue.prototype.$adminid = loginvalue.adminid;
+											Vue.prototype.$groupid = loginvalue.groupid;
+											let avanum = (Array(9).join("0") + loginvalue.uid).slice(-9);
+											Vue.prototype.$avatarsmall = 'https://zd.tiangal.com/uc_server/data/avatar/' + avanum
+												.substr(0, 3) + '/' + avanum.substr(3, 2) + '/' + avanum.substr(5, 2) + '/' +
+												avanum.substr(7, 2) + '_avatar_small.jpg';
+											Vue.prototype.$avatarsmalldefault = 'https://zd.tiangal.com/uc_server/images/randuser/small/' + avanum.substr(-1) + '.jpg';
+											//this.$emit("returnDat", "basics");
+											uni.redirectTo({
+												url: '/pages/index/index'
+											});
+									    }
+									} catch (e) {
+									    // error
+									}
+								}
+							});
+						}
+					},
+					fail: (res) => {
+						console.log(res.data);
+					}
+				});
+			},
+			googlelogin(){
+				if(!this.checked){
+					this.error.reasoncode = 'error0300';
+					this.modalName = 'loginerror';
+					this.error.reason = '请阅读并同意用户协议及隐私政策后方可继续';
+					this.formsub2 = false;
+					return;
+				}
+				let that = this;
+				// #ifdef APP-PLUS
+				LoginGoogle.handleLogin(
+					{
+						clientId: '251594858132-p7jkqgcrecp1g5tntavknq1mhjlft9h0.apps.googleusercontent.com'
+					},ret =>{
+						if(ret && ret.code==200){
+							console.log('===========================');
+							console.log('=====登录成功result: ',ret);
+							console.log('===========================');
+							that.savegoogle(ret.token,ret.email,ret.userId,ret.displayName,ret.userAvatar);
+						}else{
+							console.log('===========================');
+							console.log('=====登录失败result: ',ret);
+							console.log('===========================');
+						}
+					}
+				);
+				// #endif
+			},
 			verifycode(e) {
 				this.formsub4 = true;
 				this.yzFlag = false;
@@ -821,7 +1150,11 @@
 						} else if (res.data.code == 404) {
 							this.error.reasoncode = 'error0204';
 							this.modalName = 'loginerror';
-							this.error.reason = '号码不存在，无法找回';
+							if(this.type==0){
+								this.error.reason = '号码不存在，无法找回';
+							}else{
+								this.error.reason = '号码已存在，无法注册';
+							}
 							this.formsub3 = false;
 							this.codeFlag = true;
 							this.phonenumber = '';
@@ -882,7 +1215,6 @@
 	}
 	.login-form {
 		margin: -9px 10px 0 10px;
-		height: 280px;
 		background: #007AFF;
 		border-radius: 10px;
 		background-color: #EEEEEE;
@@ -993,5 +1325,19 @@
 	}
 	.cu-form-group{
 		background-color: #efefef;
+	}
+	
+	.google{
+		width: 1em;
+		height: 1em;
+		vertical-align: -0.15em;
+		fill: currentColor;
+		overflow: hidden;
+	}
+	.btn22{
+		height: 80upx!important;
+	}
+	.displaygoogle{
+		z-index: 10!important;
 	}
 </style>
