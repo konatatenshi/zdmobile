@@ -258,7 +258,7 @@
 					如果遇到进度条100，但是APP没有正常重启，说明数据读取失败。
 				</view>
 				<view class="padding-xl">
-					开源地址：<text class="text-blue" @tap="tothegithub()">github.com/konatatenshi/zdmobile</text>
+					开源地址：<text class="text-blue" @tap="tothegithub()"><text class="lg text-blue cuIcon-link"></text>github.com/konatatenshi/zdmobile</text>
 				</view>
 				<view class="cu-bar bg-white justify-end">
 					<view v-if="isupdate==1" class="action">

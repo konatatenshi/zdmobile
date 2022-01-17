@@ -35,7 +35,7 @@
 				</view>
 				<view class="flex">
 					<button :disabled="formsub2?true:false" class="flex-sub cu-btn line-cyan lg shadow"
-						@click="register"><text
+						@tap="register"><text
 							:class="formsub2?'cuIcon-loading2 cuIconfont-spin':''"></text>注册</button>
 					<button :disabled="formsub&&type==0?true:false" class="flex-sub cu-btn bg-blue lg shadow"
 						form-type="submit"><text
@@ -43,7 +43,11 @@
 				</view>
 				<view class="padding-top">
 					<button class="grid text-center col-1 cu-btn line-green lg shadow"
-						@click="visitor"></text>游客浏览</button>
+						@tap="visitor"></text>游客浏览</button>
+				</view>
+				<view class="padding-top" v-if="qq==1">
+					<button :disabled="formsub&&type==2?true:false" class="grid text-center cu-btn bg-cyan shadow" @tap="qqlogin()"><text
+							:class="formsub&&type==2?'cuIcon-loading2 cuIconfont-spin':''"></text><image class="google" src="../../static/images/QQ.png"></image>点击通过QQ登录</button>
 				</view>
 				<view class="padding-top" v-if="platform==2">
 					<button :disabled="formsub&&type==1?true:false" class="grid text-center cu-btn bg-green shadow" @tap="googlelogin"><text
@@ -141,7 +145,7 @@
 						<view class="title">验证码</view>
 						<input type="number" placeholder="输入验证码" name="yanzhengma" maxlength="6" v-model="yanzhengma"
 							value="" @input="shuruyanzhengma"></input>
-						<button class='cu-btn bg-green shadow' @click="yzm" :disabled="codeFlag?false:true"
+						<button class='cu-btn bg-green shadow' @tap="yzm" :disabled="codeFlag?false:true"
 							:class="{activeCode:codeFlag}"><text
 								:class="formsub3?'cuIcon-loading2 cuIconfont-spin':''"></text>{{codeTxt}}</button>
 					</view>
@@ -217,7 +221,7 @@
 							<view class="title">验证码</view>
 							<input type="number" placeholder="输入验证码" name="yanzhengma" maxlength="6" v-model="yanzhengma"
 								value="" @input="shuruyanzhengma"></input>
-							<button class='cu-btn bg-green shadow' @click="yzm" :disabled="codeFlag?false:true"
+							<button class='cu-btn bg-green shadow' @tap="yzm" :disabled="codeFlag?false:true"
 								:class="{activeCode:codeFlag}"><text
 									:class="formsub3?'cuIcon-loading2 cuIconfont-spin':''"></text>{{codeTxt}}</button>
 						</view>
@@ -231,6 +235,50 @@
 					<view class="action">
 						<button class="cu-btn bg-green margin-left" @tap="registnew">确定</button>
 						<button class="cu-btn bg-gray margin-left" @tap="hideModal">取消</button>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="cu-modal" :class="modalName=='datizhuce'?'show':''" @tap="hideModal">
+			<view class="cu-dialog" @tap.stop>
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">回答注册</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-sm">
+					<view><text class="text-lg text-blue">请回答下列问题才可注册({{datinum + 1}}/8)</text></view>
+					<view><text class="text-xl text-red">{{timu}}</text></view>
+					<radio-group class="block" @change="RadioChange">
+						<view class="cu-form-group">
+							<view class="text-xl">A:{{axx}}</view>
+							<radio :class="radio=='A'?'checked':''" :checked="radio=='A'?true:false" value="A">
+							</radio>
+						</view>
+						<view class="cu-form-group">
+							<view class="text-xl">B:{{bxx}}</view>
+							<radio :class="radio=='B'?'checked':''" :checked="radio=='B'?true:false" value="B">
+							</radio>
+						</view>
+						<view class="cu-form-group">
+							<view class="text-xl">C:{{cxx}}</view>
+							<radio :class="radio=='C'?'checked':''" :checked="radio=='C'?true:false" value="C">
+							</radio>
+						</view>
+						<view class="cu-form-group">
+							<view class="text-xl">D:{{dxx}}</view>
+							<radio :class="radio=='D'?'checked':''" :checked="radio=='D'?true:false" value="D">
+							</radio>
+						</view>
+					</radio-group>
+				</view>
+				<view class="cu-bar bg-white justify-end">
+					<view v-if="datinum<7" class="action">
+						<button class="cu-btn bg-green margin-left" @tap="dati">下一道</button>
+					</view>
+					<view v-else class="action">
+						<button class="cu-btn bg-green margin-left" @tap="tijiao">提交</button>
 					</view>
 				</view>
 			</view>
@@ -270,13 +318,24 @@
 		data() {
 			return {
 				index: 0,
+				datinum: 0,
+				zhengque: 0,
+				canreg: 0,
+				timu: '加载中……',
+				axx: '加载中……',
+				bxx: '加载中……',
+				cxx: '加载中……',
+				dxx: '加载中……',
 				checked: false,
 				yanzhengput: '',
 				errortext: '',
 				displaynewpass: '',
 				passwords: '',
 				countryList: [],
+				qq: 0,
+				regtype: 0,
 				countryListId: [],
+				questionlist:[],
 				addressData: {
 					countryid: 0,
 					countryName: "中国",
@@ -294,6 +353,8 @@
 				phonenumber: '',
 				yanzhengma: '',
 				platform: 2,
+				redati: 0,
+				radio: '',
 				version: '',
 				ticketnew: '',
 				randstrnew: '',
@@ -320,6 +381,7 @@
 		},
 		mounted() {
 			this.getJob();
+			this.checkApp();
 			var that = this;
 			plus.runtime.getProperty(plus.runtime.appid, function(wgtinfo) {
 				that.version = wgtinfo.version;
@@ -363,6 +425,9 @@
 				} catch (error) {
 					throw new Error(error);
 				}
+			},
+			RadioChange(e) {
+				this.radio = e.detail.value;
 			},
 			yzm: function() {
 				if (this.phonenumber == '') {
@@ -558,6 +623,91 @@
 			hideModal(e) {
 				this.modalName = null
 			},
+			jiazaitimu(e) {
+				this.redati = 1;
+				this.canreg = 0;
+				this.radio = '';
+				this.timu = '加载中……';
+				this.axx =  '加载中……';
+				this.bxx =  '加载中……';
+				this.cxx =  '加载中……';
+				this.dxx =  '加载中……';
+				this.datinum = 0;
+				this.zhengque = 0;
+				this.modalName='datizhuce';
+				let that = this;
+				uni.request({
+					url: getApp().globalData.zddomain +
+						'plugin.php?id=ts2t_qqavatar:regqa', //仅为示例，并非真实接口地址。
+					method: 'GET',
+					timeout: 10000,
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data);
+						that.timu = res.data[0].q;
+						that.axx = res.data[0].answers[1];
+						that.bxx = res.data[0].answers[2];
+						that.cxx = res.data[0].answers[3];
+						that.dxx = res.data[0].answers[4];
+						that.questionlist = res.data;
+					},
+					fail: (res) => {
+						console.log(res.data);
+					}
+				});
+			},
+			dati(e){
+				if(this.questionlist[this.datinum].answer[1]=='1'&&this.radio=='A'){
+					this.zhengque++;
+				}
+				if(this.questionlist[this.datinum].answer[2]=='2'&&this.radio=='B'){
+					this.zhengque++;
+				}
+				if(this.questionlist[this.datinum].answer[3]=='3'&&this.radio=='C'){
+					this.zhengque++;
+				}
+				if(this.questionlist[this.datinum].answer[4]=='4'&&this.radio=='D'){
+					this.zhengque++;
+				}
+				this.datinum++;
+				console.log(this.zhengque + '/' + this.datinum);
+				this.timu = this.questionlist[this.datinum].q;
+				this.axx = this.questionlist[this.datinum].answers[1];
+				this.bxx = this.questionlist[this.datinum].answers[2];
+				this.cxx = this.questionlist[this.datinum].answers[3];
+				this.dxx = this.questionlist[this.datinum].answers[4];
+				this.radio = '';
+			},
+			tijiao(e){
+				if(this.questionlist[this.datinum].answer[1]=='1'&&this.radio=='A'){
+					this.zhengque++;
+				}
+				if(this.questionlist[this.datinum].answer[2]=='2'&&this.radio=='B'){
+					this.zhengque++;
+				}
+				if(this.questionlist[this.datinum].answer[3]=='3'&&this.radio=='C'){
+					this.zhengque++;
+				}
+				if(this.questionlist[this.datinum].answer[4]=='4'&&this.radio=='D'){
+					this.zhengque++;
+				}
+				if(this.zhengque==8){
+					this.canreg = 1;
+					this.redati = 0;
+					this.modalName = '';
+					uni.showToast({
+						title: '答题通过',
+						duration: 2000
+					})
+				}else{
+					this.canreg = 0;
+					this.error.reasoncode = 'error0301';
+					this.modalName = 'loginerror';
+					this.error.reason = '回答失败，你答对了' + this.zhengque + '道，请重新再试。';
+				}
+			},
 			resetpass(e) {
 				this.modalName = 'chongzhimima';
 				this.yanzhengput = '';
@@ -574,9 +724,19 @@
 				this.hideEyes = !this.hideEyes;
 			},
 			qqlogin() {
-				this.modalName = 'loginerror';
-				this.error.reason = 'QQ登录因故暂不可用，可去网页版登录后修改密码后再登录';
-				this.error.reasoncode = 0;
+				//this.modalName = 'loginerror';
+				//this.error.reason = 'QQ登录因故暂不可用，可去网页版登录后修改密码后再登录';
+				//this.error.reasoncode = 0;
+				if(!this.checked){
+					this.error.reasoncode = 'error0300';
+					this.modalName = 'loginerror';
+					this.error.reason = '请阅读并同意用户协议及隐私政策后方可继续';
+					this.formsub2 = false;
+					return;
+				}
+				uni.redirectTo({
+					url: '../../pages/plugin/drawer'
+				});
 			},
 			formSubmit(e) {
 				let that = this;
@@ -697,6 +857,15 @@
 					}
 				});
 			},
+			checkApp(){
+			    if(plus.runtime.isApplicationExist({pname:'com.tencent.mobileqq',action:'mqq://'})){
+			        console.log("QQ应用已安装");
+					this.qq = 1 ;
+			    }else{
+			        console.log("QQ应用未安装");
+					this.qq = 0 ;
+			    }
+			},
 			register(e) {
 				if(!this.checked){
 					this.error.reasoncode = 'error0300';
@@ -727,6 +896,7 @@
 					},
 					success: (res) => {
 						console.log(res.data);
+						this.checkApp();
 						if (res.data.canreg == 0) {
 							this.error.reasoncode = 'error0101';
 							this.modalName = 'loginerror';
@@ -786,6 +956,11 @@
 							this.error.reasoncode = 'error0219';
 							this.modalName = 'loginerror';
 							this.error.reason = '注册失败，Google Token超时。请尝试重新登录';
+							this.formsub2 = false;
+						}else if (res.data.code == 505) {
+							this.error.reasoncode = 'error0220';
+							this.modalName = 'loginerror';
+							this.error.reason = '注册失败，用户名重复，请尝试更换一个用户名';
 							this.formsub2 = false;
 						}else{
 							that.formsub2 = false;
@@ -862,17 +1037,28 @@
 								this.error.reason = '此Google账号邮箱已注册，但未绑定账号。请登录账号前往密码安全绑定Google即可登录。';
 								this.modalName = 'loginerror';
 								this.error.reasoncode = 'error0209';
+							}else if (res.data.code == 400) {
+								this.error.reason = '登录接口失败，返回邮箱为' + res.data.result;
+								this.modalName = 'loginerror';
+								this.error.reasoncode = 'error0209';
 							}else if (res.data.code == 501) {
-								this.googletoken = e;
-								this.mail = f;
-								this.userid = g;
-								this.displayname = h.replace(/\s+/g, "");
-								this.useravatar = i.replace(/https\/\//, "https://");
-								this.modalName = 'displaygoogle';
-								console.log(this.useravatar);
-								console.log(this.mail);
-								console.log(this.userid);
+								if(this.canreg==1){
+									this.googletoken = e;
+									this.mail = f;
+									this.userid = g;
+									this.displayname = h.replace(/\s+/g, "");
+									this.useravatar = i.replace(/https\/\//, "https://");
+									this.modalName = 'displaygoogle';
+									console.log(this.useravatar);
+									console.log(this.mail);
+									console.log(this.userid);
+								}else{
+									this.jiazaitimu();
+								}
 							}else{
+								this.error.reason = '目前关闭注册，请等待开放注册或登录现有账号后去绑定';
+								this.modalName = 'loginerror';
+								this.error.reasoncode = 'error0229';
 								console.log('fail')
 							}
 						}
@@ -964,6 +1150,10 @@
 					this.modalName = 'loginerror';
 					this.error.reason = '请阅读并同意用户协议及隐私政策后方可继续';
 					this.formsub2 = false;
+					return;
+				}
+				if(this.redati==1){
+					this.jiazaitimu();
 					return;
 				}
 				let that = this;
