@@ -130,6 +130,12 @@
 					<text class="text-grey">个人资料</text>
 				</navigator>
 			</view>
+			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="tofavor()">
+				<button class="cu-btn content" open-type="content">
+					<text class="cuIcon-favorfill text-blue"></text>
+					<text class="text-grey">个人收藏</text>
+				</button>
+			</view>
 			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="haoyou()">
 				<view class="content">
 					<text class="cuIcon-emojiflashfill text-pink"></text>
@@ -428,6 +434,11 @@
 				}
 				uni.navigateTo({
 					url: '../plugin/indexes'
+				})
+			},
+			tofavor(){
+				uni.navigateTo({
+					url: '../extra/favorite'
 				})
 			},
 			bangding() {
