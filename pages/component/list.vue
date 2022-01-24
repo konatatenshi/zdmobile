@@ -361,11 +361,13 @@
 				}
 			},
 			jubaota(){
-				 
+				 uni.showToast({
+				 	title:'举报成功！'
+				 })
+				 this.modalName = null;
 			},
 			topm() {
 				let that = this;
-				console.log(e);
 				uni.navigateTo({
 					url: '../extra/pm?touid=' + that.uid + '&username=' + that.username,
 					animationType: 'pop-in',

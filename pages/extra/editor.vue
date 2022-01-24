@@ -29,7 +29,7 @@
 				console.log(found);
 				if (found) {
 					uni.redirectTo({
-						url: '../component/card?tid=' + found[2],
+						url: '../component/card?tid=' + found[2] + '&fresh=1',
 						animationType: 'pop-in',
 						animationDuration: 200
 					});

@@ -124,11 +124,11 @@
 					<text class="text-grey">风格设置</text>
 				</button>
 			</view>
-			<view class="cu-item" :class="menuArrow?'arrow':''">
-				<navigator class="content" hover-class="none" url="../list/list" open-type="redirect">
+			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="toprofile()">
+				<button class="cu-btn content" open-type="contact">
 					<text class="cuIcon-peoplefill text-orange"></text>
 					<text class="text-grey">个人资料</text>
-				</navigator>
+				</button>
 			</view>
 			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="tofavor()">
 				<button class="cu-btn content" open-type="content">
@@ -301,6 +301,7 @@
 		data() {
 			return {
 				iStatusBarHeight: 0,
+				platform: 0,
 				TabCur: 0,
 				version: '',
 				downfile: '',
@@ -441,6 +442,11 @@
 					url: '../extra/favorite'
 				})
 			},
+			toprofile(){
+				uni.navigateTo({
+					url: '../extra/profile'
+				})
+			},
 			bangding() {
 				if (this.$token == '') {
 					this.toguestlogin();
@@ -570,7 +576,8 @@
 						url: getApp().globalData.zddomain + 'api/checkapi.php', //升级地址
 						data: {
 							version: widgetInfo.version,
-							name: widgetInfo.name
+							name: widgetInfo.name,
+							platform : that.platform
 						},
 						success: (result) => {
 							var data = result.data;
@@ -879,6 +886,13 @@
 				that.version = wgtinfo.version;
 				console.log(that.version);
 			});
+			// 获取传递过来的链接
+			if (uni.getSystemInfoSync().platform == 'ios') {
+				this.platform = 1;
+			} else {
+				this.platform = 2;
+			}
+			var urlon
 			var date = new Date();
 			that.month = date.getMonth() + 1;
 			plus.navigator.setStatusBarStyle('dark');

@@ -46,7 +46,7 @@ class websocketUtil {
 				uni.$emit('websocketmessage2', {  
 				                data: res.data
 				            });
-				console.log(res.data)
+				//console.log(res.data)
 			});
 		}) 
 		// 监听连接失败，这里代码我注释掉的原因是因为如果服务器关闭后，和下面的onclose方法一起发起重连操作，这样会导致重复连接

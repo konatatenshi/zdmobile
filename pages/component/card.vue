@@ -139,6 +139,22 @@
 						<rich-text mode='widthFix' :nodes="formatRichText(sightml)"></rich-text>
 					</view>
 				</view>
+				<scroll-view scroll-x class="nav text-center" :class="'bt-'+themeColor.name">
+					<view class="flex text-center">
+						<view class="cu-item flex-sub noline" :class="1==TabCur?'text-red cur':''" @tap="tabSelect" data-id="1">
+							<text :class="1==TabCur?'text-red':'text-gray'"><text class="text-lg text-black">回帖</text>{{replies}}</text>
+						</view>
+						<view class="cu-item flex-sub noline" :class="2==TabCur?'text-red cur':''" @tap="tabSelect" data-id="2">
+							<text :class="2==TabCur?'text-red':'text-gray'">热门</text>
+						</view>
+						<view class="cu-item flex-sub noline" :class="3==TabCur?'text-red cur':''" @tap="tabSelect" data-id="3">
+							<text :class="3==TabCur?'text-red':'text-gray'">正序</text>
+						</view>
+						<view class="cu-item flex-sub noline" :class="4==TabCur?'text-red cur':''" @tap="tabSelect" data-id="4">
+							<text :class="4==TabCur?'text-red':'text-gray'">倒序</text>
+						</view>
+					</view>
+				</scroll-view>
 				<view class="cu-list menu-avatar comment solids-top" v-for="(item,index) in huifulist" :key="index"
 					:data-id="index">
 					<view class="cu-item" :class="'bt-'+themeColor.name" v-if="!(ifpingbi(item.author)&&$adminid<=0)">
@@ -307,7 +323,12 @@
 							</view>
 							<view class="cu-item" v-if="authorid==$uid" @tap="editpost()">
 								<view class="content">
-									<text class="text-grey"><text class="cuIcon-attention"></text>编辑此帖</text>
+									<text class="text-grey"><text class="cuIcon-edit"></text>编辑此帖</text>
+								</view>
+							</view>
+							<view class="cu-item" @tap="copy()">
+								<view class="content">
+									<text class="text-grey"><text class="cuIcon-link"></text>复制URL地址</text>
 								</view>
 							</view>
 						</view>
@@ -719,6 +740,7 @@
 				radio: 'A',
 				lucky: -1,
 				yzm: 0,
+				TabCur: 0,
 				luckymessage: '',
 				pingfenliyou: '',
 				luckyme: [],
@@ -759,6 +781,7 @@
 				floorpage: [],
 				jiazai: 0,
 				pm: 0,
+				fresh: 0,
 				laheivar: 0,
 				laheitext: '拉黑作者',
 				jiazaiwanbi: [],
@@ -808,6 +831,14 @@
 			},
 			jubaota(e) {
 				this.modalName = 'jubaoxinxi';
+			},
+			tabSelect(e) {
+				this.TabCur = e.currentTarget.dataset.id;
+				if(this.TabCur>1){
+					this.huifulist = [];
+					this.page = 0;
+					this.loadhuifu(this.tid, this.page, this.TabCur, '', '', '1');
+				}
 			},
 			more(e) {
 				let that = this;
@@ -1173,6 +1204,16 @@
 						that.loadModal1 = false;
 					}
 				});
+			},
+			copy(){
+				let that = this;
+				uni.setClipboardData({
+				    data: getApp().globalData.zddomain + 'thread-' + that.tid + '-1-1.html',
+				    success: function () {
+				        console.log('复制成功');
+				    }
+				});
+				this.modalName = null;
 			},
 			dianzan() {
 				if (this.loadModal2 == true) {
@@ -2168,7 +2209,7 @@
 				plus.runtime.restart();
 			},
 			tothebottom() {
-				this.loadhuifu(this.tid, this.page, '', '', '', '1');
+				this.loadhuifu(this.tid, this.page, this.TabCur, '', '', '1');
 				console.log("到底了");
 			},
 			IsCard(e) {
@@ -2216,6 +2257,7 @@
 						dateline: dateline,
 						filter: filter,
 						isimage: isImage,
+						fresh: that.fresh
 					},
 					header: {
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
@@ -2227,6 +2269,7 @@
 							that.modalName = "cantview";
 							that.cantviewmessage = res.data.message;
 						} else {
+							console.log(res.data)
 							that.postup = res.data.author;
 							that.fid = res.data.fid;
 							that.pid = res.data.pid;
@@ -2254,6 +2297,11 @@
 							that.dashang = res.data.rate;
 							that.yzm = res.data.yzm;
 							that.daoxu = res.data.daoxu;
+							if(that.daoxu==1){
+								that.TabCur = 4;
+							}else{
+								that.TabCur = 3;
+							}
 							that.replies = res.data.replies;
 							that.sightml = res.data.userinfo.sightml;
 							that.replycredit = res.data.replycredit;
@@ -2350,7 +2398,7 @@
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 					},
 					success: (res) => {
-						console.log(res.data);
+						//console.log(res.data);
 						if (res.data.code == 404) {
 							that.modalName = "needlogin";
 						} else if (res.data.code == 401) {
@@ -2383,6 +2431,7 @@
 		},
 		onLoad: function(option) { //option为object类型，会序列化上个页面传递的参数 
 			this.tid = option.tid;
+			this.fresh = option.fresh;
 			var that = this;
 			console.log(option.tid); //打印出上个页面传递的参数。
 			this.loadthread(this.tid);

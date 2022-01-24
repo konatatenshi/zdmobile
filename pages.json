@@ -293,6 +293,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/extra/profile",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"mp-alipay": {

@@ -27,7 +27,7 @@
 								<view class="solid-bottom article text-df"
 									style="padding-top: 10upx; padding-bottom: 10upx;" :class="'bg-'+themeColor.name" v-if="item.displayorder>0&&!(ifpingbi(item.author)&&$adminid<=0)">
 									<view @tap="topost(item.tid)">
-										<text class="text-black text-cut" style="width: 100%;" :style="geshihua(item.highlight)">{{item.subject}}</text>
+										<text class="text-black text-cut" style="width: 100%;" :style="geshihua(item.highlight,item.tid)">{{item.subject}}</text>
 									</view>
 									<view> <text class="text-sm text-red padding-sm">置顶</text> <text
 											class="text-sm text-gray padding-sm">{{item.author}}&nbsp&nbsp{{item.replies}}评</text>
@@ -80,7 +80,7 @@
 													</view>
 												</view>
 											</view>
-											<view class="forumtitle text-cut" :style="geshihua(item.highlight)" @tap="topost(item.tid)">
+											<view class="forumtitle text-cut" :style="geshihua(item.highlight,item.tid)" @tap="topost(item.tid)">
 												{{item.subject}}
 											</view>
 											<view class="text-content text-red flex justify-center float"
@@ -430,12 +430,16 @@
 					urls: [url], //这里一定是数组，不然就报错
 				});
 			},
-			geshihua(f){
+			geshihua(f,g){
 				if(f==0){
 					return '';
 				}
 				var shiwei = f.substr(0, 1);
-				var gewei = f.substr(1, 1);
+				if(f.toString().length==2){
+					var gewei = parseInt(f.substr(1, 1));
+				}else{
+					var gewei = parseInt(f);
+				}
 				var css = '';
 				shiwei = parseInt(shiwei).toString(2); 
 				if(parseInt(shiwei/100)==1){
@@ -444,42 +448,42 @@
 				if(parseInt((shiwei)/10)==1){
 					css = css + 'font-style:italic;';
 				}
-				if(parseInt(shiwei%10)==1){
+				if(parseInt(shiwei%10)==1&&gewei==0){
 					if(Math.round(Math.random())<1){
 						css = css + 'color: #2897C5;';
 					}else{
 						css = css + 'color: #EE1B2E;';
 					}
 				}
-				//console.log(gewei);
+				console.log(g + ':' + gewei + ':' + f);
 				switch (gewei) {
-					case '0':
+					case 9:
 						break;
-					case '1':
+					case 0:
 						css = css + 'color:#000;';
 						break;
-					case '2':
+					case 1:
 						css = css + 'color:#EE1B2E;';
 						break;
-					case '3':
+					case 2:
 						css = css + 'color:#EE5023;';
 						break;
-					case '4':
+					case 3:
 						css = css + 'color:#996600;';
 						break;
-					case '5':
+					case 4:
 						css = css + 'color:#3C9D40;';
 						break;
-					case '6':
+					case 5:
 						css = css + 'color:#2897C5;';
 						break;
-					case '7':
+					case 6:
 						css = css + 'color:#2B65B7;';
 						break;
-					case '8':
+					case 7:
 						css = css + 'color:#8F2A90;';
 						break;
-					case '9':
+					case 8:
 						css = css + 'color:#EC1282;';
 						break;
 				}
