@@ -114,7 +114,7 @@
 								<text :class="loadModal2?'cuIcon-loading2 cuIconfont-spin':''"></text>{{ding}}
 							</view>
 						</view>
-						<view class="cu-capsule flex-sub">
+						<view class="cu-capsule flex-sub" v-if="platform!=1">
 							<view class='cu-tag bg-blue padding-sm' @tap="dashangadd()">
 								<text class='cuIcon-moneybagfill'>打赏</text>
 							</view>
@@ -2398,7 +2398,7 @@
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 					},
 					success: (res) => {
-						//console.log(res.data);
+						console.log(res.data);
 						if (res.data.code == 404) {
 							that.modalName = "needlogin";
 						} else if (res.data.code == 401) {

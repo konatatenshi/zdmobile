@@ -14,7 +14,7 @@
 			:class="modalName!=null?'show':''">
 			<view class="cu-card dynamic cu-list2 menu-avatar">
 				<view class="cu-item">
-					<view class="cu-avatar2 round border-custom" :style="{'background-image': 'url('+avatar+')'}">
+					<view class="cu-avatar2 round border-custom" :style="{'background-image': 'url('+avatar+')'}" @tap="toavatar(avatar)">
 					</view>
 					<view class="content flex-sub">
 						<view class="text-black">&nbsp;</view>
@@ -87,7 +87,7 @@
 						<view v-if="guanzhupost.length > 0">
 							<block v-for="(itemex,indexe1) in guanzhupost" :key="indexe1">
 								<view class="solid-bottom text-df article"
-									style="padding-top: 10upx; padding-bottom: 10upx;" @tap="tourl(itemex.url)" v-if="itemex.url!=496145">
+									style="padding-top: 10upx; padding-bottom: 10upx;" @tap="tourl(itemex.url)" v-if="itemex.url!=510953">
 									<view style="margin-right: 20upx;padding-left: 80upx;" class="text-black text-cut">
 										{{itemex.title}}
 									</view>
@@ -212,6 +212,27 @@
 									<text class="text-gray"><text class="cuIcon-profile"></text>设置分组</text>
 								</view>
 							</view>
+							<view class="cu-item2 cu-item" v-if="!ifpingbi(username)" @tap="pingbiadd(username)">
+								<view class="content noborder2">
+									<text class="text-grey"><text
+											class="cuIcon-roundclose"></text>屏蔽作者：{{username}}</text>
+									<view class="text-gray text-sm noborder">屏蔽后，你将不会收到他的信息。</view>
+								</view>
+							</view>
+							<view class="cu-item2 cu-item" v-else @tap="pingbiremove(username)">
+								<view class="content noborder2">
+									<text class="text-grey"><text
+											class="cuIcon-roundclose"></text>取消屏蔽：{{username}}</text>
+									<view class="text-gray text-sm noborder">屏蔽后，你将不会收到他的信息。</view>
+								</view>
+							</view>
+							<view class="cu-item2 cu-item" @tap="lahei()">
+								<view class="content noborder2">
+									<text class="text-grey"><text
+											class="cuIcon-attentionforbid"></text>{{laheitext}}：{{username}}</text>
+									<view class="text-gray text-sm noborder">拉黑后，他将不能回复和私聊你任何信息。</view>
+								</view>
+							</view>
 							<view class="cu-item" @tap="jubaota()">
 								<view class="content">
 									<text class="text-grey noborder2"><text class="cuIcon-info"></text>举报此人</text>
@@ -310,6 +331,9 @@
 				huitie: 0,
 				groupid: 0,
 				iconlist: "",
+				pingbilist: [],
+				laheitext: '拉黑此人',
+				laheivar: 0,
 				friendaddmessage: "",
 				sex: 0,
 				isfriend: 0,
@@ -344,6 +368,11 @@
 				this.TabCur = e;
 				this.shuaxinlist();
 			},
+			toavatar(e){
+				uni.previewImage({
+					urls: [e], //这里一定是数组，不然就报错
+				});
+			},
 			copy(e){
 				var that = this;
 				uni.setClipboardData({
@@ -361,10 +390,13 @@
 				}
 			},
 			jubaota(){
-				 uni.showToast({
-				 	title:'举报成功！'
-				 })
-				 this.modalName = null;
+				let that = this;
+				this.modalName = null;
+				uni.navigateTo({
+					url: '../extra/jubaouser?username=' + that.username,
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
 			},
 			topm() {
 				let that = this;
@@ -495,7 +527,9 @@
 								that.username = res.data.userinfo.username;
 								that.zan = res.data.userinfo.zan;
 								that.avatar = that.getavatar(res.data.userinfo.avatarlist);
+								console.log(that.avatar);
 								that.woguanzhu = res.data.userinfo.woguanzhu;
+								that.laheivar = res.data.userinfo.blacklist;
 								that.groupid = res.data.userinfo.groupid;
 								if(JSON.stringify(res.data.userinfo.friends) != '[]'){
 									that.isfriend = 1;
@@ -888,6 +922,81 @@
 					}
 				});
 			},
+			lahei(e) {
+				let that = this;
+				this.jiazai = 1;
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:blacklist', //获取置顶帖子
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token,
+						touid: that.uid,
+						typeid: that.laheivar
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data)
+						if (res.data.code == 200) {
+							that.laheitext = '取消拉黑';
+							that.laheivar = 1;
+							that.jifenbiandong('拉黑成功', that.username + '已加入黑名单');
+						} else if (res.data.code == 201) {
+							that.laheitext = '拉黑作者';
+							that.laheivar = 0;
+							that.jifenbiandong('拉黑取消', that.username + '已移除黑名单');
+						} else {
+							that.jifenbiandong('拉黑失败', res.data.message);
+						}
+						that.jiazai = 0;
+						that.loadwb = 1;
+						setTimeout(() => {
+							this.modalName = null;
+						}, 200)
+					}
+				});
+			},
+			pingbiremove(e) {
+				var that = this;
+				this.pingbilist.splice(this.pingbilist.indexOf(e), 1);
+				console.log(this.pingbilist)
+				uni.setStorage({
+					key: 'pingbilist',
+					data: that.pingbilist,
+					success: function() {
+						that.jifenbiandong('屏蔽取消', '你已将此作者从屏蔽列表移除');
+					}
+				});
+				setTimeout(() => {
+					this.modalName = null;
+				}, 200)
+			},
+			pingbiadd(e) {
+				var that = this;
+				console.log(this.pingbilist);
+				console.log(e);
+				this.pingbilist.push(e);
+				uni.setStorage({
+					key: 'pingbilist',
+					data: that.pingbilist,
+					success: function() {
+						that.jifenbiandong('屏蔽成功', '你已将此作者加入屏蔽列表');
+					}
+				});
+				setTimeout(() => {
+					this.modalName = null;
+				}, 200)
+			},
+			ifpingbi(e) {
+				if (this.pingbilist.indexOf(e) >= 0) {
+					//console.log(e);
+					return true;
+				} else {
+					return false;
+				}
+			},
 			more(e) {
 				let that = this;
 				this.modalName = 'more';
@@ -906,7 +1015,13 @@
 			console.log(option.uid); //打印出上个页面传递的参数。
 			//this.loadthread(this.uid);
 			this.shuaxinlist();
-			console.log(this.avatar);
+			uni.getStorage({
+				key: 'pingbilist',
+				success: function(res) {
+					console.log(res.data);
+					that.pingbilist = res.data;
+				}
+			})
 		},
 		onReady() {
 			plus.navigator.setStatusBarStyle('dark'); //改变系统标题颜色
@@ -1083,5 +1198,10 @@
 		background-color: rgba(196, 16, 212, 0.4);
 		border: 4upx solid rgba(221, 255, 253, 0.4);
 	}
-	
+	.cu-list.menu>.cu-item2 .content {
+	    line-height: 1em!important;
+	}
+	.content.noborder2 {
+	    width: 100%;
+	}
 </style>

@@ -557,6 +557,13 @@
 			},
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;
+				if(this.TabCur==4){
+					uni.navigateTo({
+						url: '../extra/ad',
+						animationType: 'pop-in',
+						animationDuration: 200
+					});
+				}
 				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
 			},
 			settingselect(e) {

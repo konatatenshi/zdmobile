@@ -25,6 +25,9 @@
 			<input placeholder="请输入发帖标题" v-model="title" name="input"></input>
 		</view>
 		<linke-ux-editor v-model="content"></linke-ux-editor>
+		<view class="margin-tb-sm text-center"><button
+			class="margin cu-btn bg-blue block lg" :disabled="fasong?true:false" @tap="post()">提交</button>
+		</view>
 	</view>
 </template>
 

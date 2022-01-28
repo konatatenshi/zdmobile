@@ -68,7 +68,7 @@
 			} else {
 				this.platform = 2;
 			}
-			var urlon = encodeURIComponent(getApp().globalData.zddomain + 'plugin.php?id=qu_ranklist:ranklist&app=1&mobile=2');
+			var urlon = encodeURIComponent(getApp().globalData.zddomain + 'plugin.php?id=qu_ranklist:ranklist&app=1');
 			this.url = getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:tourl&token=' + this.$token +
 				'&action=send_url&url=' + urlon;
 			console.log(this.url)

@@ -2,7 +2,8 @@
 本论坛APP使用UNI-APP编译，主要是服务于终点论坛。
 
 ## 打包版商店地址
-[Google Play](https://play.google.com/store/apps/details?id=bbs.zdfx.net)
+[Google Play](https://play.google.com/store/apps/details?id=bbs.zdfx.net)  
+[Testfight(iOS)](https://testflight.apple.com/join/PeuaAnI3)
 
 ## 进度
  * 发帖 完成✔️
@@ -30,7 +31,7 @@
  * 点赞 完成✔
  * 打赏 完成✔
  * 收藏 完成✔
- * 签名 部分完成✔ 差管理签名
+ * 签名 完成✔
  * 下载附件/查看附件 完成✔（20211115,V0.3.6）
  * 答题 完成✔（20211210,V0.3.12）
  * 任务 完成✔（20211210,V0.3.12）

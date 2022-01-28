@@ -15,7 +15,11 @@
      		"launchtype" : "local"
      	},
      	"provider" : "aliyun",
-     	"type" : "uniCloud"
+     	"type" : "uniCloud",
+     	"uniapp" : 
+     	{
+     		"launchtype" : "local"
+     	}
      }
     ]
 }
