@@ -58,6 +58,10 @@
 			<button v-if="google==0" class="cu-btn bg-green shadow margin" @tap="googlelogin"><image class="google" src="../../static/img/google.svg"></image>点击绑定Google登录</button>
 			<button v-else class="cu-btn bg-green shadow margin btn22" @tap="googlelogin"><image class="google" src="../../static/img/google.svg"></image>Google绑定邮箱(点击解绑)：<br>{{mail}}</button>
 		</view>
+		<view class="action" v-if="platform==1">
+			<button v-if="apple==0" class="cu-btn bg-black shadow margin" @tap="applelogin"><image class="google" src="../../static/img/Apple_logo_grey.svg"></image>点击绑定Apple登录</button>
+			<button v-else class="cu-btn bg-black shadow margin btn22" @tap="applelogin"><image class="google" src="../../static/img/Apple_logo_grey.svg"></image>点击解绑Apple绑定账号</button>
+		</view>
 		<view class="cu-modal" :class="modalName=='bdgoogle'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
@@ -114,6 +118,7 @@
 				errortext: '',
 				secrettext: '',
 				mail: '',
+				amail: '',
 				erweima: '../../static/img/loading2.gif',
 				oldps:'',
 				newps1:'',
@@ -122,6 +127,7 @@
 				lpyz: false,
 				platform: 0,
 				google: 0,
+				apple: 0,
 				toggleDelay: false
 
 			};
@@ -259,6 +265,41 @@
 						}
 					});
 			},
+			saveapple(e,f,g){
+				let that = this;
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:changepassword', //获取置顶帖子
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							token: that.$token,
+							type: 7,
+							email: e,
+							openid:f,
+							name:g
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data);
+							that.lpyz = false;
+							if (res.data.code == 213) {//未开启
+									that.apple = 1;
+									uni.showToast({
+										title: '绑定成功',
+										duration: 1000
+									});
+							}else{
+									uni.showToast({
+										title: res.data.text,
+										icon: 'none',
+										duration: 1000
+									});
+							}
+						}
+					});
+			},
 			googlelogin(){
 				let that = this;
 				// #ifdef APP-PLUS
@@ -279,6 +320,28 @@
 						}
 					}
 				);
+				// #endif
+			},
+			applelogin(){
+				let that = this;
+				// #ifdef APP-PLUS
+				uni.login({  
+				    provider: 'apple',  
+				    success: function (loginRes) {  
+				        // 登录成功  
+				        uni.getUserInfo({  
+				            provider: 'apple',  
+							success: function (infoRes) {
+								console.log(infoRes);
+								that.saveapple(infoRes.userInfo.email,infoRes.userInfo.openId,infoRes.userInfo.fullName.familyName+infoRes.userInfo.fullName.giveName+infoRes.userInfo.fullName.givenName);
+								that.amail = infoRes.userInfo.email;
+							} 
+				        })  
+				    },  
+				    fail: function (err) {  
+				        // 登录失败  
+				    }  
+				});  
 				// #endif
 			},
 			togoogle(){
@@ -352,6 +415,8 @@
 						console.log(res.data);
 						that.google = res.data.google;
 						that.mail = res.data.mail;
+						that.apple = res.data.apple;
+						that.amail = res.data.amail;
 						if (res.data.code == 201) {//未开启
 							that.zhuangtai = '你还未绑定Google身份验证器，请点击绑定按钮绑定一个吧。';
 							that.bangding = '绑定';

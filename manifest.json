@@ -2,14 +2,14 @@
     "name" : "终点论坛",
     "appid" : "__UNI__0D1E511",
     "description" : "",
-    "versionName" : "0.6.1",
-    "versionCode" : 51,
+    "versionName" : "0.6.5",
+    "versionCode" : 55,
     "transformPx" : false,
     "app-plus" : {
         /* 5+App特有相关 */
         "modules" : {
             "Push" : {},
-            "Payment" : {}
+            "OAuth" : {}
         },
         /* 模块配置 */
         "distribute" : {
@@ -58,15 +58,8 @@
                 "push" : {
                     "unipush" : {}
                 },
-                "maps" : {
-                    "amap" : {
-                        "appkey_ios" : "",
-                        "appkey_android" : ""
-                    }
-                },
-                "payment" : {
-                    "google" : {},
-                    "appleiap" : {}
+                "oauth" : {
+                    "apple" : {}
                 }
             },
             "icons" : {
@@ -113,32 +106,18 @@
             "enable" : true
         },
         "nativePlugins" : {
-            "gui-google" : {
-                "__plugin_info__" : {
-                    "name" : "谷歌授权登录Androoid版插件，Google登录Android版插件",
-                    "description" : "Google/谷歌授权登录",
-                    "platforms" : "Android",
-                    "url" : "https://ext.dcloud.net.cn/plugin?id=5720",
-                    "android_package_name" : "bbs.zdfx.net",
-                    "ios_bundle_id" : "",
-                    "isCloud" : true,
-                    "bought" : 1,
-                    "pid" : "5720",
-                    "parameters" : {}
-                }
-            },
             "HXR-GoogleMobileAD" : {
                 "appid-android" : "ca-app-pub-9890309082716404~8229926380",
                 "appid-ios" : "ca-app-pub-9890309082716404~8229926380",
                 "__plugin_info__" : {
-                    "name" : "谷歌广告，限时特惠，原价666，国内可用！长期维护，先试用再购买，有问题联系 - [试用版，仅用于自定义调试基座]",
+                    "name" : "谷歌广告，限时特惠，原价666，国内可用！长期维护，先试用再购买，有问题联系",
                     "description" : "谷歌广告，AdMob，谷歌广告手机端，adsense下的AdMob，稳定收益高 ",
                     "platforms" : "Android,iOS",
                     "url" : "https://ext.dcloud.net.cn/plugin?id=2506",
-                    "android_package_name" : "",
-                    "ios_bundle_id" : "",
+                    "android_package_name" : "bbs.zdfx.net",
+                    "ios_bundle_id" : "bbs.zdfx.net",
                     "isCloud" : true,
-                    "bought" : 0,
+                    "bought" : 1,
                     "pid" : "2506",
                     "parameters" : {
                         "appid-android" : {
@@ -152,6 +131,20 @@
                             "value" : ""
                         }
                     }
+                }
+            },
+            "gui-google" : {
+                "__plugin_info__" : {
+                    "name" : "谷歌授权登录Androoid版插件，Google登录Android版插件",
+                    "description" : "Google/谷歌授权登录",
+                    "platforms" : "Android",
+                    "url" : "https://ext.dcloud.net.cn/plugin?id=5720",
+                    "android_package_name" : "bbs.zdfx.net",
+                    "ios_bundle_id" : "bbs.zdfx.net",
+                    "isCloud" : true,
+                    "bought" : 1,
+                    "pid" : "5720",
+                    "parameters" : {}
                 }
             }
         }
@@ -168,8 +161,8 @@
         }
     },
     "h5" : {
-        "title" : "ColorUi for UniApp",
-        "domain" : "demo.color-ui.com"
+        "title" : "终点论坛",
+        "domain" : "bbs.zdfx.net"
     },
     "vueVersion" : "2"
 }

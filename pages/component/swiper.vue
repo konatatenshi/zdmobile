@@ -24,6 +24,7 @@
 				var currentWebview = this.$scope.$getAppWebview();
 				var thisurl = currentWebview.children()[0].getURL();
 				console.log(thisurl);
+				plus.navigator.setStatusBarStyle('dark');
 				var re = /mod=forumdisplay(.*)fid=(\d*)*/i;
 				var found = thisurl.match(re);
 				var wv = currentWebview.children()[0];

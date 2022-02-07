@@ -148,7 +148,8 @@
 			<view class="cu-item" :class="menuArrow?'arrow':''">
 				<view class="content">
 					<view>
-						<text class="cuIcon-btn text-green margin-right-xs"></text><text class="text-grey">头像上传</text></view>
+						<text class="cuIcon-btn text-green margin-right-xs"></text><text class="text-grey">头像上传</text>
+					</view>
 					<view class="cu-progress round sm striped" v-if="percent==100">
 						<text class="text-grey text-sm">头像上传完毕，请等待缓存刷新后更新头像。</text>
 					</view>
@@ -180,19 +181,6 @@
 				</view>
 				<view class="action">
 					<text class="text-grey text-sm">定期修改密码有助于论坛安全！</text>
-				</view>
-			</view>
-			<view class="cu-item">
-				<view class="content padding-tb-sm">
-					<view>
-						<text class="cuIcon-notification text-blue margin-right-xs">消息提醒</text>
-					</view>
-					<view class="text-gray text-sm">
-						<text class="cuIcon-infofill margin-right-xs"></text> 消息提醒还没打开！
-					</view>
-				</view>
-				<view class="action">
-					<switch @change="SwitchA" :class="switchA?'checked':''" :checked="switchA?true:false"></switch>
 				</view>
 			</view>
 			<view class="cu-item" :class="menuArrow?'arrow':''">
@@ -246,14 +234,14 @@
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
-				<view class="padding-xl">
+				<view class="padding-xl text-blue">
 					终点分享 V{{version}}{{update}}
 				</view>
-				<view v-if="isupdate==1" class="padding-xl">
+				<view v-if="isupdate==1" class="padding-xl text-red">
 					目前服务器有新版本，确认进行更新吗？
 				</view>
-				<view class="padding-xl">
-					<view v-if="progress>0" class="cu-progress">
+				<view class="padding-xl" v-if="progress>0">
+					<view class="cu-progress">
 						<view class="bg-blue" :style="[{ width:progress>0?progress + '%':''}]">{{progress}}%</view>
 					</view>
 				</view>
@@ -263,8 +251,9 @@
 				<view v-if="progress>0" class="padding-xl">
 					如果遇到进度条100，但是APP没有正常重启，说明数据读取失败。
 				</view>
-				<view class="padding-xl">
-					开源地址：<text class="text-blue" @tap="tothegithub()"><text class="lg text-blue cuIcon-link"></text>github.com/konatatenshi/zdmobile</text>
+				<view class="padding-xl text-cyan">
+					开源地址：<text class="text-blue" @tap="tothegithub()"><text
+							class="lg text-blue cuIcon-link"></text>github.com/konatatenshi/zdmobile</text>
 				</view>
 				<view class="cu-bar bg-white justify-end">
 					<view v-if="isupdate==1" class="action">
@@ -273,21 +262,46 @@
 					</view>
 				</view>
 			</view>
-			<view class="cu-modal" :class="modalName=='installfail'?'show':''">
-				<view class="cu-dialog">
-					<view class="cu-bar bg-white justify-end">
-						<view class="content">数据读取失败</view>
-						<view class="action" @tap="hideModal">
-							<text class="cuIcon-close text-red"></text>
-						</view>
+		</view>
+		<view class="cu-modal" :class="modalName=='grouplist'?'show':''" @tap="hideModal">
+			<view class="cu-dialog" @tap.stop>
+				<view class="padding bg-white">
+					<view class="flex  p-xs margin-bottom-sm mb-sm">
+						<view class="bg-grey padding-sm margin-xs radius">前一等级：<br>{{getjf(mygroupid,1)}}</view>
+						<view class="bg-grey padding-sm margin-xs radius">积分范围：<br>{{getjf(mygroupid,2)}}</view>
+						<view class="bg-grey padding-sm margin-xs radius">阅读权限：<br>{{getjf(mygroupid,3)}}</view>
 					</view>
-					<view class="padding-xl">
-						数据读取失败。可能因为版本不对。请联系管理员。
+					<view class="flex  p-xs margin-bottom-sm mb-sm">
+						<view class="bg-grey padding-sm margin-xs radius">目前等级：<br>{{loadlevelicon(mygroupid)}}</view>
+						<view class="bg-grey padding-sm margin-xs radius">目前积分：<br>{{mycredits}}</view>
+						<view class="bg-grey padding-sm margin-xs radius">阅读权限：<br>{{getjf(mygroupid,4)}}</view>
 					</view>
-					<view class="cu-bar bg-white justify-end">
-						<view class="action">
-							<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
-						</view>
+					<view class="flex  p-xs margin-bottom-sm mb-sm">
+						<view class="bg-grey padding-sm margin-xs radius">下一等级：<br>{{getjf(mygroupid,5)}}</view>
+						<view class="bg-grey padding-sm margin-xs radius">积分范围：<br>{{getjf(mygroupid,6)}}</view>
+						<view class="bg-grey padding-sm margin-xs radius">阅读权限：<br>{{getjf(mygroupid,7)}}</view>
+					</view>
+					<view class="cu-bar bg-white">
+						<button class="cu-btn line-green text-green" @tap="tomore">查看详情</button>
+						<button class="cu-btn bg-green margin-left" @tap="hideModal">我知道了</button>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="cu-modal" :class="modalName=='installfail'?'show':''">
+			<view class="cu-dialog">
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">数据读取失败</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl">
+					数据读取失败。可能因为版本不对。请联系管理员。
+				</view>
+				<view class="cu-bar bg-white justify-end">
+					<view class="action">
+						<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
 					</view>
 				</view>
 			</view>
@@ -437,12 +451,12 @@
 					url: '../plugin/indexes'
 				})
 			},
-			tofavor(){
+			tofavor() {
 				uni.navigateTo({
 					url: '../extra/favorite'
 				})
 			},
-			toprofile(){
+			toprofile() {
 				uni.navigateTo({
 					url: '../extra/profile'
 				})
@@ -474,6 +488,197 @@
 			},
 			cleanbefore(e) {
 				this.modalName = 'logout';
+			},
+			getydqx(e) {
+				if (e == 9) {
+					return 0;
+				} else if (e == 10) {
+					return 10;
+				} else if (e == 29) {
+					return 20;
+				} else if (e == 30) {
+					return 30;
+				} else if (e == 31) {
+					return 40;
+				} else if (e == 32) {
+					return 50;
+				} else if (e == 33) {
+					return 60;
+				} else if (e == 34) {
+					return 70;
+				} else if (e == 35) {
+					return 80;
+				} else if (e == 36) {
+					return 90;
+				} else if (e == 37) {
+					return 100;
+				} else if (e == 38) {
+					return 110;
+				} else if (e == 52) {
+					return 110;
+				} else if (e == 54) {
+					return 110;
+				} else if (e == 1) {
+					return 255;
+				} else if (e == 2) {
+					return 255;
+				} else if (e == 3) {
+					return 255;
+				} else if (e == 16) {
+					return 150;
+				} else if (e == 17) {
+					return 255;
+				} else if (e == 18) {
+					return 255;
+				} else if (e == 19) {
+					return 255;
+				} else if (e == 45) {
+					return 150;
+				} else if (e == 45) {
+					return 150;
+				} else if (e == 47) {
+					return 255;
+				} else if (e == 57) {
+					return 255;
+				} else if (e == 4) {
+					return 0;
+				} else if (e == 5) {
+					return 0;
+				} else if (e == 6) {
+					return 0;
+				} else if (e == 7) {
+					return 1;
+				} else if (e == 8) {
+					return 0;
+				} else if (e == 9) {
+					return 1;
+				} else if (e == 41) {
+					return 110;
+				} else if (e == 42) {
+					return 110;
+				} else if (e == 50) {
+					return 110;
+				} else if (e == 44) {
+					return 80;
+				} else if (e == 51) {
+					return 90;
+				}
+			},
+			toqian(e) {
+				if (e == 9) {
+					return 9;
+				} else if (e == 10) {
+					return 9;
+				} else if (e == 29) {
+					return 10;
+				} else if (e == 30) {
+					return 29;
+				} else if (e == 31) {
+					return 30;
+				} else if (e == 32) {
+					return 31;
+				} else if (e == 33) {
+					return 32;
+				} else if (e == 34) {
+					return 33;
+				} else if (e == 35) {
+					return 34;
+				} else if (e == 36) {
+					return 35;
+				} else if (e == 37) {
+					return 36;
+				} else if (e == 38) {
+					return 37;
+				} else if (e == 52) {
+					return 38;
+				} else if (e == 54) {
+					return 52;
+				} else {
+					return e;
+				}
+			},
+			tonext(e) {
+				if (e == 9) {
+					return 10;
+				} else if (e == 10) {
+					return 39;
+				} else if (e == 29) {
+					return 30;
+				} else if (e == 30) {
+					return 31;
+				} else if (e == 31) {
+					return 32;
+				} else if (e == 32) {
+					return 33;
+				} else if (e == 33) {
+					return 34;
+				} else if (e == 34) {
+					return 35;
+				} else if (e == 35) {
+					return 36;
+				} else if (e == 36) {
+					return 37;
+				} else if (e == 37) {
+					return 38;
+				} else if (e == 38) {
+					return 52;
+				} else if (e == 52) {
+					return 54;
+				} else if (e == 54) {
+					return 54;
+				} else {
+					return e;
+				}
+			},
+			getjffw(e) {
+				if (e == 9) {
+					return "-999999999~0";
+				} else if (e == 10) {
+					return "0-300";
+				} else if (e == 29) {
+					return "300-1000";
+				} else if (e == 30) {
+					return "1000-2000";
+				} else if (e == 31) {
+					return "2000-4000";
+				} else if (e == 32) {
+					return "4000-6000";
+				} else if (e == 33) {
+					return "6000-9000";
+				} else if (e == 34) {
+					return "9000-12000";
+				} else if (e == 35) {
+					return "12000-16000";
+				} else if (e == 36) {
+					return "16000-20000";
+				} else if (e == 37) {
+					return "20000-25000";
+				} else if (e == 38) {
+					return "25000-30000";
+				} else if (e == 52) {
+					return "30000-50000";
+				} else if (e == 54) {
+					return "50000-?";
+				} else {
+					return "-";
+				}
+			},
+			getjf(e, f) {
+				if (f == 1) {
+					return this.loadlevelicon(this.toqian(e));
+				} else if (f == 2) {
+					return this.getjffw(this.toqian(e));
+				} else if (f == 3) {
+					return this.getydqx(this.toqian(e));
+				} else if (f == 4) {
+					return this.getydqx(e);
+				} else if (f == 5) {
+					return this.loadlevelicon(this.tonext(e));
+				} else if (f == 6) {
+					return this.getjffw(this.tonext(e));
+				} else if (f == 7) {
+					return this.getydqx(this.tonext(e));
+				}
 			},
 			cleanlogin() {
 				var that = this;
@@ -518,12 +723,12 @@
 					url: '../component/swiper'
 				});
 			},
-			openbox(e){
+			openbox(e) {
 				uni.navigateTo({
 					url: '../component/timeline'
 				});
 			},
-			tomm(e){
+			tomm(e) {
 				uni.navigateTo({
 					url: '../plugin/animation'
 				});
@@ -531,6 +736,11 @@
 			tologin(e) {
 				uni.navigateTo({
 					url: '../basics/button?sessionid=' + e
+				});
+			},
+			tomore(e) {
+				uni.navigateTo({
+					url: '../component/card?tid=126191'
 				});
 			},
 			scantologin() {
@@ -557,12 +767,15 @@
 			},
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;
-				if(this.TabCur==4){
+				console.log(this.TabCur);
+				if (this.TabCur == 4) {
 					uni.navigateTo({
 						url: '../extra/ad',
 						animationType: 'pop-in',
 						animationDuration: 200
 					});
+				} else if (this.TabCur == 1) {
+					this.modalName = 'grouplist';
 				}
 				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60
 			},
@@ -584,7 +797,7 @@
 						data: {
 							version: widgetInfo.version,
 							name: widgetInfo.name,
-							platform : that.platform
+							platform: that.platform
 						},
 						success: (result) => {
 							var data = result.data;
@@ -855,7 +1068,8 @@
 					success: function(res) {
 						const tempFilePaths = res.tempFilePaths;
 						const uploadTask = uni.uploadFile({
-							url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:uploadavatar',
+							url: getApp().globalData.zddomain +
+								'plugin.php?id=ts2t_qqavatar:uploadavatar',
 							filePath: tempFilePaths[0],
 							name: 'file',
 							formData: {
@@ -867,12 +1081,12 @@
 						});
 
 						uploadTask.onProgressUpdate(function(res) {
-				   _self.percent = res.progress;
+							_self.percent = res.progress;
 							console.log('上传进度' + res.progress);
 							console.log('已经上传的数据长度' + res.totalBytesSent);
 							console.log('预期需要上传的数据总长度' + res.totalBytesExpectedToSend);
 						});
-				 },
+					},
 					error: function(e) {
 						console.log(e);
 					}
@@ -893,6 +1107,7 @@
 				that.version = wgtinfo.version;
 				console.log(that.version);
 			});
+			plus.navigator.setStatusBarStyle('dark');
 			// 获取传递过来的链接
 			if (uni.getSystemInfoSync().platform == 'ios') {
 				this.platform = 1;
@@ -902,7 +1117,6 @@
 			var urlon
 			var date = new Date();
 			that.month = date.getMonth() + 1;
-			plus.navigator.setStatusBarStyle('dark');
 			void plus.runtime.setBadgeNumber(0); //桌面角标设置为0
 			const clientInfo = plus.push.getClientInfo(); //获取CID推送
 			const signature = plus.navigator.getSignature();
@@ -998,7 +1212,8 @@
 				});
 			}
 		},
-		onshow: function() {}
+		updated: function() {
+		}
 	}
 </script>
 
@@ -1022,7 +1237,8 @@
 	.cu-list.bg-black.cu-list.menu>.cu-item {
 		background-color: #747474 !important;
 	}
+
 	.cu-progress {
-	    background-color: transparent!important;
+		background-color: transparent !important;
 	}
 </style>

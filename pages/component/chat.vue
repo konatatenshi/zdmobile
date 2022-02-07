@@ -20,9 +20,13 @@
 					<view class="date">{{item.timestamp}}</view>
 				</view>
 				<view v-else-if="(item.mine || item.username==$username)&& item.remark=='图片'" class="cu-item self">
-					<view class="main">
+					<view class="main" v-if="item.content.indexOf('source') == 0">
 						<image src="../../static/img/loading2.gif" class="radius" v-show="item.id==-1"></image>
 						<image :src="'https://bbs.zdfx.net/' + item.content" @load="item.id='1'"  class="radius" @click="imgMap('https://bbs.zdfx.net/' + item.content)"  mode="widthFix" lazy-load v-show="item.id=='1'"></image>
+					</view>
+					<view class="main" v-else>
+						<image src="../../static/img/loading2.gif" mode="widthFix" class="radius" v-show="item.id==-1"></image>
+						<image :src="item.content" @load="item.id='1'"  class="radius" @click="imgMap(item.content)"  mode="widthFix" lazy-load v-show="item.id=='1'"></image>
 					</view>
 					<view class="cu-avatar radius"
 						:style="{'background-image': 'url(https://zd.tiangal.com/uc_server/avatar.php?uid='+item.fromid+'&size=small&ts=1)'}">
@@ -35,11 +39,13 @@
 					<view class="cu-avatar radius"
 						:style="{'background-image': 'url(https://zd.tiangal.com/uc_server/avatar.php?uid='+item.fromid+'&size=small&ts=1)'}">
 					</view>
-					<view class="main">
-					<view class="main">
+					<view class="main" v-if="item.content.indexOf('source') == 0">
 						<image src="../../static/img/loading2.gif" mode="widthFix" class="radius" v-show="item.id==-1"></image>
 						<image :src="'https://bbs.zdfx.net/' + item.content" @load="item.id='1'"  class="radius" @click="imgMap('https://bbs.zdfx.net/' + item.content)"  mode="widthFix" lazy-load v-show="item.id=='1'"></image>
 					</view>
+					<view class="main" v-else>
+						<image src="../../static/img/loading2.gif" mode="widthFix" class="radius" v-show="item.id==-1"></image>
+						<image :src="item.content" @load="item.id='1'"  class="radius" @click="imgMap(item.content)"  mode="widthFix" lazy-load v-show="item.id=='1'"></image>
 					</view>
 					<view class="date">&#12288;{{item.timestamp}}</view>
 				</view>
@@ -73,8 +79,12 @@
 			<input class="solid-bottom" :adjust-position="false" :focus="false" maxlength="300" cursor-spacing="10"
 				@focus="InputFocus" @blur="InputBlur" v-model="content"></input>
 			<view class="action">
-				<text class="cuIcon-emojifill text-grey" @tap="togglePicker(200, 'emoji')"></text>
-				<text class="cuIcon-roundadd text-grey" @tap="togglePicker(100, 'file')"></text>
+				<text class="cuIcon-emojifill text-grey margin-right-xs" @tap="togglePicker(200, 'emoji')"></text>
+				<uni-section title="只选择图片" type="line">
+					<view class="example-body">
+							<uni-file-picker class="exp" v-model="imageValue" limit="1" fileMediatype="image" :image-styles="imageStyles" @success="success"><text class="cuIcon-add text-grey warr"></text></uni-file-picker>
+					</view>
+				</uni-section>
 			</view>
 			<button @tap="sendmessage" class="cu-btn bg-green shadow">发送</button>
 		</view>
@@ -131,6 +141,17 @@
 	export default {
 		data() {
 			return {
+				imageStyles:{
+					width:40,
+					height:40,
+					border:{
+						color:"#8799a3",
+						width:2,
+						style:'solid',
+						radius:'50%',
+					}
+				},
+				imageValue: [],
 				imglist: [],
 				style: {
 					pageHeight: 0,
@@ -329,6 +350,40 @@
 					"avatar": "source/plugin/heart_im/img/group.png",
 					"name": "公共群组",
 					"remark": "",
+					"type": "group"
+				};
+				let dataarray = {
+					"mine": minearray,
+					"to": toarray,
+				};
+				let chatmess = {
+					"cmd": "chat",
+					"data": dataarray,
+				};
+				console.log(chatmess);
+				this.$socket.send(JSON.stringify(chatmess));
+				this.content = "";
+				console.log(this.content);
+			},
+			success(e) {
+				let hour = ("0" + new Date().getHours()).slice(-2);
+				let minute = ("0" + new Date().getMinutes()).slice(-2);
+				let second = ("0" + new Date().getSeconds()).slice(-2);
+								// 拼接
+				let result = hour + ":" + minute + ":" + second;
+				let minearray = {
+					"avatar": "https://bbs.zdfx.net/uc_server/avatar.php?uid=" + this.$uid + "&size=small&ts=1",
+					"content": "img[" + e.tempFilePaths + "]",
+					"username": this.$username,
+					"id": this.$uid,
+					"mine": true
+				};
+				let toarray = {
+					"groupname": "公共群组",
+					"id": -1,
+					"avatar": "source/plugin/heart_im/img/group.png",
+					"name": "公共群组",
+					"remark": "图片",
 					"type": "group"
 				};
 				let dataarray = {

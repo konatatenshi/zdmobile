@@ -110,7 +110,7 @@
 
 <script>
 	import AES from '../../js_sdk/ar-aes/ar-aes.js';
-	import w_md5 from "../../js_sdk/zww-md5/w_md5.js"
+	import w_md5 from "../../js_sdk/zww-md5/w_md5.js";
 	export default {
 		data() {
 			return {
@@ -310,7 +310,7 @@
 							console.log(res.data.result)
 							if (res.data.code==200) {
 								if(res.data.result.indexOf("sigZDned") != -1){
-									that.qdtext = '已签到';
+									that.qdtext = '已签到，此处不显示连签奖励';
 									if(res.data.data>0&&res.data.data<=10){
 										var jinbi = 11 - res.data.data;
 										that.jifenbiandong('签到成功','点币+' + res.data.count + ',金币+' + jinbi);

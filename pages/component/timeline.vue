@@ -58,6 +58,7 @@
 			var that = this;
 			var height = 0; //定义动态的高度变量，如高度为定值，可以直接写
 			var statusBarHeight = 0;
+			plus.navigator.setStatusBarStyle('dark');
 			uni.getSystemInfo({
 				//成功获取的回调函数，返回值为系统信息
 				success: (sysinfo) => {

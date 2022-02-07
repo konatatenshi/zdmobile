@@ -71,7 +71,15 @@
 				</view>
 				<view class="cu-modal" :class="modalName=='dianbi'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
-						<view class="text-content text-xl padding">点币来源：每日签到，翻卡是最主要来源，获得1-60不等，答题连对10道亦可+1，另外发帖被评为精华帖更是可以获得10点币。</view>
+						<view class="text-content text-xl padding">点币来源：每日签到，翻卡是最主要来源，获得1-60不等，答题连对10道亦可+1，另外发帖被评为精华帖更是可以获得10点币。点币用途是提升用户等级积分，除此之外并无他用。</view>
+						<view class="cu-bar bg-white">
+							<view class="action margin-0 flex-sub  solid-left" @tap="hideModal">我知道了</view>
+						</view>
+					</view>
+				</view>
+				<view class="cu-modal" :class="modalName=='jinbilaiyuan'?'show':''" @tap="hideModal">
+					<view class="cu-dialog" @tap.stop>
+						<view class="text-content text-xl padding">金币来源：每日答题正确可以获得1-7金币不等。另外发帖有30%概率随机获得奖励，大约1-20金币不等。</view>
 						<view class="cu-bar bg-white">
 							<view class="action margin-0 flex-sub  solid-left" @tap="hideModal">我知道了</view>
 						</view>
@@ -79,7 +87,7 @@
 				</view>
 				<view class="cu-modal" :class="modalName=='jinbi'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
-						<view class="text-content text-xl padding">你可以在下面输入活动或其他途径获取的金币卡，使用即可增加金币。</view>
+						<view class="text-content text-xl padding">你可以在下面输入活动或其他途径获取的金币卡，使用即可增加金币。<text v-show="eventtype=='adLoaded'" >也可以通过观看广告（每日限1次），获取随机的金币（1-5）。</text></view>
 						<view class="cu-bar bg-white padding">
 							<view class="search-form round">
 								<text class="cuIcon-goods"></text>
@@ -88,6 +96,9 @@
 						</view>
 						<view class="cu-bar bg-white">
 							<view class="action padding-bottom-sm padding-top-sm flex-sub cu-btn round bg-blue solid-left" @tap="chongzhi()">使用金币卡</view>
+						</view>
+						<view class="cu-bar bg-white" v-show="eventtype=='adLoaded'">
+							<view class="action padding-bottom-sm padding-top-sm flex-sub cu-btn round bg-blue solid-left" @tap="showInterstitialRewardedAd()">获取随机金币</view>
 						</view>
 					</view>
 				</view>
@@ -104,6 +115,9 @@
 </template>
 
 <script>
+	var googleInterstitialRewardedAd = uni.requireNativePlugin('HXR-GoogleMobileADRewardedInterstitialAd');
+	import AES from '../../js_sdk/ar-aes/ar-aes.js';
+	import w_md5 from "../../js_sdk/zww-md5/w_md5.js"
 	export default {
 		data() {
 			return {
@@ -122,6 +136,7 @@
 				credit1: 0,
 				credit2: 0,
 				credit3: 0,
+				platform: 0,
 				question: "题目加载中……",
 				listA: "选项加载中",
 				listB: "选项加载中",
@@ -130,10 +145,12 @@
 				sex: 0,
 				zql: 0,
 				qa: 0,
+				jiangli: 0,
 				sig: '加载中……',
 				username: "加载中……",
 				touxiangkuanglist: '',
 				zan: 0,
+				eventtype: '',
 				woguanzhu: 1,
 				scrollhight: 0,
 				swiperheight: 0,
@@ -159,7 +176,11 @@
 				this.modalName = 'dianbi';
 			},
 			tojinbi(e) {
-				this.modalName = 'jinbi';
+				if(this.platform==1&&this.$groupid==10){
+					this.modalName = 'jinbilaiyuan';
+				}else{
+					this.modalName = 'jinbi';
+				}
 			},
 			tabSelect(e) {
 				this.TabCur = e;
@@ -289,6 +310,8 @@
 					return '每日答题'
 				}else if(e=='PRC'){
 					return '帖子被打赏'
+				}else if(e=='RAC'){
+					return '观看广告'
 				}else if(e=='RSC'){
 					return '打赏帖子'
 				}else if(e=='BMC'){
@@ -304,6 +327,8 @@
 					return '你回答了题号为' + g +'的题目给与奖励'
 				}else if(e=='PRC'){
 					return '你的帖子被打赏获得奖励'
+				}else if(e=='RAC'){
+					return '你通过观看广告获得奖励'
 				}else if(e=='RSC'){
 					return '你打赏帖子花费积分'
 				}else if(e=='BMC'){
@@ -318,6 +343,73 @@
 						return f;
 					}
 				}
+			},
+			showInterstitialRewardedAd: function() {
+				let that = this;
+				googleInterstitialRewardedAd.showWithCallback(function(res) {
+					console.log(JSON.stringify(res));
+					if(res.eventType=='userDidEarnReward'){
+						that.jiangli = 1;
+					}
+					if(res.eventType=='adDidDismissScreen'&&that.jiangli == 1){
+						that.zaidas();
+						that.jiangli = 0;
+					}
+				});
+			},
+			zaidas(){
+				this.modalName = null;
+				let that = this;
+				const wuid = 'D' + this.$uid;
+				let date = new Date();
+				let Y = date.getFullYear() + '-';
+				let M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+				let D = date.getDate()< 10 ? '0' + date.getDate():date.getDate();
+				let thisdata = Y+M+D;
+				const signature = plus.navigator.getSignature();
+				console.log(signature);
+				console.log(thisdata);
+				const signe = AES.AES.encrypt(signature,w_md5.hex_md5_16(wuid),w_md5.hex_md5_16(thisdata));
+				this.formsub = true;
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:question', //获取置顶帖子
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token,
+						datiinfi: '7',
+						sign: signe
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data)
+						if(res.data.code==200){
+							that.jifenbiandong('广告奖励','成功获取' + res.data.gold + '金币！');
+						}else if(res.data.code==400){
+							uni.showToast({
+								title:'无此功能',
+								icon:"error"
+							})
+						}else if(res.data.code==401){
+							uni.showToast({
+								title:'功能关闭',
+								icon:"error"
+							})
+						}else if(res.data.code==402){
+							uni.showToast({
+								title:'次数过多',
+								icon:"error"
+							})
+						}else if(res.data.code==403){
+							uni.showToast({
+								title:'验证失败',
+								icon:"error"
+							})
+						}
+					}
+				});
 			},
 			xiangqingtap(e,f){
 				let that=this;
@@ -416,11 +508,24 @@
 			}
 		},
 		onLoad: function(option) {
+			let that = this;
 			this.uid = option.uid;
 			//this.uid = 19;
 			//console.log(option.uid); //打印出上个页面传递的参数。
 			//this.loadthread(this.uid);
 			this.shuaxinlist();
+			if (uni.getSystemInfoSync().platform == 'ios') {
+				this.platform = 1;
+			} else {
+				this.platform = 2;
+			}
+			if(this.platform==2){
+				googleInterstitialRewardedAd.createADWithAdUnitID('ca-app-pub-9890309082716404/2770356778', function(res) {
+					console.log(res);
+					that.eventtype = res.eventType;
+					console.log(that.eventtype);
+				}, {'userIdentifier':that.$uid, 'jinbi': that.$username + ' de jinbi'});
+			}
 		},
 		onReady() {
 			plus.navigator.setStatusBarStyle('dark'); //改变系统标题颜色

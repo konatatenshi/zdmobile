@@ -43,7 +43,7 @@
 				title: '',
 				platform: 0,
 				picker: ['水区', '交流区', '意见区', '教程区', '喇叭'],
-				picker2: ['水区', '无权发帖', '意见区', '无权发帖'],
+				picker2: ['吹水区', '意见区'],
 				editable: true,
 				fasong: false
 			}

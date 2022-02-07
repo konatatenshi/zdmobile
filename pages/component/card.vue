@@ -114,7 +114,7 @@
 								<text :class="loadModal2?'cuIcon-loading2 cuIconfont-spin':''"></text>{{ding}}
 							</view>
 						</view>
-						<view class="cu-capsule flex-sub" v-if="platform!=1">
+						<view class="cu-capsule flex-sub" v-if="$groupid!=10">
 							<view class='cu-tag bg-blue padding-sm' @tap="dashangadd()">
 								<text class='cuIcon-moneybagfill'>打赏</text>
 							</view>
@@ -673,8 +673,12 @@
 			<input class="solid-bottom" :adjust-position="false" :focus="false" maxlength="1000" cursor-spacing="10"
 				@focus="InputFocus" @blur="InputBlur" v-model="contenthuifu"></input>
 			<view class="action">
-				<text class="cuIcon-emojifill text-grey" @tap="togglePicker(200, 'emoji')"></text>
-				<text class="cuIcon-roundadd text-grey" @tap="togglePicker(100, 'file')"></text>
+				<text class="cuIcon-emojifill text-grey margin-right-xs" @tap="togglePicker(200, 'emoji')"></text>
+				<uni-section title="只选择图片" type="line">
+					<view class="example-body">
+							<uni-file-picker class="exp" v-model="imageValue" limit="1" fileMediatype="image" :image-styles="imageStyles" @success="success"><text class="cuIcon-add text-grey warr"></text></uni-file-picker>
+					</view>
+				</uni-section>
 			</view>
 			<button v-if="closed==0&&yzm==1" @tap="showVaptcha" class="cu-btn bg-green shadow"><text
 					class="cuIconfont-spin" :class="fasong?'cuIcon-loading2':''"></text>发送</button>
@@ -715,6 +719,17 @@
 				isCard: false,
 				sendpfno: false,
 				postname: '加载中',
+				imageStyles:{
+					width:40,
+					height:40,
+					border:{
+						color:"#8799a3",
+						width:2,
+						style:'solid',
+						radius:'50%',
+					}
+				},
+				imageValue: [],
 				sightml: '',
 				contenthuifu: '',
 				floorhuifu: '',
@@ -2137,6 +2152,10 @@
 				uni.redirectTo({
 					url: '../../components/ay-login/login-password'
 				});
+			},
+			success(e) {
+				console.log('上传成功：', e);
+				this.contenthuifu += '[img]' + e.tempFilePaths + '[/img]';
 			},
 			refresh(e) {
 				var fasonginfo = new Array();

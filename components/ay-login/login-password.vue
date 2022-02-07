@@ -47,11 +47,15 @@
 				</view>
 				<view class="padding-top" v-if="qq==1">
 					<button :disabled="formsub&&type==2?true:false" class="grid text-center cu-btn bg-cyan shadow" @tap="qqlogin()"><text
-							:class="formsub&&type==2?'cuIcon-loading2 cuIconfont-spin':''"></text><image class="google" src="../../static/images/QQ.png"></image>点击通过QQ登录</button>
+							:class="formsub&&type==2?'cuIcon-loading2 cuIconfont-spin':''"></text><image class="logo" src="../../static/images/QQ.png"></image>点击通过QQ登录</button>
 				</view>
 				<view class="padding-top" v-if="platform==2">
 					<button :disabled="formsub&&type==1?true:false" class="grid text-center cu-btn bg-green shadow" @tap="googlelogin"><text
-							:class="formsub&&type==1?'cuIcon-loading2 cuIconfont-spin':''"></text><image class="google" src="../../static/img/google.svg"></image>点击通过Google登录</button>
+							:class="formsub&&type==1?'cuIcon-loading2 cuIconfont-spin':''"></text><image class="logo" src="../../static/img/google.svg"></image>点击通过Google登录</button>
+				</view>
+				<view class="padding-top" v-if="platform==1">
+					<button :disabled="formsub&&type==1?true:false" class="grid text-center cu-btn bg-black shadow" @tap="applelogin"><text
+							:class="formsub&&type==1?'cuIcon-loading2 cuIconfont-spin':''"></text><image class="logo" src="../../static/img/Apple_logo_grey.svg"></image>点击通过Apple登录</button>
 				</view>
 			</form>
 		</view>
@@ -178,6 +182,63 @@
 					<view class="action">
 						<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
 
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="cu-modal displaygoogle" :class="modalName=='displayapple'?'show':''" @tap="hideModal">
+			<view class="cu-dialog" @tap.stop>
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">注册新账号</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl">
+					<view class="cu-avatar xl round margin-left" style="background-image:url('https://zd.tiangal.com/uc_server/images/randuser/big/0.jpg');"></view>
+					<view class="cu-form-group margin-top">
+						<view class="title">用户名</view>
+						<input placeholder="请输入用户名" v-model="displayname" type="text" name="input"></input>
+					</view>
+					<view class="cu-form-group">
+						<view class="title">密码</view>
+						<input placeholder="请输入你的密码(≥8位)" v-model="passwords" type="password" name="input"></input>
+					</view>
+					
+						<view class="cu-form-group">
+							<view class="title">手机号</view>
+							<input type="tel" placeholder="请输入手机号" name="mobilenum" v-model="phonenumber" value=""
+								@input="changephonenumber"></input>
+							<picker class="shoujiquma" @change="Pickcountry" :value="addressData.countryid"
+								:range="countryList">
+								<view class="cu-capsule radius">
+									<view class='cu-tag bg-blue '>
+										+{{addressData.countrycode}}
+									</view>
+									<view class="cu-tag line-blue">
+										{{countryList[addressData.countryid]}}
+									</view>
+								</view>
+							</picker>
+						</view>
+						<view class="cu-form-group">
+							<view class="title">验证码</view>
+							<input type="number" placeholder="输入验证码" name="yanzhengma" maxlength="6" v-model="yanzhengma"
+								value="" @input="shuruyanzhengma"></input>
+							<button class='cu-btn bg-green shadow' @tap="yzm" :disabled="codeFlag?false:true"
+								:class="{activeCode:codeFlag}"><text
+									:class="formsub3?'cuIcon-loading2 cuIconfont-spin':''"></text>{{codeTxt}}</button>
+						</view>
+						<xlg-slideCode :session_id="session_id" v-if="slideCode_show" @close="slideCode_show = false"
+							@success="slideCode_success"></xlg-slideCode>
+						<view v-if="errortext!=''" class="cu-form-group justify-center">
+							<view class="text-red">{{errortext}}</view>
+						</view>
+				</view>
+				<view class="cu-bar bg-white justify-end">
+					<view class="action">
+						<button class="cu-btn bg-green margin-left" @tap="registnew2">确定</button>
+						<button class="cu-btn bg-gray margin-left" @tap="hideModal">取消</button>
 					</view>
 				</view>
 			</view>
@@ -900,7 +961,7 @@
 						if (res.data.canreg == 0) {
 							this.error.reasoncode = 'error0101';
 							this.modalName = 'loginerror';
-							this.error.reason = '论坛目前关闭注册，请稍后再试';
+							this.error.reason = '论坛目前关闭注册，请稍后再试或尝试Google/Apple账号直接登入。';
 							this.formsub2 = false;
 						}
 						this.text = 'request success';
@@ -932,6 +993,71 @@
 						userid:that.userid,
 						name:that.displayname,
 						avatar:that.useravatar,
+						phone:that.phonenumber,
+						yanzhengma:that.yanzhengma,
+						password:that.passwords
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data);
+						console.log(res.data.code);
+						if (res.data.code == 502) {
+							this.error.reasoncode = 'error0217';
+							this.modalName = 'loginerror';
+							this.error.reason = '注册失败，可能关闭了注册。';
+							this.formsub2 = false;
+						}else if (res.data.code == 503) {
+							this.error.reasoncode = 'error0218';
+							this.modalName = 'loginerror';
+							this.error.reason = '注册失败，验证码错误。';
+							this.formsub2 = false;
+						}else if (res.data.code == 504) {
+							this.error.reasoncode = 'error0219';
+							this.modalName = 'loginerror';
+							this.error.reason = '注册失败，Google Token超时。请尝试重新登录';
+							this.formsub2 = false;
+						}else if (res.data.code == 505) {
+							this.error.reasoncode = 'error0220';
+							this.modalName = 'loginerror';
+							this.error.reason = '注册失败，用户名重复，请尝试更换一个用户名';
+							this.formsub2 = false;
+						}else{
+							that.formsub2 = false;
+							that.modalName = null;
+							uni.showToast({
+								title: '注册成功',
+								duration: 2000
+							});
+						}
+						this.text = 'request success';
+					},
+					fail: (res) => {
+						console.log(res.data);
+					}
+				});
+			},
+			registnew2(e) {
+				if(this.passwords.length<8){
+					this.error.reasoncode = 'error0220';
+					this.modalName = 'loginerror';
+					this.error.reason = '密码需要大于8个字符';
+					this.formsub2 = false;
+					return;
+				}
+				let that = this;
+				this.formsub2 = true;
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:changepassword', //获取是否开放注册
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						key: getApp().globalData.zdserverkey,
+						type: 9,
+						email:that.mail,
+						openid:that.userid,
+						name:that.displayname,
 						phone:that.phonenumber,
 						yanzhengma:that.yanzhengma,
 						password:that.passwords
@@ -1064,6 +1190,98 @@
 						}
 					});
 			},
+			selfIsNaN(value){
+			    return value !== value;
+			},
+			saveapple(e,f,g){
+				this.type = 1;
+				let that = this;
+				const signature = plus.navigator.getSignature();
+				const signe = AES.AES.encrypt(signature,w_md5.hex_md5_16(this.version),w_md5.hex_md5_16(f));
+				that.formsub = true;
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:changepassword', //获取置顶帖子
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							key: getApp().globalData.zdserverkey,
+							type: 8,
+							email: e,
+							openid:f,
+							name:g,
+							sign : signe,
+							version: that.version
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							console.log(res.data);
+							that.formsub = false;
+							if (res.data.code == 200) {//未开启
+								uni.setStorage({
+									key: 'userlogininfo',
+									data: res.data.data,
+									success: function() {
+										console.log(res.data.data);
+										try {
+											const loginvalue = uni.getStorageSync('userlogininfo');
+											if (loginvalue) {
+												Vue.prototype.$token = loginvalue.token;
+												Vue.prototype.$uid = loginvalue.uid;
+												Vue.prototype.$username = loginvalue.username;
+												Vue.prototype.$adminid = loginvalue.adminid;
+												Vue.prototype.$groupid = loginvalue.groupid;
+												let avanum = (Array(9).join("0") + loginvalue.uid).slice(-9);
+												Vue.prototype.$avatarsmall = 'https://zd.tiangal.com/uc_server/data/avatar/' + avanum
+													.substr(0, 3) + '/' + avanum.substr(3, 2) + '/' + avanum.substr(5, 2) + '/' +
+													avanum.substr(7, 2) + '_avatar_small.jpg';
+												Vue.prototype.$avatarsmalldefault = 'https://zd.tiangal.com/uc_server/images/randuser/small/' + avanum.substr(-1) + '.jpg';
+												//this.$emit("returnDat", "basics");
+												uni.redirectTo({
+													url: '/pages/index/index'
+												});
+											}
+										} catch (e) {
+											// error
+										}
+									}
+								});
+							}else if (res.data.code == 500) {
+								this.error.reason = '此Apple账号邮箱已注册，但未绑定账号。请登录账号前往密码安全绑定Apple即可登录。';
+								this.modalName = 'loginerror';
+								this.error.reasoncode = 'error0209';
+							}else if (res.data.code == 400) {
+								this.error.reason = '登录接口失败，返回邮箱为' + res.data.result;
+								this.modalName = 'loginerror';
+								this.error.reasoncode = 'error0209';
+							}else if (res.data.code == 501) {
+								if(this.canreg==1){
+									this.mail = e;
+									this.userid = f;
+									console.log(g);
+									if(this.selfIsNaN(g)){
+										this.displayname = '';
+									}else{
+										this.displayname = g.replace(/\s+/g, "");
+									}
+									this.useravatar = '';
+									this.modalName = 'displayapple';
+									console.log(this.useravatar);
+									console.log(this.mail);
+									console.log(this.userid);
+								}else{
+									this.jiazaitimu();
+								}
+							}else{
+								this.error.reason = '目前关闭注册，请等待开放注册或登录现有账号后去绑定';
+								this.modalName = 'loginerror';
+								this.error.reasoncode = 'error0229';
+								console.log('fail')
+							}
+						}
+					});
+			},
 			savegoogle2(e,f,g,h,i){
 				let that = this;
 				const signature = plus.navigator.getSignature();
@@ -1174,6 +1392,38 @@
 						}
 					}
 				);
+				// #endif
+			},
+			applelogin(){
+				if(!this.checked){
+					this.error.reasoncode = 'error0300';
+					this.modalName = 'loginerror';
+					this.error.reason = '请阅读并同意用户协议及隐私政策后方可继续';
+					this.formsub2 = false;
+					return;
+				}
+				if(this.redati==1){
+					this.jiazaitimu();
+					return;
+				}
+				let that = this;
+				// #ifdef APP-PLUS
+				uni.login({  
+				    provider: 'apple',  
+				    success: function (loginRes) {  
+				        // 登录成功  
+				        uni.getUserInfo({  
+				            provider: 'apple',  
+							success: function (infoRes) {
+								console.log(infoRes);
+								that.saveapple(infoRes.userInfo.email,infoRes.userInfo.openId,infoRes.userInfo.fullName.familyName+infoRes.userInfo.fullName.giveName+infoRes.userInfo.fullName.givenName);
+							} 
+				        })  
+				    },  
+				    fail: function (err) {  
+				        // 登录失败  
+				    }  
+				});  
 				// #endif
 			},
 			verifycode(e) {
@@ -1517,7 +1767,7 @@
 		background-color: #efefef;
 	}
 	
-	.google{
+	.logo{
 		width: 1em;
 		height: 1em;
 		vertical-align: -0.15em;
