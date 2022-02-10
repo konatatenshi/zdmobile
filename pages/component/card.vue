@@ -114,7 +114,7 @@
 								<text :class="loadModal2?'cuIcon-loading2 cuIconfont-spin':''"></text>{{ding}}
 							</view>
 						</view>
-						<view class="cu-capsule flex-sub" v-if="$groupid!=10">
+						<view class="cu-capsule flex-sub" v-if="platform!=1&&$groupid!=10&&$uid!=357043">
 							<view class='cu-tag bg-blue padding-sm' @tap="dashangadd()">
 								<text class='cuIcon-moneybagfill'>打赏</text>
 							</view>

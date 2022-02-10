@@ -230,7 +230,7 @@
 								that.credit2 = res.data.lxqd;
 								that.qiandaodengji = res.data.qddj;
 								if(Number(that.credit)>0){
-									that.qdtext = '已签到';
+									that.qdtext = '已签到，此处不显示连签奖励';
 									that.disabled = true;
 								} 
 							}

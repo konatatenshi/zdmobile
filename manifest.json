@@ -2,14 +2,15 @@
     "name" : "终点论坛",
     "appid" : "__UNI__0D1E511",
     "description" : "",
-    "versionName" : "0.6.5",
-    "versionCode" : 55,
+    "versionName" : "0.7.1",
+    "versionCode" : 62,
     "transformPx" : false,
     "app-plus" : {
         /* 5+App特有相关 */
         "modules" : {
             "Push" : {},
-            "OAuth" : {}
+            "OAuth" : {},
+            "Payment" : {}
         },
         /* 模块配置 */
         "distribute" : {
@@ -36,7 +37,8 @@
                     "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
                     "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
-                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>",
+                    "<uses-permission android:name=\"com.android.vending.BILLING\"/>"
                 ],
                 "schemes" : "zhongdian",
                 "minSdkVersion" : 26,
@@ -50,7 +52,8 @@
                     "NSPhotoLibraryUsageDescription" : "应用需要读取您的相册，以便为您选择上传的图片",
                     "NSPhotoLibraryAddUsageDescription" : "应用需要写入您的相册，以便将图片保存到本地手机",
                     "NSCameraUsageDescription" : "应用需要使用您的相机，以便将拍摄图片用于发布信息或扫描二维码登录信息"
-                }
+                },
+                "urltypes" : "zhongdian,251594858132-vo911tk9tf3l22bg6uvpmqnj4rnen4ki.apps.googleusercontent.com"
             },
             /* ios打包配置 */
             "sdkConfigs" : {
@@ -60,6 +63,10 @@
                 },
                 "oauth" : {
                     "apple" : {}
+                },
+                "payment" : {
+                    "appleiap" : {},
+                    "google" : {}
                 }
             },
             "icons" : {
@@ -106,44 +113,44 @@
             "enable" : true
         },
         "nativePlugins" : {
-            "HXR-GoogleMobileAD" : {
-                "appid-android" : "ca-app-pub-9890309082716404~8229926380",
-                "appid-ios" : "ca-app-pub-9890309082716404~8229926380",
+            "JY-GoogleAdMob" : {
+                "android_appid" : "ca-app-pub-9890309082716404~8229926380",
+                "ios_appid" : "ca-app-pub-9890309082716404~9094341525",
                 "__plugin_info__" : {
-                    "name" : "谷歌广告，限时特惠，原价666，国内可用！长期维护，先试用再购买，有问题联系",
-                    "description" : "谷歌广告，AdMob，谷歌广告手机端，adsense下的AdMob，稳定收益高 ",
+                    "name" : "JYGoogle谷歌广告AdMob - 首发支持安卓+iOS",
+                    "description" : "谷歌AdMob 支持安卓+iOS",
                     "platforms" : "Android,iOS",
-                    "url" : "https://ext.dcloud.net.cn/plugin?id=2506",
+                    "url" : "https://ext.dcloud.net.cn/plugin?id=2593",
                     "android_package_name" : "bbs.zdfx.net",
                     "ios_bundle_id" : "bbs.zdfx.net",
                     "isCloud" : true,
                     "bought" : 1,
-                    "pid" : "2506",
+                    "pid" : "2593",
                     "parameters" : {
-                        "appid-android" : {
-                            "des" : "请填写AdMob App ID",
+                        "android_appid" : {
+                            "des" : "安卓 - 谷歌AdMob的APPID(兼容)",
                             "key" : "com.google.android.gms.ads.APPLICATION_ID",
                             "value" : ""
                         },
-                        "appid-ios" : {
-                            "des" : "请填写AdMob App ID",
+                        "ios_appid" : {
+                            "des" : "iOS - 谷歌AdMob的APPID(兼容)",
                             "key" : "GADApplicationIdentifier",
                             "value" : ""
                         }
                     }
                 }
             },
-            "gui-google" : {
+            "html5app-googlelogin" : {
                 "__plugin_info__" : {
-                    "name" : "谷歌授权登录Androoid版插件，Google登录Android版插件",
-                    "description" : "Google/谷歌授权登录",
-                    "platforms" : "Android",
-                    "url" : "https://ext.dcloud.net.cn/plugin?id=5720",
+                    "name" : "Android 和 ios Google 谷歌支付，授权 登录插件",
+                    "description" : "Google 谷歌支付，谷歌授权登录",
+                    "platforms" : "Android,iOS",
+                    "url" : "https://ext.dcloud.net.cn/plugin?id=5244",
                     "android_package_name" : "bbs.zdfx.net",
                     "ios_bundle_id" : "bbs.zdfx.net",
                     "isCloud" : true,
                     "bought" : 1,
-                    "pid" : "5720",
+                    "pid" : "5244",
                     "parameters" : {}
                 }
             }
@@ -166,3 +173,5 @@
     },
     "vueVersion" : "2"
 }
+/* ios打包配置 */
+

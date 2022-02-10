@@ -54,7 +54,7 @@
 				<view class="flex justify-start padding-left-sm">
 					<view class="text-black text-content text-cut text-left text-shadow1" style="width: 75%;" v-if="sig==''">他很懒，什么都没有留下…</view>
 					<view class="text-black text-content text-cut text-left text-shadow1" style="width: 75%;" v-else>{{sig}}</view>
-					<view class="text-right text-black text-shadow1" style="width: 25%;">关于Ta<text
+					<view class="text-right text-black text-shadow1" style="width: 25%;" v-if="uid==$uid" @tap="xiugai()">修改资料<text
 							class="margin-left-xs cuIcon-right"></text></view>
 				</view>
 				<view class="flex justify-start padding-left-sm padding-top-sm">
@@ -484,6 +484,11 @@
 						}
 					});
 				}
+			},
+			xiugai(){
+				uni.navigateTo({
+					url: '../extra/profile'
+				})
 			},
 			shuaxinlist() {
 				var that = this;

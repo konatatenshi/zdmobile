@@ -183,6 +183,18 @@
 					<text class="text-grey text-sm">定期修改密码有助于论坛安全！</text>
 				</view>
 			</view>
+			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="buylr()">
+				<view class="content">
+					<text class="cuIcon-goodsnewfill text-yellow"></text>
+					<text class="text-grey">支持终点</text>
+				</view>
+			</view>
+			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="fankui()">
+				<button class="cu-btn content" open-type="content">
+					<text class="cuIcon-servicefill text-brown"></text>
+					<text class="text-grey">用户反馈</text>
+				</button>
+			</view>
 			<view class="cu-item" :class="menuArrow?'arrow':''">
 				<button class="cu-btn content" open-type="contact" @tap="cleanbefore">
 					<text class="cuIcon-footprint text-olive"></text>
@@ -454,6 +466,11 @@
 			tofavor() {
 				uni.navigateTo({
 					url: '../extra/favorite'
+				})
+			},
+			fankui(){
+				uni.navigateTo({
+					url: '../extra/fankui'
 				})
 			},
 			toprofile() {
@@ -765,6 +782,13 @@
 			SwitchA(e) {
 				this.switchA = e.detail.value
 			},
+			buylr(){
+					uni.navigateTo({
+						url: '../extra/buyvip',
+						animationType: 'pop-in',
+						animationDuration: 200
+					});
+			},
 			tabSelect(e) {
 				this.TabCur = e.currentTarget.dataset.id;
 				console.log(this.TabCur);
@@ -1033,7 +1057,7 @@
 						console.log(downloadResult);
 						if (downloadResult.statusCode === 200) {
 							plus.runtime.install(downloadResult.tempFilePath, {
-								force: false
+								force: true
 							}, function() {
 								plus.nativeUI.alert("您已是最新版本了哦！", function() {
 									plus.runtime.restart();

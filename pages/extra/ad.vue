@@ -1,35 +1,21 @@
 <template>
 	<div>
-		<HXR-GoogleMobileADBannerAd style="width:750rpx;height:50px;background-color: #555555;"
-			adSize="kGADAdSizeBanner" adUnitID="ca-app-pub-3940256099942544/2934735716" @adLoaded="myload()"
-			@adFail="myfail()"></HXR-GoogleMobileADBannerAd>
-		<HXR-GoogleMobileADBannerAd style="width:750rpx;height:100px;background-color: #555555;"
-			adSize="kGADAdSizeLargeBanner" adUnitID="ca-app-pub-3940256099942544/2934735716">
-		</HXR-GoogleMobileADBannerAd>
-		<HXR-GoogleMobileADBannerAd style="width:300px;height:250px;background-color: #555555;"
-			adSize="kGADAdSizeMediumRectangle" adUnitID="ca-app-pub-3940256099942544/2934735716">
-		</HXR-GoogleMobileADBannerAd>
-		<HXR-GoogleMobileADBannerAd style="width:750rpx;height:50px;background-color: #555555;"
-			adSize="kAutoHeightWithWidth" adUnitID="ca-app-pub-3940256099942544/2934735716">
-		</HXR-GoogleMobileADBannerAd>
-
-		<button type="default" @click="showInterstitialAd()">插屏广告</button>
-		<button type="default" @click="showRewardedAd()">激励广告</button>
-		<button type="default" @click="showInterstitialRewardedAd()">插屏激励广告</button>
-		<uni-section title="只选择图片" type="line">
+		<uni-section class="margin-top-xl" title="只选择图片" type="line">
 			<view class="example-body">
 					<uni-file-picker class="exp" v-model="imageValue" limit="1" fileMediatype="image" :image-styles="imageStyles" @select="select" @progress="progress"
 					@success="success" @fail="fail"><text class="cuIcon-add text-grey warr"></text></uni-file-picker>
 			</view>
 		</uni-section>
+		<button type="default" @click="jy_loadRewardedAd">加载激励视频广告</button>
+		<button type="default" @click="jy_showRewardedAd">展示激励视频广告</button>
+		
+		
+		<button type="default" @click="jy_loadInterstitialAd">加载插屏广告</button>
+		<button type="default" @click="jy_showInterstitialAd">展示插屏广告</button>
 	</div>
 </template>
 
 <script>
-	var googleInterstitialAd = uni.requireNativePlugin('HXR-GoogleMobileADInterstitialAd');
-	var googleRewardedAd = uni.requireNativePlugin('HXR-GoogleMobileADRewardedAd');
-	var googleInterstitialRewardedAd = uni.requireNativePlugin('HXR-GoogleMobileADRewardedInterstitialAd');
-
 	// var testModule = uni.requireNativePlugin("Test")
 	export default {
 		data() {
@@ -48,28 +34,8 @@
 			}
 		},
 		onLoad() {
-			googleInterstitialAd.createADWithAdUnitID('ca-app-pub-9890309082716404/7473880937', (res) => {
-				console.log(JSON.stringify(res));
-				uni.showToast({
-					title: res.msg
-				})
-			});
-
-			////不传入验证参数
-			googleRewardedAd.createADWithAdUnitID('ca-app-pub-9890309082716404/7965174834', function(res) {
-				console.log(JSON.stringify(res));
-			});
-			//googleRewardedAd.createADWithAdUnitID('ca-app-pub-3940256099942544/1712485313', function(res){
-			//    console.log(JSON.stringify(res));
-			//}, {'userIdentifier':'your user identifier', 'customRewardString': 'your customRewardString'});
-
-			////不传入验证参数
-			googleInterstitialRewardedAd.createADWithAdUnitID('ca-app-pub-9890309082716404/2770356778', function(res) {
-				console.log(JSON.stringify(res));
-			});
-			//googleInterstitialRewardedAd.createADWithAdUnitID('ca-app-pub-3940256099942544/4806952744', function(res){
-			//    console.log(JSON.stringify(res));
-			//}, {'userIdentifier':'your user identifier', 'customRewardString': 'your customRewardString'});
+			var jygooglead = uni.requireNativePlugin("JY-GoogleAdMob");
+			jygooglead.jy_init();
 		},
 		methods: {
 			myload: function(e) {
@@ -83,23 +49,55 @@
 					title: '加载失败'
 				})
 			},
-			showInterstitialAd: function() {
-				googleInterstitialAd.showWithCallback(function(res) {
+			jy_showInterstitialAd() {
+				var jygooglead = uni.requireNativePlugin("JY-GoogleAdMob");
+				jygooglead.jy_showInterstitialAd({
+					
+				},
+				res=> {
 					console.log(JSON.stringify(res));
 					uni.showToast({
-						title: res.msg
+						icon:'none',
+						title:JSON.stringify(res)
 					})
-				});
+				})
 			},
-			showRewardedAd: function() {
-				googleRewardedAd.showWithCallback(function(res) {
+			jy_loadInterstitialAd() {
+				var jygooglead = uni.requireNativePlugin("JY-GoogleAdMob");
+				jygooglead.jy_loadInterstitialAd({
+					adId: "ca-app-pub-9890309082716404/7473880937"
+				},
+				res=> {
 					console.log(JSON.stringify(res));
-				});
+					uni.showToast({
+						icon:'none',
+						title:JSON.stringify(res)
+					})
+				})
 			},
-			showInterstitialRewardedAd: function() {
-				googleInterstitialRewardedAd.showWithCallback(function(res) {
+			jy_showRewardedAd() {
+				var jygooglead = uni.requireNativePlugin("JY-GoogleAdMob");
+				jygooglead.jy_showRewardedAd({},
+				res=> {
 					console.log(JSON.stringify(res));
-				});
+					uni.showToast({
+						icon:'none',
+						title:JSON.stringify(res)
+					})
+				})
+			},
+			jy_loadRewardedAd() {
+				var jygooglead = uni.requireNativePlugin("JY-GoogleAdMob");
+				jygooglead.jy_loadRewardedAd({
+					adId: "ca-app-pub-9890309082716404/7965174834",
+					appId: "ca-app-pub-9890309082716404~8229926380"
+				},	res=> {
+					console.log(JSON.stringify(res));
+					uni.showToast({
+						icon:'none',
+						title:JSON.stringify(res)
+					})
+				})
 			},
 			select(e) {
 				console.log('选择文件：', e)

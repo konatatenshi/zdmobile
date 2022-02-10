@@ -62,7 +62,7 @@
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar">
 					<view>
-						确定清除所有的缓存？离线内容、图片、屏蔽列表及登录信息均会被清除。
+						确定清除所有的缓存？离线内容、图片等等缓存内容均会被清除，但登录状态不会被清除。
 					</view>
 				</view>
 				<view class="padding-sm bg-white action text-green" @tap="clearCache">确定</view>
@@ -231,7 +231,19 @@
 				this.modalName = null;
 			},
 			bottommod(){
-				this.modalName = 'bottomModal';
+				let that = this;
+				//this.modalName = 'bottomModal';
+				uni.showModal({
+					title: '清除缓存',
+					content: '确定清除所有的缓存？离线内容、图片等等缓存内容均会被清除，但登录状态不会被清除。',
+					success: function(res) {
+						if (res.confirm) {
+							that.clearCache();
+						} else if (res.cancel) {
+							console.log('用户点击取消');
+						}
+					}
+				})
 			},
 			dazimodeadd(){
 				this.modalName = 'dazimode';

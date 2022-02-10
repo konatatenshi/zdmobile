@@ -103,7 +103,7 @@
 
 <script>
 	// #ifdef APP-PLUS
-	const LoginGoogle = uni.requireNativePlugin('gui-google_login');
+	const plug=uni.requireNativePlugin("html5app-googlelogin");
 	// #endif
 	export default {
 		data() {
@@ -303,23 +303,12 @@
 			googlelogin(){
 				let that = this;
 				// #ifdef APP-PLUS
-				LoginGoogle.handleLogin(
-					{
-						clientId: '251594858132-p7jkqgcrecp1g5tntavknq1mhjlft9h0.apps.googleusercontent.com'
-					},ret =>{
-						if(ret && ret.code==200){
-							console.log('===========================');
-							console.log('=====登录成功result: ',ret);
-							console.log('===========================');
-							that.savegoogle(ret.token,ret.email,ret.userId,ret.displayName,ret.userAvatar);
-							that.mail = ret.email;
-						}else{
-							console.log('===========================');
-							console.log('=====登录失败result: ',ret);
-							console.log('===========================');
-						}
-					}
-				);
+				plug.login({
+				clientId:"251594858132-p7jkqgcrecp1g5tntavknq1mhjlft9h0.apps.googleusercontent.com"
+				},function(e){
+					console.log(e);
+					that.savegoogle(e.token,e.email,e.userId,e.displayName,e.userAvatar);
+				});
 				// #endif
 			},
 			applelogin(){

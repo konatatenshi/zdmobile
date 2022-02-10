@@ -20,7 +20,7 @@
 						<view>
 							<view class="cu-tag bg-cyan light sm round">累计排名：{{ljpm}} 总翻：{{zf}}天 累计：{{lj}}点币 第{{pm}}名</view>
 						</view>
-						<view class="text-brown">活动规则：<br>1.翻到金色卡牌翻倍！<br>2.如果连续30次翻卡均未抽中≥16的数字，则开启超级幸运模式，下次翻卡必翻倍，最终必获得≥16点币。（PS:每日前10名翻卡额外奖励50%点币。）<br>3.抽奖奖品为1-30（翻倍为最高60）点币。点币用来提升用户积分，并无其他用处。<br>4.在此活动中Apple不是赞助者，也没有以任何形式参与活动。</view>
+						<view class="text-brown">活动规则：<br>1.翻到金色卡牌翻倍！<br>2.如果连续30次翻卡均未抽中≥16的数字，则开启超级幸运模式，下次翻卡必翻倍，最终必获得≥16点币。（PS:每日前10名翻卡额外奖励50%点币。）<br>3.抽奖奖品为1-30（翻倍为最高60）点币。点币用来提升用户积分，并无其他用处。<br>4.在此活动中<text v-if="platform==1">Apple</text><text v-else>Google</text>不是赞助者，也没有以任何形式参与活动。</view>
 					<view class="text-center">
 						<button class="cu-btn block bg-blue lg margin-xs" type="" @tap="phb()">查看排行榜/旧版摇奖</button>
 					</view>
@@ -135,6 +135,7 @@
 				lj: 0,
 				pm: 0,
 				jz: 0,
+				platform: 0,
 				modalName: null,
 				jiangchi: '',
 				isloading: false,
@@ -150,6 +151,11 @@
 			//console.log(option.uid); //打印出上个页面传递的参数。
 			//this.loadthread(this.uid);
 			this.shuaxinlist();
+			if (uni.getSystemInfoSync().platform == 'ios') {
+				this.platform = 1;
+			} else {
+				this.platform = 2;
+			}
 		},
         methods: {
             //翻牌抽奖

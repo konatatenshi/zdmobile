@@ -79,9 +79,12 @@
 				</view>
 				<view class="cu-modal" :class="modalName=='jinbilaiyuan'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
-						<view class="text-content text-xl padding">金币来源：每日答题正确可以获得1-7金币不等。另外发帖有30%概率随机获得奖励，大约1-20金币不等。</view>
+						<view class="text-content text-xl padding">金币来源：每日答题正确可以获得1-7金币不等。另外发帖有30%概率随机获得奖励，大约1-20金币不等。<text v-show="eventtype=='adLoaded'" >也可以通过观看广告（每日限1次），获取随机的金币（1-5）。</text></view>
 						<view class="cu-bar bg-white">
-							<view class="action margin-0 flex-sub  solid-left" @tap="hideModal">我知道了</view>
+							<view class="action margin-0 flex-sub  solid-left" @tap="hideModal">关闭页面</view>
+						</view>
+						<view class="cu-bar bg-white" v-show="eventtype=='adLoaded'">
+							<view class="action padding-bottom-sm padding-top-sm flex-sub cu-btn round bg-blue solid-left" @tap="showInterstitialRewardedAd()">获取随机金币</view>
 						</view>
 					</view>
 				</view>
@@ -176,7 +179,7 @@
 				this.modalName = 'dianbi';
 			},
 			tojinbi(e) {
-				if(this.platform==1&&this.$groupid==10){
+				if(this.platform==1&&(this.$groupid==10||this.$uid==357043)){
 					this.modalName = 'jinbilaiyuan';
 				}else{
 					this.modalName = 'jinbi';
@@ -345,17 +348,21 @@
 				}
 			},
 			showInterstitialRewardedAd: function() {
-				let that = this;
-				googleInterstitialRewardedAd.showWithCallback(function(res) {
-					console.log(JSON.stringify(res));
-					if(res.eventType=='userDidEarnReward'){
-						that.jiangli = 1;
-					}
-					if(res.eventType=='adDidDismissScreen'&&that.jiangli == 1){
-						that.zaidas();
-						that.jiangli = 0;
-					}
-				});
+				if(this.platform==2){
+					this.jy_showRewardedAd();
+				}else{
+					let that = this;
+					googleInterstitialRewardedAd.showWithCallback(function(res) {
+						console.log(JSON.stringify(res));
+						if(res.eventType=='userDidEarnReward'){
+							that.jiangli = 1;
+						}
+						if(res.eventType=='adDidDismissScreen'&&that.jiangli == 1){
+							that.zaidas();
+							that.jiangli = 0;
+						}
+					});
+				}
 			},
 			zaidas(){
 				this.modalName = null;
@@ -462,6 +469,42 @@
 					this.modalName = 'dati';
 				}
 			},
+			jy_showRewardedAd() {
+				let that = this;
+				var jygooglead = uni.requireNativePlugin("JY-GoogleAdMob");
+				jygooglead.jy_showRewardedAd({},
+				res=> {
+					console.log(JSON.stringify(res));
+					if(res.code=='104'){
+						that.jiangli = 1;
+					}
+					if(res.code=='103' &&that.jiangli == 1){
+						that.zaidas();
+						that.jiangli = 0;
+					}
+				})
+			},
+			jy_loadRewardedAd() {
+				let that = this;
+				var jygooglead = uni.requireNativePlugin("JY-GoogleAdMob");
+				jygooglead.jy_loadRewardedAd({
+					adId: "ca-app-pub-9890309082716404/7965174834",
+					appId: "ca-app-pub-9890309082716404~8229926380"
+				},	res=> {
+					console.log(res);
+					if(res.code=='100'){
+						that.eventtype = 'adLoaded';
+						console.log(that.eventtype);
+					}
+					if(res.code=='104'){
+						that.jiangli = 1;
+					}
+					if(res.code=='103' &&that.jiangli == 1){
+						that.zaidas();
+						that.jiangli = 0;
+					}
+				})
+			},
 			chongzhi(){
 				let that = this;
 					uni.showLoading({
@@ -519,12 +562,16 @@
 			} else {
 				this.platform = 2;
 			}
-			if(this.platform==2){
-				googleInterstitialRewardedAd.createADWithAdUnitID('ca-app-pub-9890309082716404/2770356778', function(res) {
+			if(this.platform==1){
+				googleInterstitialRewardedAd.createADWithAdUnitID('ca-app-pub-9890309082716404/2637153500', function(res) {
 					console.log(res);
 					that.eventtype = res.eventType;
 					console.log(that.eventtype);
 				}, {'userIdentifier':that.$uid, 'jinbi': that.$username + ' de jinbi'});
+			}else if(this.platform==2){
+				var jygooglead = uni.requireNativePlugin("JY-GoogleAdMob");
+				jygooglead.jy_init();
+				that.jy_loadRewardedAd();
 			}
 		},
 		onReady() {

@@ -67,6 +67,7 @@
 				counts: 0,
 				platform: 0,
 				mc: 0,
+				jiangli: 0,
 				eventtype: '',
 				zdjs: false,
 				zd: 0,
@@ -83,12 +84,16 @@
 			} else {
 				this.platform = 2;
 			}
-			if(this.platform==2){
-				googleInterstitialRewardedAd.createADWithAdUnitID('ca-app-pub-9890309082716404/2770356778', function(res) {
+			if(this.platform==1){
+				googleInterstitialRewardedAd.createADWithAdUnitID('ca-app-pub-9890309082716404/2637153500', function(res) {
 					console.log(res);
 					that.eventtype = res.eventType;
 					console.log(that.eventtype);
 				}, {'userIdentifier':that.$uid, 'dati': that.$username + ' de dati'});
+			}else if(this.platform==2){
+				var jygooglead = uni.requireNativePlugin("JY-GoogleAdMob");
+				jygooglead.jy_init();
+				that.jy_loadRewardedAd();
 			}
 		},
 		onShareTimeline(res) {
@@ -129,13 +134,56 @@
 				this.modalName = null;
 			},
 			showInterstitialRewardedAd: function() {
+				if(this.platform==2){
+					this.jy_showRewardedAd();
+				}else{
+					let that = this;
+					googleInterstitialRewardedAd.showWithCallback(function(res) {
+						console.log(JSON.stringify(res));
+						if(res.eventType=='userDidEarnReward'){
+							that.zaidas(2);
+						}
+					});
+				}
+			},
+			jy_showRewardedAd() {
 				let that = this;
-				googleInterstitialRewardedAd.showWithCallback(function(res) {
+				var jygooglead = uni.requireNativePlugin("JY-GoogleAdMob");
+				jygooglead.jy_showRewardedAd({},
+				res=> {
 					console.log(JSON.stringify(res));
-					if(res.eventType=='userDidEarnReward'){
-						that.zaidas(2);
+					if(res.code=='104'){
+						that.jiangli = 1;
 					}
-				});
+					if(res.code=='103' &&that.jiangli == 1){
+						that.zaidas(2);
+						that.jiangli = 0;
+					}
+				})
+			},
+			jy_loadRewardedAd() {
+				let that = this;
+				var jygooglead = uni.requireNativePlugin("JY-GoogleAdMob");
+				jygooglead.jy_loadRewardedAd({
+					adId: "ca-app-pub-9890309082716404/7965174834",
+					appId: "ca-app-pub-9890309082716404~8229926380"
+				},	res=> {
+					console.log(res);
+					if(res.code=='100'){
+						that.eventtype = 'adLoaded';
+						console.log(that.eventtype);
+					}
+					if(res.code=='104'){
+						that.jiangli = 1;
+					}
+					if(res.code=='103' &&that.jiangli == 1){
+						that.zaidas(2);
+						that.jiangli = 0;
+					}else if(res.code=='103'){
+						that.eventtype = '';
+						that.jy_loadRewardedAd();
+					}
+				})
 			},
 			zaidas(e){
 				this.modalName = null;
