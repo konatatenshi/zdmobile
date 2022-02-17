@@ -510,6 +510,30 @@
 				</view>
 			</view>
 		</view>
+		<view class="cu-modal" :class="modalName=='update'?'show':''" @tap="hideModal">
+			<view class="cu-dialog" @tap.stop>
+				<view class="cu-bar justify-end" :class="'bg-light-'+themeColor.name">
+					<view class="content">发现新版本</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="text-left padding-bottom-xl padding-left-xl padding-right-xl">
+					<text class="text-bold">最新版本：</text>{{versionnew}}<br><text class="text-bold">新版本特性：</text><br>{{versiontext}}
+				</view>
+				<view class="cu-bar justify-end" :class="'bg-light-'+themeColor.name">
+					<view class="action">
+						<button class="cu-btn bg-green margin-left" @tap="toupdate">立即更新</button>
+					</view>
+					<view class="action">
+						<button class="cu-btn line-green margin-left" @tap="hideModal">暂不更新</button>
+					</view>
+					<view class="action">
+						<button class="cu-btn bg-red margin-left" @tap="dismiss">永不提醒</button>
+					</view>
+				</view>
+			</view>
+		</view>
 		<view class="cu-modal" :class="jifencaozuo!=0?'show':''">
 			<button class="cu-btn margin-sm basis-sm shadow bg-orange"
 				:class="jifencaozuo==1?'animation-scale-up':'animation-reverse animation-scale-down'">
@@ -574,7 +598,14 @@
 				avatarimgLoaded: false,
 				TabCur: 1,
 				fontsize: '',
+				version: '',
+				versionnew: '',
+				versiontext: '',
+				chechdate: 0,
 				closed: 0,
+				mydate: 0,
+				olddate: 0,
+				platform: 0,
 				jubaomessage: '',
 				cantpostmessage: '',
 				loading: "载入中……",
@@ -1179,6 +1210,23 @@
 				this.InputBottom = 0;
 				this.searchstyle = "none";
 			},
+			toupdate(){
+				if (this.platform == 2) {
+					let appurl = "market://details?id=bbs.zdfx.net"; //这个是通用应用市场，如果想指定某个应用商店，需要单独查这个应用商店的包名或scheme及参数
+					plus.runtime.openURL(appurl,(err) =>{
+						plus.runtime.openURL('https://bbs.zdfx.net/api/downapp.html', function(res) {
+							console.log(res);
+						});
+					  },'com.android.vending');
+				}else {
+					let appleId=1592697237 //app的appleId
+					plus.runtime.launchApplication({
+					  action: `itms-apps://itunes.apple.com/us/app/id${appleId}?mt=8`
+					}, function(e) {
+					  console.log('Open system default browser failed: ' + e.message);
+					});
+				}
+			},
 			touserpage(e) {
 				if (this.$token == '') {
 					uni.redirectTo({
@@ -1523,7 +1571,7 @@
 							that.toplist = res.data.toplist.data;
 							that.newpost = res.data.newpost.data;
 							console.log(that.tuijiantie);
-							if (uni.getSystemInfoSync().platform == 'ios') {
+							if (that.platform == 1) {
 								setTimeout(function() {
 									that.setHeight("view_listnow");
 								}, 100)
@@ -1682,6 +1730,19 @@
 			RadioChange(e) {
 				this.radio = e.detail.value;
 			},
+			dismiss(){
+				uni.setStorage({
+					key: 'chechnew',
+					data: 99,
+					success: function() {
+						that.olddate = 99;
+						console.log(that.olddate);
+						uni.showToast({
+							title:'关闭成功'
+						})
+					}
+				});
+			},
 			sendjbxx() {
 				var that = this;
 				this.closed = 1;
@@ -1744,6 +1805,17 @@
 			this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight + 170;
 			plus.navigator.setStatusBarStyle('light'); //改变系统标题颜色
 			var that = this;
+			plus.runtime.getProperty(plus.runtime.appid, function(wgtinfo) {
+				that.version = wgtinfo.version;
+				console.log(that.version);
+			});
+			uni.getStorage({
+				key: 'chechnew',
+				success: function(res) {
+					that.olddate = res.data;
+					console.log(that.olddate);
+				}
+			});
 			uni.getStorage({
 				key: 'lunbolist',
 				success: function(res) {
@@ -1751,6 +1823,11 @@
 					//console.log(that.swiperList);
 				}
 			});
+			if (uni.getSystemInfoSync().platform == 'ios') {
+				this.platform = 1;
+			} else {
+				this.platform = 2;
+			}
 			if (this.$imageswitch && this.$wifi == 0) {
 				this.isImage = 0;
 			} else {
@@ -1764,14 +1841,37 @@
 					'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 				},
 				success: (res) => {
+					console.log(res.data)
 					uni.setStorage({
 						key: 'lunbolist',
 						data: res.data.data,
 						success: function() {
 							that.swiperList = res.data.data;
-							console.log(that.swiperList);
+							//console.log(that.swiperList);
 						}
 					});
+					if (that.platform == 1) {
+						that.versionnew = res.data.ios;
+					}else{
+						that.versionnew = res.data.android;
+					}
+						var myDate=new Date();
+						that.mydate = myDate.getDate();
+						let mya = that.version.split('.');
+						let sev = that.versionnew.split('.');
+						if(((Number(mya[0])<Number(sev[0]))||(Number(mya[0])==Number(sev[0]))&&(Number(mya[1])<Number(sev[1]))||(Number(mya[0])==Number(sev[0]))&&(Number(mya[1])==Number(sev[1]))&&(Number(mya[2])<Number(sev[2])))&&that.olddate!=that.mydate&&that.olddate<99){
+							console.log(res.data)
+							that.versiontext = res.data.updatemessage;
+							that.modalName = 'update';
+							uni.setStorage({
+								key: 'chechnew',
+								data: that.mydate,
+								success: function() {
+									that.olddate = that.mydate;
+									console.log(that.olddate);
+								}
+							});
+						}
 				}
 			});
 			uni.request({
@@ -1785,7 +1885,7 @@
 					'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 				},
 				success: (res) => {
-					console.log(res.data);
+					//console.log(res.data);
 					that.tuijiantie = res.data.tuijiantie.data;
 					that.toplist = res.data.toplist.data;
 					that.newpost = res.data.newpost.data;

@@ -373,7 +373,7 @@
 			chonglian(e) {
 				//this.modalName = 'dxcl';
 				uni.showToast({
-					title: '您似乎已断线，正在尝试重连',
+					title: '您似乎已经和聊天服务器断开连接，建议重启APP以重新连接。',
 					icon: 'none',
 					duration: 2000
 				});

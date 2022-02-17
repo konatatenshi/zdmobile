@@ -162,16 +162,10 @@
 						<text class="cuIcon-upload"></text> 上传</button>
 				</view>
 			</view>
-			<view class="cu-item" :class="menuArrow?'arrow':''">
+			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="showdj()">
 				<view class="content">
 					<text class="cuIcon-presentfill text-red  margin-right-xs"></text>
-					<text class="text-grey">道具</text>
-				</view>
-				<view class="action">
-					<button class="cu-btn round bg-cyan shadow" @tap="openbox()">
-						<text class="cuIcon-pick"></text>开箱子</button>
-					<button class="cu-btn round bg-cyan shadow margin-left-sm" @tap="daoju()">
-						<text class="cuIcon-shop"></text>道具商店</button>
+					<text class="text-grey">道具装扮商店</text>
 				</view>
 			</view>
 			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="tomm()">
@@ -183,10 +177,16 @@
 					<text class="text-grey text-sm">定期修改密码有助于论坛安全！</text>
 				</view>
 			</view>
-			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="buylr()">
-				<view class="content">
+			<view class="cu-item" :class="menuArrow?'arrow':''" v-if="$adminid<=0">
+				<view class="content" @tap="buylre()">
 					<text class="cuIcon-goodsnewfill text-yellow"></text>
-					<text class="text-grey">支持终点</text>
+					<text class="text-grey">其他服务</text>
+				</view>
+				<view class="action">
+					<button class="cu-btn round bg-blue shadow" @tap="buylr()">
+						<text class="cuIcon-vip"></text>用户组</button>
+					<button class="cu-btn round bg-blue shadow margin-left-sm" @tap="buydb()">
+						<text class="cuIcon-coin"></text>钱包</button>
 				</view>
 			</view>
 			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="fankui()">
@@ -247,7 +247,7 @@
 					</view>
 				</view>
 				<view class="padding-xl text-blue">
-					终点分享 V{{version}}{{update}}
+					终点分享 V{{version}}.{{versionCode}}{{update}}
 				</view>
 				<view v-if="isupdate==1" class="padding-xl text-red">
 					目前服务器有新版本，确认进行更新吗？
@@ -271,6 +271,10 @@
 					<view v-if="isupdate==1" class="action">
 						<button class="cu-btn line-green text-green" @tap="cancelupdate">取消</button>
 						<button v-if="bite==0" class="cu-btn bg-green margin-left" @tap="chechabout">确定</button>
+					</view>
+					<view v-else-if="isupdate==2" class="action">
+						<button class="cu-btn line-green text-green" @tap="cancelupdate">取消</button>
+						<button v-if="bite==0" class="cu-btn bg-green margin-left" @tap="toupdate">前往市场更新</button>
 					</view>
 				</view>
 			</view>
@@ -296,6 +300,52 @@
 					<view class="cu-bar bg-white">
 						<button class="cu-btn line-green text-green" @tap="tomore">查看详情</button>
 						<button class="cu-btn bg-green margin-left" @tap="hideModal">我知道了</button>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="cu-modal" :class="modalName=='tozanzhu'?'show':''" @tap="hideModal">
+			<view class="cu-dialog" @tap.stop>
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">请选择接下来的服务</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl">
+					增值服务包含用户组、终点币获取（可兑换金币）。请选择你要的服务
+				</view>
+				<view class="cu-bar bg-white justify-end">
+					<view class="action">
+						<button class="cu-btn bg-green margin-left" @tap="buylr">用户组</button>
+						<button class="cu-btn bg-blue margin-left" @tap="buydb">终点币</button>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="cu-modal" :class="modalName=='toshop'?'show':''" @tap="hideModal">
+			<view class="cu-dialog" @tap.stop>
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">访问商城</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl">
+					请选择你需要访问的商城。
+				</view>
+				<view class="cu-bar bg-white justify-end">
+					<view class="action">
+						<button class="cu-btn bg-green margin-left" @tap="toxz()">勋章</button>
+						<button class="cu-btn bg-blue margin-left" @tap="daoju()">道具</button>
+						<button class="cu-btn bg-cyan margin-left" @tap="openbox()">宝箱</button>
+					</view>
+				</view>
+				<view class="cu-bar bg-white justify-end">
+					<view class="action">
+						<button disabled class="cu-btn bg-yellow margin-left" @tap="">头衔</button>
+						<button disabled class="cu-btn bg-purple margin-left" @tap="">背景</button>
+						<button disabled class="cu-btn bg-pink margin-left" @tap="">挂件</button>
 					</view>
 				</view>
 			</view>
@@ -330,6 +380,7 @@
 				platform: 0,
 				TabCur: 0,
 				version: '',
+				versionCode: '',
 				downfile: '',
 				scrollLeft: 0,
 				switchA: false,
@@ -745,6 +796,14 @@
 					url: '../component/timeline'
 				});
 			},
+			toxz(e) {
+				uni.navigateTo({
+					url: '../extra/xunzhang'
+				});
+			},
+			showdj(){
+				this.modalName = 'toshop';
+			},
 			tomm(e) {
 				uni.navigateTo({
 					url: '../plugin/animation'
@@ -782,9 +841,19 @@
 			SwitchA(e) {
 				this.switchA = e.detail.value
 			},
+			buylre(){
+				this.modalName = 'tozanzhu';
+			},
 			buylr(){
 					uni.navigateTo({
 						url: '../extra/buyvip',
+						animationType: 'pop-in',
+						animationDuration: 200
+					});
+			},
+			buydb(){
+					uni.navigateTo({
+						url: '../extra/moneybag',
 						animationType: 'pop-in',
 						animationDuration: 200
 					});
@@ -834,6 +903,7 @@
 								that.update = '(最新版)';
 							} else if (data.update === 202) {
 								that.update = '(请去市场更新)';
+								that.isupdate = 2;
 							}
 						}
 					});
@@ -1057,7 +1127,7 @@
 						console.log(downloadResult);
 						if (downloadResult.statusCode === 200) {
 							plus.runtime.install(downloadResult.tempFilePath, {
-								force: true
+								force: false
 							}, function() {
 								plus.nativeUI.alert("您已是最新版本了哦！", function() {
 									plus.runtime.restart();
@@ -1082,6 +1152,23 @@
 						that.zongbite = 0;
 					}
 				});
+			},
+			toupdate(){
+				if (this.platform == 2) {
+					let appurl = "market://details?id=bbs.zdfx.net"; //这个是通用应用市场，如果想指定某个应用商店，需要单独查这个应用商店的包名或scheme及参数
+					plus.runtime.openURL(appurl,(err) =>{
+						plus.runtime.openURL('https://bbs.zdfx.net/api/downapp.html', function(res) {
+							console.log(res);
+						});
+					  },'com.android.vending');
+				}else {
+					let appleId=1592697237 //app的appleId
+					plus.runtime.launchApplication({
+					  action: `itms-apps://itunes.apple.com/us/app/id${appleId}?mt=8`
+					}, function(e) {
+					  console.log('Open system default browser failed: ' + e.message);
+					});
+				}
 			},
 			uploadimg() {
 				let _self = this;
@@ -1129,6 +1216,7 @@
 			var that = this;
 			plus.runtime.getProperty(plus.runtime.appid, function(wgtinfo) {
 				that.version = wgtinfo.version;
+				that.versionCode = plus.runtime.versionCode;
 				console.log(that.version);
 			});
 			plus.navigator.setStatusBarStyle('dark');

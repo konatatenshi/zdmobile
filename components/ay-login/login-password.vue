@@ -920,10 +920,10 @@
 			},
 			checkApp(){
 			    if(plus.runtime.isApplicationExist({pname:'com.tencent.mobileqq',action:'mqq://'})){
-			        console.log("QQ应用已安装");
+			        console.log("QQ应用已安装。");
 					this.qq = 1 ;
 			    }else{
-			        console.log("QQ应用未安装");
+			        console.log("QQ应用未安装。");
 					this.qq = 0 ;
 			    }
 			},
@@ -1363,6 +1363,7 @@
 				});
 			},
 			googlelogin(){
+				let that = this;
 				if(!this.checked){
 					this.error.reasoncode = 'error0300';
 					this.modalName = 'loginerror';
@@ -1374,10 +1375,9 @@
 					this.jiazaitimu();
 					return;
 				}
-				let that = this;
 				// #ifdef APP-PLUS
 				plug.login({
-				clientId:"251594858132-p7jkqgcrecp1g5tntavknq1mhjlft9h0.apps.googleusercontent.com"
+					clientId:"251594858132-p7jkqgcrecp1g5tntavknq1mhjlft9h0.apps.googleusercontent.com"
 				},function(e){
 					console.log(e);
 					that.savegoogle(e.token,e.email,e.userId,e.displayName,e.userAvatar);
@@ -1406,7 +1406,7 @@
 				            provider: 'apple',  
 							success: function (infoRes) {
 								console.log(infoRes);
-								that.saveapple(infoRes.userInfo.email,infoRes.userInfo.openId,infoRes.userInfo.fullName.familyName+infoRes.userInfo.fullName.giveName+infoRes.userInfo.fullName.givenName);
+								that.saveapple(infoRes.userInfo.email,infoRes.userInfo.openId,infoRes.userInfo.fullName.familyName+infoRes.userInfo.fullName.givenName);
 							} 
 				        })  
 				    },  

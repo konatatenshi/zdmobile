@@ -27,7 +27,7 @@
 					</view>
 				</view>
 				<view class="padding-xl">
-					您目前拥有{{zd}}张再答卡(可去道具市场购买)，请问是否使用并获取一次再答机会吗？<text v-show="eventtype=='adLoaded'">或者，你可以观看一次广告，看完后即获取再答机会。</text>
+					您目前拥有{{zd}}张再答卡(可去道具市场购买)，请问是否使用并获取一次再答机会吗？<text v-show="eventtype=='adLoaded'">或者，你可以观看一次广告，看完后即获取再答机会。(限1次)</text>
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">

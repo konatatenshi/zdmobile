@@ -227,6 +227,7 @@
 							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 						},
 						success: (res) => {
+							console.log(res.data)
 							that.guanzhupost = res.data.list;
 							if (res.data.list.length < 30) {
 								that.loading = '已经到底了！';

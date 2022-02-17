@@ -162,15 +162,16 @@
 									}
 								);
 							}else if (channels[i].id == "google-pay") {
-								that.googleplay = 1;
 								plug.querySku({SKU_ID:"vip1"},function(e){
 									if(e.type!='inapp'){
-										uni.navigateTo({
+										uni.redirectTo({
 											url: '../component/card?tid=260104',
 											animationType: 'pop-in',
 											animationDuration: 200
 										});
 										return;
+									}else{
+										that.googleplay = 1;
 									}
 									console.log(e);
 									that.alldone++;

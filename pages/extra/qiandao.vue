@@ -230,7 +230,7 @@
 								that.credit2 = res.data.lxqd;
 								that.qiandaodengji = res.data.qddj;
 								if(Number(that.credit)>0){
-									that.qdtext = '已签到，此处不显示连签奖励';
+									that.qdtext = '已签到';
 									that.disabled = true;
 								} 
 							}
@@ -310,12 +310,24 @@
 							console.log(res.data.result)
 							if (res.data.code==200) {
 								if(res.data.result.indexOf("sigZDned") != -1){
-									that.qdtext = '已签到，此处不显示连签奖励';
-									if(res.data.data>0&&res.data.data<=10){
-										var jinbi = 11 - res.data.data;
-										that.jifenbiandong('签到成功','点币+' + res.data.count + ',金币+' + jinbi);
+									that.credit1 = res.data.last;
+									that.credit2++;
+									that.qdtext = '已签到';
+									console.log(that.credit1)
+									if(that.credit1>30){
+										if(res.data.data>0&&res.data.data<=10){
+											var jinbi = 11 - res.data.data + 5;
+											that.jifenbiandong('签到成功','点币+' + (Number(res.data.count)+1) + ',金币+' + jinbi);
+										}else{
+											that.jifenbiandong('签到成功','点币+' + (Number(res.data.count)+1) + ',金币+5');
+										}
 									}else{
-										that.jifenbiandong('签到成功','点币+' + res.data.count);
+										if(res.data.data>0&&res.data.data<=10){
+											var jinbi = 11 - res.data.data;
+											that.jifenbiandong('签到成功','点币+' + res.data.count + ',金币+' + jinbi);
+										}else{
+											that.jifenbiandong('签到成功','点币+' + res.data.count);
+										}
 									}
 									that.page0++;
 									setTimeout(function() {

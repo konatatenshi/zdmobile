@@ -44,6 +44,26 @@
 						data-target="menuModal">管理按钮</button>
 				</view>
 			</view>
+			<view class="margin-left-sm margin-right-sm" @tap="toxz()"><span v-if="xunzhanglist.length>15"
+				v-for="(xzitem,xzindex) in xunzhanglist.slice(0, 15)">
+				<image v-if="xzitem.id>0" class="cu-tag xunzhangshow" :src="xzitem.url">
+				</image>
+			</span></view>
+			<view class="margin-left-sm margin-right-sm" @tap="toxz()"><span v-if="xunzhanglist.length>30"
+				v-for="(xzitem,xzindex) in xunzhanglist.slice(15, 30)">
+				<image v-if="xzitem.id>0" class="cu-tag xunzhangshow" :src="xzitem.url">
+				</image>
+			</span></view>
+			<view class="margin-left-sm margin-right-sm" @tap="toxz()"><span v-if="xunzhanglist.length>45"
+				v-for="(xzitem,xzindex) in xunzhanglist.slice(30, 45)">
+				<image v-if="xzitem.id>0" class="cu-tag xunzhangshow" :src="xzitem.url">
+				</image>
+			</span></view>
+			<view class="margin-left-sm margin-right-sm" @tap="toxz()"><span v-if="xunzhanglist.length>60"
+				v-for="(xzitem,xzindex) in xunzhanglist.slice(45, 60)">
+				<image v-if="xzitem.id>0" class="cu-tag xunzhangshow" :src="xzitem.url">
+				</image>
+			</span></view>
 			<view class="cu-list grid col-1 no-border solid-bottom">
 				<view class="text-black text-content margin-left-sm text-left "><text
 						class="text-shadow1">UID:{{uid}}</text><text
@@ -347,6 +367,7 @@
 				avatar: '',
 				guanzhupost: [],
 				huifupost: [],
+				xunzhanglist: [],
 				loading: '加载中……',
 				cantpostmessage: '',
 				listTouchDirection: null,
@@ -509,8 +530,8 @@
 							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 						},
 						success: (res) => {
-							console.log(res.data.userinfo.friends);
-							console.log(JSON.stringify(res.data.userinfo.friends));
+							console.log(res.data.userinfo);
+							console.log(JSON.stringify(res.data.userinfo.xunzhanglist));
 							console.log(res.data.userinfo);
 							that.guanzhupost = res.data.post;
 							if (res.data.post.length < 30) {
@@ -527,12 +548,13 @@
 								that.huitie = res.data.userinfo.huitie;
 								that.iconlist = res.data.userinfo.iconlist;
 								that.touxiangkuanglist = res.data.userinfo.touxiangkuanglist;
+								that.xunzhanglist = res.data.userinfo.xunzhanglist;
 								that.sex = res.data.userinfo.sex;
 								that.sig = res.data.userinfo.sig;
 								that.username = res.data.userinfo.username;
 								that.zan = res.data.userinfo.zan;
 								that.avatar = that.getavatar(res.data.userinfo.avatarlist);
-								console.log(that.avatar);
+								console.log(that.xunzhanglist);
 								that.woguanzhu = res.data.userinfo.woguanzhu;
 								that.laheivar = res.data.userinfo.blacklist;
 								that.groupid = res.data.userinfo.groupid;
@@ -978,6 +1000,11 @@
 					this.modalName = null;
 				}, 200)
 			},
+			toxz(){
+				uni.redirectTo({
+					url: '../extra/xunzhang'
+				});
+			},
 			pingbiadd(e) {
 				var that = this;
 				console.log(this.pingbilist);
@@ -1208,5 +1235,10 @@
 	}
 	.content.noborder2 {
 	    width: 100%;
+	}
+	.xunzhangshow {
+		height: 64upx !important;
+		width: 44upx !important;
+		padding-left: 4upx;
 	}
 </style>

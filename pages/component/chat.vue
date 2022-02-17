@@ -22,11 +22,11 @@
 				<view v-else-if="(item.mine || item.username==$username)&& item.remark=='图片'" class="cu-item self">
 					<view class="main" v-if="item.content.indexOf('source') == 0">
 						<image src="../../static/img/loading2.gif" class="radius" v-show="item.id==-1"></image>
-						<image :src="'https://bbs.zdfx.net/' + item.content" @load="item.id='1'"  class="radius" @click="imgMap('https://bbs.zdfx.net/' + item.content)"  mode="widthFix" lazy-load v-show="item.id=='1'"></image>
+						<image :src="'https://bbs.zdfx.net/' + item.content" @load="item.id='1'" style="width: 100%;" class="radius" @click="imgMap('https://bbs.zdfx.net/' + item.content)"  mode="widthFix" v-show="item.id=='1'"></image>
 					</view>
 					<view class="main" v-else>
 						<image src="../../static/img/loading2.gif" mode="widthFix" class="radius" v-show="item.id==-1"></image>
-						<image :src="item.content" @load="item.id='1'"  class="radius" @click="imgMap(item.content)"  mode="widthFix" lazy-load v-show="item.id=='1'"></image>
+						<image :src="item.content" @load="item.id='1'"  class="radius" @click="imgMap(item.content)" style="width: 100%;" mode="widthFix" v-show="item.id=='1'"></image>
 					</view>
 					<view class="cu-avatar radius"
 						:style="{'background-image': 'url(https://zd.tiangal.com/uc_server/avatar.php?uid='+item.fromid+'&size=small&ts=1)'}">

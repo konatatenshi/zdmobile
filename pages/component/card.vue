@@ -105,7 +105,7 @@
 						<view v-else class="padding-xs radius shadow shadow-lg bg-red margin-top text-xs ltsp">
 							发帖际遇：{{luckymessage}}</view>
 					</view>
-					<view class="padding flex p-xs mb-sm">
+					<view class="padding flex p-xs mb-sm text-center">
 						<view class="cu-capsule flex-sub">
 							<view class='cu-tag bg-pink padding-sm' @tap="dianzan()">
 								<text class='cuIcon-appreciatefill'>点赞</text>
@@ -114,9 +114,9 @@
 								<text :class="loadModal2?'cuIcon-loading2 cuIconfont-spin':''"></text>{{ding}}
 							</view>
 						</view>
-						<view class="cu-capsule flex-sub" v-if="platform!=1&&$groupid!=10&&$uid!=357043">
+						<view class="cu-capsule flex-sub" v-if="!dashangvar">
 							<view class='cu-tag bg-blue padding-sm' @tap="dashangadd()">
-								<text class='cuIcon-moneybagfill'>打赏</text>
+								<text class='cuIcon-moneybagfill'>{{dashangtext}}</text>
 							</view>
 							<view class="cu-tag line-blue padding-sm">
 								<text :class="loadModal3?'cuIcon-loading2 cuIconfont-spin':''"></text>{{dashang}}
@@ -573,7 +573,8 @@
 				<view class="cu-modal" :class="modalName=='dashang'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
 						<view class="cu-bar bg-white justify-end">
-							<view class="content">请输入打赏金币的数目</view>
+							<view class="content" v-if="platform==2">请输入打赏金币的数目</view>
+							<view class="content" v-else>请输入评价积分的数量</view>
 							<view class="action" @tap="hideModal">
 								<text class="cuIcon-close text-red"></text>
 							</view>
@@ -600,7 +601,7 @@
 						<view class="cu-bar bg-white justify-end">
 							<view v-if="closed==0" class="action">
 								<button class="cu-btn bg-green margin-left" @tap="senddashang"><text
-										:class="loadModal4?'cuIcon-loading2 cuIconfont-spin':''"></text>打赏</button>
+										:class="loadModal4?'cuIcon-loading2 cuIconfont-spin':''"></text>{{dashangtext}}</button>
 							</view>
 						</view>
 					</view>
@@ -718,6 +719,7 @@
 			return {
 				isCard: false,
 				sendpfno: false,
+				dashangtext: '评价',
 				postname: '加载中',
 				imageStyles:{
 					width:40,
@@ -768,6 +770,7 @@
 				sex: 0,
 				status: 0,
 				ding: 0,
+				dashangvar: true,
 				favorite: 0,
 				dashang: 0,
 				daoxu: 0,
@@ -853,6 +856,15 @@
 					this.huifulist = [];
 					this.page = 0;
 					this.loadhuifu(this.tid, this.page, this.TabCur, '', '', '1');
+				}
+			},
+			dashangyanzheng(){
+				let arrayfid = ["49","50","51","52","95","82"];
+				console.log(arrayfid.includes(this.fid))
+				if(this.$uid==357043){
+					this.dashangvar = true;
+				}else{
+					this.dashangvar = arrayfid.includes(this.fid);
 				}
 			},
 			more(e) {
@@ -1308,13 +1320,13 @@
 							that.picker = res.data.area[0];
 							that.tishi = res.data.tishi[0];
 						} else if (res.data.code == 400) {
-							that.jifenbiandong('打赏失败', '您无权打赏');
+							that.jifenbiandong(that.dashangtext + '失败', '您无权' + that.dashangtext);
 						} else if (res.data.code == 401) {
-							that.jifenbiandong('打赏失败', '此板块禁止打赏');
+							that.jifenbiandong(that.dashangtext + '失败', '此板块禁止' + that.dashangtext);
 						} else if (res.data.code == 410) {
-							that.jifenbiandong('打赏失败', '不能给自己打赏');
+							that.jifenbiandong(that.dashangtext + '失败', '不能给自己' + that.dashangtext);
 						} else if (res.data.code == 202) {
-							that.jifenbiandong('打赏失败', '您已经打赏了此帖子');
+							that.jifenbiandong(that.dashangtext + '失败', '您已经' +that.dashangtext+ '了此帖子');
 						}
 						that.loadModal3 = false;
 					}
@@ -1352,23 +1364,23 @@
 						console.log(res.data)
 						if (res.data.code == 200) {
 							that.modalName = null;
-							that.jifenbiandong('打赏成功', '您将被扣除相应积分');
+							that.jifenbiandong(that.dashangtext + '成功', '您将被扣除相应积分');
 							that.dashang = parseInt(that.dashang) + parseInt(that.dashangjinbi);
 							if (that.dashang > 0) {
 								that.dashang = "+" + that.dashang;
 							}
 						} else if (res.data.code == 400) {
-							that.jifenbiandong('打赏失败', '您无权打赏');
+							that.jifenbiandong(that.dashangtext + '失败', '您无权' + that.dashangtext);
 						} else if (res.data.code == 401) {
-							that.jifenbiandong('打赏失败', '此板块禁止打赏');
+							that.jifenbiandong(that.dashangtext + '失败', '此板块禁止' + that.dashangtext);
 						} else if (res.data.code == 410) {
-							that.jifenbiandong('打赏失败', '不能给自己打赏');
+							that.jifenbiandong(that.dashangtext + '失败', '不能给自己' + that.dashangtext);
 						} else if (res.data.code == 402) {
-							that.jifenbiandong('打赏失败', '打赏金额不正确');
+							that.jifenbiandong(that.dashangtext + '失败',  that.dashangtext +'金额不正确');
 						} else if (res.data.code == 403) {
-							that.jifenbiandong('打赏失败', '所拥有的金币不足以打赏');
+							that.jifenbiandong(that.dashangtext + '失败', '所拥有的金币不足以' + that.dashangtext);
 						} else if (res.data.code == 202) {
-							that.jifenbiandong('打赏失败', '您已经打赏了此帖子');
+							that.jifenbiandong(that.dashangtext + '失败', '您已经' + that.dashangtext + '了此帖子');
 						}
 						that.loadModal4 = false;
 					}
@@ -2333,6 +2345,7 @@
 							setTimeout(function() {
 								that.setHeight("view_listnow");
 							}, 100);
+							that.dashangyanzheng();
 							that.loadwb = 1;
 							if (res.data.replykey == 'closed') {
 								that.contenthuifu = '回帖已关闭';
@@ -2417,7 +2430,7 @@
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 					},
 					success: (res) => {
-						console.log(res.data);
+						//console.log(res.data);
 						if (res.data.code == 404) {
 							that.modalName = "needlogin";
 						} else if (res.data.code == 401) {
@@ -2460,6 +2473,7 @@
 				this.platform = 1;
 			} else {
 				this.platform = 2;
+				this.dashangtext = '打赏';
 			}
 			this.randomunmber = Math.random() * 100;
 			this.bgimg = 'http://bbs.zdfx.net/img/style/i/yzm_pic/' + Math.floor(Math.random() * 208) + '.jpg';

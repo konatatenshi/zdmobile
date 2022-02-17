@@ -78,7 +78,6 @@
 			post(){
 				console.log(this.content);
 				var that = this;
-				console.log(that.title.length);
 				if (that.index < 0 || that.index>11) {
 					uni.showToast({
 					    title: '举报内容选择错误',
