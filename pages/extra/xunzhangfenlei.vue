@@ -22,13 +22,14 @@
 				</text>
 				<text class='cu-tag padding-smx bg-yellow margin-left-xs'>剩:{{Number(item.kucun) - Number(item.yimai)}}
 				</text>
-				<text class='cu-tag padding-smx bg-cyan margin-left-xs' v-if="item.fatie!=''">发
+				<text class='cu-tag padding-smx bg-cyan margin-left-xs' v-if="item.fatie!=''" @tap="fttx(item.fatie.jifen_jiage,item.fatie.jifen_leixing,item.fatie.jilv)">发
 				</text>
-				<text class='cu-tag padding-smx bg-mauve margin-left-xs' v-if="item.huitie!=''">回
+				<text class='cu-tag padding-smx bg-mauve margin-left-xs' v-if="item.huitie!=''" @tap="httx(item.huitie.jifen_jiage,item.huitie.jifen_leixing,item.huitie.jilv)">回
 				</text>
 				<text class="text-green text-widthd"><text class="text-orange text-bold" v-if="Number(item.jifen_jiage)>0">【价格：{{item.jifen_jiage}}金币】</text><text class="text-orange text-bold" v-else>【非卖品】</text>{{item.shuoming}}</text>
 			</view>
-			<view class="bg-red radius flex0 padding-left-xs padding-right-xs padding-top-sm padding-bottom-sm" v-if="Number(item.jifen_jiage)>0&&(Number(item.kucun) - Number(item.yimai))>0">购<br>买</view>
+			<view class="bg-gray radius flex0 padding-left-xs padding-right-xs padding-top-sm padding-bottom-sm" v-if="item.owner==1">已<br>有</view>
+			<view class="bg-red radius flex0 padding-left-xs padding-right-xs padding-top-sm padding-bottom-sm" v-else-if="Number(item.jifen_jiage)>0&&(Number(item.kucun) - Number(item.yimai))>0" @tap="gmqr(item.id,item.jifen_jiage,item.mingcheng)">购<br>买</view>
 			<view class="bg-gray radius flex0 padding-left-xs padding-right-xs padding-top-sm padding-bottom-sm text-white" v-else>购<br>买</view>
 		</view>
 		<view class="cu-modal" :class="modalName=='more'?'show':''" @tap = "hidemodal()">
@@ -40,11 +41,69 @@
 					</view>
 				</view>
 				<view class="padding-xl">
-					点击购买勋章即可通过消耗金币获取勋章。获取的勋章要在我的勋章里面点击佩戴方可生效。永久图标代表购买后永久生效。期限勋章代表购买多少天后失效。回字图标代表回帖有几率获得奖励，发字图标代表发帖有几率获得奖励。具体奖励可以通过点击图标查看。
+					点击购买勋章即可通过消耗金币获取勋章。<br>获取的勋章可以在下方我的里面查看。<br>永久图标代表购买后永久生效。<br>期限勋章代表购买多少天后失效。<br>回字图标代表回帖有几率获得奖励，发字图标代表发帖有几率获得奖励。<br>具体奖励可以通过点击图标查看。
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
 						<button class="cu-btn bg-green margin-left" @tap="hidemodal()">确定</button>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="cu-modal" :class="modalName=='fatie'?'show':''" @tap = "hidemodal()">
+			<view class="cu-dialog" @tap.stop>
+				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
+					<view class="content">发帖特效</view>
+					<view class="action" @tap="hidemodal()">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl text-blue">
+					发帖： <text v-if="texiaojifen>0"> +{{texiaojifen}}</text><text v-else> {{texiaojifen}}</text>{{texiaoleixing}}<br>
+					触发几率：{{texiaogailv}}%
+				</view>
+				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
+					<view class="action">
+						<button class="cu-btn bg-green margin-left" @tap="hidemodal()">确定</button>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="cu-modal" :class="modalName=='huitie'?'show':''" @tap = "hidemodal()">
+			<view class="cu-dialog" @tap.stop>
+				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
+					<view class="content">回帖特效</view>
+					<view class="action" @tap="hidemodal()">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl text-blue">
+					发帖： <text v-if="texiaojifen>0"> +{{texiaojifen}}</text><text v-else> {{texiaojifen}}</text>{{texiaoleixing}}<br>
+					触发几率：{{texiaogailv}}%
+				</view>
+				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
+					<view class="action">
+						<button class="cu-btn bg-green margin-left" @tap="hidemodal()">确定</button>
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="cu-modal" :class="modalName=='goumai'?'show':''" @tap = "hidemodal()">
+			<view class="cu-dialog" @tap.stop>
+				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
+					<view class="content">购买确认</view>
+					<view class="action" @tap="hidemodal()">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl text-brown">
+					确定购买<text class="text-red text-bold">{{goumainame}}</text>吗？<br>
+					将要花费<text class="text-red text-bold">{{goumaijiage}}</text>金币。
+				</view>
+				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
+					<view class="action">
+						<button class="cu-btn bg-green margin-left" @tap="goumai()">确定</button>
+						<button class="cu-btn line-green margin-left" @tap="hidemodal()">取消</button>
 					</view>
 				</view>
 			</view>
@@ -58,7 +117,13 @@
 			return {
 				fenlei:93,
 				fenleilist:[],
-				modalName: null
+				modalName: null,
+				texiaogailv: 0,
+				texiaoleixing: '',
+				texiaojifen: 0,
+				goumaiid: 0,
+				goumainame: '',
+				goumaijiage: 0
 			}
 		},
 		onLoad: function(option) { //option为object类型，会序列化上个页面传递的参数 
@@ -81,7 +146,7 @@
 						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 					},
 					success: (res) => {
-						console.log(res.data.list);
+						console.log(res.data);
 						if (res.data.code == 200) {
 							that.fenleilist = res.data.list
 						} else {
@@ -93,12 +158,83 @@
 					}
 				});
 			},
+			goumai() {
+				var that = this;
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:xunzhang', //获取轮播列表
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token,
+						typeid: 3,
+						fenlei: that.goumaiid
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data);
+						if (res.data.code == 200) {
+							uni.showToast({
+								title: '购买成功'
+							})
+							that.getxunzhang(that.fenlei);
+						} else if (res.data.code == 402) {
+							uni.showToast({
+								title: '已经拥有',
+								icon: 'error'
+							})
+						} else if (res.data.code == 404) {
+							uni.showToast({
+								title: '库存不足',
+								icon: 'error'
+							})
+						}else {
+							uni.showToast({
+								title: '金钱不足',
+								icon: 'error'
+							})
+						};
+						that.modalName = null;
+					}
+				});
+			},
 			more(){
 				this.modalName = 'more';
 			},
 			hidemodal(){
 				this.modalName = null
-			}
+			},
+			fttx(jiage,leixing,jilv){
+				if(leixing==1){
+					this.texiaoleixing = '金币';
+				}else if(leixing==2){
+					this.texiaoleixing = '点币';
+				}else if(leixing==3){
+					this.texiaoleixing = '宠物经验';
+				}
+				this.texiaojifen = jiage;
+				this.texiaogailv = jilv;
+				this.modalName = 'fatie';
+			},
+			httx(jiage,leixing,jilv){
+				if(leixing==1){
+					this.texiaoleixing = '金币';
+				}else if(leixing==2){
+					this.texiaoleixing = '点币';
+				}else if(leixing==3){
+					this.texiaoleixing = '宠物经验';
+				}
+				this.texiaojifen = jiage;
+				this.texiaogailv = jilv;
+				this.modalName = 'huitie';
+			},
+			gmqr(id,jiage,name){
+				this.goumaiid = id;
+				this.goumaijiage = jiage;
+				this.goumainame = name;
+				this.modalName = 'goumai';
+			},
 		}
 	}
 </script>

@@ -49,6 +49,9 @@
 				</view>
 			</view>
 		</view>
+		<view class="cu-form-group" @tap="topinbi()">
+			<view class="title">管理屏蔽列表</view>
+		</view>
 		<view class="cu-form-group" @tap="toserver()">
 			<view class="title">检测服务器状态</view>
 			<view class="cu-item">
@@ -251,6 +254,13 @@
 			toserver(){
 				uni.navigateTo({
 					url: './loading',
+					animationType: 'pop-in',
+					animationDuration: 200
+				});
+			},
+			topinbi(){
+				uni.navigateTo({
+					url: 'pingbi',
 					animationType: 'pop-in',
 					animationDuration: 200
 				});

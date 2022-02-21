@@ -343,9 +343,9 @@
 				</view>
 				<view class="cu-bar bg-white justify-end">
 					<view class="action">
-						<button disabled class="cu-btn bg-yellow margin-left" @tap="">头衔</button>
-						<button disabled class="cu-btn bg-purple margin-left" @tap="">背景</button>
-						<button disabled class="cu-btn bg-pink margin-left" @tap="">挂件</button>
+						<button class="cu-btn bg-yellow margin-left" @tap="totx()">头衔</button>
+						<button class="cu-btn bg-purple margin-left" @tap="tomp()">名片</button>
+						<button class="cu-btn bg-pink margin-left" @tap="togj()">挂件</button>
 					</view>
 				</view>
 			</view>
@@ -799,6 +799,21 @@
 			toxz(e) {
 				uni.navigateTo({
 					url: '../extra/xunzhang'
+				});
+			},
+			tomp(e) {
+				uni.navigateTo({
+					url: '../extra/beijing'
+				});
+			},
+			totx(e) {
+				uni.navigateTo({
+					url: '../extra/touxian'
+				});
+			},
+			togj(e) {
+				uni.navigateTo({
+					url: '../extra/guajian'
 				});
 			},
 			showdj(){

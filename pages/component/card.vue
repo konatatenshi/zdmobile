@@ -25,7 +25,7 @@
 						<img-cache class="cu-avatar round gzlist2" v-if="touxiangkuanglist != ''"
 							:src="touxiangkuanglist" />
 						<view class="content flex-sub hbx">
-							<view v-if="isImage">
+							<view v-if="isImage" @tap="totx()">
 								<img-cache class="touxian" :src="touxian"></img-cache>
 							</view>
 							<view :style="[{ color: groupid==51?randomcolor():''}]">{{postup}}<text
@@ -163,7 +163,7 @@
 						</view>
 						<view class="content hbx">
 							<view v-if="isImage">
-								<img-cache class="touxian2" :src="item.touxian"></img-cache>
+								<img-cache class="touxian2" :src="item.touxian" @tap="totx()"></img-cache>
 							</view>
 							<img-cache class="cu-avatar round gzlist3" v-if="item.touxiangkuanglist"
 								:src="item.touxiangkuanglist" />
@@ -1899,6 +1899,11 @@
 					this.csss = 0;
 					this.reshow();
 				}
+			},
+			totx(){
+				uni.navigateTo({
+					url: '../extra/touxian'
+				});
 			},
 			handleMessage(res) {
 				this.isShowVaptcha = false

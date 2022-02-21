@@ -104,6 +104,22 @@
 					}
 				});
 			},
+			NavChange(e){
+				console.log(e)
+				if(e==4){
+					uni.redirectTo({
+						url: 'myxunzhang'
+					})
+				}else if(e==2){
+					uni.redirectTo({
+						url: 'xunzhanglog'
+					})
+				}else if(e==3){
+					uni.redirectTo({
+						url: 'xunzhangrank'
+					})
+				}
+			}
 		}
 	}
 </script>

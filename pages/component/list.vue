@@ -25,6 +25,9 @@
 										class="padding-left-xl padding-right-xl cu-btn round bg-purple" v-if="woguanzhu==1" @tap="guanzhuta()">关注Ta</button><button
 										class="padding-left-xl padding-right-xl cu-btn round bg-purple" v-else @tap="guanzhuta()">取关Ta</button>
 								</view>
+								<view class="margin-tb-sm text-center padding-right-xl" v-else>
+									<button class="padding-left-xl padding-right-xl cu-btn round bg-purple" @tap="tobjsd()">名片商城</button>
+								</view>
 							</view>
 						</view>
 					</view>
@@ -44,22 +47,22 @@
 						data-target="menuModal">管理按钮</button>
 				</view>
 			</view>
-			<view class="margin-left-sm margin-right-sm" @tap="toxz()"><span v-if="xunzhanglist.length>15"
+			<view class="margin-left-sm margin-right-sm" @tap="toxz()"><span v-if="xunzhanglist.length>0"
 				v-for="(xzitem,xzindex) in xunzhanglist.slice(0, 15)">
 				<image v-if="xzitem.id>0" class="cu-tag xunzhangshow" :src="xzitem.url">
 				</image>
 			</span></view>
-			<view class="margin-left-sm margin-right-sm" @tap="toxz()"><span v-if="xunzhanglist.length>30"
+			<view class="margin-left-sm margin-right-sm" @tap="toxz()"><span v-if="xunzhanglist.length>15"
 				v-for="(xzitem,xzindex) in xunzhanglist.slice(15, 30)">
 				<image v-if="xzitem.id>0" class="cu-tag xunzhangshow" :src="xzitem.url">
 				</image>
 			</span></view>
-			<view class="margin-left-sm margin-right-sm" @tap="toxz()"><span v-if="xunzhanglist.length>45"
+			<view class="margin-left-sm margin-right-sm" @tap="toxz()"><span v-if="xunzhanglist.length>30"
 				v-for="(xzitem,xzindex) in xunzhanglist.slice(30, 45)">
 				<image v-if="xzitem.id>0" class="cu-tag xunzhangshow" :src="xzitem.url">
 				</image>
 			</span></view>
-			<view class="margin-left-sm margin-right-sm" @tap="toxz()"><span v-if="xunzhanglist.length>60"
+			<view class="margin-left-sm margin-right-sm" @tap="toxz()"><span v-if="xunzhanglist.length>45"
 				v-for="(xzitem,xzindex) in xunzhanglist.slice(45, 60)">
 				<image v-if="xzitem.id>0" class="cu-tag xunzhangshow" :src="xzitem.url">
 				</image>
@@ -531,8 +534,6 @@
 						},
 						success: (res) => {
 							console.log(res.data.userinfo);
-							console.log(JSON.stringify(res.data.userinfo.xunzhanglist));
-							console.log(res.data.userinfo);
 							that.guanzhupost = res.data.post;
 							if (res.data.post.length < 30) {
 								that.loading = '已经到底了！';
@@ -554,7 +555,6 @@
 								that.username = res.data.userinfo.username;
 								that.zan = res.data.userinfo.zan;
 								that.avatar = that.getavatar(res.data.userinfo.avatarlist);
-								console.log(that.xunzhanglist);
 								that.woguanzhu = res.data.userinfo.woguanzhu;
 								that.laheivar = res.data.userinfo.blacklist;
 								that.groupid = res.data.userinfo.groupid;
@@ -835,6 +835,7 @@
 			},
 			tothebottom(push) {
 				var that = this;
+				that.loading = '正在加载中……';
 				if (that.TabCur == 0) {
 					uni.request({
 						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取轮播列表
@@ -850,7 +851,7 @@
 							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 						},
 						success: (res) => {
-							console.log(that.page0);
+							console.log(res.data);
 							push = res.data.post;
 							console.log(push);
 							if (push.length > 0) {
@@ -947,6 +948,11 @@
 							that.jifenbiandong('关注失败', '关注失败');
 						}
 					}
+				});
+			},
+			tobjsd(){
+				uni.navigateTo({
+					url: '../extra/beijing'
 				});
 			},
 			lahei(e) {

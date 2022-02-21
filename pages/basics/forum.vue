@@ -7,7 +7,8 @@
 			<block slot="content">{{forumname}}</block>
 			<block slot="right">
 				<view class="action">
-					<view class="cu-load cuIcon-roundadd" v-if="canpost==1" @tap="add()"></view>
+					<view class="cu-load cuIcon-forward" @tap="changepage()"></view>
+					<view class="padding-left cu-load cuIcon-roundadd" v-if="canpost==1" @tap="add()"></view>
 					<view class="padding-left cu-load cuIcon-refresh" @tap="refresh()"></view>
 				</view>
 			</block>
@@ -51,7 +52,7 @@
 													<img-cache class="cu-avatar round gzlist2" v-if="item.userinfo.touxiangkuanglist != ''" :src="item.userinfo.touxiangkuanglist"/>
 													<view class="content flex-sub hbx">
 														<view v-if="isImage">
-															<img-cache class="touxian" :src="item.userinfo.touxian">
+															<img-cache class="touxian" :src="item.userinfo.touxian" @tap="totx()">
 															</img-cache>
 														</view>
 														<view class="flex justify-between">
@@ -303,6 +304,26 @@
 				</view>
 			</view>
 		</view>
+		<view class="cu-modal" :class="modalName=='changepage'?'show':''" @tap = "hideModal()">
+			<view class="cu-dialog" @tap.stop>
+				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
+					<view class="content">跳页</view>
+					<view class="action" @tap="hideModal()">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl text-brown">
+					<text>输入前往的页数，按确定转跳。<br></text>
+					<input class="solid-bottom text-red" type="number" v-model="mainpage"></input>
+				</view>
+				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
+					<view class="action">
+						<button class="cu-btn bg-green margin-left" @tap="topage()">确定</button>
+						<button class="cu-btn line-green margin-left" @tap="hideModal()">取消</button>
+					</view>
+				</view>
+			</view>
+		</view>
 		<view class="cu-modal" :class="jifencaozuo!=0?'show':''">
 			<button class="cu-btn margin-sm basis-sm shadow bg-orange"
 				:class="jifencaozuo==1?'animation-scale-up':'animation-reverse animation-scale-down'">
@@ -416,6 +437,16 @@
 			},
 			back(){
 				uni.navigateBack();
+			},
+			topage() {
+				this.threadlist = [];
+				this.modalName = null;
+				if(this.TabCur==0){
+					this.loadthread(this.forumid, this.mainpage, 'new');
+				}else if(this.TabCur==1){
+					this.loadthread(this.forumid, this.mainpage);
+				}
+				console.log("到底了");
 			},
 			tothebottom() {
 				if(this.TabCur==0){
@@ -993,6 +1024,14 @@
 			},
 			RadioChange(e) {
 				this.radio = e.detail.value;
+			},
+			changepage(){
+				this.modalName = 'changepage';
+			},
+			totx(){
+				uni.navigateTo({
+					url: '../extra/touxian'
+				});
 			},
 			sendjbxx() {
 				var that = this;
