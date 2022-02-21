@@ -3,6 +3,7 @@
 
 ## 打包版商店地址
 [Google Play](https://play.google.com/store/apps/details?id=bbs.zdfx.net)  
+[AppStore(iOS)](https://apps.apple.com/us/app/%E7%BB%88%E7%82%B9%E5%8A%A8%E6%BC%AB%E8%B5%84%E8%AE%AF/id1592697237)  
 [Testfight(iOS)](https://testflight.apple.com/join/PeuaAnI3)
 
 ## 进度
