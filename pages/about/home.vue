@@ -17,8 +17,8 @@
 			<img-cache v-show="!avatarimgLoaded" class="cu-avatar round" :src="$avatarsmalldefault" @tap="touserpage"
 				data-id="0" style="margin-left: 20upx;" />
 			</img-cache>
-			<view class="content" style="text-align: left;" @tap="touserpage">
-				{{$username}}
+			<view class="action" style="margin-left: -200upx;">
+				{{$username}}<text class="cuIcon-edit text-grey" @tap="tocn"></text>
 			</view>
 			<view class="action" @tap="touserpage">
 				个人主页<text class="cuIcon-right"></text>
@@ -824,6 +824,12 @@
 					url: '../plugin/animation'
 				});
 			},
+			tocn(e) {
+				console.log('gaiming');
+				uni.navigateTo({
+					url: '../extra/cn'
+				});
+			},
 			tologin(e) {
 				uni.navigateTo({
 					url: '../basics/button?sessionid=' + e
@@ -877,11 +883,19 @@
 				this.TabCur = e.currentTarget.dataset.id;
 				console.log(this.TabCur);
 				if (this.TabCur == 4) {
-					uni.navigateTo({
-						url: '../extra/ad',
-						animationType: 'pop-in',
-						animationDuration: 200
-					});
+					if(this.$uid==357056){
+						uni.navigateTo({
+							url: '../extra/ad',
+							animationType: 'pop-in',
+							animationDuration: 200
+						});
+					}else{
+						this.$emit("returnDat", "plugin") //传递的值
+						uni.$emit('chosenSex', -8879);
+					}
+				} else if (this.TabCur == 3) {
+					this.$emit("returnDat", "plugin") //传递的值
+					uni.$emit('chosenSex', -8878);
 				} else if (this.TabCur == 1) {
 					this.modalName = 'grouplist';
 				}

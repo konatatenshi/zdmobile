@@ -59,6 +59,7 @@
 	var googleInterstitialRewardedAd = uni.requireNativePlugin('HXR-GoogleMobileADRewardedInterstitialAd');
 	import AES from '../../js_sdk/ar-aes/ar-aes.js';
 	import w_md5 from "../../js_sdk/zww-md5/w_md5.js";
+	import AD from '../../js_sdk/ad.js';
 	export default {
 		name: "contact",
 		data() {
@@ -71,6 +72,7 @@
 				eventtype: '',
 				zdjs: false,
 				zd: 0,
+				ad: 1,
 				show: false,
 				modalName: null
 			}
@@ -84,17 +86,40 @@
 			} else {
 				this.platform = 2;
 			}
-			if(this.platform==1){
-				googleInterstitialRewardedAd.createADWithAdUnitID('ca-app-pub-9890309082716404/2637153500', function(res) {
-					console.log(res);
-					that.eventtype = res.eventType;
-					console.log(that.eventtype);
-				}, {'userIdentifier':that.$uid, 'dati': that.$username + ' de dati'});
-			}else if(this.platform==2){
-				var jygooglead = uni.requireNativePlugin("JY-GoogleAdMob");
-				jygooglead.jy_init();
-				that.jy_loadRewardedAd();
-			}
+			uni.request({
+				url: getApp().globalData.zddomain + 'plugin.php?id=zxs_maintenance_page:getip', //获取轮播列表
+				method: 'GET',
+				timeout: 10000,
+				header: {
+					'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+				},
+				success: (res) => {
+					console.log(res.data);
+					if (res.data == 'CN') {
+						that.ad = 0;
+						that.eventtype = 'adLoaded';
+						AD.load({
+							adpid: 1453639237,
+							adType: "RewardedVideo"
+						});
+						console.log(that.ad);
+					} else {
+						that.ad = 1;
+						console.log(that.ad);
+						if(that.platform==1){
+							googleInterstitialRewardedAd.createADWithAdUnitID('ca-app-pub-9890309082716404/2637153500', function(res) {
+								console.log(res);
+								that.eventtype = res.eventType;
+								console.log(that.eventtype);
+							}, {'userIdentifier':that.$uid, 'dati': that.$username + ' de dati'});
+						}else if(that.platform==2){
+							var jygooglead = uni.requireNativePlugin("JY-GoogleAdMob");
+							jygooglead.jy_init();
+							that.jy_loadRewardedAd();
+						}
+					}
+				}
+			});
 		},
 		onShareTimeline(res) {
 			if (res.from === 'menu') { // 来自页面内分享按钮
@@ -134,16 +159,42 @@
 				this.modalName = null;
 			},
 			showInterstitialRewardedAd: function() {
-				if(this.platform==2){
-					this.jy_showRewardedAd();
+				let that = this;
+				if(this.ad==0){
+						// 调用后会显示 loading 界面
+						AD.show({
+							adpid: 1453639237, // HBuilder 基座测试广告位
+							adType: "RewardedVideo"
+							//singleton: false // 设置此参数后，每次调用 show 方法将重新创建广告实例，预载将失效，如果广告回调每次要透传用户信息需要设置 false
+						}, (res) => {
+							// 用户点击了【关闭广告】按钮
+							if (res && res.isEnded) {
+								// 正常播放结束
+								console.log("onClose " + res.isEnded);
+								that.zaidas(2);
+								that.jiangli = 0;
+							} else {
+								// 播放中途退出
+								console.log("onClose " + res.isEnded);
+							}
+					
+							// 在此处理服务器回调逻辑
+						}, (err) => {
+							// 广告加载错误
+							console.log(err)
+						})
 				}else{
-					let that = this;
-					googleInterstitialRewardedAd.showWithCallback(function(res) {
-						console.log(JSON.stringify(res));
-						if(res.eventType=='userDidEarnReward'){
-							that.zaidas(2);
-						}
-					});
+					if(this.platform==2){
+						this.jy_showRewardedAd();
+					}else{
+						let that = this;
+						googleInterstitialRewardedAd.showWithCallback(function(res) {
+							console.log(JSON.stringify(res));
+							if(res.eventType=='userDidEarnReward'){
+								that.zaidas(2);
+							}
+						});
+					}
 				}
 			},
 			jy_showRewardedAd() {

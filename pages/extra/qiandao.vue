@@ -280,6 +280,17 @@
 			sign() {
 				var that = this;
 				const dateTime = Date.now();
+				var hour = dateTime.getHours();
+				var minut = dateTime.getMinutes();
+				var second = dateTime.getSeconds();
+				if( hour === 0 && minut === 0 && second < 5){
+					setTimeout(function() {
+						let signtime = 5 - second;
+						that.qdtext = '繁忙时刻，签到中……剩余:' + signtime + '秒';
+						that.sign();
+					}, 1000)
+					return;
+				}
 				const timestamp = Math.floor(dateTime / 1000);
 				const timestamps = 'S' + Math.floor(dateTime / 1000);
 				const signature = plus.navigator.getSignature();

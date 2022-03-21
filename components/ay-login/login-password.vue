@@ -186,6 +186,67 @@
 				</view>
 			</view>
 		</view>
+		<view class="cu-modal display" :class="modalName=='displaynormal'?'show':''" @tap="hideModal">
+			<view class="cu-dialog" @tap.stop>
+				<view class="cu-bar bg-white justify-end">
+					<view class="content">注册新账号</view>
+					<view class="action" @tap="hideModal">
+						<text class="cuIcon-close text-red"></text>
+					</view>
+				</view>
+				<view class="padding-xl">
+					<view class="cu-avatar xl round margin-left" style="background-image:url('https://zd.tiangal.com/uc_server/images/randuser/big/0.jpg');"></view>
+					<view class="cu-form-group margin-top">
+						<view class="title">用户名</view>
+						<input placeholder="请输入用户名" v-model="displayname" type="text" name="input"></input>
+					</view>
+					<view class="cu-form-group">
+						<view class="title">密码</view>
+						<input placeholder="请输入你的密码(≥8位)" v-model="passwords" type="password" name="input"></input>
+					</view>
+					<view class="cu-form-group">
+						<view class="title">邮箱</view>
+						<input placeholder="请输入你的邮箱" v-model="mail" type="text" name="input"></input>
+					</view>
+					
+						<view class="cu-form-group">
+							<view class="title">手机号</view>
+							<input type="tel" placeholder="请输入手机号" name="mobilenum" v-model="phonenumber" value=""
+								@input="changephonenumber"></input>
+							<picker class="shoujiquma" @change="Pickcountry" :value="addressData.countryid"
+								:range="countryList">
+								<view class="cu-capsule radius">
+									<view class='cu-tag bg-blue '>
+										+{{addressData.countrycode}}
+									</view>
+									<view class="cu-tag line-blue">
+										{{countryList[addressData.countryid]}}
+									</view>
+								</view>
+							</picker>
+						</view>
+						<view class="cu-form-group">
+							<view class="title">验证码</view>
+							<input type="number" placeholder="输入验证码" name="yanzhengma" maxlength="6" v-model="yanzhengma"
+								value="" @input="shuruyanzhengma"></input>
+							<button class='cu-btn bg-green shadow' @tap="yzm" :disabled="codeFlag?false:true"
+								:class="{activeCode:codeFlag}"><text
+									:class="formsub3?'cuIcon-loading2 cuIconfont-spin':''"></text>{{codeTxt}}</button>
+						</view>
+						<xlg-slideCode :session_id="session_id" v-if="slideCode_show" @close="slideCode_show = false"
+							@success="slideCode_success"></xlg-slideCode>
+						<view v-if="errortext!=''" class="cu-form-group justify-center">
+							<view class="text-red">{{errortext}}</view>
+						</view>
+				</view>
+				<view class="cu-bar bg-white justify-end">
+					<view class="action">
+						<button class="cu-btn bg-green margin-left" @tap="registnew2(1)">确定</button>
+						<button class="cu-btn bg-gray margin-left" @tap="hideModal">取消</button>
+					</view>
+				</view>
+			</view>
+		</view>
 		<view class="cu-modal displaygoogle" :class="modalName=='displayapple'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar bg-white justify-end">
@@ -237,7 +298,7 @@
 				</view>
 				<view class="cu-bar bg-white justify-end">
 					<view class="action">
-						<button class="cu-btn bg-green margin-left" @tap="registnew2">确定</button>
+						<button class="cu-btn bg-green margin-left" @tap="registnew2(0)">确定</button>
 						<button class="cu-btn bg-gray margin-left" @tap="hideModal">取消</button>
 					</view>
 				</view>
@@ -432,7 +493,7 @@
 				mail: '',
 				googletoken: '',
 				userid: '',
-				displayname: '用户名读取失败',
+				displayname: '',
 				useravatar: '',
 				slideCode_show: false, //图形验证码是否显示
 				slideCode_yanzheng: false, //图形验证码是否验证通过
@@ -963,6 +1024,13 @@
 							this.modalName = 'loginerror';
 							this.error.reason = '论坛目前关闭注册，请稍后再试或尝试Google/Apple账号直接登入。';
 							this.formsub2 = false;
+						}else{
+							if(this.canreg==1){
+								this.modalName = 'displaynormal';
+							}else{
+								this.jiazaitimu();
+								this.formsub2 = false;
+							}
 						}
 						this.text = 'request success';
 					},
@@ -1047,6 +1115,9 @@
 					return;
 				}
 				let that = this;
+				if(e==1){
+					that.userid = '10000';
+				}
 				this.formsub2 = true;
 				uni.request({
 					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:changepassword', //获取是否开放注册
@@ -1081,7 +1152,12 @@
 						}else if (res.data.code == 504) {
 							this.error.reasoncode = 'error0219';
 							this.modalName = 'loginerror';
-							this.error.reason = '注册失败，Google Token超时。请尝试重新登录';
+							this.error.reason = '注册失败，Token超时。请尝试重新登录';
+							this.formsub2 = false;
+						}else if (res.data.code == 506) {
+							this.error.reasoncode = 'error0221';
+							this.modalName = 'loginerror';
+							this.error.reason = '注册失败，邮箱格式非法';
 							this.formsub2 = false;
 						}else if (res.data.code == 505) {
 							this.error.reasoncode = 'error0220';
