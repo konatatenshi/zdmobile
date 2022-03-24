@@ -2,59 +2,59 @@
 	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view class="bg-white gt">
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
-			<block slot="backText">返回</block>
-			<block slot="content">我的钱包</block>
+			<block slot="backText">{{$t('api.back')}}</block>
+			<block slot="content">{{$t('buy.moneybag')}}</block>
 		</cu-custom>
 		<view class="cu-form-group">
-			<view class="title">账户余额</view>
-			<view class="text-red">{{money}}终点币</view>
+			<view class="title">{{$t('buy.balance')}}</view>
+			<view class="text-red">{{money}}{{$t('home.zdcoin')}}</view>
 		</view>
 		<view class="cu-form-group">
-			<view class="title">请选择充值终点币</view>
-			<view class="text-gray text-xs">1元人民币=20终点币</view>
+			<view class="title">{{$t('buy.coosezd')}}</view>
+			<view class="text-gray text-xs">{{$t('buy.coosezdtxt')}}</view>
 		</view>
 		<view class="cu-list grid col-3 no-border">
 			<view class="padding-xs" v-for="(item,index) in moneylist" :key="index" @tap="tabSelect(index)">
 				<view class="cu-item padding-bottom-sm padding-top-sm" :class="TabCur==index?'borders':''">
 					<view class="text-price text-xl" :class="TabCur==index?'text-red':'text-black'">{{item}}<br><text class="text-sm" v-if="viplist[index]!=undefined">({{huobifuhao(viplist[index].pricelocal,viplist[index].price)}})</text><text class="text-sm" v-if="googleplay==1&&vipprice[index]!=undefined">({{vipprice[index]}})</text><text class="text-sm" v-else-if="googleplay==1">(点击加载价格)</text>
 					</view>
-					<view class="margin-top-xs" :class="TabCur==index?'text-red':'text-gray'">{{item*20}}币</view>
+					<view class="margin-top-xs" :class="TabCur==index?'text-red':'text-gray'">{{item*20}}{{$t('buy.coin')}}</view>
 				</view>
 			</view>
 		</view>
 		<view class="margin-tb-sm text-center"><button
-			class="margin cu-btn bg-red block lg" :disabled="fasong?true:false" @tap="pay()"><text class="cuIconfont-spin" :class="fasong?'cuIcon-loading2':''"></text>立即充值</button>
+			class="margin cu-btn bg-red block lg" :disabled="fasong?true:false" @tap="pay()"><text class="cuIconfont-spin" :class="fasong?'cuIcon-loading2':''"></text>{{$t('buy.buynow')}}</button>
 		</view>
 		<view class="padding-right padding-left margin-tb-sm text-left text-gray">
-			温馨提示：<br>
-			1.该商品为<text class="text-black text-bold">虚拟商品</text>，不能兑换实物商品。<br>
-			2.充值成功后可以<text class="text-underline text-blue" @tap="duihuanit">兑换论坛金币</text>，但金币不能兑换为终点币，且不支持转让、提现、退款。<br>
-			3.支付遇到问题请去<text class="text-underline text-blue" @tap="tofankui">反馈页面</text>回报，未到账建议也可以去回报。<br>
-			4.兑换的论坛金币可以用于购买勋章、头衔、道具等等功能，以相关购买界面为准。<br>
-			5.不鼓励未成年人充值。
+			{{$t('buy.cointxt1')}}<br>
+			1.{{$t('buy.cointxt2')}}<text class="text-black text-bold">{{$t('buy.cointxt3')}}</text>，{{$t('buy.cointxt4')}}。<br>
+			2.{{$t('buy.cointxt5')}}<text class="text-underline text-blue" @tap="duihuanit">{{$t('buy.cointxt6')}}</text>，{{$t('buy.cointxt7')}}。<br>
+			3.{{$t('buy.cointxt8')}}<text class="text-underline text-blue" @tap="tofankui">{{$t('buy.cointxt9')}}</text>{{$t('buy.cointxt10')}}。<br>
+			4.{{$t('buy.cointxt11')}}<br>
+			5.{{$t('buy.cointxt12')}}
 		</view>
 		<view class="cu-modal" :class="modal=='duihuan'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar bg-white justify-end">
-					<view class="content">兑换金币(比例1:1)</view>
+					<view class="content">{{$t('buy.exchangegold')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl">
 					<view class="cu-form-group">
-						<view class="title">金币数量</view>
+						<view class="title">{{$t('buy.goldnumber')}}</view>
 						<input :placeholder="'0 - ' + money" name="money" v-model="duihuan" type="number" @blur="pandingmoney()"></input>
 					</view>
 					<view class="cu-form-group">
-						<view class="title">全部兑换</view>
+						<view class="title">{{$t('buy.allexchange')}}</view>
 						<switch @change="SwitchA" :class="switchA?'checked':''" :checked="switchA?true:false"></switch>
 					</view>
 				</view>
 				<view class="cu-bar bg-white justify-end">
 					<view class="action">
-						<button class="cu-btn bg-green margin-left" @tap="duihuanmoney()">确定</button>
-						<button class="cu-btn line-green margin-left" @tap="hideModal">取消</button>
+						<button class="cu-btn bg-green margin-left" @tap="duihuanmoney()">{{$t('api.ok')}}</button>
+						<button class="cu-btn line-green margin-left" @tap="hideModal">{{$t('api.cancel')}}</button>
 					</view>
 				</view>
 			</view>
@@ -70,6 +70,7 @@
 			return {
 				index: -1,
 				content: [],
+				red: 0,
 				switchA: false,
 				moneylist: [1,6,18,30,50,108],
 				vipprice: [],
@@ -103,7 +104,7 @@
 		methods: {
 			plusReady() {
 				uni.showLoading({
-					title: "加载中",
+					title: this.$t('api.loading'),
 				});
 				setTimeout(function() {
 					uni.hideLoading();
@@ -143,7 +144,7 @@
 											errormsg.message
 										);
 										uni.showToast({
-											title: '获取会员信息失败，请稍后重试'
+											title: that.$t('buy.failget')
 										})
 										uni.navigateBack()
 										uni.hideLoading();
@@ -152,11 +153,14 @@
 							}else if (channels[i].id == "google-pay") {
 								plug.querySku({SKU_ID:"1"},function(e){
 									if(e.type!='inapp'){
-										uni.redirectTo({
-											url: '../component/card?tid=260104',
-											animationType: 'pop-in',
-											animationDuration: 200
-										});
+										if(that.red==0){
+											that.red = 1;
+											uni.navigateTo({
+												url: '../component/card?tid=260104',
+												animationType: 'pop-in',
+												animationDuration: 200
+											});
+										}
 										return;
 									}else{
 										that.googleplay = 1;
@@ -175,15 +179,15 @@
 				);
 			},
 			pay() {
+				let that = this;
 				if(this.TabCur==-1){
 					uni.showToast({
-						title:"请选套餐",
+						title: that.$t('buy.choosevip'),
 						icon:"error"
 					})
 					return;
 				}
 				this.fasong = true;
-				let that = this;
 				if(this.googleplay==0){
 					uni.requestPayment({
 						provider: "appleiap",
@@ -196,7 +200,7 @@
 						},
 						fail: (e) => {
 							uni.showToast({
-								title: '支付失败'
+								title: that.$t('buy.paidfailed')
 							})
 							that.fasong = false;
 						},
@@ -243,13 +247,13 @@
 							console.log(res.data)
 							if(res.data.code==200){
 								uni.showToast({
-									title: '充值成功。'
+									title: that.$t('buy.paidsuccess')
 								})
 								that.getgold();
 								that.fasong = false;
 							}else{
 								uni.showToast({
-									title: '支付失败',
+									title: that.$t('buy.paidfailed'),
 									icon: 'error'
 								})
 								that.fasong = false;
@@ -258,7 +262,7 @@
 					});
 				} else {
 					uni.showToast({
-						title: '支付失败',
+						title: that.$t('buy.paidfailed'),
 						icon: 'error'
 					})
 				}
@@ -286,13 +290,13 @@
 							console.log(res.data)
 							if(res.data.code==200){
 								uni.showToast({
-									title: '充值成功。'
+									title: that.$t('buy.paidsuccess')
 								})
 								that.getgold();
 								that.loading = false;
 							}else{
 								uni.showToast({
-									title: '支付失败',
+									title: that.$t('buy.paidfailed'),
 									icon: 'error'
 								})
 								that.loading = false;
@@ -301,7 +305,7 @@
 					});
 				} else {
 					uni.showToast({
-						title: '支付失败',
+						title: that.$t('buy.paidfailed'),
 						icon: 'error'
 					})
 				}
@@ -364,7 +368,7 @@
 				}
 				if(this.duihuan==0||this.duihuan==''){
 					uni.showToast({
-						title:'兑换失败',
+						title:that.$t('buy.exchangefailed'),
 						icon: 'error'
 					})
 					this.modal=null;
@@ -387,11 +391,11 @@
 									console.log(res.data);
 									that.money = that.money - that.duihuan;
 									uni.showToast({
-										title: '兑换成功'
+										title: that.$t('buy.exchangesuccess')
 									})
 								}else{
 									uni.showToast({
-										title:'余额不足',
+										title:that.$t('buy.balangenotenough'),
 										icon: 'error'
 									})
 								}

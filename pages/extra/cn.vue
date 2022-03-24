@@ -1,17 +1,17 @@
 <template>
 	<view :class="'bg-white bc-'+themeColor.name">
 		<cu-custom class="statustop" :bgColor="'bg-gradual-'+themeColor.name" :isBack="true">
-			<block slot="backText">返回</block>
-			<block slot="content">更改用户名</block>
+			<block slot="backText">{{$t('api.back')}}</block>
+			<block slot="content">{{$t('setting.changename')}}</block>
 		</cu-custom>
 		<view class="padding-sm">
 			<form>
 				<view class="cu-bar cu-form-group margin-top cuIcon-title text-orange">
-					<view class="title">用户名</view>
-					<input placeholder="请输入新用户名" v-model="name" name="input"></input>
+					<view class="title">{{$t('setting.username')}}</view>
+					<input :placeholder="$t('setting.typeusername')" v-model="name" name="input"></input>
 				</view>
 				<view class="padding-sm">
-					<view class="solid-bottom text-sm padding"><text class="text-grey"><span>注意：注册一个月内更改免费，后更改需要500金币，第二次1000金币，第三次1500金币，以此类推。修改成功后如用用户名登录请使用新用户名，手机号登录不受影响。改名成功后，系统可能会有缓存，可能至多1个小时完全生效，请勿重复改名。</span></text></view>
+					<view class="solid-bottom text-sm padding"><text class="text-grey"><span>{{$t('setting.usernametxt')}}</span></text></view>
 				</view>
 				<view v-if="errortext!=''" class="cu-form-group justify-center">
 					<view class="text-red">{{errortext}}</view>
@@ -32,7 +32,7 @@
 			return {
 				tijiao:false,
 				name: '',
-				change: '更改',
+				change: this.$t('setting.change'),
 				errortext: ''
 
 			};
@@ -58,16 +58,16 @@
 							that.tijiao = false;
 							if (res.data.code == 200) {//未开启
 									uni.showToast({
-										title: '改名成功',
+										title: that.$t('setting.changed'),
 										duration: 1000
 									});
 							}else if(res.data.code == 201) {
 									uni.showModal({
-									    title: '改名提示',
+									    title: that.$t('setting.rntps'),
 									    content: res.data.text,
 									    success: function (res) {
 									        if (res.confirm) {
-												that.change = '改名中，请稍候';
+												that.change = that.$t('setting.changing');
 									            that.tijiaouser(1);
 									        } else if (res.cancel) {
 									            console.log('用户点击取消');
@@ -75,15 +75,15 @@
 									    }
 									});
 							}else if(res.data.code == 401) {
-								that.errortext = '改名失败，已存在相同用户名。'
+								that.errortext = that.$t('setting.change401')
 							}else if(res.data.code == 402) {
-								that.errortext = '改名失败，金钱不足或改名冷却期。'
+								that.errortext = that.$t('setting.change402')
 							}else if(res.data.code == 403) {
-								that.errortext = '用户名长度需大于3字节且小于15字节。'
+								that.errortext = that.$t('setting.change403')
 							}else if(res.data.code == 404) {
-								that.errortext = '用户名含有特殊字符。'
+								that.errortext = that.$t('setting.change404')
 							}else {
-								that.errortext = '改名失败，内部错误。'
+								that.errortext = that.$t('setting.changee')
 							}
 						}
 					});

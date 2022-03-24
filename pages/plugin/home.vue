@@ -2,10 +2,10 @@
 	<view>
 		<view class="cu-bar hometop" :class="'bg-'+themeColor.name">
 			<view class="action">
-				<text class="cuIcon-homefill text-gray"></text> 首页
+				<text class="cuIcon-homefill text-gray"></text> {{$t('home.homepage')}}
 			</view>
 			<view class="content text-bold" style="margin-bottom: 3px;">
-				消息列表
+				{{$t('home.messagelist')}}
 			</view>
 			<view class="action">
 				<text class="cuIcon-peoplefill text-grey"></text>
@@ -43,7 +43,7 @@
 										</view>
 										<view class="text-gray text-sm flex">
 											<view class="text-cut2">
-												<text style="font-weight:700">标题：{{pvmessage.subject}}</text><text class="lg text-gray cuIcon-wenzi"></text>：{{totext(pvmessage.lastmessage.lastsummary)}}
+												<text style="font-weight:700">{{$t('home.title')}}：{{pvmessage.subject}}</text><text class="lg text-gray cuIcon-wenzi"></text>：{{totext(pvmessage.lastmessage.lastsummary)}}
 											</view>
 										</view>
 									</view>
@@ -69,7 +69,7 @@
 						<view class="view_listnow listnow1">
 							<view class="cu-bar solid-bottom hometop3" :class="'bg-'+themeColor.name">
 								<view class="action">
-									群组消息
+									{{$t('home.groupmessage')}}
 								</view>
 							</view>
 							<view class="cu-list menu-avatar" @click="gonggongqunzu()">
@@ -79,8 +79,8 @@
 									</view>
 									<view class="content">
 										<view>
-											<view class="text-cut">公共群组</view>
-											<view class="cu-tag round bg-orange sm">{{chatonline}}人</view>
+											<view class="text-cut">{{$t('home.publicgroup')}}</view>
+											<view class="cu-tag round bg-orange sm">{{chatonline}}{{$t('home.people')}}</view>
 										</view>
 										<view class="text-gray text-sm flex">
 											<view class="text-cut">
@@ -98,7 +98,7 @@
 							</view>
 							<view class="cu-bar solid-bottom margin-top" :class="'bg-'+themeColor.name">
 								<view class="action">
-									群发消息
+									{{$t('home.publicmessage')}}
 								</view>
 							</view>
 							<view class="cu-list menu-avatar">
@@ -116,9 +116,9 @@
 												class="cuIcon-roundrightfill text-green margin-left-xs margin-right-xs"><text
 													v-if="pbmessage.status==0&&puchange[indexp]!=1"
 													class="text-xs"
-													@tap="shownotification(pbmessage.message,indexp,10)">点击查看详情</text><text
+													@tap="shownotification(pbmessage.message,indexp,10)">{{$t('home.clicktoviewmore')}}</text><text
 													v-else class="text-xs"
-													@tap="shownotification(pbmessage.message,-1,10)">点击查看详情</text></text>
+													@tap="shownotification(pbmessage.message,-1,10)">{{$t('home.clicktoviewmore')}}</text></text>
 										</view>
 										<view class="text-gray text-sm flex">
 											<view class="text-cut2">
@@ -185,9 +185,9 @@
 												class="cuIcon-roundrightfill text-green margin-left-xs margin-right-xs"><text
 													v-if="itemmessage.new==1&&syschange[indexm]!=MessageTabCur"
 													class="text-xs"
-													@tap="shownotification(itemmessage.note,indexm,'system')">点击查看详情</text><text
+													@tap="shownotification(itemmessage.note,indexm,'system')">{{$t('home.clicktoviewmore')}}</text><text
 													v-else class="text-xs"
-													@tap="shownotification(itemmessage.note,-1,'system')">点击查看详情</text></text>
+													@tap="shownotification(itemmessage.note,-1,'system')">{{$t('home.clicktoviewmore')}}</text></text>
 										</view>
 										<view class="text-gray text-sm flex">
 											<view class="text-cut2">
@@ -215,17 +215,17 @@
 					<scroll-view class="list">
 						<view>
 							<view class="cu-form-group margin-top hometop3">
-								<view class="title">陌生人消息不接收</view>
+								<view class="title">{{$t('home.notr')}}</view>
 								<switch @change="SwitchA" :class="switchA?'checked':''" :checked="switchA?true:false">
 								</switch>
 							</view>
 							<view class="cu-form-group">
-								<view class="title">公共群组消息开关</view>
+								<view class="title">{{$t('home.gswitch')}}</view>
 								<switch class='cyan' @change="SwitchB" :class="switchB?'checked':''"
 									:checked="switchB?true:false"></switch>
 							</view>
 							<view class="cu-form-group">
-								<view class="title">只看未读消息</view>
+								<view class="title">{{$t('home.onlynotread')}}</view>
 								<switch class='cyan' @change="SwitchC" :class="switchC?'checked':''"
 									:checked="switchC?true:false"></switch>
 							</view>
@@ -237,17 +237,17 @@
 		<view class="cu-modal" :class="modalName=='modify'?'show':''">
 			<view class="cu-dialog">
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
-					<view class="content">修改成功</view>
+					<view class="content">{{$t('home.changesuccess')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl">
-					修改成功，点击确定关闭。
+					{{$t('home.changesuccesstxt')}}
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
-						<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
+						<button class="cu-btn bg-green margin-left" @tap="hideModal">{{$t('api.ok')}}</button>
 					</view>
 				</view>
 			</view>
@@ -255,18 +255,18 @@
 		<view class="cu-modal" :class="modalName=='needlogin'?'show':''">
 			<view class="cu-dialog">
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
-					<view class="content">需要登录</view>
+					<view class="content">{{$t('api.needlogin')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl">
-					你需要登录才可以使用此功能。
+					{{$t('api.needlogintxt')}}
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
-						<button class="cu-btn line-green text-green" @tap="hideModal">取消</button>
-						<button class="cu-btn bg-green margin-left" @tap="tologin">确定</button>
+						<button class="cu-btn line-green text-green" @tap="hideModal">{{$t('api.cancel')}}</button>
+						<button class="cu-btn bg-green margin-left" @tap="tologin">{{$t('api.ok')}}</button>
 					</view>
 				</view>
 			</view>
@@ -274,18 +274,18 @@
 		<view class="cu-modal" :class="modalName=='dxcl'?'show':''">
 			<view class="cu-dialog">
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
-					<view class="content">断线重连</view>
+					<view class="content">{{$t('home.rec')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl">
-					您似乎已经和聊天服务器断开连接，建议重启APP以重新连接。
+					{{$t('home.rectxt')}}
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
-						<button class="cu-btn line-green text-green" @tap="restart">重启</button>
-						<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
+						<button class="cu-btn line-green text-green" @tap="restart">{{$t('home.restart')}}</button>
+						<button class="cu-btn bg-green margin-left" @tap="hideModal">{{$t('api.ok')}}</button>
 					</view>
 				</view>
 			</view>
@@ -293,7 +293,7 @@
 		<view class="cu-modal" :class="modalName=='shownotifi'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
-					<view class="content">查看详情</view>
+					<view class="content">{{$t('home.moreinfo')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
@@ -303,7 +303,7 @@
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
-						<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
+						<button class="cu-btn bg-green margin-left" @tap="hideModal">{{$t('api.ok')}}</button>
 					</view>
 				</view>
 			</view>
@@ -333,14 +333,14 @@
 				syschange: [],
 				puchange: [],
 				pvchange: [],
-				loading: '点击可加载更多',
-				tabjson: ['全部', '系统', '帖子', '互动', '@我'],
+				loading: this.$t('home.clicktoload'),
+				tabjson: [this.$t('home.tabjs1'),this.$t('home.tabjs2'),this.$t('home.tabjs3'),this.$t('home.tabjs4'),this.$t('home.tabjs5')],
 				modalName: "",
 				chatmessage: "",
 				notifimessage: "",
 				nowtype: "system",
 				chattime: "00:00",
-				tabname: ["私人消息", "公共消息", "提醒", "设置", "发送"],
+				tabname: [this.$t('home.tabname1'),this.$t('home.tabname2'),this.$t('home.tabname3'),this.$t('home.tabname4'),this.$t('home.tabname5')],
 				avatarimgLoaded: false,
 				modalName: null,
 				TabCur: 1,
@@ -373,7 +373,7 @@
 			chonglian(e) {
 				//this.modalName = 'dxcl';
 				uni.showToast({
-					title: '您似乎已经和聊天服务器断开连接，建议重启APP以重新连接。',
+					title: this.$t('home.rectxt'),
 					icon: 'none',
 					duration: 2000
 				});
@@ -574,13 +574,13 @@
 					},
 					success: (res) => {
 						if (res.data.code == 404) {
-							that.loading = '暂无新消息。';
+							that.loading = this.$t('home.nomoremessage');
 							that.messagearray = [];
 							return;
 						}
 						console.log(res.data);
 						that.messagearray = res.data;
-						that.loading = '点击可加载更多';
+						that.loading = this.$t('home.clicktoload');
 						that.heightset('listnow1');
 					}
 				});
@@ -609,7 +609,7 @@
 				this.scrollLeft = (e.currentTarget.dataset.id - 1) * 60;
 				//console.log(this.swiperheight);
 				this.page = 0;
-				this.loading = '正在加载中……';
+				this.loading = this.$t('api.loading');
 				this.messagearray = [];
 				if (this.MessageTabCur == 0) {
 					this.requestnoti('all');
@@ -709,9 +709,9 @@
 			},
 			tomessage(e,f,g){
 				if(f!=g){
-					return '你对' + e + '说';
+					return this.$t('home.toother') + e + this.$t('home.say');
 				}else{
-					return e + '对你说';
+					return e + this.$t('home.toyou');
 				}
 			},
 			shuaxinlist() {
@@ -805,7 +805,7 @@
 			tothebottom(push) {
 				console.log('到底了')
 				var that = this;
-				this.loading = '加载中……';
+				this.loading = this.$t('api.loading')
 				if (this.TabCur == 0) {
 					this.pvread();
 				}
@@ -848,7 +848,7 @@
 					success: (res) => {
 						if (that.page == 0) {
 							if (res.data.code == 404) {
-								that.loading = '暂无新消息。';
+								that.loading = that.$t('home.nomoremessage');
 								that.messagearray = [];
 								return;
 							}
@@ -856,9 +856,9 @@
 							that.messagearray = res.data;
 							that.heightset('listnow2');
 							if (res.data.length < 30) {
-								that.loading = '消息到底了。';
+								that.loading = that.$t('home.mstotheend');
 							} else {
-								that.loading = '点击可加载更多';
+								that.loading = that.$t('home.clicktoload');
 							}
 						} else {
 							if (res.data.length > 0) {
@@ -867,9 +867,9 @@
 								}
 							}
 							if (res.data.length < 30 || res.data.code == 404) {
-								that.loading = '消息到底了！';
+								that.loading = that.$t('home.mstotheend');
 							} else {
-								that.loading = '点击可加载更多';
+								that.loading = that.$t('home.clicktoload');
 							}
 							that.heightset('listnow2');
 						}
@@ -894,7 +894,7 @@
 					success: (res) => {
 						if (that.pagepu == 0) {
 							if (res.data.code == 404) {
-								that.loading = '暂无新消息。';
+								that.loading = that.$t('home.nomoremessage');
 								that.publicarray = [];
 								return;
 							}
@@ -902,9 +902,9 @@
 							that.publicarray = res.data;
 							that.heightset('listnow1');
 							if (res.data.length < 30 || res.data.code == 404) {
-								that.loading = '消息到底了。';
+								that.loading = that.$t('home.mstotheend');
 							} else {
-								that.loading = '点击可加载更多';
+								that.loading = that.$t('home.clicktoload');
 							}
 						} else {
 							if (res.data.length > 0) {
@@ -913,9 +913,9 @@
 								}
 							}
 							if (res.data.length < 30) {
-								that.loading = '消息到底了！';
+								that.loading = that.$t('home.mstotheend');
 							} else {
-								that.loading = '点击可加载更多';
+								that.loading = that.$t('home.clicktoload');
 							}
 							that.heightset('listnow1');
 						}
@@ -941,7 +941,7 @@
 					success: (res) => {
 						if (that.pagepv == 0) {
 							if (res.data.code == 404) {
-								that.loading = '暂无新消息。';
+								that.loading = that.$t('home.nomoremessage');
 								that.pvarray = [];
 								return;
 							}
@@ -949,9 +949,9 @@
 							that.pvarray = res.data;
 							that.heightset('listnow0');
 							if (res.data.length < 30 || res.data.code == 404) {
-								that.loading = '消息到底了。';
+								that.loading = that.$t('home.mstotheend');
 							} else {
-								that.loading = '点击可加载更多';
+								that.loading = that.$t('home.clicktoload');
 							}
 						} else {
 							if (res.data.length > 0) {
@@ -960,9 +960,9 @@
 								}
 							}
 							if (res.data.length < 30) {
-								that.loading = '消息到底了！';
+								that.loading = that.$t('home.mstotheend');
 							} else {
-								that.loading = '点击可加载更多';
+								that.loading = that.$t('home.clicktoload');
 							}
 							that.heightset('listnow0');
 						}
@@ -986,25 +986,25 @@
 					success: (res) => {
 						if (res.data.code == 200) {
 							uni.showToast({
-								title: '添加成功',
+								title: that.$t('home.addedsuccess'),
 								duration: 2000
 							});
 						} else {
 							if (res.data.result == 'error0032') {
 								uni.showToast({
-									title: '好友申请不存在',
+									title: that.$t('home.fnotexist'),
 									icon: 'error',
 									duration: 2000
 								});
 							} else if (res.data.result == 'error0031') {
 								uni.showToast({
-									title: '好友申请重复',
+									title: that.$t('home.dfriend'),
 									icon: 'error',
 									duration: 2000
 								});
 							} else {
 								uni.showToast({
-									title: '好友通过失败',
+									title: that.$t('home.friendfail'),
 									icon: 'error',
 									duration: 2000
 								});
@@ -1036,7 +1036,7 @@
 						let href = e.apphref.split('pid=');
 						let href2 = href[1].match(/^(\D*)(\d+)(.*)$/).slice(1);
 						 uni.showLoading({
-							title: '加载中'
+							title: this.$t('api.loading')
 						});
 						uni.request({
 							url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:pidtotid', //获取轮播列表
@@ -1143,7 +1143,7 @@
 				},
 				success: (res) => {
 					if (res.data.code == 404) {
-						that.loading = '暂无新消息。';
+						that.loading = this.$t('home.nomoremessage');
 						that.messagearray = [];
 						return;
 					}
@@ -1153,9 +1153,9 @@
 					}
 					that.messagearray = res.data;
 					if (res.data.length < 30) {
-						that.loading = '暂无更多提醒';
+						that.loading = this.$t('home.nomorenotifi');
 					} else {
-						that.loading = '点击可加载更多';
+						that.loading = this.$t('home.clicktoload');
 					}
 				}
 			});
@@ -1174,7 +1174,7 @@
 				},
 				success: (res) => {
 					if (res.data.code == 404) {
-						that.loading = '暂无新消息。';
+						that.loading = this.$t('home.nomoremessage');
 						that.publicarray = [];
 						return;
 					}
@@ -1184,9 +1184,9 @@
 						that.heightset('listnow1');
 					}
 					if (res.data.length < 30) {
-						that.loading = '暂无更多消息';
+						that.loading = this.$t('home.nomoremessage');
 					} else {
-						that.loading = '点击可加载更多';
+						that.loading = this.$t('home.clicktoload');
 					}
 				}
 			});
@@ -1205,7 +1205,7 @@
 				},
 				success: (res) => {
 					if (res.data.code == 404) {
-						that.loading = '暂无新消息。';
+						that.loading = this.$t('home.nomoremessage');
 						that.pvarray = [];
 						return;
 					}
@@ -1215,9 +1215,9 @@
 						that.heightset('listnow0');
 					}
 					if (res.data.length < 30) {
-						that.loading = '暂无更多消息';
+						that.loading = this.$t('home.nomoremessage');
 					} else {
-						that.loading = '点击可加载更多';
+						that.loading = this.$t('home.clicktoload');
 					}
 				}
 			});

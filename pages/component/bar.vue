@@ -1,7 +1,7 @@
 <template name="basics">
 	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
-		<cu-custom bgColor="bg-gradual-blue" :isBack="true"><block slot="backText">返回</block><block slot="content">发帖成功</block></cu-custom>
+		<cu-custom bgColor="bg-gradual-blue" :isBack="true"><block slot="backText">{{$t('api.back')}}</block><block slot="content">发帖成功</block></cu-custom>
 		<view class="bg-white padding-lr">
 			<view class="solids-bottom padding-xs flex align-center">
 				<view class="flex-sub text-center">

@@ -2,7 +2,7 @@
 	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
-			<block slot="backText">返回</block>
+			<block slot="backText">{{$t('api.back')}}</block>
 			<block slot="content">用户反馈</block>
 			<block slot="right">
 				<view class="action">
@@ -28,7 +28,7 @@
 		</view>
 		<linke-ux-editor v-model="content"></linke-ux-editor>
 		<view class="margin-tb-sm text-center"><button
-			class="margin cu-btn bg-red block lg" :disabled="fasong?true:false" @tap="post()">提交</button>
+			class="margin cu-btn bg-red block lg" :disabled="fasong?true:false" @tap="post()">{{$t('api.submit')}}</button>
 		</view>
 	</view>
 </template>

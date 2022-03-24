@@ -2,20 +2,20 @@
 	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
-			<block slot="backText">返回</block>
-			<block slot="content">确认登录</block>
+			<block slot="backText">{{$t('api.back')}}</block>
+			<block slot="content">{{$t('extra.login')}}</block>
 		</cu-custom>
 		<view class="basis-xl padding-top radius shadow-blur bg-red margin-top bg-img"
 			style="background-image:url(../../static/queren.jpg);height: 600rpx;"></view>
 		<view class="flex-sub text-center">
 			<view class="solid-bottom text-xl padding">
-				<text class="text-black text-bold">请确认是否登录论坛？</text>
+				<text class="text-black text-bold">{{$t('extra.logintxt')}}</text>
 			</view>
 		</view>
 		<view class="padding-xl">
 			<button class="cu-btn block bg-blue margin-tb-sm lg" @tap="queren">
-				<text class="cuIconfont-spin" :class="isloading?'cuIcon-loading2':''"></text> 确认登录</button>
-			<button class="cu-btn block bg-black margin-tb-sm lg" @tap="fanhui"> 取消登录</button>
+				<text class="cuIconfont-spin" :class="isloading?'cuIcon-loading2':''"></text>{{$t('extra.confirmlogin')}}</button>
+			<button class="cu-btn block bg-black margin-tb-sm lg" @tap="fanhui">{{$t('extra.cancellogin')}}</button>
 		</view>
 	</view>
 </template>

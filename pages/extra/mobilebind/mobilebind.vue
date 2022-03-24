@@ -3,8 +3,8 @@
 	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
-			<block slot="backText">返回</block>
-			<block slot="content">手机绑定</block>
+			<block slot="backText">{{$t('api.back')}}</block>
+			<block slot="content">{{$t('setting.mobilebind')}}</block>
 		</cu-custom>
 		<web-view :src="url"></web-view>
 	</view>
@@ -16,7 +16,7 @@
 			return {
 				url: '',
 				platform: 0,
-				title: "手机绑定"
+				title: this.$t('setting.mobilebind')
 			};
 		},
 		methods: {
@@ -36,7 +36,7 @@
 					});
 				}
 				setTimeout(function() {
-					if (found == null){
+					if (found == null) {
 						that.webviewurl();
 					}
 				}, 500); //如页面初始化调用需要写延迟
@@ -50,9 +50,39 @@
 			} else {
 				this.platform = 2;
 			}
-			var urlon = encodeURIComponent(getApp().globalData.zddomain + 'plugin.php?id=jzsjiale_sms:mobile&act=bangding');
-			this.url = getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:tourl&token=' + this.$token +
-				'&action=send_url&url=' + urlon;
+			let that = this;
+			uni.request({
+				url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:bind', //获取置顶帖子
+				method: 'GET',
+				timeout: 10000,
+				data: {
+					token: that.$token,
+					type: 0
+				},
+				header: {
+					'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+				},
+				success: (res) => {
+					console.log(res.data);
+					if (res.data.code == 200) { //未开启
+						//国内
+						var urlon = encodeURIComponent(getApp().globalData.zddomain +
+							'plugin.php?id=jzsjiale_sms:mobile&act=bangding');
+						that.url = getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:tourl&token=' +
+							that.$token +
+							'&action=send_url&url=' + urlon;
+					} else if (res.data.code == 201) {
+						//国外
+						var urlon = encodeURIComponent(getApp().globalData.zddomain +
+							'plugin.php?id=phone_auth&action=mobile&bp=yes#bindphone');
+						that.url = getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:tourl&token=' +
+							that.$token +
+							'&action=send_url&url=' + urlon;
+					} else {
+
+					}
+				}
+			});
 			console.log(this.url)
 			console.log(e.url)
 		},

@@ -1,7 +1,7 @@
 <template>
 	<view :class="'bg-white bc-'+themeColor.name">
 		<cu-custom class="statustop" :bgColor="'bg-gradual-'+themeColor.name" :isBack="true">
-			<block slot="backText">返回</block>
+			<block slot="backText">{{$t('api.back')}}</block>
 			<block slot="content">我的收藏</block>
 		</cu-custom>
 		<scroll-view scroll-x class="nav hometop3" :bgColor="'bg-'+themeColor.name">
@@ -90,10 +90,10 @@
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-light-'+themeColor.name">
 					<view class="action">
-						<button class="cu-btn bg-green margin-left" @tap="deleteqd">确定</button>
+						<button class="cu-btn bg-green margin-left" @tap="deleteqd">{{$t('api.ok')}}</button>
 					</view>
 					<view class="action">
-						<button class="cu-btn bg-gray margin-left" @tap="hideModal">取消</button>
+						<button class="cu-btn bg-gray margin-left" @tap="hideModal">{{$t('api.cancel')}}</button>
 					</view>
 				</view>
 			</view>
@@ -109,7 +109,7 @@
 				huifupost: '',
 				bankuailist: [],
 				showlist: [],
-				loading: '加载中……',
+				loading: this.$t('api.loading'),
 				bankuai: 0,
 				tiezi: 0,
 				kongjian: 0,
@@ -207,7 +207,7 @@
 			},
 			shuaxinlist() {
 				var that = this;
-				that.loading = '载入中...';
+				that.loading = this.$t('api.loading');
 				if (this.TabCur == 0) {
 					uni.request({
 						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:shoucang', //获取轮播列表
@@ -247,7 +247,7 @@
 							if (res.data.post.length < 30) {
 								that.loading = '已经到底了！';
 							}else{
-								that.loading = '下滑加载更多';
+								that.loading = this.$t('api.loadmore');
 							}
 							console.log(res.data.length);
 							that.page++;
@@ -289,9 +289,9 @@
 								}
 							}
 							if (push.length < 30) {
-								that.loading = '竟然到底了！';
+								that.loading = this.$t('api.loadtoend');
 							}else{
-								that.loading = '下滑加载更多';
+								that.loading = this.$t('api.loadmore');
 							}
 							that.page++;
 						}

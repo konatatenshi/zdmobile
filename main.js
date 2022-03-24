@@ -1,6 +1,14 @@
+let i18nConfig = {
+  locale: uni.getLocale(),
+  messages
+}
+
 import Vue from 'vue'
 import App from './App'
 import store from './store'
+import messages from './locale/index'
+import VueI18n from 'vue-i18n'
+
 
 import basics from './pages/basics/home.vue'
 Vue.component('basics',basics)
@@ -20,6 +28,9 @@ Vue.component('login',login)
 import cuCustom from './colorui/components/cu-custom.vue'
 Vue.component('cu-custom',cuCustom)
 
+Vue.use(VueI18n)
+const i18n = new VueI18n(i18nConfig)
+
 Vue.config.productionTip = false
 
 App.mpType = 'app'
@@ -34,6 +45,7 @@ Vue.mixin({
 })
 
 const app = new Vue({
+	i18n,
 	store,
     ...App
 })

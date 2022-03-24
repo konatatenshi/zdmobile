@@ -151,8 +151,8 @@
 				ad: 1,
 				qa: 0,
 				jiangli: 0,
-				sig: '加载中……',
-				username: "加载中……",
+				sig: this.$t('api.loading'),
+				username: this.$t('api.loading'),
 				touxiangkuanglist: '',
 				zan: 0,
 				eventtype: '',
@@ -162,7 +162,7 @@
 				avatar: '',
 				guanzhupost: [],
 				huifupost: [],
-				loading: '加载中……',
+				loading: this.$t('api.loading'),
 				listTouchDirection: null,
 				TabCur: 0,
 				jifenbiangeng: '积分名+1',
@@ -214,7 +214,7 @@
 			},
 			shuaxinlist() {
 				var that = this;
-				that.loading = '载入中...';
+				that.loading = this.$t('api.loading');
 				if (this.TabCur == 0) {
 					this.page0 = 0;
 					uni.request({
@@ -234,7 +234,7 @@
 							if (res.data.list.length < 30) {
 								that.loading = '已经到底了！';
 							}else{
-								that.loading = '下滑加载更多';
+								that.loading = this.$t('api.loadmore');
 							}
 							if(that.page0 ==0){
 								that.credit = res.data.credit;
@@ -275,9 +275,9 @@
 								}
 							}
 							if (push.length < 30) {
-								that.loading = '真的到底了！';
+								that.loading = this.$t('api.loadtoend');
 							}else{
-								that.loading = '下滑加载更多';
+								that.loading = this.$t('api.loadmore');
 							}
 							that.page0++;
 							setTimeout(function() {

@@ -2,7 +2,7 @@
 <template>
 	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
-		<cu-custom bgColor="bg-gradual-blue" :isBack="true"><block slot="backText">返回</block><block slot="content">检测服务器状态</block>
+		<cu-custom bgColor="bg-gradual-blue" :isBack="true"><block slot="backText">{{$t('api.back')}}</block><block slot="content">{{$t('setting.checkserser')}}</block>
 			<block slot="right">
 				<view class="action">
 					<view class="cu-load load-cuIcon" :class="!isLoad?'loading':'over'"></view>
@@ -11,36 +11,36 @@
 		</cu-custom>
 		<view class="cu-bar bg-white">
 			<view class="action">
-				<text class="cuIcon-title text-blue"></text>服务器状态列表
+				<text class="cuIcon-title text-blue"></text>{{$t('setting.serverlist')}}
 			</view>
 		</view>
 		<view class="cu-load bg-blue" v-if="!isLoad" :class="!isLoad?'loading':'over'"></view>
 		<view class="bg-white padding-sm" v-else>
 			<view class="grid margin-bottom text-center solid-bottom justify-start">
 				<view class="padding-left-sm padding-right-sm">
-					运行状态
+					{{$t('setting.status')}}
 				</view>
 				<view class="padding-left-sm padding-right-sm">
-					节点名称
+					{{$t('setting.sname')}}
 				</view>
 				<view class="padding-left-sm padding-right-sm">
 					CPU
 				</view>
 				<view class="padding-left-sm padding-right-sm">
-					内存
+					{{$t('setting.memory')}}
 				</view>
 				<view class="padding-left-sm padding-right-sm">
-					网络(B/s)↓|↑
+					{{$t('setting.network')}}(B/s)↓|↑
 				</view>
 			</view>
 			<view class="grid margin-bottom text-center solid-bottom" v-for="(item,index) in serverlist" :key="index">
 				<view class="bg-gray" :class="indexs!=0?(indexs==1?'padding-top-sm padding-bottom-sm':'padding-sm'): 'padding-top-sm padding-left-sm padding-bottom-sm'" :style="indexs==1?'flex-basis:25%':''" v-for="(items,indexs) in 5" :key="indexs">
 					<view v-if="indexs == 0">
 						<view v-if="item.online4">
-							<button class="cu-btn round sm bg-green shadow">运行中</button>
+							<button class="cu-btn round sm bg-green shadow">{{$t('setting.running')}}</button>
 						</view>
 						<view v-else>
-							<button class="cu-btn round sm bg-red shadow">维护中</button>
+							<button class="cu-btn round sm bg-red shadow">{{$t('setting.maintenance')}}</button>
 						</view>
 					</view>
 					<view v-if="indexs == 1">
@@ -51,7 +51,7 @@
 							{{item.cpu}}%
 						</view>
 						<view v-else>
-							无
+							{{$t('setting.none')}}
 						</view>
 					</view>
 					<view v-if="indexs == 3">
@@ -59,7 +59,7 @@
 							{{Math.round(100*item.memory_used/item.memory_total)}}%
 						</view>
 						<view v-else>
-							无
+							{{$t('setting.none')}}
 						</view>
 					</view>
 					<view v-if="indexs == 4">
@@ -70,12 +70,12 @@
 		</view>
 		<view class="cu-bar bg-white">
 			<view class="action">
-				<text class="cuIcon-title text-blue"></text>更新时间
+				<text class="cuIcon-title text-blue"></text>{{$t('setting.updatetime')}}
 			</view>
 		</view>
 		<view class="bg-white padding-sm">
 			<view class="padding-left-sm padding-right-sm">
-				{{updatetime}} 秒前
+				{{updatetime}} {{$t('setting.secondsago')}}
 			</view>
 		</view>
 	</view>

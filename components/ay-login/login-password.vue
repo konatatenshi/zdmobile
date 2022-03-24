@@ -180,7 +180,7 @@
 				</view>
 				<view class="cu-bar bg-white justify-end">
 					<view class="action">
-						<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
+						<button class="cu-btn bg-green margin-left" @tap="hideModal">{{$t('api.ok')}}</button>
 
 					</view>
 				</view>
@@ -241,8 +241,8 @@
 				</view>
 				<view class="cu-bar bg-white justify-end">
 					<view class="action">
-						<button class="cu-btn bg-green margin-left" @tap="registnew2(1)">确定</button>
-						<button class="cu-btn bg-gray margin-left" @tap="hideModal">取消</button>
+						<button class="cu-btn bg-green margin-left" @tap="registnew2(1)">{{$t('api.ok')}}</button>
+						<button class="cu-btn bg-gray margin-left" @tap="hideModal">{{$t('api.cancel')}}</button>
 					</view>
 				</view>
 			</view>
@@ -298,8 +298,8 @@
 				</view>
 				<view class="cu-bar bg-white justify-end">
 					<view class="action">
-						<button class="cu-btn bg-green margin-left" @tap="registnew2(0)">确定</button>
-						<button class="cu-btn bg-gray margin-left" @tap="hideModal">取消</button>
+						<button class="cu-btn bg-green margin-left" @tap="registnew2(0)">{{$t('api.ok')}}</button>
+						<button class="cu-btn bg-gray margin-left" @tap="hideModal">{{$t('api.cancel')}}</button>
 					</view>
 				</view>
 			</view>
@@ -355,8 +355,8 @@
 				</view>
 				<view class="cu-bar bg-white justify-end">
 					<view class="action">
-						<button class="cu-btn bg-green margin-left" @tap="registnew">确定</button>
-						<button class="cu-btn bg-gray margin-left" @tap="hideModal">取消</button>
+						<button class="cu-btn bg-green margin-left" @tap="registnew">{{$t('api.ok')}}</button>
+						<button class="cu-btn bg-gray margin-left" @tap="hideModal">{{$t('api.cancel')}}</button>
 					</view>
 				</view>
 			</view>
@@ -400,7 +400,7 @@
 						<button class="cu-btn bg-green margin-left" @tap="dati">下一道</button>
 					</view>
 					<view v-else class="action">
-						<button class="cu-btn bg-green margin-left" @tap="tijiao">提交</button>
+						<button class="cu-btn bg-green margin-left" @tap="tijiao">{{$t('api.submit')}}</button>
 					</view>
 				</view>
 			</view>
@@ -443,11 +443,11 @@
 				datinum: 0,
 				zhengque: 0,
 				canreg: 0,
-				timu: '加载中……',
-				axx: '加载中……',
-				bxx: '加载中……',
-				cxx: '加载中……',
-				dxx: '加载中……',
+				timu: this.$t('api.loading'),
+				axx: this.$t('api.loading'),
+				bxx: this.$t('api.loading'),
+				cxx: this.$t('api.loading'),
+				dxx: this.$t('api.loading'),
 				checked: false,
 				yanzhengput: '',
 				errortext: '',
@@ -749,11 +749,11 @@
 				this.redati = 1;
 				this.canreg = 0;
 				this.radio = '';
-				this.timu = '加载中……';
-				this.axx =  '加载中……';
-				this.bxx =  '加载中……';
-				this.cxx =  '加载中……';
-				this.dxx =  '加载中……';
+				this.timu = this.$t('api.loading')
+				this.axx =  this.$t('api.loading')
+				this.bxx =  this.$t('api.loading')
+				this.cxx =  this.$t('api.loading')
+				this.dxx =  this.$t('api.loading')
 				this.datinum = 0;
 				this.zhengque = 0;
 				this.modalName='datizhuce';

@@ -1,8 +1,8 @@
 <template>
 	<view class="backg" style="width:100%;height:calc( 100vh - 50px - 30upx);display:block;">
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
-			<block slot="backText">返回</block>
-			<block slot="content">答题排行</block>
+			<block slot="backText">{{$t('api.back')}}</block>
+			<block slot="content">{{$t('extra.quizrank')}}</block>
 		</cu-custom>
 		<scroll-view scroll-x class="bg-white nav">
 			<view class="flex text-center">
@@ -13,10 +13,10 @@
 		</scroll-view>
 		<view class="padding-top-sm">
 			<view class="grid text-center col-4">
-				<view class="wid1">用户名</view>
-				<view class="wid2">答题总数</view>
-				<view class="wid2">答对数</view>
-				<view class="wid2">连对数</view>
+				<view class="wid1">{{$t('setting.username')}}</view>
+				<view class="wid2">{{$t('extra.total2')}}</view>
+				<view class="wid2">{{$t('extra.bingo2')}}</view>
+				<view class="wid2">{{$t('extra.consecutive2')}}</view>
 			</view>
 			<view v-for="(itemex,indexe1) in datilist" :key="indexe1">
 				<view class="grid text-center col-3">
@@ -52,15 +52,15 @@
 		<view class="bottom-tabbar">
 			 <view class="box margin-bottom" @click="goHome">
 				  <image src="../../static/images/icon1a.png"></image>
-				  <view class="text">答题首页</view>
+				  <view class="text">{{$t('extra.quizmain')}}</view>
 			 </view>
 			 <view class="box margin-bottom" @click="goIntro">
 			 	<image src="../../static/images/iconca.png"></image>
-			 	<view class="text">答题规则</view>
+			 	<view class="text">{{$t('extra.quizrule')}}</view>
 			 </view>
 			 <view class="box margin-bottom">
 				 <image src="../../static/images/icon2b.png"></image>
-				 <view class="text active">答题排行</view>
+				 <view class="text active">{{$t('extra.quizrank')}}</view>
 			 </view>
 			 <view class="bg-white" style="height: 20upx;">
 			</view>
@@ -75,7 +75,7 @@
 	  data() {
 	    return {
 	      active: 1,
-		  loading: '载入中……',
+		  loading: this.$t('api.loading'),
 		  TabCur: 0,
 		  page0: 0,
 		  page1: 0,
@@ -127,9 +127,9 @@
 							}
 						}
 						if (push.length < 30) {
-							that.loading = '真的到底了！';
+							that.loading = that.$t('api.loadtoend');
 						}else{
-							that.loading = '下滑加载更多';
+							that.loading = that.$t('api.loadmore');
 						}
 						that.page0++;
 						setTimeout(function() {
@@ -140,11 +140,11 @@
 		},
 		tabname(e) {
 			if(e==0){
-				return '总答题数排行';
+				return this.$t('extra.total');
 			}else if(e==1){
-				return '答对排行';
+				return this.$t('extra.bingo');
 			}else if(e==2){
-				return '连对排行';
+				return this.$t('extra.consecutive');
 			}
 		},
 		goIntro() {

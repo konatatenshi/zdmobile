@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<cu-custom :bgColor="'bg-'+themeColor.name" :isBack="true">
-			<block slot="backText">返回</block>
+			<block slot="backText">{{$t('api.back')}}</block>
 			<block slot="content">选择颜色</block>
 		</cu-custom>
 		<view class="padding">

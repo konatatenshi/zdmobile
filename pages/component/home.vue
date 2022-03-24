@@ -4,8 +4,8 @@
 	<view :class="'bc-'+themeColor.name">
 		<view class="fixed">
 			<cu-custom :isBack="false" bgColor="bg-shadeTop text-white">
-				<block slot="backText">返回</block>
-				<block slot="content">板块选择</block>
+				<block slot="backText">{{$t('api.back')}}</block>
+				<block slot="content">{{$t('home.sectionselect')}}</block>
 			</cu-custom>
 		</view>
 		<swiper class="screen-swiper round-dot" :indicator-dots="true" :circular="true" :autoplay="true" interval="5000"
@@ -26,7 +26,7 @@
 				<view class="padding-top padding-lr" v-for="(item,index) in list" :key="index" :id="'main-'+index">
 					<view class="cu-bar solid-bottom" :class="'bg-'+themeColor.name">
 						<view class="action" v-if="item.name == null">
-							<text class="cuIcon-title text-green"></text> 版块列表
+							<text class="cuIcon-title text-green"></text> {{$t('home.sectionlist')}}
 						</view>
 						<view class="action" v-else>
 							<text class="cuIcon-title text-green"></text> {{item.name}}
@@ -37,7 +37,7 @@
 							<view class="content">
 								<view class="text-gray text-sm">
 									<text class="text-cut">
-										暂无任何分版
+										{{$t('home.nosection')}}
 									</text>
 								</view>
 							</view>
@@ -68,18 +68,18 @@
 		<view class="cu-modal" :class="modalName=='needlogin'?'show':''">
 			<view class="cu-dialog">
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
-					<view class="content">需要登录</view>
+					<view class="content">{{$t('api.needlogin')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl">
-					你需要登录才可以使用此功能。
+					{{$t('api.needlogintxt')}}
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
-						<button class="cu-btn line-green text-green" @tap="hideModal">取消</button>
-						<button class="cu-btn bg-green margin-left" @tap="tologin">确定</button>
+						<button class="cu-btn line-green text-green" @tap="hideModal">{{$t('api.cancel')}}</button>
+						<button class="cu-btn bg-green margin-left" @tap="tologin">{{$t('api.ok')}}</button>
 					</view>
 				</view>
 			</view>
@@ -114,7 +114,7 @@
 		created() {
 			this.iStatusBarHeight = uni.getSystemInfoSync().statusBarHeight;
 			uni.showLoading({
-				title: '加载中...',
+				title: this.$t('api.loading'),
 				mask: true
 			});
 			var that = this;
@@ -178,17 +178,17 @@
 			  var limit=now-createtime;
 			  var content="";
 			  if(limit<60){
-			    content="刚刚";
+			    content=this.$t('home.justnow');
 			  }else if(limit>=60 && limit<3600){
-			    content=Math.floor(limit/60)+"分钟前";
+			    content=Math.floor(limit/60)+this.$t('home.mintesago');
 			  }else if(limit>=3600 && limit<86400){
-			    content=Math.floor(limit/3600)+"小时前";
+			    content=Math.floor(limit/3600)+this.$t('home.hourssago');
 			  }else if(limit>=86400 && limit<2592000){
-			    content=Math.floor(limit/86400)+"天前";
+			    content=Math.floor(limit/86400)+this.$t('home.daysago');
 			  }else if(limit>=2592000 && limit<31104000){
-			    content=Math.floor(limit/2592000)+"个月前";
+			    content=Math.floor(limit/2592000)+this.$t('home.monthsago');
 			  }else{
-			    content="很久前";
+			    content=this.$t('home.longtime');
 			  }
 			  return content;
 			},

@@ -2,7 +2,7 @@
 	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
-			<block slot="backText">返回</block>
+			<block slot="backText">{{$t('api.back')}}</block>
 			<block slot="content">购买勋章</block>
 			<block slot="right">
 				<view class="action">
@@ -45,7 +45,7 @@
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
-						<button class="cu-btn bg-green margin-left" @tap="hidemodal()">确定</button>
+						<button class="cu-btn bg-green margin-left" @tap="hidemodal()">{{$t('api.ok')}}</button>
 					</view>
 				</view>
 			</view>
@@ -64,7 +64,7 @@
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
-						<button class="cu-btn bg-green margin-left" @tap="hidemodal()">确定</button>
+						<button class="cu-btn bg-green margin-left" @tap="hidemodal()">{{$t('api.ok')}}</button>
 					</view>
 				</view>
 			</view>
@@ -83,7 +83,7 @@
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
-						<button class="cu-btn bg-green margin-left" @tap="hidemodal()">确定</button>
+						<button class="cu-btn bg-green margin-left" @tap="hidemodal()">{{$t('api.ok')}}</button>
 					</view>
 				</view>
 			</view>
@@ -102,8 +102,8 @@
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
-						<button class="cu-btn bg-green margin-left" @tap="goumai()">确定</button>
-						<button class="cu-btn line-green margin-left" @tap="hidemodal()">取消</button>
+						<button class="cu-btn bg-green margin-left" @tap="goumai()">{{$t('api.ok')}}</button>
+						<button class="cu-btn line-green margin-left" @tap="hidemodal()">{{$t('api.cancel')}}</button>
 					</view>
 				</view>
 			</view>

@@ -21,14 +21,14 @@
 				{{$username}}<text class="cuIcon-edit text-grey" @tap="tocn"></text>
 			</view>
 			<view class="action" @tap="touserpage">
-				个人主页<text class="cuIcon-right"></text>
+				{{$t('home.userpage')}}<text class="cuIcon-right"></text>
 			</view>
 		</view>
 		<scroll-view scroll-x class="nav text-center" :class="'bg-'+themeColor.name">
 			<view class="flex text-center">
 				<view class="cu-item flex-sub noline" :class="1==TabCur?'text-red cur':''" @tap="tabSelect" data-id="1">
 					<text :class="1==TabCur?'text-red':'text-gray'"><text
-							class="cuIcon-formfill"></text>用户组</text><br />{{loadlevelicon(mygroupid)}}
+							class="cuIcon-formfill"></text>{{$t('home.group')}}</text><br />{{loadlevelicon(mygroupid)}}
 				</view>
 				<view class="cu-item flex-sub noline" :class="2==TabCur?'text-red cur':''" @tap="tabSelect" data-id="2">
 					<text :class="2==TabCur?'text-red':'text-gray'"><text
@@ -36,19 +36,19 @@
 				</view>
 				<view class="cu-item flex-sub noline" :class="3==TabCur?'text-red cur':''" @tap="tabSelect" data-id="3">
 					<text :class="3==TabCur?'text-red':'text-gray'"> <text
-							class="cuIcon-newshotfill"></text>消息</text><br /><text
+							class="cuIcon-newshotfill"></text>{{$t('home.message')}}</text><br /><text
 						:class="mynewpm>0?'text-red':''">{{mynewpm}}</text>
 				</view>
 				<view class="cu-item flex-sub noline" :class="4==TabCur?'text-red cur':''" @tap="tabSelect" data-id="4">
 					<text :class="4==TabCur?'text-red':'text-gray'"><text
-							class="cuIcon-favorfill"></text>提醒</text><br /><text
+							class="cuIcon-favorfill"></text>{{$t('home.notification')}}</text><br /><text
 						:class="mynewprompt>0?'text-red':''">{{mynewprompt}}</text>
 				</view>
 			</view>
 		</scroll-view>
 		<view class="cu-bar solid-bottom" :class="'bg-'+themeColor.name">
 			<view class="action">
-				<text v-if="myinfoprompt>0" class="cuIcon-title text-orange "></text> 快捷信息
+				<text v-if="myinfoprompt>0" class="cuIcon-title text-orange "></text> {{$t('home.quickinformation')}}
 			</view>
 		</view>
 		<view class="cu-list grid col-3 no-border" :class="'bg-'+themeColor.name">
@@ -58,7 +58,7 @@
 						<block v-if="this.mynewpm!=1">{{this.mynewpm>99?'99+':this.mynewpm}}</block>
 					</view>
 				</view>
-				<text>消息</text>
+				<text>{{$t('home.message')}}</text>
 			</view>
 			<view class="cu-item" @click="tonotifi">
 				<view class="cuIcon-noticefill text-orange">
@@ -66,92 +66,92 @@
 						<block v-if="this.mynewprompt!=1">{{this.mynewprompt>99?'99+':this.mynewprompt}}</block>
 					</view>
 				</view>
-				<text>提醒</text>
+				<text>{{$t('home.notification')}}</text>
 			</view>
 			<view class="cu-item" @click="toqiandao">
 				<view class="cuIcon-squarecheckfill text-yellow">
 				</view>
-				<text>签到</text>
+				<text>{{$t('home.dailysign')}}</text>
 			</view>
 			<view class="cu-item" @click="messageclick">
 				<view class="cuIcon-questionfill text-green">
 				</view>
-				<text>答题</text>
+				<text>{{$t('home.quiz')}}</text>
 			</view>
 			<view class="cu-item" @click="yaoyao">
 				<view class="cuIcon-presentfill text-blue">
 				</view>
-				<text>抽卡</text>
+				<text>{{$t('home.drawcard')}}</text>
 			</view>
 			<view class="cu-item" @click="paihang">
 				<view class="cuIcon-upstagefill text-cyan">
 				</view>
-				<text>排行</text>
+				<text>{{$t('home.rank')}}</text>
 			</view>
 		</view>
 
 
 		<view class="cu-bar solid-bottom margin-top" :class="'bg-'+themeColor.name">
 			<view class="action">
-				<text v-if="mysetprompt>0" class="cuIcon-title text-orange"></text> 设置列表
+				<text v-if="mysetprompt>0" class="cuIcon-title text-orange"></text> {{$t('home.settinglist')}}
 			</view>
 		</view>
 		<view class="cu-list menu" :class="'bg-'+themeColor.name">
 			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="mycredit()">
 				<view class="content">
 					<text class="cuIcon-moneybagfill text-mauve"></text>
-					<text class="text-grey">我的积分</text>
+					<text class="text-grey">{{$t('home.mycredit')}}</text>
 				</view>
 				<view class="action">
-					<text class="text-sm text-cyan">总积分：{{mycredits}}</text>
+					<text class="text-sm text-cyan">{{$t('home.credits')}}：{{mycredits}}</text>
 				</view>
 			</view>
 			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="myquest()">
 				<view class="content">
 					<image src="/static/task.gif" class="png" mode="aspectFit"></image>
-					<text class="text-grey">我的任务</text>
+					<text class="text-grey">{{$t('home.mytask')}}</text>
 				</view>
 			</view>
 			<view v-if="month==1" class="cu-item" :class="menuArrow?'arrow':''" @tap="verti()">
 				<button class="cu-btn content" open-type="contact">
 					<text class="cuIcon-evaluate_fill text-red"></text>
-					<text class="text-red">年度总结</text>
+					<text class="text-red">{{$t('home.annualreview')}}</text>
 				</button>
 			</view>
 			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="tostyle()">
 				<button class="cu-btn content" open-type="contact">
 					<text class="cuIcon-discoverfill text-olive"></text>
-					<text class="text-grey">风格设置</text>
+					<text class="text-grey">{{$t('home.stylesettings')}}</text>
 				</button>
 			</view>
 			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="toprofile()">
 				<button class="cu-btn content" open-type="contact">
 					<text class="cuIcon-peoplefill text-orange"></text>
-					<text class="text-grey">个人资料</text>
+					<text class="text-grey">{{$t('home.personalinformation')}}</text>
 				</button>
 			</view>
 			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="tofavor()">
 				<button class="cu-btn content" open-type="content">
 					<text class="cuIcon-favorfill text-blue"></text>
-					<text class="text-grey">个人收藏</text>
+					<text class="text-grey">{{$t('home.personalcollection')}}</text>
 				</button>
 			</view>
 			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="haoyou()">
 				<view class="content">
 					<text class="cuIcon-emojiflashfill text-pink"></text>
-					<text class="text-grey">好友</text>
+					<text class="text-grey">{{$t('home.friendslist')}}</text>
 				</view>
 				<view class="action">
-					<text class="text-grey text-sm">管理好友列表</text>
+					<text class="text-grey text-sm">{{$t('home.managefriendslist')}}</text>
 				</view>
 			</view>
 			<view class="cu-item" :class="menuArrow?'arrow':''">
 				<view class="content">
 					<view>
-						<text class="cuIcon-btn text-green margin-right-xs"></text><text class="text-grey">头像上传</text>
+						<text class="cuIcon-btn text-green margin-right-xs"></text><text class="text-grey">{{$t('home.avatarupload')}}</text>
 					</view>
 					<view class="cu-progress round sm striped" v-if="percent==100">
-						<text class="text-grey text-sm">头像上传完毕，请等待缓存刷新后更新头像。</text>
+						<text class="text-grey text-sm">{{$t('home.avataruploaded')}}</text>
 					</view>
 					<view class="cu-progress round sm striped" v-else-if="percent>0">
 						<view class="bg-green" :style="[{ width:percent?percent + '%':'0'}]"></view>
@@ -159,59 +159,59 @@
 				</view>
 				<view class="action">
 					<button class="cu-btn round bg-green shadow" @tap="uploadimg()">
-						<text class="cuIcon-upload"></text> 上传</button>
+						<text class="cuIcon-upload"></text> {{$t('home.upload')}}</button>
 				</view>
 			</view>
 			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="showdj()">
 				<view class="content">
 					<text class="cuIcon-presentfill text-red  margin-right-xs"></text>
-					<text class="text-grey">道具装扮商店</text>
+					<text class="text-grey">{{$t('home.premiumshop')}}</text>
 				</view>
 			</view>
 			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="tomm()">
 				<view class="content">
 					<text class="cuIcon-settingsfill text-green"></text>
-					<text class="text-grey">密码安全</text>
+					<text class="text-grey">{{$t('home.passwordsecurity')}}</text>
 				</view>
 				<view class="action">
-					<text class="text-grey text-sm">定期修改密码有助于论坛安全！</text>
+					<text class="text-grey text-sm">{{$t('home.passwordsecuritytxt')}}</text>
 				</view>
 			</view>
 			<view class="cu-item" :class="menuArrow?'arrow':''" v-if="$adminid<=0">
 				<view class="content" @tap="buylre()">
 					<text class="cuIcon-goodsnewfill text-yellow"></text>
-					<text class="text-grey">其他服务</text>
+					<text class="text-grey">{{$t('home.premiumservice')}}</text>
 				</view>
 				<view class="action">
 					<button class="cu-btn round bg-blue shadow" @tap="buylr()">
-						<text class="cuIcon-vip"></text>用户组</button>
+						<text class="cuIcon-vip"></text>{{$t('home.group')}}</button>
 					<button class="cu-btn round bg-blue shadow margin-left-sm" @tap="buydb()">
-						<text class="cuIcon-coin"></text>钱包</button>
+						<text class="cuIcon-coin"></text>{{$t('home.wallet')}}</button>
 				</view>
 			</view>
 			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="fankui()">
 				<button class="cu-btn content" open-type="content">
 					<text class="cuIcon-servicefill text-brown"></text>
-					<text class="text-grey">用户反馈</text>
+					<text class="text-grey">{{$t('home.customerfeedback')}}</text>
 				</button>
 			</view>
 			<view class="cu-item" :class="menuArrow?'arrow':''">
 				<button class="cu-btn content" open-type="contact" @tap="cleanbefore">
 					<text class="cuIcon-footprint text-olive"></text>
-					<text class="text-grey">注销登录</text>
+					<text class="text-grey">{{$t('home.logout')}}</text>
 				</button>
 			</view>
 			<view class="cu-item" :class="menuArrow?'arrow':''">
 				<button class="cu-btn content" open-type="contact" @tap="bbxx">
 					<text class="cuIcon-info text-olive"></text>
-					<text class="text-grey">版本信息</text>
+					<text class="text-grey">{{$t('home.versioninformation')}}</text>
 				</button>
 			</view>
 			<view class="padding-xs flex align-center" :class="'bg-'+themeColor.name"
 				:style="{'height': iStatusBarHeight+'upx'}">
 				<view class="flex-sub text-center">
 					<view class="text-xs padding">
-						<text class="text-white">终点论坛 @2021</text>
+						<text class="text-white">{{$t('index.title')}} @2022</text>
 					</view>
 				</view>
 			</view>
@@ -219,26 +219,26 @@
 		<view class="cu-modal" :class="modalName=='logout'?'show':''">
 			<view class="cu-dialog">
 				<view class="cu-bar bg-white justify-end">
-					<view class="content">确认注销</view>
+					<view class="content">{{$t('home.conformlogout')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl">
-					你确认注销此前登录的账号吗？
+					{{$t('home.conformlogouttxt')}}
 				</view>
 				<view class="cu-bar bg-white justify-end">
 					<view class="action">
-						<button class="cu-btn line-green text-green" @tap="hideModal">取消</button>
-						<button class="cu-btn bg-green margin-left" @tap="cleanlogin()">确定</button>
+						<button class="cu-btn line-green text-green" @tap="hideModal">{{$t('api.cancel')}}</button>
+						<button class="cu-btn bg-green margin-left" @tap="cleanlogin()">{{$t('api.ok')}}</button>
 					</view>
 				</view>
 			</view>
 		</view>
-		<view class="cu-modal" :class="modalName=='update'?'show':''">
-			<view class="cu-dialog">
+		<view class="cu-modal" :class="modalName=='update'?'show':''" @tap="hideModal">
+			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar bg-white justify-end">
-					<view class="content">版本信息</view>
+					<view class="content">{{$t('home.versioninformation')}}</view>
 					<view v-if="isupdate==1" class="action" @tap="cancelupdate">
 						<text class="cuIcon-close text-red"></text>
 					</view>
@@ -247,10 +247,10 @@
 					</view>
 				</view>
 				<view class="padding-xl text-blue">
-					终点分享 V{{version}}.{{versionCode}}{{update}}
+					{{$t('index.title')}} V{{version}}.{{versionCode}}{{update}}
 				</view>
 				<view v-if="isupdate==1" class="padding-xl text-red">
-					目前服务器有新版本，确认进行更新吗？
+					{{$t('home.conformupdate')}}
 				</view>
 				<view class="padding-xl" v-if="progress>0">
 					<view class="cu-progress">
@@ -261,20 +261,20 @@
 					{{mbh(bite)}} MB / {{mbh(zongbite)}} MB
 				</view>
 				<view v-if="progress>0" class="padding-xl">
-					如果遇到进度条100，但是APP没有正常重启，说明数据读取失败。
+					{{$t('home.conformupdatetxt')}}
 				</view>
 				<view class="padding-xl text-cyan">
-					开源地址：<text class="text-blue" @tap="tothegithub()"><text
+					{{$t('home.github')}}：<text class="text-blue" @tap="tothegithub()"><text
 							class="lg text-blue cuIcon-link"></text>github.com/konatatenshi/zdmobile</text>
 				</view>
 				<view class="cu-bar bg-white justify-end">
 					<view v-if="isupdate==1" class="action">
-						<button class="cu-btn line-green text-green" @tap="cancelupdate">取消</button>
-						<button v-if="bite==0" class="cu-btn bg-green margin-left" @tap="chechabout">确定</button>
+						<button class="cu-btn line-green text-green" @tap="cancelupdate">{{$t('api.cancel')}}</button>
+						<button v-if="bite==0" class="cu-btn bg-green margin-left" @tap="chechabout">{{$t('api.ok')}}</button>
 					</view>
 					<view v-else-if="isupdate==2" class="action">
-						<button class="cu-btn line-green text-green" @tap="cancelupdate">取消</button>
-						<button v-if="bite==0" class="cu-btn bg-green margin-left" @tap="toupdate">前往市场更新</button>
+						<button class="cu-btn line-green text-green" @tap="cancelupdate">{{$t('api.cancel')}}</button>
+						<button v-if="bite==0" class="cu-btn bg-green margin-left" @tap="toupdate">{{$t('home.toshop')}}</button>
 					</view>
 				</view>
 			</view>
@@ -283,23 +283,23 @@
 			<view class="cu-dialog" @tap.stop>
 				<view class="padding bg-white">
 					<view class="flex  p-xs margin-bottom-sm mb-sm">
-						<view class="bg-grey padding-sm margin-xs radius">前一等级：<br>{{getjf(mygroupid,1)}}</view>
-						<view class="bg-grey padding-sm margin-xs radius">积分范围：<br>{{getjf(mygroupid,2)}}</view>
-						<view class="bg-grey padding-sm margin-xs radius">阅读权限：<br>{{getjf(mygroupid,3)}}</view>
+						<view class="bg-grey padding-sm margin-xs radius">{{$t('home.prelevel')}}：<br>{{getjf(mygroupid,1)}}</view>
+						<view class="bg-grey padding-sm margin-xs radius">{{$t('home.creditrange')}}：<br>{{getjf(mygroupid,2)}}</view>
+						<view class="bg-grey padding-sm margin-xs radius">{{$t('home.permission')}}：<br>{{getjf(mygroupid,3)}}</view>
 					</view>
 					<view class="flex  p-xs margin-bottom-sm mb-sm">
-						<view class="bg-grey padding-sm margin-xs radius">目前等级：<br>{{loadlevelicon(mygroupid)}}</view>
-						<view class="bg-grey padding-sm margin-xs radius">目前积分：<br>{{mycredits}}</view>
-						<view class="bg-grey padding-sm margin-xs radius">阅读权限：<br>{{getjf(mygroupid,4)}}</view>
+						<view class="bg-grey padding-sm margin-xs radius">{{$t('home.nowlevel')}}：<br>{{loadlevelicon(mygroupid)}}</view>
+						<view class="bg-grey padding-sm margin-xs radius">{{$t('home.nowcredit')}}：<br>{{mycredits}}</view>
+						<view class="bg-grey padding-sm margin-xs radius">{{$t('home.permission')}}：<br>{{getjf(mygroupid,4)}}</view>
 					</view>
 					<view class="flex  p-xs margin-bottom-sm mb-sm">
-						<view class="bg-grey padding-sm margin-xs radius">下一等级：<br>{{getjf(mygroupid,5)}}</view>
-						<view class="bg-grey padding-sm margin-xs radius">积分范围：<br>{{getjf(mygroupid,6)}}</view>
-						<view class="bg-grey padding-sm margin-xs radius">阅读权限：<br>{{getjf(mygroupid,7)}}</view>
+						<view class="bg-grey padding-sm margin-xs radius">{{$t('home.nextlevel')}}：<br>{{getjf(mygroupid,5)}}</view>
+						<view class="bg-grey padding-sm margin-xs radius">{{$t('home.creditrange')}}：<br>{{getjf(mygroupid,6)}}</view>
+						<view class="bg-grey padding-sm margin-xs radius">{{$t('home.permission')}}：<br>{{getjf(mygroupid,7)}}</view>
 					</view>
 					<view class="cu-bar bg-white">
-						<button class="cu-btn line-green text-green" @tap="tomore">查看详情</button>
-						<button class="cu-btn bg-green margin-left" @tap="hideModal">我知道了</button>
+						<button class="cu-btn line-green text-green" @tap="tomore">{{$t('home.clicktoviewmore')}}</button>
+						<button class="cu-btn bg-green margin-left" @tap="hideModal">{{$t('home.know')}}</button>
 					</view>
 				</view>
 			</view>
@@ -307,18 +307,18 @@
 		<view class="cu-modal" :class="modalName=='tozanzhu'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar bg-white justify-end">
-					<view class="content">请选择接下来的服务</view>
+					<view class="content">{{$t('home.chooseservice')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl">
-					增值服务包含用户组、终点币获取（可兑换金币）。请选择你要的服务
+					{{$t('home.chooseservicetxt')}}
 				</view>
 				<view class="cu-bar bg-white justify-end">
 					<view class="action">
-						<button class="cu-btn bg-green margin-left" @tap="buylr">用户组</button>
-						<button class="cu-btn bg-blue margin-left" @tap="buydb">终点币</button>
+						<button class="cu-btn bg-green margin-left" @tap="buylr">{{$t('home.group')}}</button>
+						<button class="cu-btn bg-blue margin-left" @tap="buydb">{{$t('home.zdcoin')}}</button>
 					</view>
 				</view>
 			</view>
@@ -326,26 +326,26 @@
 		<view class="cu-modal" :class="modalName=='toshop'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar bg-white justify-end">
-					<view class="content">访问商城</view>
+					<view class="content">{{$t('home.toshop')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl">
-					请选择你需要访问的商城。
+					{{$t('home.toshoptxt')}}
 				</view>
 				<view class="cu-bar bg-white justify-end">
 					<view class="action">
-						<button class="cu-btn bg-green margin-left" @tap="toxz()">勋章</button>
-						<button class="cu-btn bg-blue margin-left" @tap="daoju()">道具</button>
-						<button class="cu-btn bg-cyan margin-left" @tap="openbox()">宝箱</button>
+						<button class="cu-btn bg-green margin-left" @tap="toxz()">{{$t('home.medal')}}</button>
+						<button class="cu-btn bg-blue margin-left" @tap="daoju()">{{$t('home.item')}}</button>
+						<button class="cu-btn bg-cyan margin-left" @tap="openbox()">{{$t('home.treasure')}}</button>
 					</view>
 				</view>
 				<view class="cu-bar bg-white justify-end">
 					<view class="action">
-						<button class="cu-btn bg-yellow margin-left" @tap="totx()">头衔</button>
-						<button class="cu-btn bg-purple margin-left" @tap="tomp()">名片</button>
-						<button class="cu-btn bg-pink margin-left" @tap="togj()">挂件</button>
+						<button class="cu-btn bg-yellow margin-left" @tap="totx()">{{$t('home.designation')}}</button>
+						<button class="cu-btn bg-purple margin-left" @tap="tomp()">{{$t('home.card')}}</button>
+						<button class="cu-btn bg-pink margin-left" @tap="togj()">{{$t('home.frame')}}</button>
 					</view>
 				</view>
 			</view>
@@ -353,17 +353,17 @@
 		<view class="cu-modal" :class="modalName=='installfail'?'show':''">
 			<view class="cu-dialog">
 				<view class="cu-bar bg-white justify-end">
-					<view class="content">数据读取失败</view>
+					<view class="content">{{$t('home.readdataf')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl">
-					数据读取失败。可能因为版本不对。请联系管理员。
+					{{$t('home.readdataftxt')}}
 				</view>
 				<view class="cu-bar bg-white justify-end">
 					<view class="action">
-						<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
+						<button class="cu-btn bg-green margin-left" @tap="hideModal">{{$t('api.ok')}}</button>
 					</view>
 				</view>
 			</view>
@@ -769,7 +769,7 @@
 							Vue.prototype.$floorswitch = 0;
 							Vue.prototype.$nowdate = 0;
 							Vue.prototype.$groupid = 0;
-							Vue.prototype.$username = '游客';
+							Vue.prototype.$username = that.$t('index.guest');
 							Vue.prototype.$avatarsmall =
 								'https://zd.tiangal.com/uc_server/images/randuser/small/0.jpg';
 							Vue.prototype.$avatarsmalldefault =
@@ -926,12 +926,12 @@
 							console.log(data);
 							that.downfile = data.StoreID;
 							if (data.update == 200 && data.StoreID) {
-								that.update = '(有更新)';
+								that.update = that.$t('home.updatefound');
 								that.isupdate = 1;
 							} else if (data.update === 201) {
-								that.update = '(最新版)';
+								that.update = that.$t('home.latestversion');
 							} else if (data.update === 202) {
-								that.update = '(请去市场更新)';
+								that.update = that.$t('home.updatefounds');
 								that.isupdate = 2;
 							}
 						}
@@ -943,7 +943,7 @@
 					if (f == 1) {
 						return 'line-gray';
 					} else {
-						return '游客';
+						return this.$t('index.guest');
 					}
 				} else if (e == 9) {
 					if (f == 1) {
@@ -1051,7 +1051,7 @@
 					if (f == 1) {
 						return 'light bg-gray';
 					} else {
-						return 'QQ游客';
+						return 'QQ' + this.$t('index.guest');
 					}
 				} else if (e == 41) {
 					if (f == 1) {
@@ -1075,7 +1075,7 @@
 					if (f == 1) {
 						return 'vip';
 					} else {
-						return '懒人组';
+						return this.$t('index.vip');
 					}
 				} else if (e == 1) {
 					if (f == 1) {
@@ -1141,7 +1141,7 @@
 					if (f == 1) {
 						return 'line-gray';
 					} else {
-						return '游客';
+						return this.$t('index.guest');
 					}
 				}
 			},
@@ -1158,13 +1158,13 @@
 							plus.runtime.install(downloadResult.tempFilePath, {
 								force: false
 							}, function() {
-								plus.nativeUI.alert("您已是最新版本了哦！", function() {
+								plus.nativeUI.alert(that.$t('home.nownew'), function() {
 									plus.runtime.restart();
 								});
 							}, function(e) {
 								plus.nativeUI.closeWaiting();
-								console.log("错误代码：[" + e.code + "]：" + e.message);
-								plus.nativeUI.alert("错误代码[" + e.code + "]：" + e.message);
+								console.log(that.$t('home.errorcode') + "：[" + e.code + "]：" + e.message);
+								plus.nativeUI.alert(that.$t('home.errorcode') + "：[" + e.code + "]：" + e.message);
 							});
 						}
 					}
@@ -1193,9 +1193,9 @@
 				}else {
 					let appleId=1592697237 //app的appleId
 					plus.runtime.launchApplication({
-					  action: `itms-apps://itunes.apple.com/us/app/id${appleId}?mt=8`
+					  action: `itms-apps://itunes.apple.com/us/app/id${appleId}?mt=8`
 					}, function(e) {
-					  console.log('Open system default browser failed: ' + e.message);
+					  console.log('Open system default browser failed: ' + e.message);
 					});
 				}
 			},

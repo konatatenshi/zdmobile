@@ -3,7 +3,7 @@
 	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<cu-custom class="statustop" :bgColor="'bg-gradual-'+themeColor.name" :isBack="true">
-			<block slot="backText">返回</block>
+			<block slot="backText">{{$t('api.back')}}</block>
 			<block slot="content">{{postname}}</block>
 			<block slot="right">
 				<view class="action">
@@ -272,18 +272,18 @@
 				<view class="cu-modal" :class="modalName=='needlogin'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
 						<view class="cu-bar bg-white justify-end">
-							<view class="content">需要登录</view>
+							<view class="content">{{$t('api.needlogin')}}</view>
 							<view class="action" @tap="hideModal">
 								<text class="cuIcon-close text-red"></text>
 							</view>
 						</view>
 						<view class="padding-xl">
-							你需要登录才可以使用此功能。
+							{{$t('api.needlogintxt')}}
 						</view>
 						<view class="cu-bar bg-white justify-end">
 							<view class="action">
-								<button class="cu-btn line-green text-green" @tap="hideModal">取消</button>
-								<button class="cu-btn bg-green margin-left" @tap="tologin">确定</button>
+								<button class="cu-btn line-green text-green" @tap="hideModal">{{$t('api.cancel')}}</button>
+								<button class="cu-btn bg-green margin-left" @tap="tologin">{{$t('api.ok')}}</button>
 							</view>
 						</view>
 					</view>
@@ -405,7 +405,7 @@
 						</view>
 						<view class="cu-bar bg-white justify-end">
 							<view class="action">
-								<button class="cu-btn bg-green margin-left" @tap="back">确定</button>
+								<button class="cu-btn bg-green margin-left" @tap="back">{{$t('api.ok')}}</button>
 							</view>
 						</view>
 					</view>
@@ -423,7 +423,7 @@
 						</view>
 						<view class="cu-bar bg-white justify-end">
 							<view class="action">
-								<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
+								<button class="cu-btn bg-green margin-left" @tap="hideModal">{{$t('api.ok')}}</button>
 							</view>
 						</view>
 					</view>
@@ -619,8 +619,8 @@
 						</view>
 						<view class="cu-bar bg-white justify-end">
 							<view class="action">
-								<button class="cu-btn line-green text-green" @tap="hideModal">取消</button>
-								<button class="cu-btn bg-green margin-left" @tap="refresh">确定</button>
+								<button class="cu-btn line-green text-green" @tap="hideModal">{{$t('api.cancel')}}</button>
+								<button class="cu-btn bg-green margin-left" @tap="refresh">{{$t('api.ok')}}</button>
 							</view>
 						</view>
 					</view>
@@ -1608,7 +1608,7 @@
 					if (f == 1) {
 						return 'line-gray';
 					} else {
-						return '游客';
+						return this.$t('index.guest');
 					}
 				} else if (e == 9) {
 					if (f == 1) {
@@ -1716,7 +1716,7 @@
 					if (f == 1) {
 						return 'light bg-gray';
 					} else {
-						return 'QQ游客';
+						return 'QQ' + this.$t('index.guest');
 					}
 				} else if (e == 41) {
 					if (f == 1) {

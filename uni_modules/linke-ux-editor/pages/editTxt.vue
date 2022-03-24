@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
-			<block slot="backText">返回</block>
+			<block slot="backText">{{$t('api.back')}}</block>
 			<block slot="content">快捷发帖</block>
 		</cu-custom>
 		<linke-ux-edit-txt @save="save" :item="item" /></view>

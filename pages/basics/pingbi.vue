@@ -2,7 +2,7 @@
 	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<cu-custom bgColor="bg-gradual-cyan" :isBack="true" class="text-shadow1">
-			<block slot="content">屏蔽列表</block>
+			<block slot="content">{{$t('setting.ignorelist')}}</block>
 		</cu-custom>
 		<view v-for="(itemex,indexe1) in pingbilist" :key="indexe1">
 			<view class="grid col-2 align-center padding-top">
@@ -10,7 +10,7 @@
 					{{itemex}}
 				</view>
 				<view class="wid1 text-red padding-right padding-left" @tap="pingbiremove(itemex)">
-					移除
+					{{$t('setting.remove')}}
 				</view>
 			</view>
 		</view>
@@ -28,8 +28,8 @@
 			pingbiremove(e){
 				let that = this;
 				uni.showModal({
-					title: '移除确认',
-					content: '确定将用户 ' + e + ' 移除屏蔽列表？',
+					title: that.$t('setting.removeconfirm'),
+					content: that.$t('setting.removet1') + e + that.$t('setting.removet2'),
 					success: function(res) {
 						if (res.confirm) {
 							that.pingbiremove2(e);
@@ -48,7 +48,7 @@
 					data: that.pingbilist,
 					success: function() {
 						uni.showToast({
-							title:'移除成功'
+							title:that.$t('setting.removesuccess')
 						})
 					}
 				});

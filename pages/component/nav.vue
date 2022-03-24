@@ -1,28 +1,28 @@
 <template>
 	<view>
-		<cu-custom bgColor="bg-gradual-pink" :isBack="true"><block slot="backText">返回</block><block slot="content">摇奖抽卡</block></cu-custom>
+		<cu-custom bgColor="bg-gradual-pink" :isBack="true"><block slot="backText">{{$t('api.back')}}</block><block slot="content">{{$t('extra.draw')}}</block></cu-custom>
 		<qyq-luckDraw @lottoLuckDraw="lottoLuckDraw" :cardList="cardList"></qyq-luckDraw>
 		
 		<view class="cu-card article">
 			<view class="cu-item shadow">
-				<view class="title"><view class="text-cut">每日翻翻卡统计信息</view></view>
+				<view class="title"><view class="text-cut">{{$t('extra.drawtxt')}}</view></view>
 				<view class="content">
 					<view class="desc">
 						<view v-if="xingyun==1">
-							<view class="cu-tag bg-yellow light sm round">超级幸运！此次抽奖必翻倍，金额必定大于等于16！</view>
+							<view class="cu-tag bg-yellow light sm round">{{$t('extra.luckys')}}</view>
 						</view>
 						<view>
-							<view class="cu-tag bg-red light sm round">今日排名：{{jrpm}} 翻出：{{fc}}点币</view>
+							<view class="cu-tag bg-red light sm round">{{$t('extra.lrank1')}}:{{jrpm}} {{$t('extra.draw1')}}:{{fc}}{{$t('index.credits')}}</view>
 						</view>
 						<view>
-							<view class="cu-tag bg-green light sm round">连续排名：{{lxpm}} 连翻：{{lf}}天</view>
+							<view class="cu-tag bg-green light sm round">{{$t('extra.lrank2')}}:{{lxpm}} {{$t('extra.draw2')}}:{{lf}}{{$t('extra.days')}}</view>
 						</view>
 						<view>
-							<view class="cu-tag bg-cyan light sm round">累计排名：{{ljpm}} 总翻：{{zf}}天 累计：{{lj}}点币 第{{pm}}名</view>
+							<view class="cu-tag bg-cyan light sm round">{{$t('extra.lrank3')}}:{{ljpm}} {{$t('extra.draw3')}}:{{zf}}{{$t('extra.days')}} {{$t('extra.totals')}}:{{lj}}{{$t('index.credits')}} {{$t('extra.nob')}}{{pm}}{{$t('extra.nob2')}}</view>
 						</view>
-						<view class="text-brown">活动规则：<br>1.翻到金色卡牌翻倍！<br>2.如果连续30次翻卡均未抽中≥16的数字，则开启超级幸运模式，下次翻卡必翻倍，最终必获得≥16点币。（PS:每日前10名翻卡额外奖励50%点币。）<br>3.抽奖奖品为1-30（翻倍为最高60）点币。点币用来提升用户积分，并无其他用处。<br>4.在此活动中<text v-if="platform==1">Apple</text><text v-else>Google</text>不是赞助者，也没有以任何形式参与活动。</view>
+						<view class="text-brown">{{$t('extra.rule1')}}:<br>1.{{$t('extra.rule2')}}！<br>2.{{$t('extra.rule3')}}<br>3.{{$t('extra.rule4')}}<br>4.{{$t('extra.rule5')}}<text v-if="platform==1">Apple</text><text v-else>Google</text>{{$t('extra.rule6')}}</view>
 					<view class="text-center">
-						<button class="cu-btn block bg-blue lg margin-xs" type="" @tap="phb()">查看排行榜/旧版摇奖</button>
+						<button class="cu-btn block bg-blue lg margin-xs" type="" @tap="phb()">{{$t('extra.toranking')}}</button>
 					</view>
 					</view>
 				</view>
@@ -30,12 +30,12 @@
 		</view>
 		<view class="cu-modal" :class="modalName=='chushihua'?'show':''" @tap.stop>
 			<view class="cu-dialog" @tap.stop>
-				<view class="text-content text-xl padding">保留奖池提醒</view>
-				<view class="text-content text-cyan padding">你上次摇奖还未初始化，是保留上次摇奖奖池还是继续抽奖？奖池还剩：{{jiangchi}}</view>
+				<view class="text-content text-xl padding">{{$t('extra.reserved')}}</view>
+				<view class="text-content text-cyan padding">{{$t('extra.reservedtxt')}}{{jiangchi}}</view>
 				<view class="cu-bar bg-white justify-end">
 					<view class="action">
-						<button class="cu-btn bg-red" @tap="chongzhi" :disabled="isloading?true:false"><text class="cuIconfont-spin" :class="isloading1?'cuIcon-loading2':''"></text>重置</button>
-						<button class="cu-btn bg-green margin-left" @tap="baoliu()" :disabled="isloading?true:false"><text class="cuIconfont-spin" :class="isloading2?'cuIcon-loading2':''"></text>保留</button>
+						<button class="cu-btn bg-red" @tap="chongzhi" :disabled="isloading?true:false"><text class="cuIconfont-spin" :class="isloading1?'cuIcon-loading2':''"></text>{{$t('extra.reset')}}</button>
+						<button class="cu-btn bg-green margin-left" @tap="baoliu()" :disabled="isloading?true:false"><text class="cuIconfont-spin" :class="isloading2?'cuIcon-loading2':''"></text>{{$t('extra.reserve')}}</button>
 					</view>
 				</view>
 			</view>
@@ -51,78 +51,78 @@
                 //卡片数组，reward为奖励，info为奖励信息
                 cardList:[
                     {
-                        reward:"载入中",
-                        info:"点币"
+                        reward:this.$t('extra.loading'),
+                        info:this.$t('index.credits')
                     },
                     {
-                        reward:"载入中",
-                        info:"点币"
+                        reward:this.$t('extra.loading'),
+                        info:this.$t('index.credits')
                     },
                     {
-                        reward:"载入中",
-                        info:"点币"
+                        reward:this.$t('extra.loading'),
+                        info:this.$t('index.credits')
                     },
                     {
-                        reward:"载入中",
-                        info:"点币"
+                        reward:this.$t('extra.loading'),
+                        info:this.$t('index.credits')
                     },
                     {
-                        reward:"载入中",
-                        info:"点币"
+                        reward:this.$t('extra.loading'),
+                        info:this.$t('index.credits')
                     },
                     {
-                        reward:"载入中",
-                        info:"点币"
+                        reward:this.$t('extra.loading'),
+                        info:this.$t('index.credits')
                     },
                     {
-                        reward:"载入中",
-                        info:"点币"
+                        reward:this.$t('extra.loading'),
+                        info:this.$t('index.credits')
                     },
                     {
-                        reward:"载入中",
-                        info:"点币"
+                        reward:this.$t('extra.loading'),
+                        info:this.$t('index.credits')
                     },
                     {
-                        reward:"载入中",
-                        info:"点币"
+                        reward:this.$t('extra.loading'),
+                        info:this.$t('index.credits')
                     }
                 ],
                 cardList2:[
                     {
-                        reward:"载入中",
-                        info:"点币"
+                        reward:this.$t('extra.loading'),
+                        info:this.$t('index.credits')
                     },
                     {
-                        reward:"载入中",
-                        info:"点币"
+                        reward:this.$t('extra.loading'),
+                        info:this.$t('index.credits')
                     },
                     {
-                        reward:"载入中",
-                        info:"点币"
+                        reward:this.$t('extra.loading'),
+                        info:this.$t('index.credits')
                     },
                     {
-                        reward:"载入中",
-                        info:"点币"
+                        reward:this.$t('extra.loading'),
+                        info:this.$t('index.credits')
                     },
                     {
-                        reward:"载入中",
-                        info:"点币"
+                        reward:this.$t('extra.loading'),
+                        info:this.$t('index.credits')
                     },
                     {
-                        reward:"载入中",
-                        info:"点币"
+                        reward:this.$t('extra.loading'),
+                        info:this.$t('index.credits')
                     },
                     {
-                        reward:"载入中",
-                        info:"点币"
+                        reward:this.$t('extra.loading'),
+                        info:this.$t('index.credits')
                     },
                     {
-                        reward:"载入中",
-                        info:"点币"
+                        reward:this.$t('extra.loading'),
+                        info:this.$t('index.credits')
                     },
                     {
-                        reward:"载入中",
-                        info:"点币"
+                        reward:this.$t('extra.loading'),
+                        info:this.$t('index.credits')
                     }
                 ],
 				xingyun: 0,
@@ -179,7 +179,7 @@
 			},
 			shuaxinlist() {
 				var that = this;
-				that.loading = '载入中...';
+				that.loading = this.$t('api.loading');
 					uni.request({
 						url: getApp().globalData.zddomain + 'plugin.php?id=yinxingfei_zzza:yaoyao', //获取轮播列表
 						method: 'GET',
@@ -233,7 +233,7 @@
 							that.modalName = null;
 							console.log(res.data);
 							uni.showToast({
-							title: '已重置',
+							title: that.$t('extra.reseted'),
 							duration: 2000
 							});
 						}
@@ -258,7 +258,7 @@
 							that.modalName = null;
 							console.log(res.data)
 							uni.showToast({
-							title: '已保留',
+							title: that.$t('extra.loaded'),
 							duration: 2000
 							});
 						}

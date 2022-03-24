@@ -29,14 +29,14 @@
 						}"
 						:style="{ color: item.txtStyleColor, 'font-size': item.txtStyleSize + 'px' }"
 						v-model="item.txtContent"
-						placeholder="请输入内容"
+						:placeholder="$t('post.inputtxt')"
 						@click="showPaiban(index)"
 					/>
 					<view class="link-box" v-if="item.txtLink">
 						<text class="iconfont iconfont-link-url"></text>
 						<text>{{ item.txtLink | substr(20) }}</text>
 					</view>
-					<view class="paiban-box" @click="editTxt(item, index)" v-if="index == showPaibanIndex">排版</view>
+					<view class="paiban-box" @click="editTxt(item, index)" v-if="index == showPaibanIndex">{{$t('home.typesetting')}}</view>
 				</view>
 				<!-- 图片预览 -->
 				<view v-else-if="item.type == 'pic'" class="pic-box ux-item-border">
@@ -74,15 +74,15 @@
 					<view class="add-opt-box" :ref="'add-opt-box' + index" v-if="index == showAddIndex">
 						<view @click="addTitle(item, index)" class="opt">
 							<text class="iconfont iconfont-biaoti"></text>
-							<text>标题</text>
+							<text>{{$t('home.title')}}</text>
 						</view>
 						<view @click="addTxt(item, index)" class="opt">
 							<text class="iconfont iconfont-wenzi"></text>
-							<text>文字</text>
+							<text>{{$t('home.monji')}}</text>
 						</view>
 						<view @click="addPic(item, index)" class="opt">
 							<text class="iconfont iconfont-tupian"></text>
-							<text>图片</text>
+							<text>{{$t('home.image')}}</text>
 						</view>
 						<!-- <view class="opt">
 							<x-content-file-uploader :MIME="fileLoaderType" @confirm="addVideo(item, index, $event)">
@@ -193,7 +193,7 @@ export default {
 				title: {
 					layer: '1' // 1_    0_
 				},
-				txtContent: '新标题',
+				txtContent: this.$t('post.newtitle'),
 				txtStyleBold: true,
 				txtStyleAlign: 'left',
 				txtStyleSize: 16
@@ -320,7 +320,7 @@ export default {
 			this.list.splice(index, 1);
 			this.ensureNotEmpty();
 			uni.showToast({
-				title: '内容块已移除',
+				title: this.$t('post.remove'),
 				icon: 'none'
 			});
 		},

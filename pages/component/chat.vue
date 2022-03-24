@@ -2,11 +2,11 @@
 	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<cu-custom class="statustop" bgColor="bg-gradual-pink" :isBack="true">
-			<block slot="backText">返回</block>
-			<block slot="content">公共群组 ({{onlinenumber}}人在线)</block>
+			<block slot="backText">{{$t('api.back')}}</block>
+			<block slot="content">{{$t('home.publicgroup')}} ({{onlinenumber}}{{$t('home.peoples')}})</block>
 		</cu-custom>
 		<view class="cu-chat">
-			<view v-if="!loadingmore" class="cu-info round" @tap="getchatmessage()">查看更多记录</view><view v-else class="cu-load text-gray loading"></view>
+			<view v-if="!loadingmore" class="cu-info round" @tap="getchatmessage()">{{$t('home.vmoreinfo')}}</view><view v-else class="cu-load text-gray loading"></view>
 			<view v-for="(item,index) in chatlist" :key="index" :data-id="index">
 				<view v-if="(item.mine || item.username==$username) && item.remark!='图片'" class="cu-item self" @tap="tabSelect(item.cid,item.fromid)">
 					<view class="main">
@@ -62,13 +62,13 @@
 					<view class="date">&#12288;{{item.timestamp}}</view>
 				</view>
 			</view>
-			<view v-if="stopload>1" class="cu-info round" @tap="retriveload()">继续自动滚动消息</view>
+			<view v-if="stopload>1" class="cu-info round" @tap="retriveload()">{{$t('home.continue')}}</view>
 			<view>
 				<block>
 					<view class="padding-xs flex align-center bg-gray" :style="{'height': iStatusBarHeight+'px'}">
 						<view class="flex-sub text-center">
 							<view class="text-xs padding">
-								<text class="text-white">终点论坛 @2021</text>
+								<text class="text-white">{{$t('index.title')}} @2022</text>
 							</view>
 						</view>
 					</view>
@@ -116,18 +116,18 @@
 		<view class="cu-modal" :class="modalName=='dxcl'?'show':''">
 			<view class="cu-dialog">
 				<view class="cu-bar bg-white justify-end">
-					<view class="content">断线重连</view>
+					<view class="content">{{$t('home.rec')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl">
-					您似乎已经和聊天服务器断开连接，是否重连？
+					{{$t('home.rectxt')}}
 				</view>
 				<view class="cu-bar bg-white justify-end">
 					<view class="action">
-						<button class="cu-btn line-green text-green" @tap="hideModal">取消</button>
-						<button class="cu-btn bg-green margin-left" @tap="restart">确定</button>
+						<button class="cu-btn line-green text-green" @tap="hideModal">{{$t('api.cancel')}}</button>
+						<button class="cu-btn bg-green margin-left" @tap="restart">{{$t('api.ok')}}</button>
 					</view>
 				</view>
 			</view>

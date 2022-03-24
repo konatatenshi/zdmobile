@@ -1,7 +1,7 @@
 <template>
 	<view :class="'bg-white bc-'+themeColor.name">
 		<cu-custom class="statustop" :bgColor="'bg-gradual-'+themeColor.name" :isBack="true">
-			<block slot="backText">返回</block>
+			<block slot="backText">{{$t('api.back')}}</block>
 			<block slot="content">QQ登录</block>
 			<block slot="right">
 				<view class="action">

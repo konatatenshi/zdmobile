@@ -2,11 +2,11 @@
 	<view>
 		<view class="intro-box">
 			<view class="info">
-				<view class="span">正确率:<text>{{zql}}</text></view>
+				<view class="span">{{$t('extra.zql')}}:<text>{{zql}}</text></view>
 			</view>
 			<view class="prized-box">
 				<view class="answer-main">
-					<view class="name"><rich-text :nodes="'题目:' + question"></rich-text></view>
+					<view class="name"><rich-text :nodes="$t('extra.subject') + ':' + question"></rich-text></view>
 					<radio-group class="block" @change="RadioChange">
 						<view class="cu-form-group justify-start" v-for="(radio, index) in tmlist" :key="index" v-if="radio.answer!=''">
 							<radio :class="datixuanxiang==radio.id?'checked':''" :checked="datixuanxiang==radio.id?true:false" :value="radio.id"></radio>
@@ -21,17 +21,17 @@
 
 		<view class="intro-box">
 			<view class="info">
-				<view class="span">倒计时</view>
+				<view class="span">{{$t('extra.countdown')}}</view>
 			</view>
 			<view class="prized-box">
 				<view class="time-box">
-					<view ref="uCountDown" style="text-align:center" >{{timestamp}}秒</view>
+					<view ref="uCountDown" style="text-align:center" >{{timestamp}}{{$t('extra.seconds')}}</view>
 				</view>
 			</view>
 		</view>
 
 		<view class="btnsub margin-bottom-sm" @click="submit">
-			提 交
+			{{$t('api.submit')}}
 		</view>
 		<view class="cu-modal" :class="[animation=='s'?'show animation-' +douka:'']">
 			<view class="cu-dialog backgrou">

@@ -9,28 +9,28 @@
 		<view v-else class="status_bar bg-white cu-bar tabbar shadow foot" :class="'bt-'+themeColor.name">
 			<view :class="PageCur=='basics'?'action text-green':'action text-gray'" @click="NavChange"
 				data-cur="basics">
-				<view class="cuIcon-homefill"></view> 首页
+				<view class="cuIcon-homefill"></view>{{$t('index.home')}}
 			</view>
 			<view :class="PageCur=='component'?'action text-green':'action text-gray'" @click="NavChange"
 				data-cur="component">
-				<view class="cuIcon-similar"></view> 版块
+				<view class="cuIcon-similar"></view>{{$t('index.component')}}
 			</view>
 			<view class="action text-gray add-action" @click="postnew()">
 				<button class="cu-btn cuIcon-add bg-green shadow"></button>
-				发布
+				{{$t('index.post')}}
 			</view>
 			<view :class="PageCur=='plugin'?'action text-green':'action text-gray'" @click="NavChange"
 				data-cur="plugin">
 				<view class="cuIcon-message">
 					<view v-if="mynewpm>0" class="cu-tag badge">{{mynewpm}}</view>
 				</view>
-				信息
+				{{$t('index.message')}}
 			</view>
 			<view :class="PageCur=='about'?'action text-green':'action text-gray'" @click="NavChange" data-cur="about">
 				<view class="cuIcon-my">
 					<view v-if="myinfoprompt>0" class="cu-tag badge"></view>
 				</view>
-				我的
+				{{$t('index.mine')}}
 			</view>
 		</view>
 	</view>
@@ -203,7 +203,7 @@
 				}
 			},
 			loginchat() {
-				if(this.$uid>0 && this.$username == '游客'){
+				if(this.$uid>0 && this.$username == this.$t('index.guest')){
 					plus.runtime.restart();
 				}
 				let data = {

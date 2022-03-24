@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
-			<block slot="backText">返回</block>
+			<block slot="backText">{{$t('api.back')}}</block>
 			<block slot="content">模态窗口</block>
 		</cu-custom>
 		<view class="cu-bar bg-white margin-top">
@@ -37,8 +37,8 @@
 		<view class="cu-modal bottom-modal" :class="modalName=='bottomModal'?'show':''">
 			<view class="cu-dialog">
 				<view class="cu-bar bg-white">
-					<view class="action text-green">确定</view>
-					<view class="action text-blue" @tap="hideModal">取消</view>
+					<view class="action text-green">{{$t('api.ok')}}</view>
+					<view class="action text-blue" @tap="hideModal">{{$t('api.cancel')}}</view>
 				</view>
 				<view class="padding-xl">
 					Modal 内容。
@@ -68,8 +68,8 @@
 				</view>
 				<view class="cu-bar bg-white justify-end">
 					<view class="action">
-						<button class="cu-btn line-green text-green" @tap="hideModal">取消</button>
-						<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
+						<button class="cu-btn line-green text-green" @tap="hideModal">{{$t('api.cancel')}}</button>
+						<button class="cu-btn bg-green margin-left" @tap="hideModal">{{$t('api.ok')}}</button>
 
 					</view>
 				</view>
@@ -90,8 +90,8 @@
 				<view class="cu-bar bg-white">
 					<view class="action margin-0 flex-sub text-green " @tap="hideModal">
 						<text class="cuIcon-moneybag"></text>微信支付</view>
-					<view class="action margin-0 flex-sub text-green solid-left" @tap="hideModal">取消</view>
-					<view class="action margin-0 flex-sub  solid-left" @tap="hideModal">确定</view>
+					<view class="action margin-0 flex-sub text-green solid-left" @tap="hideModal">{{$t('api.cancel')}}</view>
+					<view class="action margin-0 flex-sub  solid-left" @tap="hideModal">{{$t('api.ok')}}</view>
 				</view>
 			</view>
 		</view>
@@ -157,8 +157,8 @@
 		<view class="cu-modal bottom-modal" :class="modalName=='ChooseModal'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop="">
 				<view class="cu-bar bg-white">
-					<view class="action text-blue" @tap="hideModal">取消</view>
-					<view class="action text-green" @tap="hideModal">确定</view>
+					<view class="action text-blue" @tap="hideModal">{{$t('api.cancel')}}</view>
+					<view class="action text-green" @tap="hideModal">{{$t('api.ok')}}</view>
 				</view>
 				<view class="grid col-3 padding-sm">
 					<view v-for="(item,index) in checkbox" class="padding-xs" :key="index">

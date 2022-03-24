@@ -2,7 +2,7 @@
 	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<cu-custom bgColor="bg-white" :isBack="true" class="text-shadow1">
-				<block slot="backText">返回</block>
+				<block slot="backText">{{$t('api.back')}}</block>
 				<block slot="right" v-if="uid!=$uid">
 					<view class="action">
 						<view class="cu-load cuIcon-mail padding-left-sm text-shadow1" @tap="topm()"></view>
@@ -320,7 +320,7 @@
 						</view>
 						<view class="cu-bar bg-white justify-end">
 							<view class="action">
-								<button class="cu-btn bg-green margin-left" @tap="hideModal">确定</button>
+								<button class="cu-btn bg-green margin-left" @tap="hideModal">{{$t('api.ok')}}</button>
 							</view>
 						</view>
 					</view>
@@ -360,8 +360,8 @@
 				friendaddmessage: "",
 				sex: 0,
 				isfriend: 0,
-				sig: '加载中……',
-				username: "加载中……",
+				sig: this.$t('api.loading'),
+				username: this.$t('api.loading'),
 				touxiangkuanglist: '',
 				zan: 0,
 				woguanzhu: 1,
@@ -371,7 +371,7 @@
 				guanzhupost: [],
 				huifupost: [],
 				xunzhanglist: [],
-				loading: '加载中……',
+				loading: this.$t('api.loading'),
 				cantpostmessage: '',
 				listTouchDirection: null,
 				floorfasong: false,
@@ -516,7 +516,7 @@
 			},
 			shuaxinlist() {
 				var that = this;
-				that.loading = '载入中...';
+				that.loading = this.$t('api.loading');
 				if (this.TabCur == 0) {
 					this.page0 = 0;
 					uni.request({
@@ -538,7 +538,7 @@
 							if (res.data.post.length < 30) {
 								that.loading = '已经到底了！';
 							}else{
-								that.loading = '下滑加载更多';
+								that.loading = this.$t('api.loadmore');
 							}
 							if(that.page0 ==0){
 								that.uid = res.data.userinfo.uid;
@@ -593,7 +593,7 @@
 							if (res.data.post.length < 30) {
 								that.loading = '已经到底了！';
 							}else{
-								that.loading = '下滑加载更多';
+								that.loading = this.$t('api.loadmore');
 							}
 							console.log(res.data.length);
 							that.page1++;
@@ -637,7 +637,7 @@
 					if (f == 1) {
 						return 'line-gray';
 					} else {
-						return '游客';
+						return this.$t('index.guest');
 					}
 				} else if (e == 9) {
 					if (f == 1) {
@@ -745,7 +745,7 @@
 					if (f == 1) {
 						return 'light bg-gray';
 					} else {
-						return 'QQ游客';
+						return 'QQ' + this.$t('index.guest');
 					}
 				} else if (e == 41) {
 					if (f == 1) {
@@ -835,7 +835,7 @@
 			},
 			tothebottom(push) {
 				var that = this;
-				that.loading = '正在加载中……';
+				that.loading = this.$t('api.loading');
 				if (that.TabCur == 0) {
 					uni.request({
 						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:thread', //获取轮播列表
@@ -860,9 +860,9 @@
 								}
 							}
 							if (push.length < 30) {
-								that.loading = '竟然到底了！';
+								that.loading = this.$t('api.loadtoend');
 							}else{
-								that.loading = '下滑加载更多';
+								that.loading = this.$t('api.loadmore');
 							}
 							that.page0++;
 							setTimeout(function() {
@@ -894,9 +894,9 @@
 								}
 							}
 							if (push.length < 30) {
-								that.loading = '竟然到底了！';
+								that.loading = this.$t('api.loadtoend');
 							}else{
-								that.loading = '下滑加载更多';
+								that.loading = this.$t('api.loadmore');
 							}
 							that.page1++;
 							setTimeout(function() {

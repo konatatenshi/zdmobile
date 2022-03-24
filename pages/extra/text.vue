@@ -2,8 +2,8 @@
 	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
-			<block slot="backText">返回</block>
-			<block slot="content">快捷发帖</block>
+			<block slot="backText">{{$t('api.back')}}</block>
+			<block slot="content">{{$t('post.newpost')}}</block>
 			<block slot="right">
 				<view class="action">
 					<view v-if="fasong" class="cuIcon-loading2 cuIconfont-spin"></view>
@@ -12,21 +12,21 @@
 			</block>
 		</cu-custom>
 		<view class="cu-form-group">
-			<view class="title">选择发帖位置</view>
-			<input placeholder="水贴/交流贴" v-model="thread" disabled=true name="input"></input>
+			<view class="title">{{$t('post.choose')}}</view>
+			<input :placeholder="$t('post.shui')" v-model="thread" disabled=true name="input"></input>
 			<picker @change="PickerChange" :value="index" :range="picker">
 				<view class="picker">
-					选择
+					{{$t('post.ch')}}
 				</view>
 			</picker>
 		</view>
 		<view class="cu-form-group">
-			<view class="title">标题</view>
-			<input placeholder="请输入发帖标题" v-model="title" name="input"></input>
+			<view class="title">{{$t('home.title')}}</view>
+			<input :placeholder="$t('post.inputtitle')" v-model="title" name="input"></input>
 		</view>
 		<linke-ux-editor v-model="content"></linke-ux-editor>
 		<view class="margin-tb-sm text-center"><button
-			class="margin cu-btn bg-blue block lg" :disabled="fasong?true:false" @tap="post()">提交</button>
+			class="margin cu-btn bg-blue block lg" :disabled="fasong?true:false" @tap="post()">{{$t('api.submit')}}</button>
 		</view>
 	</view>
 </template>
@@ -42,8 +42,8 @@
 				thread: '',
 				title: '',
 				platform: 0,
-				picker: ['水区', '交流区', '意见区', '教程区', '喇叭'],
-				picker2: ['吹水区', '意见区'],
+				picker: [this.$t('post.picker1'),this.$t('post.picker2'),this.$t('post.picker3'),this.$t('post.picker4'),this.$t('post.picker5')],
+				picker2: [this.$t('post.picker1'),this.$t('post.picker3')],
 				editable: true,
 				fasong: false
 			}

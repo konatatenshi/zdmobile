@@ -2,38 +2,38 @@
 	<view class="app">
 		<image class="bgt" src="../../static/images/indexbg4.jpg"></image>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
-			<block slot="backText">返回</block>
-			<block slot="content">每日答题</block>
+			<block slot="backText">{{$t('api.back')}}</block>
+			<block slot="content">{{$t('extra.quiz')}}</block>
 		</cu-custom>
 		<view class="btn">
 			<image src="../../static/images/btn.png" mode="widthFix" @click="goSubject()"></image>
 		</view>
 		<view class="tip" v-if="show">
-			<text class="text margin-bottom">今天您还有<text>{{ counts }}</text>次答题机会</text>
-			<text class="text">您目前还有<text>{{ mc }}</text>张免错卡</text>
+			<text class="text margin-bottom">{{$t('extra.todayo')}}<text>{{ counts }}</text>{{$t('extra.todayp')}}</text>
+			<text class="text">{{$t('extra.nowo')}}<text>{{ mc }}</text>{{$t('extra.nowp')}}</text>
 		</view>
 		<view class="zaida" v-if="show">
 			<view class="margin-tb-sm text-center"><button
-				class="margin cu-btn bg-red block lg" :disabled="zdjs?true:false" @tap="zaidar()"><text v-show="zdjs" class="cuIcon-loading2 cuIconfont-spi"></text>获取再答机会</button>
+				class="margin cu-btn bg-red block lg" :disabled="zdjs?true:false" @tap="zaidar()"><text v-show="zdjs" class="cuIcon-loading2 cuIconfont-spi"></text>{{$t('extra.answermore')}}</button>
 			</view>
 		</view>
-		<view class="tip2 margin-bottom-xl"><text class="text" style="margin-bottom: 200upx;">技术支持：终点论坛</text></view>
+		<view class="tip2 margin-bottom-xl"><text class="text" style="margin-bottom: 200upx;">{{$t('extra.poweredbyzd')}}</text></view>
 		<view class="cu-modal" :class="modalName=='zaida'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar justify-end">
-					<view class="content">再次答题</view>
+					<view class="content">{{$t('extra.quizagain')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl">
-					您目前拥有{{zd}}张再答卡(可去道具市场购买)，请问是否使用并获取一次再答机会吗？<text v-show="eventtype=='adLoaded'">或者，你可以观看一次广告，看完后即获取再答机会。(限1次)</text>
+					{{$t('extra.zdk1')}}{{zd}}{{$t('extra.zdk2')}}<text v-show="eventtype=='adLoaded'">{{$t('extra.zdk3')}}</text>
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
-						<button class="cu-btn line-green text-green" @tap="hideModal">取消</button>
-						<button class="cu-btn bg-green margin-left" :disabled="zd?false:true" @tap="zaidas(1)">使用再答卡</button>
-						<button class="cu-btn bg-green margin-left" v-show="eventtype=='adLoaded'" @tap="showInterstitialRewardedAd">观看广告</button>
+						<button class="cu-btn line-green text-green" @tap="hideModal">{{$t('api.cancel')}}</button>
+						<button class="cu-btn bg-green margin-left" :disabled="zd?false:true" @tap="zaidas(1)">{{$t('extra.usezdk')}}</button>
+						<button class="cu-btn bg-green margin-left" v-show="eventtype=='adLoaded'" @tap="showInterstitialRewardedAd">{{$t('extra.watchad')}}</button>
 					</view>
 				</view>
 			</view>
@@ -41,15 +41,15 @@
 		<view class="bottom-tabbar margin-bottom">
 			<view class="box active">
 				<image src="../../static/images/icon1b.png"></image>
-				<view class="text">活动首页</view>
+				<view class="text">{{$t('extra.quizmain')}}</view>
 			</view>
 			<view class="box" @click="goIntro">
 				<image src="../../static/images/iconca.png"></image>
-				<view class="text">答题规则</view>
+				<view class="text">{{$t('extra.quizrule')}}</view>
 			</view>
 			<view class="box " @click="goRecord">
 				<image src="../../static/images/icon2a.png"></image>
-				<view class="text">答题排行</view>
+				<view class="text">{{$t('extra.quizrank')}}</view>
 			</view>
 		</view>
 

@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<cu-custom class="statustop" bgColor="bg-gradual-pink" :isBack="true">
-			<block slot="backText">返回</block>
+			<block slot="backText">{{$t('api.back')}}</block>
 			<block slot="content">同{{username}}的私聊</block>
 		</cu-custom>
 		<view class="cu-chat">
@@ -97,7 +97,7 @@
 				showFile: false,
 				showmove: false,
 				loadingmore: false,
-				loading: '点击可加载更多',
+				loading: this.$t('home.clicktoload'),
 				scrollHeight: 'auto',
 				modalName: null,
 				username: '',
@@ -219,7 +219,7 @@
 					success: (res) => {
 						console.log(res.data)
 						if (res.data.code == 404) {
-							that.loading = '暂无新消息。';
+							that.loading = this.$t('home.nomoremessage');
 							that.loadingmore = false;
 							return;
 						}
@@ -231,9 +231,9 @@
 							};
 						}
 						if (res.data.length < 10) {
-							that.loading = '暂无更多消息';
+							that.loading = this.$t('home.nomoremessage');
 						} else {
-							that.loading = '点击可加载更多';
+							that.loading = this.$t('home.clicktoload');
 						}
 						that.page++;
 						that.loadingmore = false;

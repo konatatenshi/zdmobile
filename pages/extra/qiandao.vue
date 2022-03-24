@@ -2,7 +2,7 @@
 	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<cu-custom bgColor="bg-white" :isBack="true" class="text-shadow1">
-				<block slot="content">签到</block>
+				<block slot="content">{{$t('extra.sign')}}</block>
 		</cu-custom>
 		<view :scroll-y="modalName==null" class="page" :class="modalName!=null?'show':''">
 			<view class="cu-card dynamic cu-list2">
@@ -20,16 +20,16 @@
 												class="padding-left-xl padding-right-xl cu-btn round2 bg-grey2">{{$username}}</button>
 										</view>
 										<view class="text-left padding-right-xsl margin-bottom-sm"><button
-												class="padding-left-xl padding-right-xl cu-btn round2 bg-grey2">签到等级 Lv{{qiandaodengji}}</button>
+												class="padding-left-xl padding-right-xl cu-btn round2 bg-grey2" @tap="toshowjl">{{$t('extra.sign')}} Lv{{qiandaodengji}}</button>
 										</view>
 									</view>
 								</view>
 							</view>
 						</view>
 						<view class="grid col-3 padding-top-sm padding-bottom-sm mbl">
-							<view class="text-content">今日排名<br><text class="lg text-yellow cuIcon-card margin-right-xs"></text>{{credit}}</view>
-							<view class="text-content">连续签到<br><text class="lg text-yellow cuIcon-babyfill margin-right-xs"></text>{{credit1}}天</view>
-							<view class="text-content">累计签到<br><text class="lg text-yellow cuIcon-samefill margin-right-xs"></text>{{credit2}}天</view>
+							<view class="text-content">{{$t('extra.todayrank')}}<br><text class="lg text-yellow cuIcon-card margin-right-xs"></text>{{credit}}</view>
+							<view class="text-content">{{$t('extra.continuoussign')}}<br><text class="lg text-yellow cuIcon-babyfill margin-right-xs"></text>{{credit1}}{{$t('extra.days')}}</view>
+							<view class="text-content">{{$t('extra.cumulativesign')}}<br><text class="lg text-yellow cuIcon-samefill margin-right-xs"></text>{{credit2}}{{$t('extra.days')}}</view>
 						</view>
 					</view>
 					<view class="text-center">
@@ -40,15 +40,15 @@
 			<scroll-view scroll-x class="bg-white nav">
 				<view class="cu-item padding-xsl"
 					:class="TabCur==0?'text-blue text-bold cur':'text-black'" @tap="tabSelect(0)">
-					今日排行
+					{{$t('extra.todayrank')}}
 				</view>
 				<view class="cu-item padding-xsl"
 					:class="TabCur==1?'text-blue text-bold cur':'text-black'" @tap="tabSelect(1)">
-					本月排行
+					{{$t('extra.monthrank')}}
 				</view>
 				<view class="cu-item padding-xsl"
 					:class="TabCur==2?'text-blue text-bold cur':'text-black'" @tap="tabSelect(2)">
-					总排行
+					{{$t('extra.totalrank')}}
 				</view>
 			</scroll-view>
 			<view class="cu-bar border-custom2 margin-top">
@@ -90,9 +90,9 @@
 				</scroll-view>
 				<view class="cu-modal" :class="modalName=='dengji'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
-						<view class="text-content text-xl padding">等级说明：<view v-for="(itemex2,indexe2) in dengjilist" :key="indexe2"><br>{{itemex2.txt}}</view></view>
+						<view class="text-content text-xl padding">{{$t('extra.lvtxt')}}：<text class="text-red">{{$t('extra.lvtxt2')}}</text></view>
 						<view class="cu-bar bg-white">
-							<view class="action margin-0 flex-sub  solid-left" @tap="hideModal">我知道了</view>
+							<view class="action margin-0 flex-sub  solid-left" @tap="hideModal">{{$t('home.know')}}</view>
 						</view>
 					</view>
 				</view>
@@ -131,12 +131,12 @@
 				credit2: 0,
 				credit3: 0,
 				qiandaodengji: 0,
-				qdtext: "签到加载中……",
+				qdtext: this.$t('extra.signloading'),
 				sex: 0,
 				zql: 0,
 				qa: 0,
-				dengji: '加载中……',
-				username: "加载中……",
+				dengji: this.$t('api.loading'),
+				username: this.$t('api.loading'),
 				touxiangkuanglist: '',
 				zan: 0,
 				woguanzhu: 1,
@@ -145,7 +145,7 @@
 				avatar: '',
 				guanzhupost: [],
 				dengjilist: [],
-				loading: '加载中……',
+				loading: this.$t('api.loading'),
 				listTouchDirection: null,
 				TabCur: 0,
 				jifenbiangeng: '积分名+1',
@@ -199,9 +199,12 @@
 				    }
 				});
 			},
+			toshowjl(){
+				this.modalName = 'dengji';
+			},
 			shuaxinlist() {
 				var that = this;
-				that.loading = '载入中...';
+				that.loading = this.$t('api.loading');
 					this.page0 = 0;
 					uni.request({
 						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:sign', //获取轮播列表
@@ -216,13 +219,13 @@
 							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
 						},
 						success: (res) => {
-							that.qdtext = '签到';
+							that.qdtext =  that.$t('extra.sign');
 							//console.log(res.data.list)
 							that.guanzhupost = res.data.list;
 							if (res.data.list.length < 30) {
-								that.loading = '已经到底了！';
+								that.loading = that.$t('api.loadtoend');
 							}else{
-								that.loading = '下滑加载更多';
+								that.loading = that.$t('api.loadmore');
 							}
 							if(that.page0 ==0){
 								that.credit = res.data.pm;
@@ -230,7 +233,7 @@
 								that.credit2 = res.data.lxqd;
 								that.qiandaodengji = res.data.qddj;
 								if(Number(that.credit)>0){
-									that.qdtext = '已签到';
+									that.qdtext = that.$t('extra.signed');
 									that.disabled = true;
 								} 
 							}
@@ -265,9 +268,9 @@
 								}
 							}
 							if (push.length < 30) {
-								that.loading = '真的到底了！';
+								that.loading = that.$t('api.loadtoend');
 							}else{
-								that.loading = '下滑加载更多';
+								that.loading = that.$t('api.loadmore');
 							}
 							that.page0++;
 							setTimeout(function() {
@@ -279,7 +282,7 @@
 			},
 			sign() {
 				var that = this;
-				const dateTime = Date.now();
+				const dateTime = new Date();
 				var hour = dateTime.getHours();
 				var minut = dateTime.getMinutes();
 				var second = dateTime.getSeconds();
@@ -295,7 +298,7 @@
 				const timestamps = 'S' + Math.floor(dateTime / 1000);
 				const signature = plus.navigator.getSignature();
 				const signe = AES.AES.encrypt(signature,w_md5.hex_md5_16(timestamps),w_md5.hex_md5_16(that.$uid));
-				that.qdtext = '签到中……';
+				that.qdtext = that.$t('extra.signing');
 				console.log(signe);
 				console.log(signature);
 				console.log(timestamp);
@@ -323,21 +326,21 @@
 								if(res.data.result.indexOf("sigZDned") != -1){
 									that.credit1 = res.data.last;
 									that.credit2++;
-									that.qdtext = '已签到';
+									that.qdtext = that.$t('extra.signed');
 									console.log(that.credit1)
 									if(that.credit1>30){
 										if(res.data.data>0&&res.data.data<=10){
 											var jinbi = 11 - res.data.data + 5;
-											that.jifenbiandong('签到成功','点币+' + (Number(res.data.count)+1) + ',金币+' + jinbi);
+											that.jifenbiandong(that.$t('extra.signsuccess'),'点币+' + (Number(res.data.count)+1) + ',金币+' + jinbi);
 										}else{
-											that.jifenbiandong('签到成功','点币+' + (Number(res.data.count)+1) + ',金币+5');
+											that.jifenbiandong(that.$t('extra.signsuccess'),'点币+' + (Number(res.data.count)+1) + ',金币+5');
 										}
 									}else{
 										if(res.data.data>0&&res.data.data<=10){
 											var jinbi = 11 - res.data.data;
-											that.jifenbiandong('签到成功','点币+' + res.data.count + ',金币+' + jinbi);
+											that.jifenbiandong(that.$t('extra.signsuccess'),'点币+' + res.data.count + ',金币+' + jinbi);
 										}else{
-											that.jifenbiandong('签到成功','点币+' + res.data.count);
+											that.jifenbiandong(that.$t('extra.signsuccess'),'点币+' + res.data.count);
 										}
 									}
 									that.page0++;
@@ -401,7 +404,7 @@
 				});
 			},
 			xiangqing(e,f){
-				return '月天数 ' + e +' 天，总天数' + f + '天';
+				return this.$t('extra.monthday') + e + this.$t('extra.allday') + f + this.$t('extra.days');
 			},
 		},
 		onLoad: function(option) {

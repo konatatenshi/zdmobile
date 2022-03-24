@@ -1,21 +1,21 @@
 <template>
 	<view class="backg" style="width:100%;height:calc( 100vh - 50px - 30upx);display:block;">
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
-			<block slot="backText">返回</block>
-			<block slot="content">规则</block>
+			<block slot="backText">{{$t('api.back')}}</block>
+			<block slot="content">{{$t('extra.quizrule')}}</block>
 		</cu-custom>
 		<view class="bottom-tabbar margin-bottom">
 			 <view class="box" @click="goHome">
 				  <image src="../../static/images/icon1a.png"></image>
-				  <view class="text">答题首页</view>
+				  <view class="text">{{$t('extra.quizmain')}}</view>
 			 </view>
 			 <view class="box">
 			 	<image src="../../static/images/iconcb.png"></image>
-			 	<view class="text active">答题规则</view>
+			 	<view class="text active">{{$t('extra.quizrule')}}</view>
 			 </view>
 			 <view class="box" @click="goRecord">
 				 <image src="../../static/images/icon2a.png"></image>
-				 <view class="text">答题排行</view>
+				 <view class="text">{{$t('extra.quizrank')}}</view>
 			 </view>
 		</view>
 	</view>

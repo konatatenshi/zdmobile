@@ -1,58 +1,58 @@
 <template>
 	<view>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
-			<block slot="backText">返回</block>
-			<block slot="content">购买懒人组</block>
+			<block slot="backText">{{$t('api.back')}}</block>
+			<block slot="content">{{$t('buy.buyvip')}}</block>
 			<block slot="right">
 			</block>
 		</cu-custom>
 		<view class="solids-bottom padding-xs flex align-center service-list">
 			<view class="flex-sub text-center">
-				<view class="text-lg"><image src="../../static/vip.png" class="imgbt"></image>尊贵特权</view>
-				<view class="text-left">1.免回复看内容特权<br>2.每月领取免费补签卡特权<br>3.每日领取额外积分及点币<br>4.发帖有高亮显示.</view>
+				<view class="text-lg"><image src="../../static/vip.png" class="imgbt"></image>{{$t('buy.nobleprivilege')}}</view>
+				<view class="text-left">1.{{$t('buy.nobleprivilege1')}}<br>2.{{$t('buy.nobleprivilege2')}}<br>3.{{$t('buy.nobleprivilege3')}}<br>4.{{$t('buy.nobleprivilege4')}}.</view>
 			</view>
 		</view>
 		<view v-for="(items,indexs) in vipList" :key="indexs">
 			<view class="solids-bottom padding-xs flex align-center service-list" :class="index==indexs?'actives':''" @tap="changeindex(indexs,items.productid)">
-				<view class="padding bigzi">懒</view>
+				<view class="padding bigzi">{{$t('buy.vi')}}</view>
 				<view class="flex-sub text-center">
 					<view class="solid-bottom text-xl padding">
 						<text
 							class="text-bold" :class="index==indexs?'text-red':'text-black'">{{items.title}}({{huobifuhao(items.pricelocal,items.price)}})</text>
 					</view>
-					<view class="padding"><text v-show="index==indexs" class="text-red">【已选】</text>{{items.description}}</view>
+					<view class="padding"><text v-show="index==indexs" class="text-red">【{{$t('buy.selected')}}】</text>{{items.description}}</view>
 				</view>
 			</view>
 		</view>
 		<view v-if="googleplay==1">
 			<view class="solids-bottom padding-xs flex align-center service-list" :class="index==1?'actives':''" @tap="changeindex(1,'vip1')">
-				<view class="padding bigzi">懒</view>
+				<view class="padding bigzi">{{$t('buy.vi')}}</view>
 				<view class="flex-sub text-center">
 					<view class="solid-bottom text-xl padding">
 						<text
 							class="text-bold" :class="index==1?'text-red':'text-black'">{{title1}}({{price1}})</text>
 					</view>
-					<view class="padding"><text v-show="index==1" class="text-red">【已选】</text>{{description1}}</view>
+					<view class="padding"><text v-show="index==1" class="text-red">【{{$t('buy.selected')}}】</text>{{description1}}</view>
 				</view>
 			</view>
 			<view class="solids-bottom padding-xs flex align-center service-list" :class="index==2?'actives':''" @tap="changeindex(2,'vip2')">
-				<view class="padding bigzi">懒</view>
+				<view class="padding bigzi">{{$t('buy.vi')}}</view>
 				<view class="flex-sub text-center">
 					<view class="solid-bottom text-xl padding">
 						<text
 							class="text-bold" :class="index==2?'text-red':'text-black'">{{title2}}({{price2}})</text>
 					</view>
-					<view class="padding"><text v-show="index==2" class="text-red">【已选】</text>{{description2}}</view>
+					<view class="padding"><text v-show="index==2" class="text-red">【{{$t('buy.selected')}}】</text>{{description2}}</view>
 				</view>
 			</view>
 		</view>
 		<view class="margin-top-xl solids-bottom padding-xs flex align-center service-list">
 			<view class="flex-sub text-center">
-				<view class="text-left">目前用户组：<text class="margin-right-sm" :class="loadlevelicon(mygroupid,1)">{{loadlevelicon(mygroupid)}}</text>  过期时间：<text class="text-red">{{todate(mygroupexpiry)}}</text></view>
+				<view class="text-left">{{$t('buy.currentusergroup')}}：<text class="margin-right-sm" :class="loadlevelicon(mygroupid,1)">{{loadlevelicon(mygroupid)}}</text>  {{$t('buy.expiration')}}：<text class="text-red">{{todate(mygroupexpiry)}}</text></view>
 			</view>
 		</view>
-		<button class="margin-top-xl cu-btn block bg-blue margin-sm lg" @tap="pay()" :disabled="loading?true:false"><text class="cuIconfont-spin" :class="loading?'cuIcon-loading2':''"></text>点击购买懒人组</button>
-		<button class="cu-btn block bg-grey margin-sm lg" @tap="restoreComplateRequest()">丢单补单</button>
+		<button class="margin-top-xl cu-btn block bg-blue margin-sm lg" @tap="pay()" :disabled="loading?true:false"><text class="cuIconfont-spin" :class="loading?'cuIcon-loading2':''"></text>{{$t('buy.taptobuy')}}</button>
+		<button class="cu-btn block bg-grey margin-sm lg" @tap="restoreComplateRequest()">{{$t('buy.lost')}}</button>
 	</view>
 </template>
 
@@ -65,6 +65,7 @@
 				vipList: [],
 				goodInfo: [],
 				index: -1,
+				red: 0,
 				googleplay: 0,
 				produceid: '',
 				showerror: '',
@@ -116,7 +117,7 @@
 			},
 			plusReady() {
 				uni.showLoading({
-					title: "加载中",
+					title: this.$t('api.loading'),
 				});
 				setTimeout(function() {
 					uni.hideLoading();
@@ -155,7 +156,7 @@
 											errormsg.message
 										);
 										uni.showToast({
-											title: '获取会员信息失败，请稍后重试'
+											title: that.$t('buy.failget')
 										})
 										uni.navigateBack()
 										uni.hideLoading();
@@ -164,11 +165,14 @@
 							}else if (channels[i].id == "google-pay") {
 								plug.querySku({SKU_ID:"vip1"},function(e){
 									if(e.type!='inapp'){
-										uni.redirectTo({
-											url: '../component/card?tid=260104',
-											animationType: 'pop-in',
-											animationDuration: 200
-										});
+										if(that.red==0){
+											that.red = 1;
+											uni.navigateTo({
+												url: '../component/card?tid=260104',
+												animationType: 'pop-in',
+												animationDuration: 200
+											});
+										}
 										return;
 									}else{
 										that.googleplay = 1;
@@ -203,15 +207,15 @@
 				);
 			},
 			pay() {
+				let that = this;
 				if(this.index==-1){
 					uni.showToast({
-						title:"请选套餐",
+						title:that.$t('buy.choosevip'),
 						icon:"error"
 					})
 					return;
 				}
 				this.loading = true;
-				let that = this;
 				if(this.googleplay==0){
 					uni.requestPayment({
 						provider: "appleiap",
@@ -224,7 +228,7 @@
 						},
 						fail: (e) => {
 							uni.showToast({
-								title: '支付失败'
+								title: that.$t('buy.paidfailed')
 							})
 							that.loading = false;
 						},
@@ -279,7 +283,7 @@
 							console.log(res.data)
 							if(res.data.code==200){
 								uni.showToast({
-									title: '充值成功。'
+									title: that.$t('buy.paidsuccess')
 								})
 								uni.request({
 									url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:user', //获取用户基本信息。
@@ -338,7 +342,7 @@
 								});
 							}else{
 								uni.showToast({
-									title: '支付失败',
+									title: that.$t('buy.paidfailed'),
 									icon: 'error'
 								})
 								that.loading = false;
@@ -347,7 +351,7 @@
 					});
 				} else {
 					uni.showToast({
-						title: '支付失败',
+						title: that.$t('buy.paidfailed'),
 						icon: 'error'
 					})
 				}
@@ -374,7 +378,7 @@
 							console.log(res.data)
 							if(res.data.code==200){
 								uni.showToast({
-									title: '充值成功。'
+									title: that.$t('buy.paidsuccess')
 								})
 								uni.request({
 									url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:user', //获取用户基本信息。
@@ -433,7 +437,7 @@
 								});
 							}else{
 								uni.showToast({
-									title: '支付失败',
+									title: that.$t('buy.paidfailed'),
 									icon: 'error'
 								})
 								that.loading = false;
@@ -442,15 +446,16 @@
 					});
 				} else {
 					uni.showToast({
-						title: '支付失败',
+						title: that.$t('buy.paidfailed'),
 						icon: 'error'
 					})
 				}
 			},
 			restoreComplateRequest() {
+				let that = this;
 				uni.showModal({
-					title: '订单恢复',
-					content: '如果你在订购过程中遇到问题或者遇到支付成功但订单失败的情况，先尝试再次点击购买懒人组按钮即可恢复订购，如恢复失败，可以在我的-用户反馈里面，发送你要反馈的内容以及订单截图，待审核后会予以补单。',
+					title: that.$t('buy.lost'),
+					content: that.$t('buy.losttxt'),
 					success: function(res) {
 						if (res.confirm) {
 							uni.navigateTo({
@@ -467,7 +472,7 @@
 					if (f == 1) {
 						return 'line-gray';
 					} else {
-						return '游客';
+						return this.$t('index.guest');
 					}
 				} else if (e == 9) {
 					if (f == 1) {
@@ -575,7 +580,7 @@
 					if (f == 1) {
 						return 'light bg-gray';
 					} else {
-						return 'QQ游客';
+						return 'QQ' + this.$t('index.guest');
 					}
 				} else if (e == 41) {
 					if (f == 1) {
@@ -599,7 +604,7 @@
 					if (f == 1) {
 						return 'text-red';
 					} else {
-						return '懒人组';
+						return this.$t('index.vip');
 					}
 				} else if (e == 1) {
 					if (f == 1) {
@@ -665,13 +670,13 @@
 					if (f == 1) {
 						return 'line-gray';
 					} else {
-						return '游客';
+						return this.$t('index.guest');
 					}
 				}
 			},
 			todate(e) {
 				if(e==0){
-					return '永久';
+					return this.$t('buy.forever');
 				}
 				let date = new Date(e * 1000);
 				let nowdate = new Date();

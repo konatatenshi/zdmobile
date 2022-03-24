@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
-			<block slot="backText">返回</block>
+			<block slot="backText">{{$t('api.back')}}</block>
 			<block slot="content">个人资料更改</block>
 		</cu-custom>
 		<form>
@@ -101,7 +101,7 @@
 				<text class="padding text-df text-gray">👆输入你的论坛签名👆<br>[img]图片URL[/img]可以插入图片</text>
 			</view>
 			<view class="padding">
-				<button class="cu-btn block bg-blue margin-tb-sm lg" :disabled="disabled?true:false" type="" @tap="submit"><text v-show="disabled" class="cuIcon-loading2 cuIconfont-spin"></text>提交</button>
+				<button class="cu-btn block bg-blue margin-tb-sm lg" :disabled="disabled?true:false" type="" @tap="submit"><text v-show="disabled" class="cuIcon-loading2 cuIconfont-spin"></text>{{$t('api.submit')}}</button>
 			</view>
 		</form>
 	</view>

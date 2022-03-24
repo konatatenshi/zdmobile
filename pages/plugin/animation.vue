@@ -1,7 +1,7 @@
 <template>
 	<view :class="'bg-white bc-'+themeColor.name">
 		<cu-custom class="statustop" :bgColor="'bg-gradual-'+themeColor.name" :isBack="true">
-			<block slot="backText">返回</block>
+			<block slot="backText">{{$t('api.back')}}</block>
 			<block slot="content">修改密码</block>
 		</cu-custom>
 		<view class="cu-bar" :class="'bg-'+themeColor.name">
@@ -93,7 +93,7 @@
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
-						<button :disabled="lpyz?true:false" class="cu-btn bg-green margin-left" @tap="googleauth()"><text v-if="lpyz" class="cuIcon-loading2 cuIconfont-spin"></text>确定</button>
+						<button :disabled="lpyz?true:false" class="cu-btn bg-green margin-left" @tap="googleauth()"><text v-if="lpyz" class="cuIcon-loading2 cuIconfont-spin"></text>{{$t('api.ok')}}</button>
 					</view>
 				</view>
 			</view>
@@ -340,9 +340,9 @@
 				}else {
 					let appleId=388497605 //app的appleId
 					plus.runtime.launchApplication({
-					  action: `itms-apps://itunes.apple.com/cn/app/id${appleId}?mt=8`
+					  action: `itms-apps://itunes.apple.com/cn/app/id${appleId}?mt=8`
 					}, function(e) {
-					  console.log('Open system default browser failed: ' + e.message);
+					  console.log('Open system default browser failed: ' + e.message);
 					});
 				}
 			},

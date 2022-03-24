@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<cu-custom :bgColor="'bg-gradual-'+themeColor.name"  :isBack="true"><block slot="backText">返回</block>
+		<cu-custom :bgColor="'bg-gradual-'+themeColor.name"  :isBack="true"><block slot="backText">{{$t('api.back')}}</block>
 			<block slot="content">好友列表</block>
 		</cu-custom>
 		<view class="cu-bar bg-white search fixed" :style="[{top:CustomBar + 'px'}]">
@@ -126,7 +126,7 @@
 			},
 			shuaxinlist() {
 				var that = this;
-				that.loading = '载入中...';
+				that.loading = this.$t('api.loading');
 					this.page0 = 0;
 					uni.request({
 						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:friend', //获取轮播列表

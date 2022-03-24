@@ -14,7 +14,7 @@
 			}"
 			:style="{ color: itemData.txtStyleColor, 'font-size': itemData.txtStyleSize + 'px' }"
 			v-model="itemData.txtContent"
-			placeholder="请输入内容"
+			:placeholder="$t('post.inputtxt')"
 		/>
 		<view class="menus">
 			<view class="menus_item"><text :style="{ color: jiacuActiveColor }" class="iconfont iconfont-font-jiacu" @click="fontJiacu"></text></view>
