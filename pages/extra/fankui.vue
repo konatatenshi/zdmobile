@@ -3,7 +3,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
 			<block slot="backText">{{$t('api.back')}}</block>
-			<block slot="content">用户反馈</block>
+			<block slot="content">{{$t('my.feedback')}}</block>
 			<block slot="right">
 				<view class="action">
 					<view v-if="fasong" class="cuIcon-loading2 cuIconfont-spin"></view>
@@ -12,19 +12,19 @@
 			</block>
 		</cu-custom>
 		<view class="cu-form-group cu-list grid min-ht col-1 solid-bottom">
-			<text class="text-yellow cuIcon-warn"></text><text class="margin-left-xl">您的反馈内容将在24小时内受理。若有价值的反馈将会通过私信来通知您。</text>
+			<text class="text-yellow cuIcon-warn"></text><text class="margin-left-xl">{{$t('my.feedbacktxt')}}</text>
 		</view>
 		<view class="cu-form-group">
-			<view class="title">选择反馈原因</view>
-			<input placeholder="请选择反馈原因" v-model="thread" disabled=true name="input"></input>
+			<view class="title">{{$t('my.feedbackreason')}}</view>
+			<input :placeholder="$t('my.pfeedbackreason')" v-model="thread" disabled=true name="input"></input>
 			<picker @change="PickerChange" :value="index" :range="picker">
 				<view class="picker">
-					选择
+					{{$t('post.ch')}}
 				</view>
 			</picker>
 		</view>
 		<view class="cu-form-group cu-list grid min-ht col-1 solid-bottom">
-			<text>反馈内容（可插入截图）</text>
+			<text>{{$t('my.feedtext')}}</text>
 		</view>
 		<linke-ux-editor v-model="content"></linke-ux-editor>
 		<view class="margin-tb-sm text-center"><button
@@ -44,7 +44,7 @@
 				thread: '',
 				title: '',
 				platform: 0,
-				picker: ['账号被盗', '找回账号', '手机停机换号', '内测相关', '广告反馈', '意见反馈', '充值未到账', '验证码未收到', '其他'],
+				picker: [this.$t('my.feedpick1'),this.$t('my.feedpick2'),this.$t('my.feedpick3'),this.$t('my.feedpick4'),this.$t('my.feedpick5'),this.$t('my.feedpick6'),this.$t('my.feedpick7'),this.$t('my.feedpick8'),this.$t('my.feedpick9')],
 				editable: true,
 				fasong: false
 			}
@@ -80,7 +80,7 @@
 				var that = this;
 				if (that.index < 0 || that.index>11) {
 					uni.showToast({
-					    title: '举报内容选择错误',
+					    title: this.$t('my.feederror'),
 						icon:'none',
 					    duration: 2000
 					});
@@ -110,7 +110,7 @@
 							console.log(res.data)
 							if (res.data.code == 404) {
 								uni.showToast({
-									title: '需要登录',
+									title: that.$t('api.needlogin'),
 									icon:'none',
 									duration: 2000
 								});
@@ -123,7 +123,7 @@
 								});
 							} else {
 								uni.showToast({
-									title: '反馈成功，可关闭此页面了。',
+									title: that.$t('my.successed'),
 									icon:'none',
 									duration: 2000
 								});

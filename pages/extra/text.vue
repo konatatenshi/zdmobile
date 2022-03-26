@@ -120,7 +120,7 @@
 							console.log(res.data)
 							if (res.data.code == 404) {
 								uni.showToast({
-									title: '需要登录',
+									title: this.$t('api.needlogin'),
 									icon:'none',
 									duration: 2000
 								});

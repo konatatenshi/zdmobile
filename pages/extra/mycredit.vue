@@ -2,17 +2,17 @@
 	<page-meta :root-font-size="$fontsize"></page-meta>
 	<view>
 		<cu-custom bgColor="bg-white" :isBack="true" class="text-shadow1">
-				<block slot="content">我的积分</block>
+				<block slot="content">{{$t('credit.mycredit')}}</block>
 		</cu-custom>
 		<view :scroll-y="modalName==null" class="page" :class="modalName!=null?'show':''">
 			<view class="cu-card dynamic cu-list2">
 				<view>
 					<view class="bg-gradual-red padding-top padding-left padding-right radius text-center shadow-blur">
 						<view class="grid col-4 padding-sm">
-							<view class="text-content">总积分<br><text class="lg text-yellow cuIcon-card margin-right-xs"></text>{{credit}}</view>
-							<view class="text-content" @tap="tojinbi()">金币<br><text class="lg text-yellow cuIcon-choicenessfill margin-right-xs"></text>{{credit1}}<br><text class="text-sm margin-left-xs">获取金币</text><text class="lg text-black cuIcon-right"></text></view>
-							<view class="text-content" @tap="todianbi()">点币<br><text class="lg text-yellow cuIcon-creativefill margin-right-xs"></text>{{credit2}}<br><text class="text-sm margin-left-xs">点币来源</text><text class="lg text-black cuIcon-right"></text></view>
-							<view class="text-content">宠物经验<br><text class="lg text-yellow cuIcon-babyfill margin-right-xs"></text>{{credit3}}</view>
+							<view class="text-content">{{$t('credit.totalcredit')}}<br><text class="lg text-yellow cuIcon-card margin-right-xs"></text>{{credit}}</view>
+							<view class="text-content" @tap="tojinbi()">{{$t('credit.coins')}}<br><text class="lg text-yellow cuIcon-choicenessfill margin-right-xs"></text>{{credit1}}<br><text class="text-sm margin-left-xs">{{$t('credit.getcoin')}}</text><text class="lg text-black cuIcon-right"></text></view>
+							<view class="text-content" @tap="todianbi()">{{$t('credit.credits')}}<br><text class="lg text-yellow cuIcon-creativefill margin-right-xs"></text>{{credit2}}<br><text class="text-sm margin-left-xs">{{$t('credit.getcredit')}}</text><text class="lg text-black cuIcon-right"></text></view>
+							<view class="text-content">{{$t('credit.exp')}}<br><text class="lg text-yellow cuIcon-babyfill margin-right-xs"></text>{{credit3}}</view>
 						</view>
 					</view>
 				</view>
@@ -26,19 +26,19 @@
 							<block>
 								<view class="bg-white padding-top-sm">
 									<view class="grid text-center col-3">
-										<view class="wid1">操作</view>
-										<view class="wid1">积分变更</view>
-										<view class="wid8">详情</view>
+										<view class="wid1">{{$t('credit.operation')}}</view>
+										<view class="wid1">{{$t('credit.change')}}</view>
+										<view class="wid8">{{$t('credit.detail')}}</view>
 									</view>
 									<view v-for="(itemex,indexe1) in guanzhupost" :key="indexe1">
 										<view class="grid text-center col-3">
 											<view class="wid1">{{operation(itemex.operation,itemex.title)}}</view>
 											<view class="wid1">
-												<view v-if="itemex.extcredits1>0">金币<text class="text-red">+{{itemex.extcredits1}}</text></view><view v-else-if="itemex.extcredits1<0">金币<text class="text-red">{{itemex.extcredits1}}</text></view>
-												<view v-if="itemex.extcredits2>0">点币<text class="text-red">+{{itemex.extcredits2}}</text></view><view v-else-if="itemex.extcredits2<0">点币<text class="text-red">{{itemex.extcredits2}}</text></view>
-												<view v-if="itemex.extcredits3>0">宠物经验<text class="text-red">+{{itemex.extcredits3}}</text></view><view v-else-if="itemex.extcredits3<0">宠物经验<text class="text-red">{{itemex.extcredits3}}</text></view>
+												<view v-if="itemex.extcredits1>0">{{$t('credit.coins')}}<text class="text-red">+{{itemex.extcredits1}}</text></view><view v-else-if="itemex.extcredits1<0">{{$t('credit.coins')}}<text class="text-red">{{itemex.extcredits1}}</text></view>
+												<view v-if="itemex.extcredits2>0">{{$t('credit.credits')}}<text class="text-red">+{{itemex.extcredits2}}</text></view><view v-else-if="itemex.extcredits2<0">{{$t('credit.credits')}}<text class="text-red">{{itemex.extcredits2}}</text></view>
+												<view v-if="itemex.extcredits3>0">{{$t('credit.exp')}}<text class="text-red">+{{itemex.extcredits3}}</text></view><view v-else-if="itemex.extcredits3<0">{{$t('credit.exp')}}<text class="text-red">{{itemex.extcredits3}}</text></view>
 											</view>
-											<view class="wid8">{{xiangqing(itemex.operation,itemex.text,itemex.relatedid)}}<text class="text-center text-shadow text-green" v-if="itemex.text==''||itemex.operation=='ECU'" @tap="xiangqingtap(itemex.operation,itemex.relatedid)">详情</text></view>
+											<view class="wid8">{{xiangqing(itemex.operation,itemex.text,itemex.relatedid)}}<text class="text-center text-shadow text-green" v-if="itemex.text==''||itemex.operation=='ECU'" @tap="xiangqingtap(itemex.operation,itemex.relatedid)">{{$t('credit.detail')}}</text></view>
 										</view>
 									</view>
 								</view>
@@ -59,49 +59,49 @@
 				</scroll-view>
 				<view class="cu-modal" :class="modalName=='dati'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
-						<view class="text-content text-xl padding"><text class="text-gray cuIcon-questionfill"></text>题目：{{question}}(正确率：{{zql}}%)</view>
+						<view class="text-content text-xl padding"><text class="text-gray cuIcon-questionfill"></text>{{$t('extra.subject')}}：{{question}}({{$t('extra.zql')}}：{{zql}}%)</view>
 						<view class="text-xl" :class="qa==1?'text-red':'text-gray'"><text :class="qa==1?'text-red cuIcon-roundcheckfill':'text-gray cuIcon-roundclosefill'"></text>{{totext(listA)}}</view>
 						<view class="text-xl" :class="qa==2?'text-red':'text-gray'"><text :class="qa==2?'text-red cuIcon-roundcheckfill':'text-gray cuIcon-roundclosefill'"></text>{{totext(listB)}}</view>
 						<view class="text-xl" :class="qa==3?'text-red':'text-gray'" v-if="listC!= ''"><text :class="qa==3?'text-red cuIcon-roundcheckfill':'text-gray cuIcon-roundclosefill'"></text>{{totext(listC)}}</view>
 						<view class="text-xl padding-bottom" :class="qa==4?'text-red':'text-gray'" v-if="listD!= ''"><text :class="qa==4?'text-red cuIcon-roundcheckfill':'text-gray cuIcon-roundclosefill'"></text>{{totext(listD)}}</view>
 						<view class="cu-bar bg-white">
-							<view class="action margin-0 flex-sub  solid-left" @tap="hideModal">我知道了</view>
+							<view class="action margin-0 flex-sub  solid-left" @tap="hideModal">{{$t('home.know')}}</view>
 						</view>
 					</view>
 				</view>
 				<view class="cu-modal" :class="modalName=='dianbi'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
-						<view class="text-content text-xl padding">点币来源：每日签到，翻卡是最主要来源，获得1-60不等，答题连对10道亦可+1，另外发帖被评为精华帖更是可以获得10点币。点币用途是提升用户等级积分，除此之外并无他用。</view>
+						<view class="text-content text-xl padding">{{$t('credit.credittxt')}}</view>
 						<view class="cu-bar bg-white">
-							<view class="action margin-0 flex-sub  solid-left" @tap="hideModal">我知道了</view>
+							<view class="action margin-0 flex-sub  solid-left" @tap="hideModal">{{$t('home.know')}}</view>
 						</view>
 					</view>
 				</view>
 				<view class="cu-modal" :class="modalName=='jinbilaiyuan'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
-						<view class="text-content text-xl padding">金币来源：每日答题正确可以获得1-7金币不等。另外发帖有30%概率随机获得奖励，大约1-20金币不等。<text v-show="eventtype=='adLoaded'" >也可以通过观看广告（每日限1次），获取随机的金币（1-5）。</text></view>
+						<view class="text-content text-xl padding">{{$t('credit.cointxt1')}}<text v-show="eventtype=='adLoaded'" >{{$t('credit.cointxt2')}}</text></view>
 						<view class="cu-bar bg-white">
-							<view class="action margin-0 flex-sub  solid-left" @tap="hideModal">关闭页面</view>
+							<view class="action margin-0 flex-sub  solid-left" @tap="hideModal">{{$t('home.know')}}</view>
 						</view>
 						<view class="cu-bar bg-white" v-show="eventtype=='adLoaded'">
-							<view class="action padding-bottom-sm padding-top-sm flex-sub cu-btn round bg-blue solid-left" @tap="showInterstitialRewardedAd()">获取随机金币</view>
+							<view class="action padding-bottom-sm padding-top-sm flex-sub cu-btn round bg-blue solid-left" @tap="showInterstitialRewardedAd()">{{$t('credit.getrandomcoins')}}</view>
 						</view>
 					</view>
 				</view>
 				<view class="cu-modal" :class="modalName=='jinbi'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
-						<view class="text-content text-xl padding">你可以在下面输入活动或其他途径获取的金币卡，使用即可增加金币。<text v-show="eventtype=='adLoaded'" >也可以通过观看广告（每日限1次），获取随机的金币（1-5）。</text></view>
+						<view class="text-content text-xl padding">{{$t('credit.cointxt3')}}<text v-show="eventtype=='adLoaded'" >{{$t('credit.cointxt2')}}</text></view>
 						<view class="cu-bar bg-white padding">
 							<view class="search-form round">
 								<text class="cuIcon-goods"></text>
-								<input type="text" placeholder="输入金币卡" v-model="goldcard"></input>
+								<input type="text" :placeholder="$t('credit.typecardnumber')" v-model="goldcard"></input>
 							</view>
 						</view>
 						<view class="cu-bar bg-white">
-							<view class="action padding-bottom-sm padding-top-sm flex-sub cu-btn round bg-blue solid-left" @tap="chongzhi()">使用金币卡</view>
+							<view class="action padding-bottom-sm padding-top-sm flex-sub cu-btn round bg-blue solid-left" @tap="chongzhi()">{{$t('credit.usegoldcard')}}</view>
 						</view>
 						<view class="cu-bar bg-white" v-show="eventtype=='adLoaded'">
-							<view class="action padding-bottom-sm padding-top-sm flex-sub cu-btn round bg-blue solid-left" @tap="showInterstitialRewardedAd()">获取随机金币</view>
+							<view class="action padding-bottom-sm padding-top-sm flex-sub cu-btn round bg-blue solid-left" @tap="showInterstitialRewardedAd()">{{$t('credit.getrandomcoins')}}</view>
 						</view>
 					</view>
 				</view>
@@ -141,11 +141,11 @@
 				credit2: 0,
 				credit3: 0,
 				platform: 0,
-				question: "题目加载中……",
-				listA: "选项加载中",
-				listB: "选项加载中",
-				listC: "选项加载中",
-				listD: "选项加载中",
+				question: this.$t('credit.loadingsubject'),
+				listA: this.$t('credit.loadinganswers'),
+				listB: this.$t('credit.loadinganswers'),
+				listC: this.$t('credit.loadinganswers'),
+				listD: this.$t('credit.loadinganswers'),
 				sex: 0,
 				zql: 0,
 				ad: 1,
@@ -232,9 +232,9 @@
 							console.log(res.data)
 							that.guanzhupost = res.data.list;
 							if (res.data.list.length < 30) {
-								that.loading = '已经到底了！';
+								that.loading = that.$t('api.loadtoend');
 							}else{
-								that.loading = this.$t('api.loadmore');
+								that.loading = that.$t('api.loadmore');
 							}
 							if(that.page0 ==0){
 								that.credit = res.data.credit;
@@ -275,9 +275,9 @@
 								}
 							}
 							if (push.length < 30) {
-								that.loading = this.$t('api.loadtoend');
+								that.loading = that.$t('api.loadtoend');
 							}else{
-								that.loading = this.$t('api.loadmore');
+								that.loading = that.$t('api.loadmore');
 							}
 							that.page0++;
 							setTimeout(function() {
@@ -313,38 +313,38 @@
 			},
 			operation(e,f){
 				if(e=='ECU'){
-					return '每日答题'
+					return this.$t('credit.op1')
 				}else if(e=='PRC'){
-					return '帖子被打赏'
+					return this.$t('credit.op2')
 				}else if(e=='RAC'){
-					return '观看广告'
+					return this.$t('credit.op3')
 				}else if(e=='RSC'){
-					return '打赏帖子'
+					return this.$t('credit.op4')
 				}else if(e=='BMC'){
-					return '购买道具'
+					return this.$t('credit.op5')
 				}else if(e=='MRC'){
-					return '道具获取'
+					return this.$t('credit.op6')
 				}else if(f!= ''){
 					return f;
 				}
 			},
 			xiangqing(e,f,g){
 				if(e=='ECU'){
-					return '你回答了题号为' + g +'的题目给与奖励'
+					return this.$t('credit.ops1') + g +this.$t('credit.ops11')
 				}else if(e=='PRC'){
-					return '你的帖子被打赏获得奖励'
+					return this.$t('credit.ops2')
 				}else if(e=='RAC'){
-					return '你通过观看广告获得奖励'
+					return this.$t('credit.ops3')
 				}else if(e=='RSC'){
-					return '你打赏帖子花费积分'
+					return this.$t('credit.ops4')
 				}else if(e=='BMC'){
-					return '购买道具花费积分'
+					return this.$t('credit.ops5')
 				}else if(e=='MRC'){
-					return '道具随机获取积分'
+					return this.$t('credit.ops6')
 				}else if(f!= ''){
 					//console.log(f);
 					if(f=='进入每日摇摇乐大厅,完成任务摇奖即可获得奖励'){
-						return '摇奖/翻卡';
+						return this.$t('credit.ops7');
 					}else{
 						return f;
 					}
@@ -471,7 +471,7 @@
 						});
 				}else if(e=='ECU'){
 					uni.showLoading({
-						title: '题目加载中'
+						title: that.$t('credit.loadingsubject')
 					});
 						uni.request({
 							url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:question', //获取轮播列表

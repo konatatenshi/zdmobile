@@ -1646,7 +1646,7 @@
 						if(res.data.pm == 1){
 							that.pm = 1;
 						}else{
-							that.sixintxt = that.$t('home.pmn');
+							that.sixintxt = that.$t('home.pmns');
 						}
 					}
 				});

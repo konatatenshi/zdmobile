@@ -3,16 +3,16 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
 			<block slot="backText">{{$t('api.back')}}</block>
-			<block slot="content">购买头衔</block>
+			<block slot="content">{{$t('shop.buydesignation')}}</block>
 		</cu-custom>
 		<view v-if="fenleilist.length > 0" id="waterfull">
 			<view class="flex solid-bottom align-center bg-white item-img" v-for="(item,index) in fenleilist" :key="index" v-show="Number(item.price)<10000">
 				<view class="cu-item shadow flex1 cu-card case">
 					<view class="image">
 						<image class="width100" :src="item.src" @tap="more(item.src,item.title,item.price)"></image>
-						<view class="cu-tag bg-blue-trans"><text>价格{{item.price}}金币，销量{{item.sales}}</text></view>
+						<view class="cu-tag bg-blue-trans"><text>价格{{item.price}}{{$t('credit.coins')}}，销量{{item.sales}}</text></view>
 						<view class="cu-bar bg-shadeBottom"> <text class="text-cut text-center text-shadow2">{{item.title}}</text>
-						<button class="cu-btn bg-green-trans margin-left" v-if="item.ifbuy==''" @tap="gmqr(item.id,item.price,item.title)">购买</button>
+						<button class="cu-btn bg-green-trans margin-left" v-if="item.ifbuy==''" @tap="gmqr(item.id,item.price,item.title)">{{$t('shop.buyit')}}</button>
 						<button class="cu-btn bg-yellow margin-left" @tap="xiexia(item.id)" v-else-if="item.ifbuy.status==1">卸下</button>
 						<button class="cu-btn bg-red margin-left" @tap="shiyong(item.id)" v-else>使用</button>
 					</view>
@@ -30,7 +30,7 @@
 				</view>
 				<view class="padding-top-xl padding-bottom-xl">
 					<image class="width101" :src="mpsrc"></image>
-					<text class="text-red text-xl">{{goumainame}}</text><br><text class="text-blue" v-if="shengyu>=0">价格：{{shengyu}}金币</text>
+					<text class="text-red text-xl">{{goumainame}}</text><br><text class="text-blue" v-if="shengyu>=0">价格：{{shengyu}}{{$t('credit.coins')}}</text>
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
@@ -49,7 +49,7 @@
 				</view>
 				<view class="padding-xl text-brown">
 					确定购买<text class="text-red text-bold">{{goumainame}}</text>吗？<br>
-					将要花费<text class="text-red text-bold">{{goumaijiage}}</text>金币。
+					将要花费<text class="text-red text-bold">{{goumaijiage}}</text>{{$t('credit.coins')}}。
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">

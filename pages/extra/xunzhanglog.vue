@@ -3,7 +3,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
 			<block slot="backText">{{$t('api.back')}}</block>
-			<block slot="content">勋章记录</block>
+			<block slot="content">{{$t('shop.medallog')}}</block>
 		</cu-custom>
 		<scroll-view scroll-x class="nav">
 			<view class="cu-item padding-left-xl padding-right-xl"
@@ -40,20 +40,20 @@
 		</view>
 		<view class="status_bar bg-white cu-bar tabbar shadow foot" :class="'bt-'+themeColor.name">
 			<view class="action text-gray" @click="NavChange(1)">
-				<view class="cuIcon-shopfill"></view> 商城
+				<view class="cuIcon-shopfill"></view> {{$t('shop.store')}}
 			</view>
 			<view class="action text-green" @click="NavChange(2)">
-				<view class="cuIcon-punch"></view> 记录
+				<view class="cuIcon-punch"></view> {{$t('shop.log')}}
 			</view>
 			<view class="action text-gray" @click="NavChange(3)">
 				<view class="cuIcon-rank">
 				</view>
-				排行
+				{{$t('shop.rank')}}
 			</view>
 			<view class="action text-gray" @click="NavChange(4)">
 				<view class="cuIcon-my">
 				</view>
-				我的
+				{{$t('shop.mine')}}
 			</view>
 		</view>
 	</view>

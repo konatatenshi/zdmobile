@@ -3,7 +3,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
 			<block slot="backText">{{$t('api.back')}}</block>
-			<block slot="content">用户举报</block>
+			<block slot="content">{{$t('my.report')}}</block>
 			<block slot="right">
 				<view class="action">
 					<view v-if="fasong" class="cuIcon-loading2 cuIconfont-spin"></view>
@@ -12,23 +12,23 @@
 			</block>
 		</cu-custom>
 		<view class="cu-form-group cu-list grid min-ht col-1 solid-bottom">
-			<text class="text-yellow cuIcon-warn"></text><text class="margin-left-xl">你的举报内容将在24小时内受理。若举报成功将会第一时间通知您处理结果。请尽量在下列举报描述中提交完整的举报信息及材料。</text>
+			<text class="text-yellow cuIcon-warn"></text><text class="margin-left-xl">{{$t('my.reporttxt')}}</text>
 		</view>
 		<view class="cu-form-group">
-			<view class="title">选择举报原因</view>
-			<input placeholder="请选择举报原因" v-model="thread" disabled=true name="input"></input>
+			<view class="title">{{$t('my.reportreason')}}</view>
+			<input :placeholder="$t('my.reportreasons')" v-model="thread" disabled=true name="input"></input>
 			<picker @change="PickerChange" :value="index" :range="picker">
 				<view class="picker">
-					选择
+					{{$t('post.ch')}}
 				</view>
 			</picker>
 		</view>
 		<view class="cu-form-group">
-			<view class="title">被举报者用户名</view>
-			<input placeholder="默认举报人" v-model="title" disabled=true name="input"></input>
+			<view class="title">{{$t('my.reportusername')}}</view>
+			<input placeholder="default" v-model="title" disabled=true name="input"></input>
 		</view>
 		<view class="cu-form-group cu-list grid min-ht col-1 solid-bottom">
-			<text>举报描述（选填）（可插入截图）</text>
+			<text>{{$t('my.reporttext')}}</text>
 		</view>
 		<linke-ux-editor v-model="content"></linke-ux-editor>
 		<view class="margin-tb-sm text-center"><button
@@ -48,7 +48,7 @@
 				thread: '',
 				title: '',
 				platform: 0,
-				picker: ['色情低俗', '不实信息', '违法犯罪', '垃圾广告', '未成年相关', '非法集资', '侵犯名誉', '侵犯版权', '冒充他人', '涉嫌诈骗', '头像/签名违规', '其他'],
+				picker: [this.$t('my.reportpick1'),this.$t('my.reportpick2'),this.$t('my.reportpick3'),this.$t('my.reportpick4'),this.$t('my.reportpick5'),this.$t('my.reportpick6'),this.$t('my.reportpick7'),this.$t('my.reportpick8'),this.$t('my.reportpick9'),this.$t('my.reportpick10'),this.$t('my.reportpick11'),this.$t('my.reportpick12'),],
 				editable: true,
 				fasong: false
 			}
@@ -85,7 +85,7 @@
 				console.log(that.title.length);
 				if (that.index < 0 || that.index>11) {
 					uni.showToast({
-					    title: '举报内容选择错误',
+					    title: this.$t('my.feederror'),
 						icon:'none',
 					    duration: 2000
 					});
@@ -117,7 +117,7 @@
 							console.log(res.data)
 							if (res.data.code == 404) {
 								uni.showToast({
-									title: '需要登录',
+									title: that.$t('api.needlogin'),
 									icon:'none',
 									duration: 2000
 								});
@@ -130,7 +130,7 @@
 								});
 							} else {
 								uni.showToast({
-									title: '举报成功，可关闭此页面了。',
+									title: that.$t('my.successed'),
 									icon:'none',
 									duration: 2000
 								});

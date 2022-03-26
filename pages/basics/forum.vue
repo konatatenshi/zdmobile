@@ -299,7 +299,7 @@
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view v-if="closed==0" class="action">
-						<button class="cu-btn bg-green margin-left" @tap="sendjbxx">发送</button>
+						<button class="cu-btn bg-green margin-left" @tap="sendjbxx">{{$t('home.send')}}</button>
 					</view>
 				</view>
 			</view>
@@ -922,23 +922,23 @@
 					success: (res) => {
 						console.log(res.data)
 						if (res.data.code == 200) {
-							that.guanzhutext = '取消关注';
+							that.guanzhutext = that.$t('home.unfollow');
 							that.guanzhuvar = 2;
 						} else if (res.data.code == 404) {
-							that.guanzhutext = '关注作者';
+							that.guanzhutext = that.$t('home.follow');
 							that.guanzhuvar = 1;
 						} 
 						if (res.data.blacklist == 1) {
-							that.laheitext = '取消拉黑';
+							that.laheitext = that.$t('home.unblock2');
 							that.laheivar = 1;
 						}else{
-							that.laheitext = '拉黑作者';
+							that.laheitext = that.$t('home.blockauthor2');
 							that.laheivar = 0;
 						}
 						if(res.data.pm == 1){
 							that.pm = 1;
 						}else{
-							that.sixintxt = '私信作者（无权限使用）';
+							that.sixintxt = that.$t('home.pmns');
 						}
 					}
 				});
@@ -951,7 +951,7 @@
 					key: 'pingbilist',
 					data: that.pingbilist,
 					success: function() {
-						that.jifenbiandong('屏蔽取消', '你已将此作者从屏蔽列表移除');
+						that.jifenbiandong(that.$t('home.cancelblock'), that.$t('home.cancelblocktxt'));
 					}
 				});
 				setTimeout(() => {
@@ -967,7 +967,7 @@
 					key: 'pingbilist',
 					data: that.pingbilist,
 					success: function() {
-						that.jifenbiandong('屏蔽成功', '你已将此作者加入屏蔽列表');
+						that.jifenbiandong(that.$t('home.blocksuccess'), that.$t('home.blocksuccesstxt'));
 					}
 				});
 				setTimeout(() => {
@@ -1000,15 +1000,15 @@
 					success: (res) => {
 						console.log(res.data)
 						if (res.data.code == 200) {
-							that.laheitext = '取消拉黑';
+							that.laheitext = that.$t('home.unblock2');
 							that.laheivar = 1;
-							that.jifenbiandong('拉黑成功', that.pingbiauthor + '已加入黑名单');
+							that.jifenbiandong(that.$t('home.blocksuccess2'), that.pingbiauthor + that.$t('home.blocksuccesstxt2'));
 						} else if (res.data.code == 201) {
-							that.laheitext = '拉黑作者';
+							that.laheitext = that.$t('home.blockauthor2');
 							that.laheivar = 0;
-							that.jifenbiandong('拉黑取消', that.pingbiauthor + '已移除黑名单');
+							that.jifenbiandong(that.$t('home.cancelblock2'), that.pingbiauthor + that.$t('home.cancelblocktxt2'));
 						} else{
-							that.jifenbiandong('拉黑失败', res.data.message);
+							that.jifenbiandong(that.$t('home.failblock'), res.data.message);
 						}
 						that.jiazai = 0;
 						that.loadwb = 1;

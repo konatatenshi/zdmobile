@@ -22,11 +22,11 @@
 							&nbsp;
 							<view class="text-black text-sm">
 								<view class="margin-tb-sm text-center padding-right-xl" v-if="uid!=$uid"><button
-										class="padding-left-xl padding-right-xl cu-btn round bg-purple" v-if="woguanzhu==1" @tap="guanzhuta()">关注Ta</button><button
-										class="padding-left-xl padding-right-xl cu-btn round bg-purple" v-else @tap="guanzhuta()">取关Ta</button>
+										class="padding-left-xl padding-right-xl cu-btn round bg-purple" v-if="woguanzhu==1" @tap="guanzhuta()">{{$t('userpage.followhe')}}</button><button
+										class="padding-left-xl padding-right-xl cu-btn round bg-purple" v-else @tap="guanzhuta()">{{$t('userpage.unfollowhe')}}</button>
 								</view>
 								<view class="margin-tb-sm text-center padding-right-xl" v-else>
-									<button class="padding-left-xl padding-right-xl cu-btn round bg-purple" @tap="tobjsd()">名片商城</button>
+									<button class="padding-left-xl padding-right-xl cu-btn round bg-purple" @tap="tobjsd()">{{$t('userpage.cardshop')}}</button>
 								</view>
 							</view>
 						</view>
@@ -44,7 +44,7 @@
 				</view>
 				<view class="action">
 					<button class="cu-btn bg-green shadow" v-if="$adminid>0" @tap="showModal"
-						data-target="menuModal">管理按钮</button>
+						data-target="menuModal">{{$t('userpage.managebutton')}}</button>
 				</view>
 			</view>
 			<view class="margin-left-sm margin-right-sm" @tap="toxz()"><span v-if="xunzhanglist.length>0"
@@ -72,21 +72,21 @@
 						class="text-shadow1">UID:{{uid}}</text><text
 						class="margin-left-xs cuIcon-copy text-shadow1" @tap="copy(uid)"></text><text
 						class="margin-right-xs margin-left-xs cuIcon-titles" style="color: #f5f5f5;"></text><text
-						class="text-shadow1">点龄：{{age}}年</text><text class="margin-right-xs margin-left-xs cuIcon-titles"
+						class="text-shadow1">{{$t('userpage.registered')}}：{{age}}{{$t('userpage.years')}}</text><text class="margin-right-xs margin-left-xs cuIcon-titles"
 						style="color: #f5f5f5;"></text><text v-if="sex==1" class="cuIcon-male text-shadow1"></text><text v-else-if="sex==2" class="cuIcon-female text-shadow1"></text><text v-else class="cuIcon-question text-shadow1"></text></view>
 				<view class="flex justify-start padding-left-sm">
-					<view class="text-black text-content text-cut text-left text-shadow1" style="width: 75%;" v-if="sig==''">他很懒，什么都没有留下…</view>
+					<view class="text-black text-content text-cut text-left text-shadow1" style="width: 75%;" v-if="sig==''">{{$t('userpage.sigtxt')}}</view>
 					<view class="text-black text-content text-cut text-left text-shadow1" style="width: 75%;" v-else>{{sig}}</view>
-					<view class="text-right text-black text-shadow1" style="width: 25%;" v-if="uid==$uid" @tap="xiugai()">修改资料<text
+					<view class="text-right text-black text-shadow1" style="width: 25%;" v-if="uid==$uid" @tap="xiugai()">{{$t('userpage.modify')}}<text
 							class="margin-left-xs cuIcon-right"></text></view>
 				</view>
 				<view class="flex justify-start padding-left-sm padding-top-sm">
 					<view class="text-xl text-black text-bold text-shadow2">{{zan}}</view>
-					<view class="padding-left-sm padding-right-xl text-black text-shadow1">获赞</view>
+					<view class="padding-left-sm padding-right-xl text-black text-shadow1">{{$t('userpage.liked')}}</view>
 					<view class="text-xl text-black text-bold text-shadow2">{{guanzhu}}</view>
-					<view class="padding-left-xs padding-right-xl text-black text-shadow1">关注</view>
+					<view class="padding-left-xs padding-right-xl text-black text-shadow1">{{$t('userpage.followed')}}</view>
 					<view class="text-xl text-black text-bold text-shadow2">{{fensi}}</view>
-					<view class="padding-left-sm padding-right-sm text-black text-shadow1">粉丝</view>
+					<view class="padding-left-sm padding-right-sm text-black text-shadow1">{{$t('userpage.followers')}}</view>
 				</view>
 			</view>
 
@@ -94,11 +94,11 @@
 			<scroll-view scroll-x class="bg-white nav">
 				<view class="cu-item padding-left-xl padding-right-xl"
 					:class="TabCur==0?'text-black text-bold cur':'text-black'" @tap="tabSelect(0)">
-					Ta 的帖子 {{fatie}}
+					{{$t('userpage.hispost')}} {{fatie}}
 				</view>
 				<view class="cu-item padding-left-xl padding-right-xl"
 					:class="TabCur==1?'text-black text-bold cur':'text-black'" @tap="tabSelect(1)">
-					Ta 的回复 {{huitie}}
+					{{$t('userpage.hisreply')}} {{huitie}}
 				</view>
 			</scroll-view>
 
@@ -126,7 +126,7 @@
 											:class="loadlevelicon2(itemex.fid)">
 											{{itemex.bkname}}
 										</view><text class="text-sm text-gray"
-											style="padding-left: 8upx;">{{itemex.author}}&nbsp&nbsp{{itemex.replies}}评&nbsp&nbsp{{itemex.nowdate}}</text>
+											style="padding-left: 8upx;">{{itemex.author}}&nbsp&nbsp{{itemex.replies}}{{$t('home.comment')}}&nbsp&nbsp{{itemex.nowdate}}</text>
 										<img-cache v-if="itemex.img!='static/image/common/nophoto.gif'"
 											mode="aspectFill" class="gzlist3" :src="itemex.img" />
 									</view>
@@ -177,7 +177,7 @@
 											:class="loadlevelicon2(iteme2.fid)">
 											{{iteme2.bkname}}
 										</view><text class="text-sm text-gray"
-											style="padding-left: 8upx;">{{iteme2.author}}&nbsp&nbsp{{iteme2.replies}}楼&nbsp&nbsp{{iteme2.nowdate}}</text>
+											style="padding-left: 8upx;">{{iteme2.author}}&nbsp&nbsp{{iteme2.replies}}{{$t('home.floor')}}&nbsp&nbsp{{iteme2.nowdate}}</text>
 										<img-cache v-if="iteme2.img!='static/image/common/nophoto.gif'"
 											mode="aspectFill" class="gzlist3" :src="iteme2.img" />
 									</view>
@@ -217,48 +217,48 @@
 						<view class="cu-list menu text-left solid-top">
 							<view class="cu-item" v-if="isfriend">
 								<view class="content">
-									<text class="text-gray"><text class="cuIcon-roundclose"></text>解除好友</text>
+									<text class="text-gray"><text class="cuIcon-roundclose"></text>{{$t('userpage.unfriend')}}</text>
 								</view>
 							</view>
 							<view class="cu-item" v-else @tap="showaddfirend()">
 								<view class="content noborder2">
-									<text class="text-grey"><text class="cuIcon-friendadd"></text>加为好友</text>
+									<text class="text-grey"><text class="cuIcon-friendadd"></text>{{$t('userpage.addfriend')}}</text>
 								</view>
 							</view>
 							<view class="cu-item" v-if="isfriend">
 								<view class="content">
-									<text class="text-gray"><text class="cuIcon-profile"></text>设置备注</text>
+									<text class="text-gray"><text class="cuIcon-profile"></text>{{$t('userpage.setnotes')}}</text>
 								</view>
 							</view>
 							<view class="cu-item" v-if="isfriend">
 								<view class="content">
-									<text class="text-gray"><text class="cuIcon-profile"></text>设置分组</text>
+									<text class="text-gray"><text class="cuIcon-profile"></text>{{$t('userpage.addfriend')}}</text>
 								</view>
 							</view>
 							<view class="cu-item2 cu-item" v-if="!ifpingbi(username)" @tap="pingbiadd(username)">
 								<view class="content noborder2">
 									<text class="text-grey"><text
-											class="cuIcon-roundclose"></text>屏蔽作者：{{username}}</text>
-									<view class="text-gray text-sm noborder">屏蔽后，你将不会收到他的信息。</view>
+											class="cuIcon-roundclose"></text>{{$t('home.blockauthor')}}：{{username}}</text>
+									<view class="text-gray text-sm noborder">{{$t('home.blocktxt')}}</view>
 								</view>
 							</view>
 							<view class="cu-item2 cu-item" v-else @tap="pingbiremove(username)">
 								<view class="content noborder2">
 									<text class="text-grey"><text
-											class="cuIcon-roundclose"></text>取消屏蔽：{{username}}</text>
-									<view class="text-gray text-sm noborder">屏蔽后，你将不会收到他的信息。</view>
+											class="cuIcon-roundclose"></text>{{$t('home.unblock')}}：{{username}}</text>
+									<view class="text-gray text-sm noborder">{{$t('home.blocktxt')}}</view>
 								</view>
 							</view>
 							<view class="cu-item2 cu-item" @tap="lahei()">
 								<view class="content noborder2">
 									<text class="text-grey"><text
 											class="cuIcon-attentionforbid"></text>{{laheitext}}：{{username}}</text>
-									<view class="text-gray text-sm noborder">拉黑后，他将不能回复和私聊你任何信息。</view>
+									<view class="text-gray text-sm noborder">{{$t('home.blocktxt2')}}</view>
 								</view>
 							</view>
 							<view class="cu-item" @tap="jubaota()">
 								<view class="content">
-									<text class="text-grey noborder2"><text class="cuIcon-info"></text>举报此人</text>
+									<text class="text-grey noborder2"><text class="cuIcon-info"></text>{{$t('userpage.reporthe')}}</text>
 								</view>
 							</view>
 						</view>
@@ -267,7 +267,7 @@
 				<view class="cu-modal" :class="modalName=='friendadd'?'show':''"  @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
 						<view class="cu-bar bg-white justify-end">
-							<view class="content">请输入要添加好友的理由</view>
+							<view class="content">{{$t('userpage.friendreason')}}</view>
 							<view class="action" @tap="hideModal">
 								<text class="cuIcon-close text-red"></text>
 							</view>
@@ -275,33 +275,33 @@
 						<view class="padding-sm">
 							<radio-group class="block" @change="RadioChange">
 								<view class="cu-form-group">
-									<view class="text-xl">你好，很高兴认识你，能交个朋友吗？</view>
+									<view class="text-xl">{{$t('userpage.reason1')}}</view>
 									<radio :class="radio=='A'?'checked':''" :checked="radio=='A'?true:false" value="A"></radio>
 								</view>
 								<view class="cu-form-group">
-									<view class="text-xl">你的头像很漂亮，能加个好友聊聊天吗？</view>
+									<view class="text-xl">{{$t('userpage.reason2')}}</view>
 									<radio :class="radio=='B'?'checked':''" :checked="radio=='B'?true:false" value="B"></radio>
 								</view>
 								<view class="cu-form-group">
-									<view class="text-xl">今天很无聊，想找个人聊聊天，可以吗？</view>
+									<view class="text-xl">{{$t('userpage.reason3')}}</view>
 									<radio :class="radio=='C'?'checked':''" :checked="radio=='C'?true:false" value="C"></radio>
 								</view>
 								<view class="cu-form-group">
-									<view class="text-xl">一个人逛论坛好累，你是我找寻的另一个人吗？</view>
+									<view class="text-xl">{{$t('userpage.reason4')}}</view>
 									<radio :class="radio=='D'?'checked':''" :checked="radio=='D'?true:false" value="D"></radio>
 								</view>
 								<view class="cu-form-group">
-									<view class="text-xl">其他</view>
+									<view class="text-xl">{{$t('my.reportpick12')}}</view>
 									<radio :class="radio=='E'?'checked':''" :checked="radio=='E'?true:false" value="E"></radio>
 								</view>
 							</radio-group>
 							<view class="cu-form-group align-start" v-if="radio=='E'">
-								<textarea maxlength="-1" v-model="friendaddmessage" placeholder="请在此输入想要说的话"></textarea>
+								<textarea maxlength="-1" v-model="friendaddmessage" :placeholder="$t('userpage.reason5')"></textarea>
 							</view>
 						</view>
 						<view class="cu-bar bg-white justify-end">
 							<view v-if="closed==0" class="action">
-								<button class="cu-btn bg-green margin-left" @tap="sendfriendadd">发送</button>
+								<button class="cu-btn bg-green margin-left" @tap="sendfriendadd">{{$t('home.send')}}</button>
 							</view>
 						</view>
 					</view>
@@ -310,13 +310,13 @@
 				<view class="cu-modal" :class="modalName=='cantpost'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
 						<view class="cu-bar bg-white justify-end">
-							<view class="content">添加错误</view>
+							<view class="content">{{$t('userpage.adderror')}}</view>
 							<view class="action" @tap="hideModal">
 								<text class="cuIcon-close text-red"></text>
 							</view>
 						</view>
 						<view class="padding-xl">
-							错误提示：{{cantpostmessage}}
+							{{$t('userpage.adderrort')}}：{{cantpostmessage}}
 						</view>
 						<view class="cu-bar bg-white justify-end">
 							<view class="action">
@@ -355,7 +355,7 @@
 				groupid: 0,
 				iconlist: "",
 				pingbilist: [],
-				laheitext: '拉黑此人',
+				laheitext: this.$t('userpage.blockher'),
 				laheivar: 0,
 				friendaddmessage: "",
 				sex: 0,
@@ -442,20 +442,20 @@
 				console.log(that.friendaddmessage.length);
 				if (that.friendaddmessage.length < 2 && that.radio == 'E') {
 					that.modalName = "cantpost";
-					that.cantpostmessage = '请输入大于等于2个字的加好友信息。';
+					that.cantpostmessage = this.$t('userpage.m2');
 					this.floorfasong = false;
 					return;
 				}
 				if (!this.floorfasong) {
 					that.floorfasong = true;
 					if(that.radio=='A'){
-						var message = encodeURI('你好，很高兴认识你，能交个朋友吗？');
+						var message = encodeURI(this.$t('userpage.reason1'));
 					}else if(that.radio=='B'){
-						var message = encodeURI('你的头像很漂亮，能加个好友聊聊天吗？');
+						var message = encodeURI(this.$t('userpage.reason2'));
 					}else if(that.radio=='C'){
-						var message = encodeURI('今天很无聊，想找个人聊聊天，可以吗？');
+						var message = encodeURI(this.$t('userpage.reason3'));
 					}else if(that.radio=='D'){
-						var message = encodeURI('一个人逛论坛好累，你是我找寻的另一个人吗？');
+						var message = encodeURI(this.$t('userpage.reason4'));
 					}else if(that.radio=='E'){
 						var message = encodeURI(that.friendaddmessage);
 					}
@@ -483,23 +483,23 @@
 								that.cantpostmessage = res.data.result;
 							} else if (res.data.code ==403) {
 								that.modalName = "cantpost";
-								that.cantpostmessage = '你的等级不允许添加好友。';
+								that.cantpostmessage = that.$t('userpage.senderror1');
 							} else if (res.data.code ==406) {
 								that.modalName = "cantpost";
-								that.cantpostmessage = '你已发送验证请求，请等待Ta回应。';
+								that.cantpostmessage = that.$t('userpage.senderror2');
 							} else if (res.data.code ==407) {
 								that.modalName = "cantpost";
-								that.cantpostmessage = '今日你已发送太多好友请求，请明日再来。';
+								that.cantpostmessage = that.$t('userpage.senderror3');
 							} else if (res.data.code == 200) {
 								that.modalName = null;
 								uni.showToast({
-									title: '发送成功',
+									title: that.$t('userpage.sendsuccess'),
 									duration: 2000
 								})
 							} else{
 								that.modalName = null;
 								uni.showToast({
-									title: '发送失败',
+									title: that.$t('userpage.sendfail'),
 									icon: 'error',
 									duration: 2000
 								})
@@ -536,7 +536,7 @@
 							console.log(res.data.userinfo);
 							that.guanzhupost = res.data.post;
 							if (res.data.post.length < 30) {
-								that.loading = '已经到底了！';
+								that.loading = this.$t('api.loadtoend');
 							}else{
 								that.loading = this.$t('api.loadmore');
 							}
@@ -591,7 +591,7 @@
 							console.log(res.data.post);
 							that.huifupost = res.data.post;
 							if (res.data.post.length < 30) {
-								that.loading = '已经到底了！';
+								that.loading = this.$t('api.loadtoend');
 							}else{
 								that.loading = this.$t('api.loadmore');
 							}
@@ -937,15 +937,15 @@
 						if (res.data.code == 200) {
 							that.modalName = null;
 							if(that.woguanzhu==1){
-								that.jifenbiandong('关注成功', '恭喜，你已关注该作者');
+								that.jifenbiandong(that.$t('userpage.followed'), that.$t('userpage.likedtxt'));
 								that.woguanzhu = 2;
 							}else{
-								that.jifenbiandong('取关成功', '你已不再关注该作者');
+								that.jifenbiandong(that.$t('userpage.unfollowed'), that.$t('userpage.likefailedtxt'));
 								that.woguanzhu = 1;
 							}
 						} else{
 							that.modalName = null;
-							that.jifenbiandong('关注失败', '关注失败');
+							that.jifenbiandong(that.$t('userpage.followfail'), that.$t('userpage.followfail'));
 						}
 					}
 				});
@@ -973,15 +973,15 @@
 					success: (res) => {
 						console.log(res.data)
 						if (res.data.code == 200) {
-							that.laheitext = '取消拉黑';
+							that.laheitext = that.$t('home.unblock2');
 							that.laheivar = 1;
-							that.jifenbiandong('拉黑成功', that.username + '已加入黑名单');
+							that.jifenbiandong(that.$t('home.blocksuccess2'), that.pingbiauthor + that.$t('home.blocksuccesstxt2'));
 						} else if (res.data.code == 201) {
-							that.laheitext = '拉黑作者';
+							that.laheitext = that.$t('home.blockauthor2');
 							that.laheivar = 0;
-							that.jifenbiandong('拉黑取消', that.username + '已移除黑名单');
-						} else {
-							that.jifenbiandong('拉黑失败', res.data.message);
+							that.jifenbiandong(that.$t('home.cancelblock2'), that.pingbiauthor + that.$t('home.cancelblocktxt2'));
+						} else{
+							that.jifenbiandong(that.$t('home.failblock'), res.data.message);
 						}
 						that.jiazai = 0;
 						that.loadwb = 1;
@@ -999,7 +999,7 @@
 					key: 'pingbilist',
 					data: that.pingbilist,
 					success: function() {
-						that.jifenbiandong('屏蔽取消', '你已将此作者从屏蔽列表移除');
+						that.jifenbiandong(that.$t('home.cancelblock'), that.pingbiauthor + that.$t('home.cancelblocktxt'));
 					}
 				});
 				setTimeout(() => {
@@ -1020,7 +1020,7 @@
 					key: 'pingbilist',
 					data: that.pingbilist,
 					success: function() {
-						that.jifenbiandong('屏蔽成功', '你已将此作者加入屏蔽列表');
+						that.jifenbiandong(that.$t('home.blocksuccess'), that.pingbiauthor + that.$t('home.blocksuccesstxt'));
 					}
 				});
 				setTimeout(() => {
@@ -1048,6 +1048,7 @@
 			}
 		},
 		onLoad: function(option) {
+			let that = this;
 			this.uid = option.uid;
 			//this.uid = 19;
 			console.log(option.uid); //打印出上个页面传递的参数。

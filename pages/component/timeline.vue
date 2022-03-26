@@ -3,7 +3,7 @@
 	<view>
 		<cu-custom :bgColor="'bg-'+themeColor.name" :isBack="true">
 			<block slot="backText">{{$t('api.back')}}</block>
-			<block slot="content">开宝箱</block>
+			<block slot="content">{{$t('userpage.treasure')}}</block>
 		</cu-custom>
 		<web-view :src="url"></web-view>
 	</view>

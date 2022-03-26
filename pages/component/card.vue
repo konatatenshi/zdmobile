@@ -46,11 +46,11 @@
 								</span></view>
 							<view class="text-gray text-sm flex justify-start">
 								{{nowdate}}
-								<view v-if="status&128&&status&8" class="text-xs text-blue cuIcon-mobile">来自iPhone客户端
+								<view v-if="status&128&&status&8" class="text-xs text-blue cuIcon-mobile">{{$t('post.fromiphone')}}
 								</view>
 								<view v-else-if="status&256&&status&8" class="text-xs text-green cuIcon-mobile">
-									来自Android客户端</view>
-								<view v-else-if="status&8" class="text-xs text-gray cuIcon-mobile">来自手机网页版</view>
+									{{$t('post.fromandroid')}}</view>
+								<view v-else-if="status&8" class="text-xs text-gray cuIcon-mobile">{{$t('post.frommobile')}}</view>
 							</view>
 						</view>
 					</view>
@@ -59,12 +59,12 @@
 					<view v-if="content==''" class="cu-load text-gray loading"></view>
 					<view v-if="replycredit>0"
 						class="padding-xs radius shadow shadow-lg bg-yellow text-xs ltsp text-red">
-						回帖奖励还剩：{{replycredit}}金币，每人限{{membertimes}}次<text v-if="rprandom>0">，概率为{{rprandom}}%</text>。</view>
+						{{$t('post.replyreward')}}{{$t('post.replyreward')}}：{{replycredit}}{{$t('credit.coins')}}，{{$t('post.coinsleft')}}{{membertimes}}{{$t('post.times')}}<text v-if="rprandom>0">，{{$t('post.probability')}}{{rprandom}}%</text>。</view>
 					<mp-html :content="content" @linktap="linktap" selectable="true" />
 					<view v-if="jiance.type>0" class="text-center" @tap="jiancequery()">
 						<view v-if="jiance.type==1"
 							class="padding-xs radius shadow shadow-lg bg-cyan margin-top text-sm ltsp"><text
-								:class="loadModal?'cuIcon-loading2 cuIconfont-spin':''"></text>[{{jiance.time}}]网盘检测存活，失效点此
+								:class="loadModal?'cuIcon-loading2 cuIconfont-spin':''"></text>[{{jiance.time}}]{{$t('post.detection')}}
 							<view
 								class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray">
 								<view class="cu-tag line-red">{{jiance.cishu}}</view>
@@ -72,7 +72,7 @@
 						</view>
 						<view v-else-if="jiance.type==2"
 							class="padding-xs radius shadow shadow-lg bg-orange margin-top text-sm ltsp"><text
-								:class="loadModal?'cuIcon-loading2 cuIconfont-spin':''"></text>[{{jiance.time}}]百度盘失效，重检点此
+								:class="loadModal?'cuIcon-loading2 cuIconfont-spin':''"></text>[{{jiance.time}}]{{$t('post.baidu')}}{{$t('post.detectiondown')}}
 							<view
 								class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray">
 								<view class="cu-tag line-red">{{jiance.cishu}}</view>
@@ -80,7 +80,7 @@
 						</view>
 						<view v-else-if="jiance.type==3"
 							class="padding-xs radius shadow shadow-lg bg-yellow margin-top text-sm ltsp"><text
-								:class="loadModal?'cuIcon-loading2 cuIconfont-spin':''"></text>[{{jiance.time}}]Google盘失效，重检点此
+								:class="loadModal?'cuIcon-loading2 cuIconfont-spin':''"></text>[{{jiance.time}}]Google{{$t('post.detectiondown')}}
 							<view
 								class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray">
 								<view class="cu-tag line-red">{{jiance.cishu}}</view>
@@ -88,7 +88,7 @@
 						</view>
 						<view v-else-if="jiance.type==4"
 							class="padding-xs radius shadow shadow-lg bg-black margin-top text-sm ltsp"><text
-								:class="loadModal?'cuIcon-loading2 cuIconfont-spin':''"></text>[{{jiance.time}}]百度谷歌失效，重检点此
+								:class="loadModal?'cuIcon-loading2 cuIconfont-spin':''"></text>[{{jiance.time}}]{{$t('post.baidu')}},Google{{$t('post.detectiondown')}}
 							<view
 								class="margin-left-xs margin-bottom-xs padding-left-xs padding-right-xs cu-capsule bg-gray">
 								<view class="cu-tag line-red">{{jiance.cishu}}</view>
@@ -96,19 +96,19 @@
 						</view>
 						<view v-else-if="jiance.type==5"
 							class="padding-sm radius shadow shadow-lg bg-blue margin-top text-sm ltsp"><text
-								:class="loadModal?'cuIcon-loading2 cuIconfont-spin':''"></text>如链接失效请点此检测</view>
+								:class="loadModal?'cuIcon-loading2 cuIconfont-spin':''"></text>{{$t('post.detectionit')}}</view>
 					</view>
 					<view v-if="lucky>=0" class="text-center">
 						<view v-if="lucky==1"
 							class="padding-xs radius shadow shadow-lg bg-green margin-top text-xs ltsp">
-							发帖际遇：{{luckymessage}}</view>
+							{{$t('post.luckypost')}}：{{luckymessage}}</view>
 						<view v-else class="padding-xs radius shadow shadow-lg bg-red margin-top text-xs ltsp">
-							发帖际遇：{{luckymessage}}</view>
+							{{$t('post.luckypost')}}：{{luckymessage}}</view>
 					</view>
 					<view class="padding flex p-xs mb-sm text-center">
 						<view class="cu-capsule flex-sub">
 							<view class='cu-tag bg-pink padding-sm' @tap="dianzan()">
-								<text class='cuIcon-appreciatefill'>点赞</text>
+								<text class='cuIcon-appreciatefill'>{{$t('post.like')}}</text>
 							</view>
 							<view class="cu-tag line-pink padding-sm">
 								<text :class="loadModal2?'cuIcon-loading2 cuIconfont-spin':''"></text>{{ding}}
@@ -124,7 +124,7 @@
 						</view>
 						<view class="cu-capsule flex-sub" @tap="shoucang()">
 							<view class='cu-tag bg-red padding-sm'>
-								<text class='cuIcon-likefill'>收藏</text>
+								<text class='cuIcon-likefill'>{{$t('post.favorite')}}</text>
 							</view>
 							<view class="cu-tag line-red padding-sm">
 								<text :class="loadModal1?'cuIcon-loading2 cuIconfont-spin':''"></text>{{favorite}}
@@ -139,19 +139,19 @@
 						<rich-text mode='widthFix' :nodes="formatRichText(sightml)"></rich-text>
 					</view>
 				</view>
-				<scroll-view scroll-x class="nav text-center" :class="'bt-'+themeColor.name">
+				<scroll-view scroll-x class="nav text-center text-content3" :class="' bt-'+themeColor.name">
 					<view class="flex text-center">
 						<view class="cu-item flex-sub noline" :class="1==TabCur?'text-red cur':''" @tap="tabSelect" data-id="1">
-							<text :class="1==TabCur?'text-red':'text-gray'"><text class="text-lg text-black">回帖</text>{{replies}}</text>
+							<text :class="1==TabCur?'text-red':'text-gray'"><text class="text-lg text-black">{{$t('post.replies')}}</text>{{replies}}</text>
 						</view>
 						<view class="cu-item flex-sub noline" :class="2==TabCur?'text-red cur':''" @tap="tabSelect" data-id="2">
-							<text :class="2==TabCur?'text-red':'text-gray'">热门</text>
+							<text :class="2==TabCur?'text-red':'text-gray'">{{$t('post.hot')}}</text>
 						</view>
 						<view class="cu-item flex-sub noline" :class="3==TabCur?'text-red cur':''" @tap="tabSelect" data-id="3">
-							<text :class="3==TabCur?'text-red':'text-gray'">正序</text>
+							<text :class="3==TabCur?'text-red':'text-gray'">{{$t('post.ascending')}}</text>
 						</view>
 						<view class="cu-item flex-sub noline" :class="4==TabCur?'text-red cur':''" @tap="tabSelect" data-id="4">
-							<text :class="4==TabCur?'text-red':'text-gray'">倒序</text>
+							<text :class="4==TabCur?'text-red':'text-gray'">{{$t('post.descending')}}</text>
 						</view>
 					</view>
 				</scroll-view>
@@ -180,19 +180,19 @@
 										</img-cache>
 									</span>
 								</view>
-								<view v-show="item.dateline!='刚刚'" class="text-grey text-sm">{{item.position}}楼</view>
+								<view v-show="item.dateline!=$t('post.justnow')" class="text-grey text-sm">{{item.position}}{{$t('home.floor')}}</view>
 							</view>
 							<view class="flex justify-start">
 								<view class="text-gray text-sm">{{item.dateline}}</view>
 								<view v-if="item.status&128&&item.status&8" class="text-xs text-blue cuIcon-mobile">
-									来自iPhone客户端</view>
+									{{$t('post.fromiphone')}}</view>
 								<view v-else-if="item.status&256&&item.status&8"
-									class="text-xs text-green cuIcon-mobile">来自Android客户端</view>
-								<view v-else-if="item.status&8" class="text-xs text-gray cuIcon-mobile">来自手机网页版</view>
+									class="text-xs text-green cuIcon-mobile">{{$t('post.fromandroid')}}</view>
+								<view v-else-if="item.status&8" class="text-xs text-gray cuIcon-mobile">{{$t('post.frommobile')}}</view>
 							</view>
 							<view v-if="item.replycredit>0"
 								class="padding-xs radius shadow shadow-lg bg-yellow text-xs ltsp text-red">
-								回帖奖励： +{{item.replycredit}}金币</view>
+								{{$t('post.replyreward')}}： +{{item.replycredit}}{{$t('credit.coins')}}</view>
 							<mp-html v-if="item.status&1" class="text-content text-df float"
 								:class="isfloat[index]?'show':'hide'" :content="pingbi" @linktap="linktap"
 								selectable="true" />
@@ -202,13 +202,13 @@
 							<mp-html v-else class="text-content text-df float" :class="isfloat[index]?'show':'hide'"
 								:content="(mphtmlis(1) + item.html + mphtmlis(2))" @linktap="linktap" selectable="true" />
 							<view class="text-blue" v-if="Letter(item.html).length>70&&isfloat[index]!= true"
-								@tap="loadmore(index)">展开</view>
+								@tap="loadmore(index)">{{$t('post.expand')}}</view>
 							<view v-if="item.luckypost.key>=0" class="text-center">
 								<view v-if="item.luckypost.key==1"
 									class="padding-xs radius shadow shadow-lg bg-green margin-top text-xs ltsp">
-									发帖际遇：{{item.luckypost.msg}}</view>
+									{{$t('post.luckypost')}}：{{item.luckypost.msg}}</view>
 								<view v-else class="padding-xs radius shadow shadow-lg bg-red margin-top text-xs ltsp">
-									发帖际遇：{{item.luckypost.msg}}</view>
+									{{$t('post.luckypost')}}：{{item.luckypost.msg}}</view>
 							</view>
 							<view class="margin-top-sm flex justify-between">
 								<view v-if="animation[index]">
@@ -235,7 +235,7 @@
 										@tap="more2(item.authorid,item.author,item.pid)"></text>
 								</view>
 							</view>
-							<view v-if="item.reply>0" class="bg-gray padding-sm radius margin-top-sm  text-sm">
+							<view v-if="item.reply>0" class="bg-gray padding-sm radius margin-top-sm  text-sm text-content3" :class="' bt-'+themeColor.name">
 								<view class="flex" v-for="(rpitem,rpindex) in item.floor" :key="'b' + rpindex"
 									:data-id="rpindex">
 									<rich-text class="flex-sub float2 hide" :nodes="rpitem.content"
@@ -248,11 +248,11 @@
 									</rich-text>
 								</view>
 								<view class="flex text-blue" v-if="item.reply>5&&jiazaiwanbi[index]!=1&&jiazai==0"
-									@tap="loadfloor(item.pid,index)">共
-									{{item.reply}} 条回复<text class="cuIcon-right"></text>
+									@tap="loadfloor(item.pid,index)">{{$t('post.total')}}
+									{{item.reply}} {{$t('post.total2')}}<text class="cuIcon-right"></text>
 								</view>
 								<view class="flex text-blue" v-else-if="item.reply>5&&jiazaiwanbi[index]!=1&&jiazai==1">
-									加载中<text class="cuIcon-right"></text>
+									{{$t('api.loading')}}<text class="cuIcon-right"></text>
 								</view>
 							</view>
 						</view>
@@ -260,7 +260,7 @@
 				</view>
 				<view>
 					<block>
-						<view class="padding-xs flex align-center bg-gray">
+						<view class="padding-xs flex align-center text-content3" :class="'bt-'+themeColor.name">
 							<view class="flex-sub text-center">
 								<view class="text-xs padding">
 									<text class="text-black">{{loading}}</text>
@@ -293,7 +293,7 @@
 						<view class="cu-list menu text-left solid-top">
 							<view class="cu-item" v-if="authorid==$uid">
 								<view class="content noborder2">
-									<text class="text-gray"><text class="cuIcon-attention"></text>关注自己</text>
+									<text class="text-gray"><text class="cuIcon-attention"></text>{{$t('post.gzself')}}</text>
 								</view>
 							</view>
 							<view class="cu-item" v-else @tap="guanzhu()">
@@ -303,7 +303,7 @@
 							</view>
 							<view v-if="pm==1" class="cu-item" @tap="siliaozuozhe">
 								<view class="content">
-									<text class="text-grey"><text class="cuIcon-mark"></text>私信作者</text>
+									<text class="text-grey"><text class="cuIcon-mark"></text>{{$t('home.pmn')}}</text>
 								</view>
 							</view>
 							<view v-else class="cu-item">
@@ -313,22 +313,22 @@
 							</view>
 							<view class="cu-item" @tap="totheuid(authorid)">
 								<view class="content">
-									<text class="text-grey"><text class="cuIcon-form"></text>查看资料</text>
+									<text class="text-grey"><text class="cuIcon-form"></text>{{$t('post.viewdetails')}}</text>
 								</view>
 							</view>
 							<view class="cu-item" @tap="jubaota(jubaopid)">
 								<view class="content">
-									<text class="text-grey"><text class="cuIcon-info"></text>举报此帖</text>
+									<text class="text-grey"><text class="cuIcon-info"></text>{{$t('post.reportit')}}</text>
 								</view>
 							</view>
 							<view class="cu-item" v-if="authorid==$uid" @tap="editpost()">
 								<view class="content">
-									<text class="text-grey"><text class="cuIcon-edit"></text>编辑此帖</text>
+									<text class="text-grey"><text class="cuIcon-edit"></text>{{$t('post.editit')}}</text>
 								</view>
 							</view>
 							<view class="cu-item" @tap="copy()">
 								<view class="content">
-									<text class="text-grey"><text class="cuIcon-link"></text>复制URL地址</text>
+									<text class="text-grey"><text class="cuIcon-link"></text>{{$t('post.copyurl')}}</text>
 								</view>
 							</view>
 						</view>
@@ -339,38 +339,38 @@
 						<view class="cu-list menu text-left solid-top">
 							<view class="cu-item" v-if="pingbiauthor==$username">
 								<view class="content">
-									<text class="text-gray"><text class="cuIcon-roundclose"></text>屏蔽自己</text>
+									<text class="text-gray"><text class="cuIcon-roundclose"></text>{{$t('home.blockself')}}</text>
 								</view>
 							</view>
 							<view class="cu-item" v-else-if="!ifpingbi(pingbiauthor)" @tap="pingbiadd(pingbiauthor)">
 								<view class="content noborder2">
 									<text class="text-grey"><text
-											class="cuIcon-roundclose"></text>屏蔽作者：{{pingbiauthor}}</text>
-									<view class="text-gray text-sm noborder">屏蔽后，你将不会收到他的信息。</view>
+											class="cuIcon-roundclose"></text>{{$t('home.blockauthor')}}：{{pingbiauthor}}</text>
+									<view class="text-gray text-sm noborder">{{$t('home.blocktxt')}}</view>
 								</view>
 							</view>
 							<view class="cu-item" v-else @tap="pingbiremove(pingbiauthor)">
 								<view class="content noborder2">
 									<text class="text-grey"><text
-											class="cuIcon-roundclose"></text>取消屏蔽：{{pingbiauthor}}</text>
-									<view class="text-gray text-sm noborder">屏蔽后，你将不会收到他的信息。</view>
+											class="cuIcon-roundclose"></text>{{$t('home.cancelblock')}}：{{pingbiauthor}}</text>
+									<view class="text-gray text-sm noborder">{{$t('home.blocktxt')}}</view>
 								</view>
 							</view>
 							<view class="cu-item" v-if="pingbiauthor==$username">
 								<view class="content">
-									<text class="text-gray"><text class="cuIcon-attentionforbid"></text>拉黑自己</text>
+									<text class="text-gray"><text class="cuIcon-attentionforbid"></text>{{$t('home.blockself2')}}</text>
 								</view>
 							</view>
 							<view class="cu-item" v-else @tap="lahei()">
 								<view class="content noborder2">
 									<text class="text-grey"><text
 											class="cuIcon-attentionforbid"></text>{{laheitext}}：{{pingbiauthor}}</text>
-									<view class="text-gray text-sm noborder">拉黑后，他将不能回复和私聊你任何信息。</view>
+									<view class="text-gray text-sm noborder">{{$t('home.blocktxt2')}}</view>
 								</view>
 							</view>
 							<view v-if="pm==1&&jubaopid!=pid" class="cu-item" @tap="siliaozuozhe2">
 								<view class="content">
-									<text class="text-grey"><text class="cuIcon-mark"></text>私信作者</text>
+									<text class="text-grey"><text class="cuIcon-mark"></text>{{$t('home.pmn')}}</text>
 								</view>
 							</view>
 							<view v-else-if="jubaopid!=pid" class="cu-item">
@@ -380,13 +380,13 @@
 							</view>
 							<view class="cu-item" v-if="pingbiuid == 0&& jubaopid!=pid" @tap="totheuid(pingbiuid)">
 								<view class="content">
-									<text class="text-grey"><text class="cuIcon-form"></text>查看资料</text>
+									<text class="text-grey"><text class="cuIcon-form"></text>{{$t('post.viewdetails')}}</text>
 								</view>
 							</view>
 							<view class="cu-item" @tap="jubaota(jubaopid)" v-if="jubaopid!=pid">
 								<view class="content">
-									<text class="text-grey noborder2"><text class="cuIcon-info"></text>举报此回复</text>
-									<view class="text-gray text-sm noborder">标题夸张，内容质量差等。</view>
+									<text class="text-grey noborder2"><text class="cuIcon-info"></text>{{$t('post.reportit2')}}</text>
+									<view class="text-gray text-sm noborder">{{$t('home.reporttxt')}}</view>
 								</view>
 							</view>
 						</view>
@@ -395,13 +395,13 @@
 				<view class="cu-modal" :class="modalName=='cantview'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
 						<view class="cu-bar bg-white justify-end">
-							<view class="content">权限不足</view>
+							<view class="content">{{$t('post.permissionsdenied')}}</view>
 							<view class="action" @tap="hideModal">
 								<text class="cuIcon-close text-red"></text>
 							</view>
 						</view>
 						<view class="padding-xl">
-							无法进入帖子，错误提示：{{cantviewmessage}}
+							{{$t('post.permissionsdeniedtxt')}}：{{cantviewmessage}}
 						</view>
 						<view class="cu-bar bg-white justify-end">
 							<view class="action">
@@ -413,13 +413,13 @@
 				<view class="cu-modal" :class="modalName=='cantpost'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
 						<view class="cu-bar bg-white justify-end">
-							<view class="content">回帖错误</view>
+							<view class="content">{{$t('post.replyerror')}}</view>
 							<view class="action" @tap="hideModal">
 								<text class="cuIcon-close text-red"></text>
 							</view>
 						</view>
 						<view class="padding-xl">
-							无法回帖，错误提示：{{cantpostmessage}}
+							{{$t('post.replyerrortxt')}}：{{cantpostmessage}}
 						</view>
 						<view class="cu-bar bg-white justify-end">
 							<view class="action">
@@ -431,26 +431,26 @@
 				<view class="cu-modal" :class="modalName=='testpan'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
 						<view class="cu-bar bg-white justify-end">
-							<view class="content">帖子检测</view>
+							<view class="content">{{$t('post.checkdisk')}}</view>
 							<view class="action" @tap="hideModal">
 								<text class="cuIcon-close text-red"></text>
 							</view>
 						</view>
 						<view class="padding-xl">
-							请选择你需要检测的网盘。
+							{{$t('post.checkdisktxt')}}
 						</view>
 						<view class="cu-bar bg-white justify-end">
 							<view class="action">
-								<button class="cu-btn bg-green margin-left" @tap="jiancequery2()">百度</button>
-								<button disabled class="cu-btn bg-blue margin-left" @tap="">谷歌</button>
-								<button disabled class="cu-btn bg-cyan margin-left" @tap="">测试</button>
+								<button class="cu-btn bg-green margin-left" @tap="jiancequery2()">{{$t('post.baidu')}}</button>
+								<button disabled class="cu-btn bg-blue margin-left" @tap="">{{$t('post.google')}}</button>
+								<button disabled class="cu-btn bg-cyan margin-left" @tap="">{{$t('post.test')}}</button>
 							</view>
 						</view>
 						<view class="cu-bar bg-white justify-end">
 							<view class="action">
-								<button disabled class="cu-btn bg-yellow margin-left" @tap="">微云</button>
-								<button disabled class="cu-btn bg-purple margin-left" @tap="">微软</button>
-								<button disabled class="cu-btn bg-pink margin-left" @tap="">直连</button>
+								<button disabled class="cu-btn bg-yellow margin-left" @tap="">{{$t('post.weiyun')}}</button>
+								<button disabled class="cu-btn bg-purple margin-left" @tap="">{{$t('post.microsoft')}}</button>
+								<button disabled class="cu-btn bg-pink margin-left" @tap="">{{$t('post.direct')}}</button>
 							</view>
 						</view>
 					</view>
@@ -458,25 +458,25 @@
 				<view class="cu-load load-modal" v-if="loadModal==100">
 					<!-- <view class="cuIcon-emojifill text-orange"></view> -->
 					<image src="../../static/img/loadzd.gif" style="border-radius: 50%;" mode="aspectFit"></image>
-					<view class="gray-text">检测中...</view>
+					<view class="gray-text">{{$t('post.checking')}}</view>
 				</view>
 				<view class="cu-modal" :class="modalName=='floorpost'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
 						<view class="cu-bar bg-white justify-end">
-							<view class="content">楼中楼回复</view>
+							<view class="content">{{$t('post.floorreply')}}</view>
 							<view class="action" @tap="hideModal">
 								<text class="cuIcon-close text-red"></text>
 							</view>
 						</view>
 						<view class="padding-xl">
 							<view class="cu-form-group align-start">
-								<textarea maxlength="-1" v-model="floorhuifu" placeholder="请在此输入想要说的话"></textarea>
+								<textarea maxlength="-1" v-model="floorhuifu" :placeholder="$t('home.reporttxt')"></textarea>
 								<text class="cuIcon-emojifill text-grey" @tap="togglePicker(200, 'emoji')"></text>
 							</view>
 						</view>
 						<view class="cu-bar bg-white justify-end">
 							<view v-if="closed==0" class="action">
-								<button class="cu-btn bg-green margin-left" @tap="sendfloor">发送</button>
+								<button class="cu-btn bg-green margin-left" @tap="sendfloor">{{$t('home.send')}}</button>
 							</view>
 						</view>
 					</view>
@@ -484,20 +484,20 @@
 				<view class="cu-modal" :class="modalName=='siliao'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
 						<view class="cu-bar bg-white justify-end">
-							<view class="content">私聊给{{postup}}</view>
+							<view class="content">{{$t('post.pmto')}}{{postup}}</view>
 							<view class="action" @tap="hideModal">
 								<text class="cuIcon-close text-red"></text>
 							</view>
 						</view>
 						<view class="padding-xl">
 							<view class="cu-form-group align-start">
-								<textarea maxlength="-1" v-model="siliaotxt" placeholder="请在此输入想要说的话"></textarea>
+								<textarea maxlength="-1" v-model="siliaotxt" :placeholder="$t('home.reporttxt')"></textarea>
 								<text class="cuIcon-emojifill text-grey" @tap="togglePicker(200, 'emoji')"></text>
 							</view>
 						</view>
 						<view class="cu-bar bg-white justify-end">
 							<view v-if="closed==0" class="action">
-								<button class="cu-btn bg-green margin-left" @tap="sendsl">发送</button>
+								<button class="cu-btn bg-green margin-left" @tap="sendsl">{{$t('home.send')}}</button>
 							</view>
 						</view>
 					</view>
@@ -505,20 +505,20 @@
 				<view class="cu-modal" :class="modalName=='siliao2'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
 						<view class="cu-bar bg-white justify-end">
-							<view class="content">私聊给{{pingbiauthor}}</view>
+							<view class="content">{{$t('post.pmto')}}{{pingbiauthor}}</view>
 							<view class="action" @tap="hideModal">
 								<text class="cuIcon-close text-red"></text>
 							</view>
 						</view>
 						<view class="padding-xl">
 							<view class="cu-form-group align-start">
-								<textarea maxlength="-1" v-model="siliaotxt" placeholder="请在此输入想要说的话"></textarea>
+								<textarea maxlength="-1" v-model="siliaotxt" :placeholder="$t('home.reporttxt')"></textarea>
 								<text class="cuIcon-emojifill text-grey" @tap="togglePicker(200, 'emoji')"></text>
 							</view>
 						</view>
 						<view class="cu-bar bg-white justify-end">
 							<view v-if="closed==0" class="action">
-								<button class="cu-btn bg-green margin-left" @tap="sendsl2">发送</button>
+								<button class="cu-btn bg-green margin-left" @tap="sendsl2">{{$t('home.send')}}</button>
 							</view>
 						</view>
 					</view>
@@ -526,7 +526,7 @@
 				<view class="cu-modal" :class="modalName=='jubaoxinxi'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
 						<view class="cu-bar bg-white justify-end">
-							<view class="content">请输入举报理由</view>
+							<view class="content">{{$t('home.reportreason')}}</view>
 							<view class="action" @tap="hideModal">
 								<text class="cuIcon-close text-red"></text>
 							</view>
@@ -534,38 +534,38 @@
 						<view class="padding-sm">
 							<radio-group class="block" @change="RadioChange">
 								<view class="cu-form-group">
-									<view class="text-xl">广告垃圾</view>
+									<view class="text-xl">{{$t('home.ad')}}</view>
 									<radio :class="radio=='A'?'checked':''" :checked="radio=='A'?true:false" value="A">
 									</radio>
 								</view>
 								<view class="cu-form-group">
-									<view class="text-xl">违规内容</view>
+									<view class="text-xl">{{$t('home.illegal')}}</view>
 									<radio :class="radio=='B'?'checked':''" :checked="radio=='B'?true:false" value="B">
 									</radio>
 								</view>
 								<view class="cu-form-group">
-									<view class="text-xl">恶意灌水</view>
+									<view class="text-xl">{{$t('home.bump')}}</view>
 									<radio :class="radio=='C'?'checked':''" :checked="radio=='C'?true:false" value="C">
 									</radio>
 								</view>
 								<view class="cu-form-group">
-									<view class="text-xl">重复内容</view>
+									<view class="text-xl">{{$t('home.dump')}}</view>
 									<radio :class="radio=='D'?'checked':''" :checked="radio=='D'?true:false" value="D">
 									</radio>
 								</view>
 								<view class="cu-form-group">
-									<view class="text-xl">其他</view>
+									<view class="text-xl">{{$t('home.other')}}</view>
 									<radio :class="radio=='E'?'checked':''" :checked="radio=='E'?true:false" value="E">
 									</radio>
 								</view>
 							</radio-group>
 							<view class="cu-form-group align-start" v-if="radio=='E'">
-								<textarea maxlength="-1" v-model="jubaomessage" placeholder="请在此输入想要说的话"></textarea>
+								<textarea maxlength="-1" v-model="jubaomessage" :placeholder="$t('home.reporttxt')"></textarea>
 							</view>
 						</view>
 						<view class="cu-bar bg-white justify-end">
 							<view v-if="closed==0" class="action">
-								<button class="cu-btn bg-green margin-left" @tap="sendjbxx">发送</button>
+								<button class="cu-btn bg-green margin-left" @tap="sendjbxx">{{$t('home.send')}}</button>
 							</view>
 						</view>
 					</view>
@@ -573,8 +573,8 @@
 				<view class="cu-modal" :class="modalName=='dashang'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
 						<view class="cu-bar bg-white justify-end">
-							<view class="content" v-if="platform==2">请输入打赏金币的数目</view>
-							<view class="content" v-else>请输入评价积分的数量</view>
+							<view class="content" v-if="platform==2">{{$t('post.dashang1')}}</view>
+							<view class="content" v-else>{{$t('post.dashang2')}}</view>
 							<view class="action" @tap="hideModal">
 								<text class="cuIcon-close text-red"></text>
 							</view>
@@ -585,15 +585,15 @@
 								<input :placeholder="tishi" v-model="dashangjinbi" name="input" type="number"></input>
 								<picker @change="PickerChange" :value="index" :range="picker">
 									<view class="picker">
-										选择金币
+										{{$t('post.xzcoin')}}
 									</view>
 								</picker>
 							</view>
 							<view class="cu-form-group margin-top">
-								<input placeholder="可输入评分理由" v-model="pingfenliyou" name="liyou"></input>
+								<input :placeholder="$t('post.pfreason')" v-model="pingfenliyou" name="liyou"></input>
 							</view>
 							<view class="cu-form-group margin-top">
-								<text class='cuIcon-notificationfill text-cyan'>通知作者</text>
+								<text class='cuIcon-notificationfill text-cyan'>{{$t('post.notifyauthor')}}</text>
 								<switch @change="sendpfnofi" :class="sendpfno?'checked':''"
 									:checked="sendpfno?true:false"></switch>
 							</view>
@@ -609,13 +609,13 @@
 				<view class="cu-modal" :class="modalName=='postnew'?'show':''" @tap="hideModal">
 					<view class="cu-dialog" @tap.stop>
 						<view class="cu-bar bg-white justify-end">
-							<view class="content">发表回复成功</view>
+							<view class="content">{{$t('post.replysuccess')}}</view>
 							<view class="action" @tap="hideModal">
 								<text class="cuIcon-close text-red"></text>
 							</view>
 						</view>
 						<view class="padding-xl">
-							发表错误成功，请点击确定刷新帖子。
+							{{$t('post.replysuccesstxt')}}
 						</view>
 						<view class="cu-bar bg-white justify-end">
 							<view class="action">
@@ -634,8 +634,8 @@
 							</sliding-image-verification>
 						</view>
 						<view class="padding-xl">
-							请左右滑动上图的滑块来完成拼图以便认证真人操作。
-							<button class="cu-btn bg-green margin-left" @tap="reshow()">重置</button>
+							{{$t('post.yz')}}
+							<button class="cu-btn bg-green margin-left" @tap="reshow()">{{$t('extra.reset')}}</button>
 						</view>
 					</view>
 				</view>
@@ -649,7 +649,7 @@
 				<view class="cu-modal" :class="showEmoji?'show':''" @tap.prevent.stop="">
 					<view class="cu-dialog">
 						<view class="cu-bar bg-white justify-end">
-							<view class="content">请选择表情</view>
+							<view class="content">{{$t('post.emoji')}}</view>
 							<view class="action" @tap="closeemoji">
 								<text class="cuIcon-close text-red"></text>
 							</view>
@@ -682,9 +682,9 @@
 				</uni-section>
 			</view>
 			<button v-if="closed==0&&yzm==1" @tap="showVaptcha" class="cu-btn bg-green shadow"><text
-					class="cuIconfont-spin" :class="fasong?'cuIcon-loading2':''"></text>发送</button>
+					class="cuIconfont-spin" :class="fasong?'cuIcon-loading2':''"></text>{{$t('home.send')}}</button>
 			<button v-else-if="closed==0" @tap="sendmessage" class="cu-btn bg-green shadow"><text
-					class="cuIconfont-spin" :class="fasong?'cuIcon-loading2':''"></text>发送</button>
+					class="cuIconfont-spin" :class="fasong?'cuIcon-loading2':''"></text>{{$t('home.send')}}</button>
 		</view>
 		<!--表情-->
 		<!--附件-->
@@ -719,8 +719,8 @@
 			return {
 				isCard: false,
 				sendpfno: false,
-				dashangtext: '评价',
-				postname: '加载中',
+				dashangtext: this.$t('post.evaluate'),
+				postname: this.$t('api.loading'),
 				imageStyles:{
 					width:40,
 					height:40,
@@ -737,17 +737,17 @@
 				floorhuifu: '',
 				siliaotxt: '',
 				content: '',
-				sixintxt: '私信作者',
+				sixintxt: this.$t('home.pmn'),
 				pingbiauthor: '',
 				pingbiuid: 0,
 				dashangjinbi: '',
 				picker: [],
-				postup: '加载中',
-				tishi: '输入金币数目',
-				nowdate: '加载中',
+				postup: this.$t('api.loading'),
+				tishi: this.$t('post.coinnumber'),
+				nowdate: this.$t('api.loading'),
 				jifenbiangeng: '积分名+1',
 				jifenshuoming: '积分变更',
-				pingbi: '<div style=\"overflow: hidden;border: 1px dashed #FF9A9A;margin: 8px 0;padding: 10px;zoom: 1;\">此帖因违规被屏蔽，不可见。</div>',
+				pingbi: '<div style=\"overflow: hidden;border: 1px dashed #FF9A9A;margin: 8px 0;padding: 10px;zoom: 1;\">' + this.$t('post.ille') + '</div>',
 				cantviewmessage: '',
 				cantpostmessage: '',
 				replykey: '',
@@ -801,14 +801,14 @@
 				pm: 0,
 				fresh: 0,
 				laheivar: 0,
-				laheitext: '拉黑作者',
+				laheitext: this.$t('home.blockauthor2'),
 				jiazaiwanbi: [],
 				InputBottom: 0,
 				randomunmber: 0,
 				platform: 0,
 				loadwb: 0,
 				csss: 0,
-				guanzhutext: '关注作者',
+				guanzhutext: this.$t('home.follow'),
 				jubaomessage: '',
 				guanzhuvar: 1,
 				huifulist: [],
@@ -819,7 +819,7 @@
 				isfloats: false,
 				modalName: null,
 				isShowVaptcha: false,
-				loading: "上拉可加载更多回复",
+				loading: this.$t('api.loadmore'),
 				animation: [],
 				dianzannumber: [],
 				avatarlist: '../../static/avatar.jpg',
@@ -889,16 +889,16 @@
 					success: (res) => {
 						console.log(res.data)
 						if (res.data.code == 200) {
-							that.guanzhutext = '取消关注';
+							that.guanzhutext = that.$t('home.unfollow');
 							that.guanzhuvar = 2;
 						} else if (res.data.code == 404) {
-							that.guanzhutext = '关注作者';
+							that.guanzhutext = that.$t('home.follow');
 							that.guanzhuvar = 1;
 						}
 						if (res.data.pm == 1) {
 							that.pm = 1;
 						} else {
-							that.sixintxt = '私信作者（无权限使用）';
+							that.sixintxt = that.$t('home.pmns');
 						}
 						that.jiazai = 0;
 						that.loadwb = 1;
@@ -913,7 +913,7 @@
 					key: 'pingbilist',
 					data: that.pingbilist,
 					success: function() {
-						that.jifenbiandong('屏蔽取消', '你已将此作者从屏蔽列表移除');
+						that.jifenbiandong(that.$t('home.cancelblock'), that.$t('home.cancelblocktxt'));
 					}
 				});
 				setTimeout(() => {
@@ -929,7 +929,7 @@
 					key: 'pingbilist',
 					data: that.pingbilist,
 					success: function() {
-						that.jifenbiandong('屏蔽成功', '你已将此作者加入屏蔽列表');
+						that.jifenbiandong(that.$t('home.blocksuccess'), that.$t('home.blocksuccesstxt'));
 					}
 				});
 				setTimeout(() => {
@@ -967,23 +967,23 @@
 					success: (res) => {
 						console.log(res.data)
 						if (res.data.code == 200) {
-							that.guanzhutext = '取消关注';
+							that.guanzhutext = that.$t('home.unfollow');
 							that.guanzhuvar = 2;
 						} else if (res.data.code == 404) {
-							that.guanzhutext = '关注作者';
+							that.guanzhutext = that.$t('home.follow');
 							that.guanzhuvar = 1;
-						}
+						} 
 						if (res.data.blacklist == 1) {
-							that.laheitext = '取消拉黑';
+							that.laheitext = that.$t('home.unblock2');
 							that.laheivar = 1;
-						} else {
-							that.laheitext = '拉黑作者';
+						}else{
+							that.laheitext = that.$t('home.blockauthor2');
 							that.laheivar = 0;
 						}
-						if (res.data.pm == 1) {
+						if(res.data.pm == 1){
 							that.pm = 1;
-						} else {
-							that.sixintxt = '私信作者（无权限使用）';
+						}else{
+							that.sixintxt = that.$t('home.pmns');
 						}
 						that.jiazai = 0;
 						that.loadwb = 1;
@@ -1010,13 +1010,13 @@
 						if (res.data.code == 200) {
 							that.modalName = null;
 							if (that.guanzhuvar == 1) {
-								that.jifenbiandong('关注成功', '恭喜，你已关注该作者');
+								that.jifenbiandong(that.$t('userpage.followed'), that.$t('userpage.likedtxt'));
 							} else {
-								that.jifenbiandong('取关成功', '你已不再关注该作者');
+								that.jifenbiandong(that.$t('userpage.unfollowed'), that.$t('userpage.likefailedtxt'));
 							}
 						} else {
 							that.modalName = null;
-							that.jifenbiandong('关注失败', '关注失败');
+							that.jifenbiandong(that.$t('userpage.followfail'), that.$t('userpage.followfail'));
 						}
 						that.jiazai = 0;
 						that.loadwb = 1;
@@ -1041,15 +1041,15 @@
 					success: (res) => {
 						console.log(res.data)
 						if (res.data.code == 200) {
-							that.laheitext = '取消拉黑';
+							that.laheitext = that.$t('home.unblock2');
 							that.laheivar = 1;
-							that.jifenbiandong('拉黑成功', that.pingbiauthor + '已加入黑名单');
+							that.jifenbiandong(that.$t('home.blocksuccess2'), that.pingbiauthor + that.$t('home.blocksuccesstxt2'));
 						} else if (res.data.code == 201) {
-							that.laheitext = '拉黑作者';
+							that.laheitext = that.$t('home.blockauthor2');
 							that.laheivar = 0;
-							that.jifenbiandong('拉黑取消', that.pingbiauthor + '已移除黑名单');
-						} else {
-							that.jifenbiandong('拉黑失败', res.data.message);
+							that.jifenbiandong(that.$t('home.cancelblock2'), that.pingbiauthor + that.$t('home.cancelblocktxt2'));
+						} else{
+							that.jifenbiandong(that.$t('home.failblock'), res.data.message);
 						}
 						that.jiazai = 0;
 						that.loadwb = 1;
@@ -1182,17 +1182,17 @@
 					success: (res) => {
 						console.log(res.data)
 						if (res.data.code == 200) {
-							that.jifenbiandong('网盘检测', '恭喜，该链接有效');
+							that.jifenbiandong(that.$t('post.wpjc'), that.$t('post.detection1'));
 							that.loadthread(that.tid);
 						} else if (res.data.code == 400) {
-							that.jifenbiandong('网盘检测', '该链接检测已失效');
+							that.jifenbiandong(that.$t('post.wpjc'), that.$t('post.detection2'));
 							that.loadthread(that.tid);
 						} else if (res.data.code == 500) {
-							that.jifenbiandong('网盘检测', '检测频率过快，稍后再试');
+							that.jifenbiandong(that.$t('post.wpjc'), that.$t('post.detection3'));
 						} else if (res.data.code == 301) {
-							that.jifenbiandong('网盘检测', '只能作者或管理员验证');
+							that.jifenbiandong(that.$t('post.wpjc'), that.$t('post.detection4'));
 						} else {
-							that.jifenbiandong('网盘检测', '功能错误');
+							that.jifenbiandong(that.$t('post.wpjc'), that.$t('post.detection5'));
 						}
 						that.loadModal = false;
 					}
@@ -1220,13 +1220,13 @@
 					success: (res) => {
 						console.log(res.data)
 						if (res.data.code == 200) {
-							that.jifenbiandong('收藏成功', '已经加进您的收藏夹');
+							that.jifenbiandong(that.$t('post.fsuccess'), that.$t('post.fsuccesstxt'));
 							that.favorite = parseInt(that.favorite) + 1;
 						} else if (res.data.code == 404) {
-							that.jifenbiandong('收藏失败', '帖子不存在');
+							that.jifenbiandong(that.$t('post.ffail'), that.$t('post.ffailtxt1'));
 							that.loadthread(that.tid);
 						} else if (res.data.code == 202) {
-							that.jifenbiandong('收藏失败', '您已经收藏了此帖子');
+							that.jifenbiandong(that.$t('post.ffail'), that.$t('post.ffailtxt2'));
 						}
 						that.loadModal1 = false;
 					}
@@ -1264,15 +1264,15 @@
 					success: (res) => {
 						console.log(res.data)
 						if (res.data.code == 200) {
-							that.jifenbiandong('点赞成功', '此帖支持度+1');
+							that.jifenbiandong(that.$t('post.liked'), that.$t('post.liketxt1'));
 							that.ding = parseInt(that.ding) + 1;
 						} else if (res.data.code == 404) {
-							that.jifenbiandong('点赞失败', '帖子不存在');
+							that.jifenbiandong(that.$t('post.unliked'), that.$t('post.liketxt2'));
 							that.loadthread(that.tid);
 						} else if (res.data.code == 202) {
-							that.jifenbiandong('点赞失败', '您已经点赞了此帖子');
+							that.jifenbiandong(that.$t('post.unliked'), that.$t('post.liketxt3'));
 						} else if (res.data.code == 201) {
-							that.jifenbiandong('取消成功', '您取消点赞了此帖子');
+							that.jifenbiandong(that.$t('post.likef'), that.$t('post.liketxt4'));
 							that.ding = parseInt(that.ding) - 1;
 						}
 						that.loadModal2 = false;
@@ -1320,13 +1320,13 @@
 							that.picker = res.data.area[0];
 							that.tishi = res.data.tishi[0];
 						} else if (res.data.code == 400) {
-							that.jifenbiandong(that.dashangtext + '失败', '您无权' + that.dashangtext);
+							that.jifenbiandong(that.dashangtext + that.$t('post.failed'), that.$t('post.failedtxt1') + that.dashangtext);
 						} else if (res.data.code == 401) {
-							that.jifenbiandong(that.dashangtext + '失败', '此板块禁止' + that.dashangtext);
+							that.jifenbiandong(that.dashangtext + that.$t('post.failed'), that.$t('post.failedtxt2') + that.dashangtext);
 						} else if (res.data.code == 410) {
-							that.jifenbiandong(that.dashangtext + '失败', '不能给自己' + that.dashangtext);
+							that.jifenbiandong(that.dashangtext + that.$t('post.failed'), that.$t('post.failedtxt3') + that.dashangtext);
 						} else if (res.data.code == 202) {
-							that.jifenbiandong(that.dashangtext + '失败', '您已经' +that.dashangtext+ '了此帖子');
+							that.jifenbiandong(that.dashangtext + that.$t('post.failed'), that.$t('post.failedtxt4') +that.dashangtext+ that.$t('post.failedtxt5'));
 						}
 						that.loadModal3 = false;
 					}
@@ -1364,23 +1364,23 @@
 						console.log(res.data)
 						if (res.data.code == 200) {
 							that.modalName = null;
-							that.jifenbiandong(that.dashangtext + '成功', '您将被扣除相应积分');
+							that.jifenbiandong(that.dashangtext + that.$t('post.success'), that.$t('post.failedtxt0'));
 							that.dashang = parseInt(that.dashang) + parseInt(that.dashangjinbi);
 							if (that.dashang > 0) {
 								that.dashang = "+" + that.dashang;
 							}
 						} else if (res.data.code == 400) {
-							that.jifenbiandong(that.dashangtext + '失败', '您无权' + that.dashangtext);
+							that.jifenbiandong(that.dashangtext + that.$t('post.failed'), that.$t('post.failedtxt1') + that.dashangtext);
 						} else if (res.data.code == 401) {
-							that.jifenbiandong(that.dashangtext + '失败', '此板块禁止' + that.dashangtext);
+							that.jifenbiandong(that.dashangtext + that.$t('post.failed'), that.$t('post.failedtxt2') + that.dashangtext);
 						} else if (res.data.code == 410) {
-							that.jifenbiandong(that.dashangtext + '失败', '不能给自己' + that.dashangtext);
+							that.jifenbiandong(that.dashangtext + that.$t('post.failed'), that.$t('post.failedtxt3') + that.dashangtext);
 						} else if (res.data.code == 402) {
-							that.jifenbiandong(that.dashangtext + '失败',  that.dashangtext +'金额不正确');
+							that.jifenbiandong(that.dashangtext + that.$t('post.failed'),  that.dashangtext +that.$t('post.failedtxt6'));
 						} else if (res.data.code == 403) {
-							that.jifenbiandong(that.dashangtext + '失败', '所拥有的金币不足以' + that.dashangtext);
+							that.jifenbiandong(that.dashangtext + that.$t('post.failed'), that.$t('post.failedtxt7') + that.dashangtext);
 						} else if (res.data.code == 202) {
-							that.jifenbiandong(that.dashangtext + '失败', '您已经' + that.dashangtext + '了此帖子');
+							that.jifenbiandong(that.dashangtext + that.$t('post.failed'), that.$t('post.failedtxt4') +that.dashangtext+ that.$t('post.failedtxt5'));
 						}
 						that.loadModal4 = false;
 					}
@@ -1538,7 +1538,7 @@
 								uni.showToast({
 									icon: 'none',
 									mask: true,
-									title: '文件已保存：' + res.tempFilePath, //保存路径
+									title: this.$t('post.saved') + res.tempFilePath, //保存路径
 									duration: 300,
 								});
 								setTimeout(() => {
@@ -1582,7 +1582,7 @@
 								that.jifenbiandong(res.data.title, res.data.message);
 								that.loadthread(that.tid);
 							} else {
-								that.jifenbiandong('领取失败', res.data);
+								that.jifenbiandong(that.$t('post.receivefailed'), res.data);
 							}
 						}
 					});
@@ -1933,7 +1933,7 @@
 				console.log(that.contenthuifu.length);
 				if (that.contenthuifu.length < 4) {
 					that.modalName = "cantpost";
-					that.cantpostmessage = '请输入大于等于4个字的回复内容。';
+					that.cantpostmessage = that.$t('post.over4');
 					this.fasong = false;
 					return;
 				}
@@ -1987,7 +1987,7 @@
 				console.log(that.floorhuifu.length);
 				if (that.floorhuifu.length < 2) {
 					that.modalName = "cantpost";
-					that.cantpostmessage = '请输入大于等于2个字的回复内容。';
+					that.cantpostmessage = that.$t('post.over2');
 					this.floorfasong = false;
 					return;
 				}
@@ -2018,7 +2018,7 @@
 								that.cantpostmessage = res.data.message;
 								this.floorfasong = false;
 							} else {
-								that.jifenbiandong('楼中楼', '回楼中楼成功，刷新可见');
+								that.jifenbiandong(that.$t('post.floor1'), that.$t('post.floor2'));
 								that.modalName = null;
 							}
 						}
@@ -2030,7 +2030,7 @@
 				console.log(that.siliaotxt.length);
 				if (that.siliaotxt.length < 2) {
 					that.modalName = "cantpost";
-					that.cantpostmessage = '请输入大于等于2个字的回复内容。';
+					that.cantpostmessage = that.$t('post.over2');
 					this.floorfasong = false;
 					return;
 				}
@@ -2058,11 +2058,11 @@
 								that.modalName = "needlogin";
 							} else if (res.data.code == 200) {
 								that.modalName = null;
-								that.jifenbiandong('私信成功', '你的私信发送完毕。');
+								that.jifenbiandong(that.$t('post.pmsu'), that.$t('post.pmsutxt'));
 								that.siliaotxt = '';
 							} else {
 								that.modalName = null;
-								that.jifenbiandong('私信失败', res.data.message);
+								that.jifenbiandong(that.$t('post.pmfa'), res.data.message);
 							}
 						}
 					});
@@ -2073,7 +2073,7 @@
 				console.log(that.siliaotxt.length);
 				if (that.siliaotxt.length < 2) {
 					that.modalName = "cantpost";
-					that.cantpostmessage = '请输入大于等于2个字的回复内容。';
+					that.cantpostmessage = that.$t('post.over2');
 					this.floorfasong = false;
 					return;
 				}
@@ -2101,11 +2101,11 @@
 								that.modalName = "needlogin";
 							} else if (res.data.code == 200) {
 								that.modalName = null;
-								that.jifenbiandong('私信成功', '你的私信发送完毕。')
+								that.jifenbiandong(that.$t('post.pmsu'), that.$t('post.pmsutxt'));
 								that.siliaotxt = '';
 							} else {
 								that.modalName = null;
-								that.jifenbiandong('私信失败', res.data.message);
+								that.jifenbiandong(that.$t('post.pmfa'), res.data.message);
 							}
 						}
 					});
@@ -2116,20 +2116,20 @@
 				console.log(that.jubaomessage.length);
 				if (that.jubaomessage.length < 2 && that.radio == 'E') {
 					that.modalName = "cantpost";
-					that.cantpostmessage = '请输入大于等于2个字的举报内容。';
+					that.cantpostmessage = that.$t('home.reportless');
 					this.floorfasong = false;
 					return;
 				}
 				if (!this.floorfasong) {
 					that.floorfasong = true;
 					if (that.radio == 'A') {
-						var message = encodeURI('广告垃圾');
+						var message = encodeURI(that.$t('home.ad'));
 					} else if (that.radio == 'B') {
-						var message = encodeURI('违规内容');
+						var message = encodeURI(that.$t('home.illegal'));
 					} else if (that.radio == 'C') {
-						var message = encodeURI('恶意灌水');
+						var message = encodeURI(that.$t('home.bump'));
 					} else if (that.radio == 'D') {
-						var message = encodeURI('重复发帖');
+						var message = encodeURI(that.$t('home.dump'));
 					} else if (that.radio == 'E') {
 						var message = encodeURI(that.jubaomessage);
 					}
@@ -2155,11 +2155,11 @@
 								that.modalName = "needlogin";
 							} else if (res.data.code == 200) {
 								that.modalName = null;
-								that.jifenbiandong('举报成功', '你的举报发送完毕。')
+								that.jifenbiandong(that.$t('home.reportsuccess'), that.$t('home.reportsuccesstxt'))
 								that.siliaotxt = '';
 							} else {
 								that.modalName = null;
-								that.jifenbiandong('举报失败', res.data.message);
+								that.jifenbiandong(that.$t('home.reportfailed'), res.data.message);
 							}
 						}
 					});
@@ -2179,7 +2179,7 @@
 				fasonginfo.author = this.$username;
 				fasonginfo.authorid = this.$uid;
 				fasonginfo.avatarlist = 'https://zd.tiangal.com/uc_server/avatar.php?uid=' + this.$uid + '&size=small';
-				fasonginfo.dateline = '刚刚';
+				fasonginfo.dateline = this.$t('post.justnow');
 				fasonginfo.groupid = 0;
 				fasonginfo.html = decodeURI(e);
 				fasonginfo.pid = 0;
@@ -2212,7 +2212,7 @@
 				fasongf.username = this.$username;
 				fasongf.uid = this.$uid;
 				fasongf.floor = 0;
-				fasongf.dateline = '刚刚';
+				fasongf.dateline = this.$t('post.justnow');
 				fasongf.content = '<span style="color:#0081ff;">' + this.$username + '</span>:' + decodeURI(e);
 				this.rplist[this.index].push(fasongf);
 				this.modalName = null
@@ -2353,7 +2353,7 @@
 							that.dashangyanzheng();
 							that.loadwb = 1;
 							if (res.data.replykey == 'closed') {
-								that.contenthuifu = '回帖已关闭';
+								that.contenthuifu = that.$t('post.rclosed');
 								that.closed = 1;
 							}
 						}
@@ -2414,7 +2414,7 @@
 				} else {
 					var isImage = 1;
 				}
-				that.loading = '载入中';
+				that.loading = that.$t('extra.loading');
 				that.loadwb = 0;
 				that.LoadProgresss();
 				uni.request({
@@ -2445,17 +2445,17 @@
 							if (that.page == 0) {
 								that.huifulist = res.data;
 								if (res.data.length == 0) {
-									that.loading = '还没有任何回复，快来抢沙发吧！';
+									that.loading = that.$t('post.notreply1');
 								} else {
-									that.loading = '上拉可加载更多回复';
+									that.loading = that.$t('post.notreply2');
 								}
 							} else {
 								for (let i = 0; i < res.data.length; ++i) {
 									that.huifulist.push(res.data[i]);
-									that.loading = '上拉可加载更多回复';
+									that.loading = that.$t('post.notreply2');
 								}
 								if (res.data.length < 30) {
-									that.loading = '到底了。';
+									that.loading = that.$t('api.loadtoend');
 								}
 							}
 							//console.log(res.data);
@@ -2478,7 +2478,7 @@
 				this.platform = 1;
 			} else {
 				this.platform = 2;
-				this.dashangtext = '打赏';
+				this.dashangtext = this.$t('post.evaluate2');
 			}
 			this.randomunmber = Math.random() * 100;
 			this.bgimg = 'http://bbs.zdfx.net/img/style/i/yzm_pic/' + Math.floor(Math.random() * 208) + '.jpg';
@@ -2721,9 +2721,17 @@
 	}
 	.text-content2.bt-black{
 		background-color: #747474!important;
+		color: #cacaca;
+	}
+	.text-content3.bt-black{
+		background-color: #747474!important;
+		color: #cacaca;
 	}
 	.txtf.bt-black{
 		color: #cacaca!important;
+	}
+	.text-content3.bt-black.text-black{
+		color: #fff!important;
 	}
 	.cu-bar.input.bt-black{
 		background-color: #484848!important;

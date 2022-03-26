@@ -3,7 +3,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
 			<block slot="backText">{{$t('api.back')}}</block>
-			<block slot="content">我的任务</block>
+			<block slot="content">{{$t('home.mytask')}}</block>
 		</cu-custom>
 		<web-view :src="url"></web-view>
 	</view>

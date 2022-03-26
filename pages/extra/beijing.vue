@@ -3,17 +3,17 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
 			<block slot="backText">{{$t('api.back')}}</block>
-			<block slot="content">购买名片</block>
+			<block slot="content">{{$t('shop.buycard')}}</block>
 		</cu-custom>
 		<view v-if="fenleilist.length > 0" id="waterfull">
 			<view class="flex solid-bottom align-center bg-white item-img" v-for="(item,index) in fenleilist" :key="index">
 				<view class="cu-item shadow flex1 cu-card case">
 					<view class="image">
 						<image class="width100" :src="item.pic" @tap="more(item.pic,item.title,item.shengyu)"></image>
-						<view class="cu-tag bg-blue">已购{{item.sales}},<text v-if="item.ifbuy==''">价格{{item.sale}}金币/{{item.days}}天</text><text v-else class="text-yellow">剩余时间：{{item.shengyu}}天</text></view>
+						<view class="cu-tag bg-blue">已购{{item.sales}},<text v-if="item.ifbuy==''">价格{{item.sale}}{{$t('credit.coins')}}/{{item.days}}天</text><text v-else class="text-yellow">剩余时间：{{item.shengyu}}天</text></view>
 						<view class="cu-bar bg-shadeBottom"> <text class="text-cut text-center text-shadow2" :style="'color:' + item.fontcolor" v-if="item.shengyu==-1">{{item.title}}</text>
 						<button class="cu-btn bg-green margin-left" @tap="gmqr(item.sid,item.sale,item.title)" v-else>续期</button>
-						<button class="cu-btn bg-green margin-left" v-if="item.ifbuy==''" @tap="gmqr(item.sid,item.sale,item.title)">购买</button>
+						<button class="cu-btn bg-green margin-left" v-if="item.ifbuy==''" @tap="gmqr(item.sid,item.sale,item.title)">{{$t('shop.buyit')}}</button>
 						<button class="cu-btn bg-red margin-left" @tap="shiyong(item.sid)" v-else-if="item.ifused==''">使用</button>
 						<button class="cu-btn bg-yellow margin-left" @tap="xiexia(item.sid)" v-else>卸下</button>
 					</view>
@@ -50,7 +50,7 @@
 				</view>
 				<view class="padding-xl text-brown">
 					确定购买<text class="text-red text-bold">{{goumainame}}</text>吗？<br>
-					将要花费<text class="text-red text-bold">{{goumaijiage}}</text>金币。
+					将要花费<text class="text-red text-bold">{{goumaijiage}}</text>{{$t('credit.coins')}}。
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">

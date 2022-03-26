@@ -3,7 +3,7 @@
 	<view>
 		<cu-custom :bgColor="'bg-'+themeColor.name" :isBack="true">
 			<block slot="backText">{{$t('api.back')}}</block>
-			<block slot="content">我的道具</block>
+			<block slot="content">{{$t('home.toshop')}}</block>
 		</cu-custom>
 		<web-view :src="url"></web-view>
 	</view>

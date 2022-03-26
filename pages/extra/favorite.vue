@@ -2,20 +2,20 @@
 	<view :class="'bg-white bc-'+themeColor.name">
 		<cu-custom class="statustop" :bgColor="'bg-gradual-'+themeColor.name" :isBack="true">
 			<block slot="backText">{{$t('api.back')}}</block>
-			<block slot="content">我的收藏</block>
+			<block slot="content">{{$t('my.favorite')}}</block>
 		</cu-custom>
 		<scroll-view scroll-x class="nav hometop3" :bgColor="'bg-'+themeColor.name">
 			<view class="cu-item padding-left-xl padding-right-xl"
 				:class="TabCur==0?'text-black text-bold cur':'text-black'" @tap="tabSelect(0)">
-				收藏的板块 {{bankuai}}
+				{{$t('my.favoriteforums')}} {{bankuai}}
 			</view>
 			<view class="cu-item padding-left-xl padding-right-xl"
 				:class="TabCur==1?'text-black text-bold cur':'text-black'" @tap="tabSelect(1)">
-				收藏的帖子 {{tiezi}}
+				{{$t('my.favoriteposts')}} {{tiezi}}
 			</view>
 			<view class="cu-item padding-left-xl padding-right-xl"
 				:class="TabCur==2?'text-black text-bold cur':'text-black'" @tap="tabSelect(2)">
-				收藏的空间 {{kongjian}}
+				{{$t('my.favoritespaces')}} {{kongjian}}
 			</view>
 		</scroll-view>
 		<view class="cu-bar bg-gray border-custom2">
@@ -46,7 +46,7 @@
 										:class="loadlevelicon2(itemex.fid)">
 										{{itemex.bkname}}
 									</view><text class="text-sm text-gray"
-										style="padding-left: 8upx;">{{itemex.author}}&nbsp&nbsp{{itemex.replies}}评&nbsp&nbsp{{itemex.nowdate}}</text>
+										style="padding-left: 8upx;">{{itemex.author}}&nbsp&nbsp{{itemex.replies}}{{$t('home.comment')}}&nbsp&nbsp{{itemex.nowdate}}</text>
 									<img-cache v-if="itemex.img!='static/image/common/nophoto.gif'" mode="aspectFill"
 										class="gzlist3" :src="itemex.img" />
 								</view>
@@ -80,13 +80,13 @@
 		<view class="cu-modal" :class="modalName=='delete'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar justify-end" :class="'bg-light-'+themeColor.name">
-					<view class="content">确认删除</view>
+					<view class="content">{{$t('my.conformdelete')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl">
-					确认将此帖从你的收藏夹移除吗？
+					{{$t('my.conformdeletetxt')}}
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-light-'+themeColor.name">
 					<view class="action">
@@ -164,7 +164,7 @@
 								console.log(that.showlist);
 								this.tiezi--;
 								uni.showToast({
-									title: '移除成功!',
+									title: that.$t('setting.removesuccess'),
 								})
 							}else{
 								uni.showToast({
@@ -245,7 +245,7 @@
 							console.log(res.data);
 							that.huifupost = res.data.post;
 							if (res.data.post.length < 30) {
-								that.loading = '已经到底了！';
+								that.loading = this.$t('api.loadtoend');
 							}else{
 								that.loading = this.$t('api.loadmore');
 							}

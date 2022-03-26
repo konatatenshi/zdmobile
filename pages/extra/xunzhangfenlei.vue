@@ -3,7 +3,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
 			<block slot="backText">{{$t('api.back')}}</block>
-			<block slot="content">购买勋章</block>
+			<block slot="content">{{$t('shop.buymedal')}}</block>
 			<block slot="right">
 				<view class="action">
 					<view class="cu-load cuIcon-question" @tap="more()"></view>

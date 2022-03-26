@@ -2,7 +2,7 @@
 	<view>
 		<cu-custom class="statustop" bgColor="bg-gradual-pink" :isBack="true">
 			<block slot="backText">{{$t('api.back')}}</block>
-			<block slot="content">同{{username}}的私聊</block>
+			<block slot="content">{{$t('userpage.pm')}}{{username}}{{$t('userpage.pms')}}</block>
 		</cu-custom>
 		<view class="cu-chat">
 			<view v-if="!loadingmore" class="cu-info round" @tap="receivemessage()">{{loading}}</view><view v-else class="cu-load text-gray loading"></view>
@@ -35,7 +35,7 @@
 				<text class="cuIcon-emojifill text-grey" @tap="togglePicker(200, 'emoji')"></text>
 				<text class="cuIcon-roundadd text-grey" @tap="togglePicker(100, 'file')"></text>
 			</view>
-			<button @tap="sendmessage" class="cu-btn bg-green shadow">发送</button>
+			<button @tap="sendmessage" class="cu-btn bg-green shadow">{{$t('home.send')}}</button>
 		</view>
 		<!--表情-->
 		<view v-show="showEmoji" class="emoji" @tap.prevent.stop="">
@@ -294,14 +294,14 @@
 							that.modalName = "needlogin";
 						} else if (res.data.code == 200) {
 							that.modalName = null;
-							that.jifenbiandong('私信成功', '你的私信发送完毕。');
+							that.jifenbiandong(that.$t('userpage.sendsuccess'), that.$t('userpage.spms'));
 							that.page = 0;
 							that.receivemessage();
 							that.scrollToBottom();
 							that.content = '';
 						} else {
 							that.modalName = null;
-							that.jifenbiandong('私信失败', res.data.message);
+							that.jifenbiandong(that.$t('userpage.sendfail'), res.data.message);
 						}
 					}
 				});

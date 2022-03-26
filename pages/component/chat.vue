@@ -86,7 +86,7 @@
 					</view>
 				</uni-section>
 			</view>
-			<button @tap="sendmessage" class="cu-btn bg-green shadow">发送</button>
+			<button @tap="sendmessage" class="cu-btn bg-green shadow">{{$t('home.send')}}</button>
 		</view>
 		<!--表情-->
 		<view v-show="showEmoji" class="emoji" @tap.prevent.stop="">

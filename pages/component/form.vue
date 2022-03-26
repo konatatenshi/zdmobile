@@ -4,7 +4,7 @@
 	<view>
 		<cu-custom class="statustop" bgColor="bg-white" :isBack="true">
 			<block slot="backText">{{$t('api.back')}}</block>
-			<block slot="content">楼中楼详情</block>
+			<block slot="content">{{$t('post.isfloor')}}</block>
 		</cu-custom>
 		<view class="cu-card dynamic no-card" :style="'margin-top: -' + iStatusBarHeight +'px;'">
 			<view class="cu-item shadow">
@@ -47,7 +47,7 @@
 				</view>
 				<view class="cu-list menu-avatar comment solids-top" v-for="(item,index) in huifulist" :key="index" :data-id="index">
 					<view v-if="index==0" class="text-grey margin-left">
-						<view class="text-sm">共有相关评论 {{count}} 个</view>
+						<view class="text-sm">{{$t('post.totalreply')}} {{count}} {{$t('post.totalreply2')}}</view>
 					</view>
 					<view class="cu-item">
 						<view class="cu-avatar round" :style="[{ backgroundImage:'url(https://zd.tiangal.com/uc_server/avatar.php?uid=' + item.uid + '&size=small)' }]">
@@ -55,7 +55,7 @@
 						<view class="content">
 							<view class="flex justify-between">
 								<view class="text-grey">{{item.username}}</view>
-								<view class="text-grey text-sm">{{index+2}}楼</view>
+								<view class="text-grey text-sm">{{index+2}}{{$t('home.floor')}}</view>
 							</view>
 							<view class="flex justify-between">
 								<view class="text-gray text-sm">{{item.dateline}}</view>
@@ -111,13 +111,13 @@
 				<view class="cu-modal" :class="modalName=='cantview'?'show':''">
 					<view class="cu-dialog">
 						<view class="cu-bar bg-white justify-end">
-							<view class="content">权限不足</view>
+							<view class="content">{{$t('post.permissionsdenied')}}</view>
 							<view class="action" @tap="hideModal">
 								<text class="cuIcon-close text-red"></text>
 							</view>
 						</view>
 						<view class="padding-xl">
-							无法进入帖子，错误提示：{{cantviewmessage}}
+							{{$t('post.replyerrortxt')}}：{{cantviewmessage}}
 						</view>
 						<view class="cu-bar bg-white justify-end">
 							<view class="action">
@@ -129,13 +129,13 @@
 				<view class="cu-modal" :class="modalName=='cantpost'?'show':''">
 					<view class="cu-dialog">
 						<view class="cu-bar bg-white justify-end">
-							<view class="content">回帖错误</view>
+							<view class="content">{{$t('post.replyerror')}}</view>
 							<view class="action" @tap="hideModal">
 								<text class="cuIcon-close text-red"></text>
 							</view>
 						</view>
 						<view class="padding-xl">
-							无法回帖，错误提示：{{cantpostmessage}}
+							{{$t('post.replyerrortxt')}}：{{cantpostmessage}}
 						</view>
 						<view class="cu-bar bg-white justify-end">
 							<view class="action">
@@ -147,20 +147,20 @@
 				<view class="cu-modal" :class="modalName=='floorpost'?'show':''">
 					<view class="cu-dialog">
 						<view class="cu-bar bg-white justify-end">
-							<view class="content">楼中楼回复</view>
+							<view class="content">{{$t('post.floorreply')}}</view>
 							<view class="action" @tap="hideModal">
 								<text class="cuIcon-close text-red"></text>
 							</view>
 						</view>
 						<view class="padding-xl">
 							<view class="cu-form-group align-start">
-								<textarea maxlength="-1" v-model="floorhuifu" placeholder="请在此输入想要说的话"></textarea>
+								<textarea maxlength="-1" v-model="floorhuifu" :placeholder="$t('home.reporttxt')"></textarea>
 								<text class="cuIcon-emojifill text-grey" @tap="togglePicker(200, 'emoji')"></text>
 							</view>
 						</view>
 						<view class="cu-bar bg-white justify-end">
 							<view class="action">
-								<button class="cu-btn bg-green margin-left" @tap="sendfloor">发送</button>
+								<button class="cu-btn bg-green margin-left" @tap="sendfloor">{{$t('home.send')}}</button>
 							</view>
 						</view>
 					</view>
@@ -168,13 +168,13 @@
 				<view class="cu-modal" :class="modalName=='postnew'?'show':''">
 					<view class="cu-dialog">
 						<view class="cu-bar bg-white justify-end">
-							<view class="content">发表回复成功</view>
+							<view class="content">{{$t('post.replysuccess')}}</view>
 							<view class="action" @tap="hideModal">
 								<text class="cuIcon-close text-red"></text>
 							</view>
 						</view>
 						<view class="padding-xl">
-							发表错误成功，请点击确定刷新帖子。
+							{{$t('post.replysuccesstxt')}}
 						</view>
 						<view class="cu-bar bg-white justify-end">
 							<view class="action">
@@ -187,7 +187,7 @@
 				<view class="cu-modal" :class="showEmoji?'show':''" @tap.prevent.stop="">
 					<view class="cu-dialog">
 						<view class="cu-bar bg-white justify-end">
-							<view class="content">请选择表情</view>
+							<view class="content">{{$t('post.emoji')}}</view>
 							<view class="action" @tap="closeemoji">
 								<text class="cuIcon-close text-red"></text>
 							</view>
@@ -219,14 +219,14 @@
 		data() {
 			return {
 				isCard: false,
-				postname: '加载中',
+				postname: this.$t('api.loading'),
 				sightml: '',
 				contenthuifu: '',
 				floorhuifu: '',
 				content: '',
-				postup: '加载中',
-				nowdate: '加载中',
-				pingbi: '<div style=\"overflow: hidden;border: 1px dashed #FF9A9A;margin: 8px 0;padding: 10px;zoom: 1;\">此帖因违规被屏蔽，不可见。</div>',
+				postup: this.$t('api.loading'),
+				nowdate: this.$t('api.loading'),
+				pingbi: '<div style=\"overflow: hidden;border: 1px dashed #FF9A9A;margin: 8px 0;padding: 10px;zoom: 1;\">' + this.$t('post.ille') + '</div>',
 				cantviewmessage: '',
 				cantpostmessage: '',
 				touxian: '',
@@ -260,7 +260,7 @@
 				isfloat: [],
 				isfloats: false,
 				modalName: null,
-				loading: "上拉可加载更多回复",
+				loading: this.$t('api.loadmore'),
 				avatarlist: '../../static/avatar.jpg',
 				emojis: ["{:4_91:}","{:4_107:}", "{:4_100:}", "{:4_115:}", "{:4_104:}", "{:4_98:}", "{:4_114:}", "{:4_88:}",
 					"{:4_87:}", "{:4_135:}", "{:4_131:}", "{:4_134:}", "{:4_106:}", "{:4_99:}", "{:4_93:}",
@@ -660,9 +660,9 @@
 			sendmessage() {
 				var that=this;
 				console.log(that.contenthuifu.length);
-				if(that.contenthuifu.length<5){
+				if(that.contenthuifu.length<3){
 					that.modalName = "cantpost";
-					that.cantpostmessage = '请输入大于4个字的回复内容。';
+					that.cantpostmessage = that.$t('post.over2');
 					this.fasong = false;
 					return;
 				}
@@ -700,9 +700,9 @@
 			sendfloor() {
 				var that=this;
 				console.log(that.floorhuifu.length);
-				if(that.floorhuifu.length<5){
+				if(that.floorhuifu.length<3){
 					that.modalName = "cantpost";
-					that.cantpostmessage = '请输入大于4个字的回复内容。';
+					that.cantpostmessage = that.$t('post.over2');
 					this.floorfasong = false;
 					return;
 				}
@@ -749,7 +749,7 @@
 				fasonginfo.author = this.$username;
 				fasonginfo.authorid = this.$uid;
 				fasonginfo.avatarlist = 'https://zd.tiangal.com/uc_server/avatar.php?uid='+ this.$uid +'&size=small';
-				fasonginfo.dateline = '刚刚';
+				fasonginfo.dateline = this.$t('post.justnow');
 				fasonginfo.groupid = 0;
 				fasonginfo.html = decodeURI(e);
 				fasonginfo.pid = 0;
@@ -775,7 +775,7 @@
 				fasongf.username = this.$username;
 				fasongf.uid = this.$uid;
 				fasongf.floor = 0;
-				fasongf.dateline = '刚刚';
+				fasongf.dateline = this.$t('post.justnow');
 				fasongf.content = '<span style="color:#0081ff;">' + this.$username + '</span>:' + decodeURI(e);
 				this.modalName = null
 				this.floorhuifu = '';
@@ -926,7 +926,7 @@
 				} else {
 					var isImage = 1;
 				}
-				that.loading = '加载中';
+				that.loading = that.$t('api.loading');
 				that.loadwb = 0;
 				that.LoadProgresss();
 				uni.request({
@@ -954,18 +954,18 @@
 							that.modalName = "cantview";
 							that.cantviewmessage = res.data.message;
 						} else if (res.data.code == 405) {
-							that.loading = '到底了。';
+							that.loading = that.$t('api.loadtoend');
 						} else {
 							if (that.page == 0) {
 								that.huifulist = res.data;
-								that.loading = '上拉可加载更多回复';
+								that.loading = that.$t('post.notreply2');
 							} else {
 								for (let i = 0; i < res.data.length; ++i) {
 									that.huifulist.push(res.data[i]);
-									that.loading = '上拉可加载更多回复';
+									that.loading = that.$t('post.notreply2');
 								}
 								if (res.data.length < 30) {
-									that.loading = '到底了。';
+									that.loading = that.$t('api.loadtoend');
 								}
 							}
 							that.page++;

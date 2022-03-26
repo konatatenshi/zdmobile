@@ -1,15 +1,15 @@
 <template>
 	<view>
 		<cu-custom :bgColor="'bg-gradual-'+themeColor.name"  :isBack="true"><block slot="backText">{{$t('api.back')}}</block>
-			<block slot="content">好友列表</block>
+			<block slot="content">{{$t('my.friendlist')}}</block>
 		</cu-custom>
 		<view class="cu-bar bg-white search fixed" :style="[{top:CustomBar + 'px'}]">
 			<view class="search-form round">
 				<text class="cuIcon-search"></text>
-				<input type="text" placeholder="输入你要搜索的好友名字" confirm-type="search"></input>
+				<input type="text" :placeholder="$t('my.searchfriends')" confirm-type="search"></input>
 			</view>
 			<view class="action">
-				<button class="cu-btn bg-gradual-green shadow-blur round">搜索</button>
+				<button class="cu-btn bg-gradual-green shadow-blur round">{{$t('my.search')}}</button>
 			</view>
 		</view>
 		<scroll-view scroll-y class="indexes" :scroll-into-view="'indexes-'+ listCurID" :style="[{height:'calc(100vh - '+ CustomBar + 'px - 50px)'}]"
@@ -24,7 +24,7 @@
 							<view class="content">
 								<view class="text-grey"><text class="text-abc">{{items.fusername}}</text></view>
 								<view class="text-gray text-sm">
-									<text v-if="items.note">备注：，</text>成为好友时间：{{todate(items.dateline)}}
+									<text v-if="items.note">{{$t('my.notes')}}：，</text>{{$t('my.befriendtime')}}：{{todate(items.dateline)}}
 								</view>
 							</view>
 						</view>

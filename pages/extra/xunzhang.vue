@@ -3,11 +3,11 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
 			<block slot="backText">{{$t('api.back')}}</block>
-			<block slot="content">勋章商城</block>
+			<block slot="content">{{$t('shop.medal')}}</block>
 		</cu-custom>
 		<view class="cu-form-group">
-			<view class="title">账户余额</view>
-			<view class="text-red">{{money}}金币</view>
+			<view class="title">{{$t('shop.balance')}}</view>
+			<view class="text-red">{{money}}{{$t('credit.coins')}}</view>
 		</view>
 		<view class='padding-xs flex flex-wrap bg-gradual-white'>
 			<view class="padding-xs" v-for="(item,index) in xunzhangfenlei" :key="index" v-if="item.count>0">
@@ -21,7 +21,7 @@
 				<view class="padding-xs flex align-center">
 					<view class="flex-sub text-center">
 						<view class="text-xs padding">
-							<text class="text-black">终点论坛©2022</text>
+							<text class="text-black">{{$t('index.title')}}©2022</text>
 						</view>
 					</view>
 				</view>
@@ -29,20 +29,20 @@
 		</view>
 		<view class="status_bar bg-white cu-bar tabbar shadow foot" :class="'bt-'+themeColor.name">
 			<view class="action text-green" @click="NavChange(1)">
-				<view class="cuIcon-shopfill"></view> 商城
+				<view class="cuIcon-shopfill"></view> {{$t('shop.store')}}
 			</view>
 			<view class="action text-gray" @click="NavChange(2)">
-				<view class="cuIcon-punch"></view> 记录
+				<view class="cuIcon-punch"></view> {{$t('shop.log')}}
 			</view>
 			<view class="action text-gray" @click="NavChange(3)">
 				<view class="cuIcon-rank">
 				</view>
-				排行
+				{{$t('shop.rank')}}
 			</view>
 			<view class="action text-gray" @click="NavChange(4)">
 				<view class="cuIcon-my">
 				</view>
-				我的
+				{{$t('shop.mine')}}
 			</view>
 		</view>
 	</view>
@@ -97,7 +97,7 @@
 							that.xunzhangfenlei = res.data.list
 						} else {
 							uni.showToast({
-								title: '加载失败',
+								title: that.$t('shop.failed'),
 								icon: 'error'
 							})
 						}

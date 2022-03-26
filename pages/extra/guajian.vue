@@ -3,7 +3,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
 			<block slot="backText">{{$t('api.back')}}</block>
-			<block slot="content">购买头像挂件</block>
+			<block slot="content">{{$t('shop.buyframe')}}</block>
 		</cu-custom>
 		<view v-if="fenleilist.length > 0" id="waterfull">
 			<view class="solid-bottom align-center bg-white item-img" v-for="(item,index) in fenleilist" :key="index">
@@ -17,11 +17,11 @@
 							</image>
 						</view>
 						<view class="cu-tag bg-blue-jb">
-						<text v-if="item.ifbuy==''">价格{{item.buy_score}}金币/{{item.expires}}天</text><text v-else class="text-yellow">剩余时间：{{item.shengyu}}天</text></view>
+						<text v-if="item.ifbuy==''">价格{{item.buy_score}}{{$t('credit.coins')}}/{{item.expires}}天</text><text v-else class="text-yellow">剩余时间：{{item.shengyu}}天</text></view>
 						<view class="cu-bar cu-bar2 bg-shadeBottom"> <text class="text-cut text-center text-shadow2">{{item.title}}</text></view>
 					</view>
 					<view class="bg-gradual-white text-right">
-					<button class="cu-btn bg-green margin-right-xs" v-if="item.ifbuy==''" @tap="gmqr(item.id,item.buy_score,item.title)">买</button>
+					<button class="cu-btn bg-green margin-right-xs" v-if="item.ifbuy==''" @tap="gmqr(item.id,item.buy_score,item.title)">{{$t('shop.buy2')}}</button>
 					<button class="cu-btn bg-green margin-right-xs" v-else @tap="gmqr(item.id,item.buy_score,item.title)">续</button>
 					<button class="cu-btn bg-red margin-right-xs" @tap="shiyong(item.id)" v-if="item.ifbuy!=''&&item.ifbuy.default_id==0">装</button>
 					<button class="cu-btn bg-yellow margin-right-xs" @tap="xiexia(item.id)" v-else-if="item.ifbuy!=''">卸</button>
@@ -58,7 +58,7 @@
 				</view>
 				<view class="padding-xl text-brown">
 					确定购买<text class="text-red text-bold">{{goumainame}}</text>吗？<br>
-					将要花费<text class="text-red text-bold">{{goumaijiage}}</text>金币。
+					将要花费<text class="text-red text-bold">{{goumaijiage}}</text>{{$t('credit.coins')}}。
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">

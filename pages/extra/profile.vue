@@ -2,29 +2,29 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
 			<block slot="backText">{{$t('api.back')}}</block>
-			<block slot="content">个人资料更改</block>
+			<block slot="content">{{$t('profile.change')}}</block>
 		</cu-custom>
 		<form>
 			<view class="cu-form-group margin-top">
-				<view class="title">姓名</view>
-				<input placeholder="输入你的姓名" name="zm" v-model="zhenming"></input>
+				<view class="title">{{$t('profile.name')}}</view>
+				<input :placeholder="$t('profile.typeyou') + $t('profile.name')" name="zm" v-model="zhenming"></input>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">性别</view>
-				<input placeholder="未选" v-model="xingbie" name="guojia"></input>
+				<view class="title">{{$t('profile.sex')}}</view>
+				<input :placeholder="$t('profile.nselect')" v-model="xingbie" name="guojia"></input>
 				<switch class='switch-sex' @change="SwitchC" :class="switchC?'checked':''" :checked="switchC?true:false"></switch>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">国家</view>
-				<input placeholder="选择国家/地区" v-model="guojia" name="guojia"></input>
+				<view class="title">{{$t('profile.country')}}</view>
+				<input :placeholder="$t('profile.selecte')" v-model="guojia" name="guojia"></input>
 				<picker @change="PickerChange" :value="index" :range="picker">
 					<view class="picker">
-						选择
+						{{$t('profile.change')}}
 					</view>
 				</picker>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">地区</view>
+				<view class="title">{{$t('profile.region')}}</view>
 				<picker mode="multiSelector" @change="MultiChange" @columnchange="MultiColumnChange" :value="multiIndex" :range="multiArray">
 					<view class="picker">
 						{{multiArray[0][multiIndex[0]]}}-{{multiArray[1][multiIndex[1]]}}-{{multiArray[2][multiIndex[2]]}}
@@ -32,7 +32,7 @@
 				</picker>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">生日</view>
+				<view class="title">{{$t('profile.birthday')}}</view>
 				<picker mode="date" :value="date" start="1900-01-01" end="2030-09-01" @change="DateChange">
 					<view class="picker">
 						{{date}}
@@ -40,65 +40,65 @@
 				</picker>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">地址</view>
-				<input placeholder="输入你的地址" name="dizhi" v-model="dizhi"></input>
+				<view class="title">{{$t('profile.address')}}</view>
+				<input :placeholder="$t('profile.typeyou') + $t('profile.address')" name="dizhi" v-model="dizhi"></input>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">证件类型</view>
-				<input placeholder="输入你的证件类型" name="zhengjianleixing" v-model="zjlx"></input>
+				<view class="title">{{$t('profile.certificate')}}</view>
+				<input :placeholder="$t('profile.typeyou') + $t('profile.certificate')" name="zhengjianleixing" v-model="zjlx"></input>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">证件号</view>
-				<input placeholder="输入你的证件号" type="number" name="zhengjianhao" v-model="zjh"></input>
+				<view class="title">{{$t('profile.identitynumber')}}</view>
+				<input :placeholder="$t('profile.typeyou') + $t('profile.identitynumber')" type="number" name="zhengjianhao" v-model="zjh"></input>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">毕业学校</view>
-				<input placeholder="输入你的毕业学校" type="text" name="xuexiao" v-model="byxx"></input>
+				<view class="title">{{$t('profile.graduatedschool')}}</view>
+				<input :placeholder="$t('profile.typeyou') + $t('profile.graduatedschool')" type="text" name="xuexiao" v-model="byxx"></input>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">工作单位</view>
-				<input placeholder="输入你的工作单位" type="text" name="danwei" v-model="gzdw"></input>
+				<view class="title">{{$t('profile.employer')}}</view>
+				<input :placeholder="$t('profile.typeyou') + $t('profile.employer')" type="text" name="danwei" v-model="gzdw"></input>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">学历</view>
-				<input placeholder="选择你的学历" v-model="xueli" name="xueli"></input>
+				<view class="title">{{$t('profile.education')}}</view>
+				<input :placeholder="$t('profile.change') + $t('profile.education')" v-model="xueli" name="xueli"></input>
 				<picker @change="xlChange" :value="index2" :range="pickerxl">
 					<view class="picker">
-						选择
+						{{$t('profile.change')}}
 					</view>
 				</picker>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">血型</view>
-				<input placeholder="选择你的血型" v-model="xuexx" name="xuexing"></input>
+				<view class="title">{{$t('profile.bloodtype')}}</view>
+				<input :placeholder="$t('profile.change') + $t('profile.bloodtype')" v-model="xuexx" name="xuexing"></input>
 				<picker @change="xxChange" :value="index3" :range="pickerxx">
 					<view class="picker">
-						选择
+						{{$t('profile.change')}}
 					</view>
 				</picker>
 			</view>
 			<view class="cu-form-group">
 				<view class="title">QQ</view>
-				<input placeholder="输入你的QQ号" type="number" name="qq" v-model="qq"></input>
+				<input :placeholder="$t('profile.typeyou') + QQ" type="number" name="qq" v-model="qq"></input>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">网址</view>
-				<input placeholder="输入你的个人网址" type="text" name="wangzhi" v-model="wz"></input>
+				<view class="title">{{$t('profile.url')}}</view>
+				<input :placeholder="$t('profile.typeyou') + $t('profile.url')" type="text" name="wangzhi" v-model="wz"></input>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">描述</view>
-				<input placeholder="输入你的个人描述" type="text" name="miaoshu" v-model="ms"></input>
+				<view class="title">{{$t('profile.describe')}}</view>
+				<input :placeholder="$t('profile.typeyou') + $t('profile.describe')" type="text" name="miaoshu" v-model="ms"></input>
 			</view>
 			<view class="cu-form-group">
-				<view class="title">兴趣</view>
-				<input placeholder="输入你的个人兴趣" type="text" name="xingqu" v-model="xq"></input>
+				<view class="title">{{$t('profile.interest')}}</view>
+				<input :placeholder="$t('profile.typeyou') + $t('profile.interest')" type="text" name="xingqu" v-model="xq"></input>
 			</view>
 			<!-- !!!!! placeholder 在ios表现有偏移 建议使用 第一种样式 -->
 			<view class="cu-form-group margin-top">
-				<textarea v-model="qianming" maxlength="-1" :disabled="modalName!=null" @input="textareaAInput" placeholder="输入你的论坛签名，[img]图片URL[/img]可以插入图片。(限制:255字节内)"></textarea>
+				<textarea v-model="qianming" maxlength="-1" :disabled="modalName!=null" @input="textareaAInput" :placeholder="$t('profile.signtxt')"></textarea>
 			</view>
 			<view class="text-center align-center">
-				<text class="padding text-df text-gray">👆输入你的论坛签名👆<br>[img]图片URL[/img]可以插入图片</text>
+				<text class="padding text-df text-gray">👆{{$t('profile.sign')}}👆<br>{{$t('profile.sign2')}}</text>
 			</view>
 			<view class="padding">
 				<button class="cu-btn block bg-blue margin-tb-sm lg" :disabled="disabled?true:false" type="" @tap="submit"><text v-show="disabled" class="cuIcon-loading2 cuIconfont-spin"></text>{{$t('api.submit')}}</button>

@@ -2,11 +2,11 @@
 	<view>
 		<cu-custom :bgColor="'bg-'+themeColor.name" :isBack="true">
 			<block slot="backText">{{$t('api.back')}}</block>
-			<block slot="content">选择颜色</block>
+			<block slot="content">{{$t('color.changecolor')}}</block>
 		</cu-custom>
 		<view class="padding">
-			<view class="text-black">对比色：黑色</view>
-			<view :class="'text-'+themeColor.name">主题色：{{themeColor.title}}</view>
+			<view class="text-black">{{$t('color.contrasting')}}</view>
+			<view :class="'text-'+themeColor.name">{{$t('color.themecolor')}}：{{themeColor.title}}</view>
 		</view>
 		<view class="cu-list menu sm-border card-menu">
 			<view class="cu-item">
@@ -16,24 +16,24 @@
 				</view>
 				<view class="action">
 					<button class="cu-btn round shadow" @click="showColorModal" :class="'bg-'+themeColor.name">
-						<text class="cuIcon-colorlens"></text> 选择颜色</button>
+						<text class="cuIcon-colorlens"></text> {{$t('color.changecolor')}}</button>
 				</view>
 			</view>
 		</view>
-		<view class="padding text-black">建议选择的颜色：天青、草灰、墨黑、雅白</view>
+		<view class="padding text-black">{{$t('color.suggest')}}</view>
 		<!-- modal -->
 		<!-- 选择颜色模态框 -->
 		<view class="cu-modal" :class="{show: colorModal}">
 			<view class="cu-dialog">
 				<view class="cu-bar justify-end solid-bottom">
-					<view class="content">选择颜色</view>
+					<view class="content">{{$t('color.changecolor')}}</view>
 					<view class="action" @tap="colorModal = false">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="grid col-5 padding">
 					<view class="padding-xs" v-for="(item,index) in ColorList" :key="index" @tap="SetColor(item)" :data-color="item.name">
-						<view class="padding-tb radius" :class="'bg-' + item.name"> {{item.title}} </view>
+						<view class="padding-tb radius" :class="'bg-' + item.name"> <text v-if="systemLocale!='en'">{{item.title}}</text><text v-else>{{item.name}}</text> </view>
 					</view>
 				</view>
 			</view>
@@ -46,6 +46,7 @@
 		data() {
 			return {
 				colorModal: false,
+				systemLocale: '',
 				ColorList: [{
 						title: '嫣红',
 						name: 'red',
@@ -151,6 +152,10 @@
 				  borderStyle: 'white'
 				})
 			}
+		},
+		created() {
+			this.systemLocale = uni.getLocale();
+			console.log(this.systemLocale);
 		}
 	}
 </script>

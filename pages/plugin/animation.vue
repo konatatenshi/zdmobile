@@ -2,26 +2,26 @@
 	<view :class="'bg-white bc-'+themeColor.name">
 		<cu-custom class="statustop" :bgColor="'bg-gradual-'+themeColor.name" :isBack="true">
 			<block slot="backText">{{$t('api.back')}}</block>
-			<block slot="content">修改密码</block>
+			<block slot="content">{{$t('my.changepassword')}}</block>
 		</cu-custom>
 		<view class="cu-bar" :class="'bg-'+themeColor.name">
 			<view class="action">
-				<text class="cuIcon-title text-orange"></text> 通过旧密码重置密码
+				<text class="cuIcon-title text-orange"></text> {{$t('my.changepasswords')}}
 			</view>
 		</view>
 		<view class="padding-sm">
 			<form>
 				<view class="cu-form-group margin-top">
-					<view class="title">旧密码</view>
-					<input placeholder="请输入原始密码" v-model="oldps" name="input"></input>
+					<view class="title">{{$t('my.oldpassword')}}</view>
+					<input :placeholder="$t('my.oldpasswordtxt')" v-model="oldps" name="input"></input>
 				</view>
 				<view class="cu-form-group">
-					<view class="title">新密码</view>
-					<input placeholder="请输入你修改后的密码(≥8位)" v-model="newps1" type="password" name="input"></input>
+					<view class="title">{{$t('my.newpassword')}}</view>
+					<input :placeholder="$t('my.newpasswordtxt')" v-model="newps1" type="password" name="input"></input>
 				</view>
 				<view class="cu-form-group">
-					<view class="title">再确认</view>
-					<input placeholder="请再次输入你修改后的密码" v-model="newps2" type="password" name="input"></input>
+					<view class="title">{{$t('my.newpassword2')}}</view>
+					<input :placeholder="$t('my.newpassword2txt')" v-model="newps2" type="password" name="input"></input>
 				</view>
 				<view v-if="errortext!=''" class="cu-form-group justify-center">
 					<view class="text-red">{{errortext}}</view>
@@ -32,18 +32,18 @@
 		</view>
 		<view class="cu-bar" :class="'bg-'+themeColor.name">
 			<view class="action">
-				<text class="cuIcon-title text-orange"></text> 通过短信重置密码
+				<text class="cuIcon-title text-orange"></text> {{$t('my.smsreset')}}
 			</view>
 		</view>
 		<view class="padding-sm">
-			<view class="solid-bottom text-sm padding"><text class="text-grey"><span>你需要先在个人界面登出此账号，然后点击登录，然后点击通过短信重置密码即可重置。</span></text></view>
+			<view class="solid-bottom text-sm padding"><text class="text-grey"><span>{{$t('my.smsresettxt')}}</span></text></view>
 		</view>
 		<view class="cu-bar" :class="'bg-'+themeColor.name">
 			<view class="action">
-				<text class="cuIcon-title text-orange"></text> 绑定Google身份验证器
+				<text class="cuIcon-title text-orange"></text> {{$t('my.bandgoogleauth')}}
 			</view>
 			<view class="action">
-				<button class="cu-btn bg-cyan shadow" @tap="bdgoogle">点击{{bangding}}</button>
+				<button class="cu-btn bg-cyan shadow" @tap="bdgoogle">{{$t('my.tap')}}{{bangding}}</button>
 			</view>
 		</view>
 		<view class="padding-sm">
@@ -51,45 +51,45 @@
 		</view>
 		<view class="cu-bar" :class="'bg-'+themeColor.name">
 			<view class="action">
-				<text class="cuIcon-title text-orange"></text> 绑定其他登录工具
+				<text class="cuIcon-title text-orange"></text> {{$t('my.bandother')}}
 			</view>
 		</view>
 		<view class="action" v-if="platform==2">
-			<button v-if="google==0" class="cu-btn bg-green shadow margin" @tap="googlelogin"><image class="google" src="../../static/img/google.svg"></image>点击绑定Google登录</button>
-			<button v-else class="cu-btn bg-green shadow margin btn22" @tap="googlelogin"><image class="google" src="../../static/img/google.svg"></image>Google绑定邮箱(点击解绑)：<br>{{mail}}</button>
+			<button v-if="google==0" class="cu-btn bg-green shadow margin" @tap="googlelogin"><image class="google" src="../../static/img/google.svg"></image>{{$t('my.bandgoogle')}}</button>
+			<button v-else class="cu-btn bg-green shadow margin btn22" @tap="googlelogin"><image class="google" src="../../static/img/google.svg"></image>{{$t('my.bandgoogle2')}}：<br>{{mail}}</button>
 		</view>
 		<view class="action" v-if="platform==1">
-			<button v-if="apple==0" class="cu-btn bg-black shadow margin" @tap="applelogin"><image class="google" src="../../static/img/Apple_logo_grey.svg"></image>点击绑定Apple登录</button>
-			<button v-else class="cu-btn bg-black shadow margin btn22" @tap="applelogin"><image class="google" src="../../static/img/Apple_logo_grey.svg"></image>点击解绑Apple绑定账号</button>
+			<button v-if="apple==0" class="cu-btn bg-black shadow margin" @tap="applelogin"><image class="google" src="../../static/img/Apple_logo_grey.svg"></image>{{$t('my.bandapple')}}</button>
+			<button v-else class="cu-btn bg-black shadow margin btn22" @tap="applelogin"><image class="google" src="../../static/img/Apple_logo_grey.svg"></image>{{$t('my.bandapple2')}}</button>
 		</view>
 		<view class="cu-modal" :class="modalName=='bdgoogle'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
-					<view class="content">{{bangding}}Google身份令牌</view>
+					<view class="content">{{bangding}}Google{{$t('my.eauth')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl" v-if="lingpai">
-					你已绑定Google身份令牌，请输入验证码以解除绑定。如果丢失了令牌，请通过手机短信更改密码即可解绑。
+					{{$t('my.bandgoogletxt')}}
 				</view>
 				<view class="padding-xl" v-else>
-					请使用Google身份验证器来复制下面的密钥（用户名随意）来添加身份令牌。
+					{{$t('my.bandgoogletxt2')}}
 					<view class="flex-sub text-center">
 						<view class="solid-bottom text-xl padding">
 							<text class="text-black text-bold">{{secrettext}}</text>
 						</view>
 					</view>
 					<view class="action">
-						<button class="cu-btn bg-gradual-red margin-left" @tap="copy()">复制令牌密钥</button>
+						<button class="cu-btn bg-gradual-red margin-left" @tap="copy()">{{$t('my.copykey')}}</button>
 					</view>
 					<view class="action">
-						<button class="cu-btn bg-green margin-left margin-top-sm" @tap="togoogle()">去商店下载Google身份验证器</button>
+						<button class="cu-btn bg-green margin-left margin-top-sm" @tap="togoogle()">{{$t('my.downgoogle')}}</button>
 					</view>
 				</view>
 				<view class="cu-form-group margin-bottom">
-					<view class="title">输入验证码</view>
-					<input placeholder="请输入Google令牌6位数" v-model="lppass" type="number" name="input"></input>
+					<view class="title">{{$t('my.verifycode')}}</view>
+					<input :placeholder="$t('my.verifycode6')" v-model="lppass" type="number" name="input"></input>
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
@@ -109,12 +109,12 @@
 		data() {
 			return {
 				animation:'',
-				change: '更改密码',
+				change: this.$t('my.changepassword'),
 				ischange: false,
 				modalName: null,
 				lingpai: false,
-				zhuangtai: '载入状态中……',
-				bangding: '绑定',
+				zhuangtai: this.$t('my.loadingstate'),
+				bangding: this.$t('my.band'),
 				errortext: '',
 				secrettext: '',
 				mail: '',
@@ -205,12 +205,12 @@
 								that.modalName = null;
 								if(!this.lingpai){
 									uni.showToast({
-										title: '绑定成功',
+										title: that.$t('my.bandde'),
 										duration: 1000
 									});
 								}else{
 									uni.showToast({
-										title: '解绑成功',
+										title: that.$t('my.bandf'),
 										duration: 1000
 									});
 								}
@@ -252,7 +252,7 @@
 							if (res.data.code == 213) {//未开启
 									that.google = 1;
 									uni.showToast({
-										title: '绑定成功',
+										title: that.$t('my.bandde'),
 										duration: 1000
 									});
 							}else{
@@ -287,7 +287,7 @@
 							if (res.data.code == 213) {//未开启
 									that.apple = 1;
 									uni.showToast({
-										title: '绑定成功',
+										title: that.$t('my.bandde'),
 										duration: 1000
 									});
 							}else{
@@ -348,11 +348,11 @@
 			},
 			tijiaomima() {
 				if(this.newps1.length<8){
-					this.errortext = '新密码必须大于8位，请再次输入。';
+					this.errortext = this.$t('my.error1');
 					return;
 				}
 				if(this.newps1!=this.newps2){
-					this.errortext = '两次密码不相同，请再次确认。';
+					this.errortext = this.$t('my.error2');
 					return;
 				}
 				this.ischange=true;
@@ -373,10 +373,10 @@
 					success: (res) => {
 						console.log(res.data);
 						if (res.data.code == 200) {//未开启
-							that.change = '更改成功。';
+							that.change = that.$t('my.changed');
 							that.errortext = '';
 						} else {
-							that.errortext = '修改密码失败，旧密码输入错误。';
+							that.errortext = that.$t('my.error3');
 						}
 						that.ischange=false;
 					}
@@ -407,16 +407,16 @@
 						that.apple = res.data.apple;
 						that.amail = res.data.amail;
 						if (res.data.code == 201) {//未开启
-							that.zhuangtai = '你还未绑定Google身份验证器，请点击绑定按钮绑定一个吧。';
-							that.bangding = '绑定';
+							that.zhuangtai = that.$t('my.bandtxt1');
+							that.bangding = that.$t('my.band');
 							that.lingpai = false;
 						} else if(res.data.code == 202) {//未开启
-							that.zhuangtai = '你已绑定Google身份验证器。点击解绑按钮即可解绑。';
-							that.bangding = '解绑';
+							that.zhuangtai = that.$t('my.bandtxt2');
+							that.bangding = that.$t('my.unband');
 							that.lingpai = true;
 						} else {
-							that.zhuangtai = '你还未绑定Google身份验证器，请点击绑定按钮绑定一个吧。';
-							that.bangding = '绑定';
+							that.zhuangtai = that.$t('my.bandtxt3');
+							that.bangding = that.$t('my.band');
 							that.lingpai = false;
 						}
 					}
