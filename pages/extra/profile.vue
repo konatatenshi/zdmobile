@@ -79,7 +79,7 @@
 			</view>
 			<view class="cu-form-group">
 				<view class="title">QQ</view>
-				<input :placeholder="$t('profile.typeyou') + QQ" type="number" name="qq" v-model="qq"></input>
+				<input :placeholder="$t('profile.typeyou') + 'QQ'" type="number" name="qq" v-model="qq"></input>
 			</view>
 			<view class="cu-form-group">
 				<view class="title">{{$t('profile.url')}}</view>

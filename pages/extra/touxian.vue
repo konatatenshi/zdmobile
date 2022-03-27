@@ -10,11 +10,11 @@
 				<view class="cu-item shadow flex1 cu-card case">
 					<view class="image">
 						<image class="width100" :src="item.src" @tap="more(item.src,item.title,item.price)"></image>
-						<view class="cu-tag bg-blue-trans"><text>价格{{item.price}}{{$t('credit.coins')}}，销量{{item.sales}}</text></view>
+						<view class="cu-tag bg-blue-trans"><text>{{$t('shop.price')}}{{item.price}}{{$t('credit.coins')}}，{{$t('shop.sales')}}{{item.sales}}</text></view>
 						<view class="cu-bar bg-shadeBottom"> <text class="text-cut text-center text-shadow2">{{item.title}}</text>
 						<button class="cu-btn bg-green-trans margin-left" v-if="item.ifbuy==''" @tap="gmqr(item.id,item.price,item.title)">{{$t('shop.buyit')}}</button>
-						<button class="cu-btn bg-yellow margin-left" @tap="xiexia(item.id)" v-else-if="item.ifbuy.status==1">卸下</button>
-						<button class="cu-btn bg-red margin-left" @tap="shiyong(item.id)" v-else>使用</button>
+						<button class="cu-btn bg-yellow margin-left" @tap="xiexia(item.id)" v-else-if="item.ifbuy.status==1">{{$t('shop.remove')}}</button>
+						<button class="cu-btn bg-red margin-left" @tap="shiyong(item.id)" v-else>{{$t('shop.use')}}</button>
 					</view>
 					</view>
 				</view>
@@ -23,14 +23,14 @@
 		<view class="cu-modal" :class="modalName=='more'?'show':''" @tap = "hidemodal()">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
-					<view class="content">头衔详情</view>
+					<view class="content">{{$t('credit.detail')}}</view>
 					<view class="action" @tap="hidemodal()">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-top-xl padding-bottom-xl">
 					<image class="width101" :src="mpsrc"></image>
-					<text class="text-red text-xl">{{goumainame}}</text><br><text class="text-blue" v-if="shengyu>=0">价格：{{shengyu}}{{$t('credit.coins')}}</text>
+					<text class="text-red text-xl">{{goumainame}}</text><br><text class="text-blue" v-if="shengyu>=0">{{$t('shop.price')}}：{{shengyu}}{{$t('credit.coins')}}</text>
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
@@ -42,14 +42,14 @@
 		<view class="cu-modal" :class="modalName=='goumai'?'show':''" @tap = "hidemodal()">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
-					<view class="content">购买确认</view>
+					<view class="content">{{$t('shop.pconfirm')}}</view>
 					<view class="action" @tap="hidemodal()">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl text-brown">
-					确定购买<text class="text-red text-bold">{{goumainame}}</text>吗？<br>
-					将要花费<text class="text-red text-bold">{{goumaijiage}}</text>{{$t('credit.coins')}}。
+					{{$t('shop.pconfirmt1')}}<text class="text-red text-bold">{{goumainame}}</text>{{$t('shop.pconfirmt2')}}<br>
+					{{$t('shop.pconfirmt3')}}<text class="text-red text-bold">{{goumaijiage}}</text>{{$t('credit.coins')}}。
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
@@ -103,7 +103,7 @@
 							that.fenleilist = res.data.list
 						} else {
 							uni.showToast({
-								title: '加载失败',
+								title: that.$t('shop.failed'),
 								icon: 'error'
 							})
 						}
@@ -128,12 +128,12 @@
 						console.log(res.data);
 						if (res.data.code == 200) {
 							uni.showToast({
-								title: '使用成功'
+								title: that.$t('shop.medalts3')
 							})
 							that.getxunzhang(that.fenlei);
 						}else {
 							uni.showToast({
-								title: '失败',
+								title: that.$t('shop.medalts4'),
 								icon: 'error'
 							})
 						};
@@ -159,12 +159,12 @@
 						console.log(res.data);
 						if (res.data.code == 200) {
 							uni.showToast({
-								title: '卸下成功'
+								title: that.$t('shop.medalts7')
 							})
 							that.getxunzhang(that.fenlei);
 						}else {
 							uni.showToast({
-								title: '失败',
+								title: that.$t('shop.medalts8'),
 								icon: 'error'
 							})
 						};
@@ -190,22 +190,22 @@
 						console.log(res.data);
 						if (res.data.code == 200) {
 							uni.showToast({
-								title: '购买成功'
+								title: that.$t('shop.medaltishi1')
 							})
 							that.getxunzhang(that.fenlei);
 						} else if (res.data.code == 402) {
 							uni.showToast({
-								title: '已经拥有',
+								title: that.$t('shop.medaltishi2'),
 								icon: 'error'
 							})
 						} else if (res.data.code == 404) {
 							uni.showToast({
-								title: '库存不足',
+								title: that.$t('shop.medaltishi3'),
 								icon: 'error'
 							})
 						}else {
 							uni.showToast({
-								title: '金钱不足',
+								title: that.$t('shop.medaltishi4'),
 								icon: 'error'
 							})
 						};

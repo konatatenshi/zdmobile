@@ -9,10 +9,10 @@
 			<view class="bg-white margin-xs radius flex1"><image class="tup" :src="'https://zd.tiangal.com/uc_server/avatar.php?uid=' + item.uid +'&size=middle'"></image>
 			</view>
 			<view class="padding-left-sm padding-right-sm radius flex9">
-				<text class="text-red">第{{Number(index)+1}}名：</text><text class="text-blue">{{item.username}}</text>
-				<text class="text-green text-widthd">目前拥有勋章：{{item.count}}</text>
+				<text class="text-red">{{$t('extra.nob')}}{{Number(index)+1}}{{$t('extra.nob2')}}：</text><text class="text-blue">{{item.username}}</text>
+				<text class="text-green text-widthd">：{{item.count}}</text>
 			</view>
-			<view class="bg-red radius flex0 padding-left-xs padding-right-xs padding-top-sm padding-bottom-sm" @tap="touid(item.uid)">查<br>看</view>
+			<view class="bg-red radius flex0 padding-left-xs padding-right-xs padding-top-sm padding-bottom-sm" @tap="touid(item.uid)">{{$t('shop.vi')}}<br>{{$t('shop.ew')}}</view>
 		</view>
 		<view>
 			<block>
@@ -86,7 +86,7 @@
 							that.fenleilist = res.data.list.query
 						} else {
 							uni.showToast({
-								title: '加载失败',
+								title: that.$t('shop.failed'),
 								icon: 'error'
 							})
 						}
@@ -101,11 +101,11 @@
 			},
 			fttx(jiage,leixing,jilv){
 				if(leixing==1){
-					this.texiaoleixing = '金币';
+					this.texiaoleixing = this.$t('credit.coins');
 				}else if(leixing==2){
-					this.texiaoleixing = '点币';
+					this.texiaoleixing = this.$t('credit.credits');
 				}else if(leixing==3){
-					this.texiaoleixing = '宠物经验';
+					this.texiaoleixing = this.$t('credit.exp');
 				}
 				this.texiaojifen = jiage;
 				this.texiaogailv = jilv;
@@ -113,11 +113,11 @@
 			},
 			httx(jiage,leixing,jilv){
 				if(leixing==1){
-					this.texiaoleixing = '金币';
+					this.texiaoleixing = this.$t('credit.coins');
 				}else if(leixing==2){
-					this.texiaoleixing = '点币';
+					this.texiaoleixing = this.$t('credit.credits');
 				}else if(leixing==3){
-					this.texiaoleixing = '宠物经验';
+					this.texiaoleixing = this.$t('credit.exp');
 				}
 				this.texiaojifen = jiage;
 				this.texiaogailv = jilv;

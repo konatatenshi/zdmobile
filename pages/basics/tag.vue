@@ -4,7 +4,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
 			<block slot="backText">{{$t('api.back')}}</block>
-			<block slot="content">隐私协议及条约</block>
+			<block slot="content">{{$t('register.privary')}}</block>
 		</cu-custom>
 		<web-view :src="url"></web-view>
 	</view>
@@ -16,6 +16,7 @@
 			return {
 				url: '',
 				tag: 0,
+				systemLocale: '',
 				title: "排行榜"
 			};
 		},
@@ -62,11 +63,20 @@
 		},
 		onLoad(e) {
 			// 获取传递过来的链接
+			this.systemLocale = uni.getLocale();
+			console.log(this.systemLocale);
+			if(this.systemLocale == 'en'){
+				this.fj = 'en';
+			}else if(this.systemLocale == 'zh-Hant'){
+				this.fj = 'tw';
+			}else{
+				this.fj = '';
+			}
 			this.tag = e.id;
 			if(this.tag == 1){
-				this.url = getApp().globalData.zddomain + 'm/about.html';
+				this.url = getApp().globalData.zddomain + 'm/about' + this.fj + '.html';
 			}else{
-				this.url = getApp().globalData.zddomain + 'm/private.html';
+				this.url = getApp().globalData.zddomain + 'm/private' + this.fj + '.html';
 			}
 			console.log(this.url)
 			console.log(e.url)

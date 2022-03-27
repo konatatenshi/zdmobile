@@ -18,84 +18,84 @@
 		<view class="login-form">
 			<form @submit="formSubmit">
 				<view class="form-input">
-					<input type="text" name="text" value="" placeholder="用户名/手机号" />
+					<input type="text" name="text" value="" :placeholder="$t('register.username') + '/' + $t('register.phone')" />
 				</view>
 				<view class="form-input">
-					<input type="password" name="password" value="" placeholder="密码" @focus="passwordF_B"
+					<input type="password" name="password" value="" :placeholder="$t('register.password')" @focus="passwordF_B"
 						@blur="passwordF_B" />
 				</view>
 				<view class="form-input" style="display: none;">
-					<input type="text" name="questionid" :value="index" placeholder="安全问题" />
+					<input type="text" name="questionid" :value="index" :placeholder="$t('register.security')" />
 				</view>
 				<view class="form-input" style="display: none;">
-					<input type="text" name="answer" :value="yanzhengput" placeholder="安全回答" />
+					<input type="text" name="answer" :value="yanzhengput" :placeholder="$t('register.security2')" />
 				</view>
 				<view class="form-input" style="display: none;">
-					<input type="text" name="authcode" :value="authcode" placeholder="验证码" />
+					<input type="text" name="authcode" :value="authcode" :placeholder="$t('register.verifycode')" />
 				</view>
 				<view class="flex">
 					<button :disabled="formsub2?true:false" class="flex-sub cu-btn line-cyan lg shadow"
 						@tap="register"><text
-							:class="formsub2?'cuIcon-loading2 cuIconfont-spin':''"></text>注册</button>
+							:class="formsub2?'cuIcon-loading2 cuIconfont-spin':''"></text>{{$t('register.register')}}</button>
 					<button :disabled="formsub&&type==0?true:false" class="flex-sub cu-btn bg-blue lg shadow"
 						form-type="submit"><text
-							:class="formsub&&type==0?'cuIcon-loading2 cuIconfont-spin':''"></text>登录</button>
+							:class="formsub&&type==0?'cuIcon-loading2 cuIconfont-spin':''"></text>{{$t('register.login')}}</button>
 				</view>
 				<view class="padding-top">
 					<button class="grid text-center col-1 cu-btn line-green lg shadow"
-						@tap="visitor"></text>游客浏览</button>
+						@tap="visitor"></text>{{$t('register.guest')}}</button>
 				</view>
 				<view class="padding-top" v-if="qq==1">
 					<button :disabled="formsub&&type==2?true:false" class="grid text-center cu-btn bg-cyan shadow" @tap="qqlogin()"><text
-							:class="formsub&&type==2?'cuIcon-loading2 cuIconfont-spin':''"></text><image class="logo" src="../../static/images/QQ.png"></image>点击通过QQ登录</button>
+							:class="formsub&&type==2?'cuIcon-loading2 cuIconfont-spin':''"></text><image class="logo" src="../../static/images/QQ.png"></image>{{$t('register.signwithqq')}}</button>
 				</view>
 				<view class="padding-top" v-if="platform==2">
 					<button :disabled="formsub&&type==1?true:false" class="grid text-center cu-btn bg-green shadow" @tap="googlelogin"><text
-							:class="formsub&&type==1?'cuIcon-loading2 cuIconfont-spin':''"></text><image class="logo" src="../../static/img/google.svg"></image>点击通过Google登录</button>
+							:class="formsub&&type==1?'cuIcon-loading2 cuIconfont-spin':''"></text><image class="logo" src="../../static/img/google.svg"></image>{{$t('register.signwithgoogle')}}</button>
 				</view>
 				<view class="padding-top" v-if="platform==1">
 					<button :disabled="formsub&&type==1?true:false" class="grid text-center cu-btn bg-black shadow" @tap="applelogin"><text
-							:class="formsub&&type==1?'cuIcon-loading2 cuIconfont-spin':''"></text><image class="logo" src="../../static/img/Apple_logo_grey.svg"></image>点击通过Apple登录</button>
+							:class="formsub&&type==1?'cuIcon-loading2 cuIconfont-spin':''"></text><image class="logo" src="../../static/img/Apple_logo_grey.svg"></image>{{$t('register.signwithapple')}}</button>
 				</view>
 			</form>
 		</view>
 		<view class="cu-modal" :class="modalName=='loginerror'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar bg-white justify-end">
-					<view class="content">注册登录错误</view>
+					<view class="content">{{$t('register.signerror')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl">
-					错误原因：{{error.reason}}<br />
-					错误ID：{{error.reasoncode}}。
+					{{$t('register.errorreason')}}：{{error.reason}}<br />
+					ID：{{error.reasoncode}}。
 				</view>
 			</view>
 		</view>
 		<view class="cu-modal" :class="modalName=='yanzhenghuida'?'show':''">
 			<view class="cu-dialog">
 				<view class="cu-bar bg-white justify-end">
-					<view class="content">补充：请完善验证问题及答案</view>
+					<view class="content">{{$t('register.security')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl">
 					<view class="cu-form-group margin-top">
-						<view class="title">验证问题</view>
+						<view class="title">{{$t('register.security2')}}</view>
 						<picker @change="questionchange" :value="index" :range="picker">
 							<view class="picker">
-								{{index>0?picker[index]:'请选择安全提问'}}
+								{{index>0?picker[index]:$t('register.choose1')}}
 							</view>
 						</picker>
 					</view>
 					<view class="cu-form-group">
-						<view class="title">验证回答</view>
-						<input placeholder="请输入验证回答" name="input" :value="yanzhengput" @input="changeanswer"></input>
+						<view class="title">{{$t('register.securitytitle')}}</view>
+						<input :placeholder="$t('register.choose2')" name="input" :value="yanzhengput" @input="changeanswer"></input>
 					</view>
 					<view class="padding flex flex-direction">
-						<button class="cu-btn bg-blue" @tap="hideModal">点此关闭窗口并重新点击登录框</button>
+						<button class="cu-btn bg-blue" @tap="hideModal">{{$t('register.choose3')}}</button>
 					</view>
 				</view>
 			</view>
@@ -103,19 +103,19 @@
 		<view class="cu-modal" :class="modalName=='yanzhengcode'?'show':''">
 			<view class="cu-dialog">
 				<view class="cu-bar bg-white justify-end">
-					<view class="content">Google身份验证器</view>
+					<view class="content">{{$t('register.googleauth')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl">
 					<view class="cu-form-group">
-						<view class="title">验证码</view>
-						<input type="number" placeholder="请输入6位数验证码" name="input" :value="authcode" @input="changeauth"></input>
+						<view class="title">{{$t('register.verifycode')}}</view>
+						<input type="number" :placeholder="$t('my.verifycode')" name="input" :value="authcode" @input="changeauth"></input>
 					</view>
-					<view class="text-gray text-sm"><text class="cuIcon-infofill margin-right-xs"></text>帮助：你的账号已开启Google身份验证，请输入Google身份验证器里的6位验证码登录。如不小心遗忘了验证器，请点击手机重置密码即可。</view>
+					<view class="text-gray text-sm"><text class="cuIcon-infofill margin-right-xs"></text>{{$t('register.googleauthtxt')}}</view>
 					<view class="padding flex flex-direction">
-						<button class="cu-btn bg-blue" @tap="hideModal">点此关闭窗口并重新点击登录框</button>
+						<button class="cu-btn bg-blue" @tap="hideModal">{{$t('register.choose3')}}</button>
 					</view>
 				</view>
 			</view>
@@ -123,15 +123,15 @@
 		<view class="cu-modal" :class="modalName=='chongzhimima'?'show':''">
 			<view class="cu-dialog">
 				<view class="cu-bar bg-white justify-end">
-					<view class="content">请输入手机号及新密码</view>
+					<view class="content">{{$t('register.mobilepassword')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding">
 					<view class="cu-form-group">
-						<view class="title">手机号</view>
-						<input type="tel" placeholder="请输入手机号" name="mobilenum" v-model="phonenumber" value=""
+						<view class="title">{{$t('register.mobilephone')}}</view>
+						<input type="tel" :placeholder="$t('register.mobilephonetxt')" name="mobilenum" v-model="phonenumber" value=""
 							@input="changephonenumber"></input>
 						<picker class="shoujiquma" @change="Pickcountry" :value="addressData.countryid"
 							:range="countryList">
@@ -146,8 +146,8 @@
 						</picker>
 					</view>
 					<view class="cu-form-group">
-						<view class="title">验证码</view>
-						<input type="number" placeholder="输入验证码" name="yanzhengma" maxlength="6" v-model="yanzhengma"
+						<view class="title">{{$t('register.verifycode')}}</view>
+						<input type="number" :placeholder="$t('my.verifycode')" name="yanzhengma" maxlength="6" v-model="yanzhengma"
 							value="" @input="shuruyanzhengma"></input>
 						<button class='cu-btn bg-green shadow' @tap="yzm" :disabled="codeFlag?false:true"
 							:class="{activeCode:codeFlag}"><text
@@ -156,13 +156,13 @@
 					<xlg-slideCode :session_id="session_id" v-if="slideCode_show" @close="slideCode_show = false"
 						@success="slideCode_success"></xlg-slideCode>
 					<view class="cu-form-group">
-						<view class="title">设置新密码</view>
-						<input placeholder="请输入新密码" type="password" name="newpasswd" v-model="newpasswd" value=""
+						<view class="title">{{$t('register.newpassword')}}</view>
+						<input :placeholder="$t('register.newpassword2')" type="password" name="newpasswd" v-model="newpasswd" value=""
 							@input="shezhinewpass"></input>
 					</view>
 					<view class="padding flex flex-direction">
 						<button class="cu-btn bg-blue" @tap="verifycode" :disabled="yzFlag?false:true"><text
-								:class="formsub4?'cuIcon-loading2 cuIconfont-spin':''"></text>验证并重置</button>
+								:class="formsub4?'cuIcon-loading2 cuIconfont-spin':''"></text>{{$t('register.verifyit')}}</button>
 					</view>
 				</view>
 			</view>
@@ -170,13 +170,13 @@
 		<view class="cu-modal" :class="modalName=='yzcg'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar bg-white justify-end">
-					<view class="content">修改密码成功</view>
+					<view class="content">{{$t('register.modifyyes')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl">
-					您已成功修改密码，新密码是：<br /><text class="text-black text-bold">{{displaynewpass}}</text>。
+					{{$t('register.modifyyestxt')}}：<br /><text class="text-black text-bold">{{displaynewpass}}</text>。
 				</view>
 				<view class="cu-bar bg-white justify-end">
 					<view class="action">
@@ -189,7 +189,7 @@
 		<view class="cu-modal display" :class="modalName=='displaynormal'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar bg-white justify-end">
-					<view class="content">注册新账号</view>
+					<view class="content">{{$t('register.registernew')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
@@ -197,21 +197,21 @@
 				<view class="padding-xl">
 					<view class="cu-avatar xl round margin-left" style="background-image:url('https://zd.tiangal.com/uc_server/images/randuser/big/0.jpg');"></view>
 					<view class="cu-form-group margin-top">
-						<view class="title">用户名</view>
-						<input placeholder="请输入用户名" v-model="displayname" type="text" name="input"></input>
+						<view class="title">{{$t('register.username')}}</view>
+						<input :placeholder="$t('register.registertxt1')" v-model="displayname" type="text" name="input"></input>
 					</view>
 					<view class="cu-form-group">
-						<view class="title">密码</view>
-						<input placeholder="请输入你的密码(≥8位)" v-model="passwords" type="password" name="input"></input>
+						<view class="title">{{$t('register.password')}}</view>
+						<input :placeholder="$t('register.registertxt2')" v-model="passwords" type="password" name="input"></input>
 					</view>
 					<view class="cu-form-group">
-						<view class="title">邮箱</view>
-						<input placeholder="请输入你的邮箱" v-model="mail" type="text" name="input"></input>
+						<view class="title">{{$t('register.mail')}}</view>
+						<input :placeholder="$t('register.registertxt3')" v-model="mail" type="text" name="input"></input>
 					</view>
 					
 						<view class="cu-form-group">
-							<view class="title">手机号</view>
-							<input type="tel" placeholder="请输入手机号" name="mobilenum" v-model="phonenumber" value=""
+							<view class="title">{{$t('register.mobilephone')}}</view>
+							<input type="tel" :placeholder="$t('register.mobilephonetxt')" name="mobilenum" v-model="phonenumber" value=""
 								@input="changephonenumber"></input>
 							<picker class="shoujiquma" @change="Pickcountry" :value="addressData.countryid"
 								:range="countryList">
@@ -226,8 +226,8 @@
 							</picker>
 						</view>
 						<view class="cu-form-group">
-							<view class="title">验证码</view>
-							<input type="number" placeholder="输入验证码" name="yanzhengma" maxlength="6" v-model="yanzhengma"
+							<view class="title">{{$t('register.verifycode')}}</view>
+							<input type="number" :placeholder="$t('register.registertxt4')" name="yanzhengma" maxlength="6" v-model="yanzhengma"
 								value="" @input="shuruyanzhengma"></input>
 							<button class='cu-btn bg-green shadow' @tap="yzm" :disabled="codeFlag?false:true"
 								:class="{activeCode:codeFlag}"><text
@@ -250,7 +250,7 @@
 		<view class="cu-modal displaygoogle" :class="modalName=='displayapple'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar bg-white justify-end">
-					<view class="content">注册新账号</view>
+					<view class="content">{{$t('register.registernew')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
@@ -258,17 +258,17 @@
 				<view class="padding-xl">
 					<view class="cu-avatar xl round margin-left" style="background-image:url('https://zd.tiangal.com/uc_server/images/randuser/big/0.jpg');"></view>
 					<view class="cu-form-group margin-top">
-						<view class="title">用户名</view>
-						<input placeholder="请输入用户名" v-model="displayname" type="text" name="input"></input>
+						<view class="title">{{$t('register.username')}}</view>
+						<input :placeholder="$t('register.registertxt1')" v-model="displayname" type="text" name="input"></input>
 					</view>
 					<view class="cu-form-group">
-						<view class="title">密码</view>
-						<input placeholder="请输入你的密码(≥8位)" v-model="passwords" type="password" name="input"></input>
+						<view class="title">{{$t('register.password')}}</view>
+						<input :placeholder="$t('register.registertxt2')" v-model="passwords" type="password" name="input"></input>
 					</view>
 					
 						<view class="cu-form-group">
-							<view class="title">手机号</view>
-							<input type="tel" placeholder="请输入手机号" name="mobilenum" v-model="phonenumber" value=""
+							<view class="title">{{$t('register.mobilephone')}}</view>
+							<input type="tel" :placeholder="$t('register.mobilephonetxt')" name="mobilenum" v-model="phonenumber" value=""
 								@input="changephonenumber"></input>
 							<picker class="shoujiquma" @change="Pickcountry" :value="addressData.countryid"
 								:range="countryList">
@@ -283,8 +283,8 @@
 							</picker>
 						</view>
 						<view class="cu-form-group">
-							<view class="title">验证码</view>
-							<input type="number" placeholder="输入验证码" name="yanzhengma" maxlength="6" v-model="yanzhengma"
+							<view class="title">{{$t('register.verifycode')}}</view>
+							<input type="number" :placeholder="$t('register.registertxt4')" name="yanzhengma" maxlength="6" v-model="yanzhengma"
 								value="" @input="shuruyanzhengma"></input>
 							<button class='cu-btn bg-green shadow' @tap="yzm" :disabled="codeFlag?false:true"
 								:class="{activeCode:codeFlag}"><text
@@ -307,7 +307,7 @@
 		<view class="cu-modal displaygoogle" :class="modalName=='displaygoogle'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar bg-white justify-end">
-					<view class="content">注册新账号</view>
+					<view class="content">{{$t('register.registernew')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
@@ -315,17 +315,17 @@
 				<view class="padding-xl">
 					<view class="cu-avatar xl round margin-left" :style="'background-image:url(' + useravatar + ');'"></view>
 					<view class="cu-form-group margin-top">
-						<view class="title">用户名</view>
-						<input placeholder="请输入用户名" v-model="displayname" type="text" name="input"></input>
+						<view class="title">{{$t('register.username')}}</view>
+						<input :placeholder="$t('register.registertxt1')" v-model="displayname" type="text" name="input"></input>
 					</view>
 					<view class="cu-form-group">
-						<view class="title">密码</view>
-						<input placeholder="请输入你的密码(≥8位)" v-model="passwords" type="password" name="input"></input>
+						<view class="title">{{$t('register.password')}}</view>
+						<input :placeholder="$t('register.registertxt2')" v-model="passwords" type="password" name="input"></input>
 					</view>
 					
 						<view class="cu-form-group">
-							<view class="title">手机号</view>
-							<input type="tel" placeholder="请输入手机号" name="mobilenum" v-model="phonenumber" value=""
+							<view class="title">{{$t('register.mobilephone')}}</view>
+							<input type="tel" :placeholder="$t('register.mobilephonetxt')" name="mobilenum" v-model="phonenumber" value=""
 								@input="changephonenumber"></input>
 							<picker class="shoujiquma" @change="Pickcountry" :value="addressData.countryid"
 								:range="countryList">
@@ -340,8 +340,8 @@
 							</picker>
 						</view>
 						<view class="cu-form-group">
-							<view class="title">验证码</view>
-							<input type="number" placeholder="输入验证码" name="yanzhengma" maxlength="6" v-model="yanzhengma"
+							<view class="title">{{$t('register.verifycode')}}</view>
+							<input type="number" :placeholder="$t('register.registertxt4')" name="yanzhengma" maxlength="6" v-model="yanzhengma"
 								value="" @input="shuruyanzhengma"></input>
 							<button class='cu-btn bg-green shadow' @tap="yzm" :disabled="codeFlag?false:true"
 								:class="{activeCode:codeFlag}"><text
@@ -364,13 +364,13 @@
 		<view class="cu-modal" :class="modalName=='datizhuce'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar bg-white justify-end">
-					<view class="content">回答注册</view>
+					<view class="content">{{$t('register.regq')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-sm">
-					<view><text class="text-lg text-blue">请回答下列问题才可注册({{datinum + 1}}/8)</text></view>
+					<view><text class="text-lg text-blue">{{$t('register.regqtxt')}}({{datinum + 1}}/8)</text></view>
 					<view><text class="text-xl text-red">{{timu}}</text></view>
 					<radio-group class="block" @change="RadioChange">
 						<view class="cu-form-group">
@@ -397,7 +397,7 @@
 				</view>
 				<view class="cu-bar bg-white justify-end">
 					<view v-if="datinum<7" class="action">
-						<button class="cu-btn bg-green margin-left" @tap="dati">下一道</button>
+						<button class="cu-btn bg-green margin-left" @tap="dati">{{$t('register.next')}}</button>
 					</view>
 					<view v-else class="action">
 						<button class="cu-btn bg-green margin-left" @tap="tijiao">{{$t('api.submit')}}</button>
@@ -408,18 +408,18 @@
 		<view class="cu-load load-modal" v-if="loadModal">
 			<!-- <view class="cuIcon-emojifill text-orange"></view> -->
 			<image src="../../static/img/loadzd.gif" style="border-radius: 50%;" mode="aspectFit"></image>
-			<view class="gray-text">登录中...</view>
+			<view class="gray-text">{{$t('register.logging')}}</view>
 		</view>
 		<view class="flex padding-top padding-left padding-right justify-between foot">
 			<checkbox-group class="block" @change="CheckboxChange">
 				<view class="cu-form-group">
 					<checkbox :class="checked?'checked':''" :checked="checked?true:false" value="A"></checkbox>
-					<view class="title2">我已认真阅读并同意<a href="#" @tap="about">《用户服务协议》</a>及<a href="#2" @tap="private">《隐私政策》</a>全部条款。</view>
+					<view class="title2">{{$t('register.agreet1')}}<a href="#" @tap="about">{{$t('register.agreet2')}}</a>{{$t('register.agreet3')}}<a href="#2" @tap="private">{{$t('register.agreet4')}}</a>{{$t('register.agreet5')}}</view>
 				</view>
 			</checkbox-group>
 		</view>
 		<view class="flex padding-left justify-between foot">
-			<view class="padding-sm margin-xs radius" @tap="resetpass">手机重置密码</view>
+			<view class="padding-sm margin-xs radius" @tap="resetpass">{{$t('register.resetpassword')}}</view>
 			<!-- <view class="padding-sm margin-xs radius" @tap="qqlogin">QQ登录(外部跳转)</view> -->
 		</view>
 	</view>
@@ -481,7 +481,7 @@
 				ticketnew: '',
 				randstrnew: '',
 				newpasswd: '',
-				codeTxt: '获取验证码',
+				codeTxt: this.$t('register.getcode'),
 				codeFlag: true, // 控制按钮是否可点击
 				yzFlag: true,
 				result: {},
@@ -520,7 +520,7 @@
 				if (this.phonenumber == '') {
 					this.error.reasoncode = 'error0200';
 					this.modalName = 'loginerror';
-					this.error.reason = '你还未输入手机号';
+					this.error.reason = this.$t('register.error0200');
 					return;
 				}
 				if (this.codeFlag == false) {
@@ -529,7 +529,7 @@
 				if (!(/^1[3456789]\d{9}$/.test(this.phonenumber)) && this.addressData.countrycode == 86) {
 					this.error.reasoncode = 'error0201';
 					this.modalName = 'loginerror';
-					this.error.reason = '你输入的手机号错误';
+					this.error.reason = this.$t('register.error0201');
 					return;
 				}
 				try {
@@ -555,7 +555,7 @@
 				if (this.phonenumber == '') {
 					this.error.reasoncode = 'error0200';
 					this.modalName = 'loginerror';
-					this.error.reason = '你还未输入手机号';
+					this.error.reason = this.$t('register.error0200');
 					return;
 				}
 				if (this.codeFlag == false) {
@@ -564,7 +564,7 @@
 				if (!(/^1[3456789]\d{9}$/.test(this.phonenumber)) && this.addressData.countrycode == 86) {
 					this.error.reasoncode = 'error0201';
 					this.modalName = 'loginerror';
-					this.error.reason = '你输入的手机号错误';
+					this.error.reason = this.$t('register.error0201');
 					return;
 				}
 				if (this.slideCode_yanzheng === true) { //图形滑块是否验证通过
@@ -589,15 +589,15 @@
 							if (res.data.code == 2001) { //发送成功
 								this.formsub3 = false;
 								let time = 60
-								this.codeTxt = '重新获取' + time
+								this.codeTxt = this.$t('register.getcode2') + time
 								let timer = setInterval(() => {
-									this.codeTxt = '获取验证码'
+									this.codeTxt = this.$t('register.getcode')
 									if (time == 1) {
 										this.codeFlag = true;
 										clearInterval(timer)
 									} else {
 										time--
-										this.codeTxt = '重新获取' + time
+										this.codeTxt = this.$t('register.getcode2') + time
 									}
 
 								}, 1000)
@@ -605,7 +605,7 @@
 								this.slideCode_yanzheng = false
 								this.error.reasoncode = 'error0203';
 								this.modalName = 'loginerror';
-								this.error.reason = '号码错误，请重新输入';
+								this.error.reason = this.$t('register.error0203');
 								this.formsub3 = false;
 								this.codeFlag = true;
 								this.phonenumber = '';
@@ -616,9 +616,9 @@
 								this.error.reasoncode = 'error0204';
 								this.modalName = 'loginerror';
 								if(this.type==0){
-									this.error.reason = '号码不存在，无法找回';
+									this.error.reason = this.$t('register.error0204');
 								}else{
-									this.error.reason = '号码已存在，无法注册';
+									this.error.reason = this.$t('register.error02042');
 								}
 								this.formsub3 = false;
 								this.codeFlag = true;
@@ -629,7 +629,7 @@
 								this.slideCode_yanzheng = false
 								this.error.reasoncode = 'error0205';
 								this.modalName = 'loginerror';
-								this.error.reason = '号码违规，请重新输入';
+								this.error.reason = this.$t('register.error0205');
 								this.formsub3 = false;
 								this.codeFlag = true;
 								this.phonenumber = '';
@@ -639,7 +639,7 @@
 								this.slideCode_yanzheng = false
 								this.error.reasoncode = 'error0206';
 								this.modalName = 'loginerror';
-								this.error.reason = '你已经在1个月内修改过密码超过3次，请稍后再修改';
+								this.error.reason = this.$t('register.error0206');
 								this.formsub3 = false;
 								this.codeFlag = true;
 								this.phonenumber = '';
@@ -820,14 +820,14 @@
 					this.redati = 0;
 					this.modalName = '';
 					uni.showToast({
-						title: '答题通过',
+						title: this.$t('register.qapass'),
 						duration: 2000
 					})
 				}else{
 					this.canreg = 0;
 					this.error.reasoncode = 'error0301';
 					this.modalName = 'loginerror';
-					this.error.reason = '回答失败，你答对了' + this.zhengque + '道，请重新再试。';
+					this.error.reason = this.$t('register.qafail') + this.zhengque + this.$t('register.qafail2');
 				}
 			},
 			resetpass(e) {
@@ -852,7 +852,7 @@
 				if(!this.checked){
 					this.error.reasoncode = 'error0300';
 					this.modalName = 'loginerror';
-					this.error.reason = '请阅读并同意用户协议及隐私政策后方可继续';
+					this.error.reason = this.$t('register.error0300');
 					this.formsub2 = false;
 					return;
 				}
@@ -865,7 +865,7 @@
 				if(!this.checked){
 					this.error.reasoncode = 'error0300';
 					this.modalName = 'loginerror';
-					this.error.reason = '请阅读并同意用户协议及隐私政策后方可继续';
+					this.error.reason = this.$t('register.error0300');
 					this.formsub2 = false;
 					return;
 				}
@@ -905,33 +905,36 @@
 							this.loadModal = false;
 							if (res.data.result == 'error0100') {
 								this.modalName = 'loginerror';
-								this.error.reason = '登录太频繁，请稍后再试';
+								this.error.reason = this.$t('register.error0100');
 							} else if (res.data.result == 'error0011') {
 								this.modalName = 'loginerror';
-								this.error.reason = '您输入的用户登陆名不存在';
+								this.error.reason = this.$t('register.error00112');
 							} else if (res.data.result == 'error00112') {
 								this.modalName = 'loginerror';
-								this.error.reason = '您输入的用户名不存在';
+								this.error.reason = this.$t('register.error00112');
 							} else if (res.data.result == 'error0012') {
 								this.modalName = 'loginerror';
-								this.error.reason = '您输入的密码错误';
+								this.error.reason = this.$t('register.error0012');
 							} else if (res.data.result == 'error0013') {
-								this.error.reason = '验证问题错误';
+								this.error.reason = this.$t('register.error0013');
 								this.modalName = 'yanzhenghuida';
 							} else if (res.data.result == 'error016') {
 								this.error.reason = '服务过期';
 								this.modalName = 'loginerror';
 							} else if (res.data.result == 'error06:username') {
-								this.error.reason = '您还未输入用户名';
+								this.error.reason = this.$t('register.error06u');
+								this.modalName = 'loginerror';
+							} else if (res.data.result == 'error06:password') {
+								this.error.reason = this.$t('register.error06p');
 								this.modalName = 'loginerror';
 							} else if (res.data.result == 'error01004') {
-								this.error.reason = '因验证失败次数过多，用户已锁定，请通过手机找回密码解锁';
+								this.error.reason = this.$t('register.error01004');
 								this.modalName = 'loginerror';
 							} else if (res.data.result == 'error01005') {
-								this.error.reason = '验证码错误，请输入验证码以继续';
+								this.error.reason = this.$t('register.error01005');
 								this.modalName = 'yanzhengcode';
 							} else if (res.data.result == 'error01006') {
-								this.error.reason = '安全锁定：您需要手机重置密码才可以继续登录。';
+								this.error.reason = this.$t('register.error01006');
 								this.modalName = 'loginerror';
 							} else {
 								this.error.reason = res.data.reason;
@@ -940,7 +943,7 @@
 							this.formsub = false;
 							console.log(this.modalName);
 						} else if (status == 1) {
-							this.error.reason = '您的账号被禁止登入';
+							this.error.reason = this.$t('register.error0102');
 							this.modalName = 'loginerror';
 							this.error.reasoncode = 'error0102';
 						} else if (res.data.code == 200) {
@@ -992,7 +995,7 @@
 				if(!this.checked){
 					this.error.reasoncode = 'error0300';
 					this.modalName = 'loginerror';
-					this.error.reason = '请阅读并同意用户协议及隐私政策后方可继续';
+					this.error.reason = this.$t('register.error0300');
 					this.formsub2 = false;
 					return;
 				}
@@ -1022,7 +1025,7 @@
 						if (res.data.canreg == 0) {
 							this.error.reasoncode = 'error0101';
 							this.modalName = 'loginerror';
-							this.error.reason = '论坛目前关闭注册，请稍后再试或尝试Google/Apple账号直接登入。';
+							this.error.reason = this.$t('register.error0101');
 							this.formsub2 = false;
 						}else{
 							if(this.canreg==1){
@@ -1043,7 +1046,7 @@
 				if(this.passwords.length<8){
 					this.error.reasoncode = 'error0220';
 					this.modalName = 'loginerror';
-					this.error.reason = '密码需要大于8个字符';
+					this.error.reason = this.$t('register.error0220');
 					this.formsub2 = false;
 					return;
 				}
@@ -1074,28 +1077,28 @@
 						if (res.data.code == 502) {
 							this.error.reasoncode = 'error0217';
 							this.modalName = 'loginerror';
-							this.error.reason = '注册失败，可能关闭了注册。';
+							this.error.reason = this.$t('register.error0217');
 							this.formsub2 = false;
 						}else if (res.data.code == 503) {
 							this.error.reasoncode = 'error0218';
 							this.modalName = 'loginerror';
-							this.error.reason = '注册失败，验证码错误。';
+							this.error.reason = this.$t('register.error0218');
 							this.formsub2 = false;
 						}else if (res.data.code == 504) {
 							this.error.reasoncode = 'error0219';
 							this.modalName = 'loginerror';
-							this.error.reason = '注册失败，Google Token超时。请尝试重新登录';
+							this.error.reason = this.$t('register.error0219');
 							this.formsub2 = false;
 						}else if (res.data.code == 505) {
 							this.error.reasoncode = 'error0220';
 							this.modalName = 'loginerror';
-							this.error.reason = '注册失败，用户名重复，请尝试更换一个用户名';
+							this.error.reason = this.$t('register.error0220');
 							this.formsub2 = false;
 						}else{
 							that.formsub2 = false;
 							that.modalName = null;
 							uni.showToast({
-								title: '注册成功',
+								title: this.$t('register.regsuc'),
 								duration: 2000
 							});
 						}
@@ -1110,7 +1113,7 @@
 				if(this.passwords.length<8){
 					this.error.reasoncode = 'error0220';
 					this.modalName = 'loginerror';
-					this.error.reason = '密码需要大于8个字符';
+					this.error.reason = this.$t('register.error0220');
 					this.formsub2 = false;
 					return;
 				}
@@ -1142,33 +1145,33 @@
 						if (res.data.code == 502) {
 							this.error.reasoncode = 'error0217';
 							this.modalName = 'loginerror';
-							this.error.reason = '注册失败，可能关闭了注册。';
+							this.error.reason = this.$t('register.error0217');
 							this.formsub2 = false;
 						}else if (res.data.code == 503) {
 							this.error.reasoncode = 'error0218';
 							this.modalName = 'loginerror';
-							this.error.reason = '注册失败，验证码错误。';
+							this.error.reason = this.$t('register.error0218');
 							this.formsub2 = false;
 						}else if (res.data.code == 504) {
 							this.error.reasoncode = 'error0219';
 							this.modalName = 'loginerror';
-							this.error.reason = '注册失败，Token超时。请尝试重新登录';
+							this.error.reason = this.$t('register.error0219');
 							this.formsub2 = false;
 						}else if (res.data.code == 506) {
 							this.error.reasoncode = 'error0221';
 							this.modalName = 'loginerror';
-							this.error.reason = '注册失败，邮箱格式非法';
+							this.error.reason = this.$t('register.error0221');
 							this.formsub2 = false;
 						}else if (res.data.code == 505) {
 							this.error.reasoncode = 'error0220';
 							this.modalName = 'loginerror';
-							this.error.reason = '注册失败，用户名重复，请尝试更换一个用户名';
+							this.error.reason = this.$t('register.error0220');
 							this.formsub2 = false;
 						}else{
 							that.formsub2 = false;
 							that.modalName = null;
 							uni.showToast({
-								title: '注册成功',
+								title: this.$t('register.regsuc'),
 								duration: 2000
 							});
 						}
@@ -1236,7 +1239,7 @@
 									}
 								});
 							}else if (res.data.code == 500) {
-								this.error.reason = '此Google账号邮箱已注册，但未绑定账号。请登录账号前往密码安全绑定Google即可登录。';
+								this.error.reason = this.$t('register.error0209');
 								this.modalName = 'loginerror';
 								this.error.reasoncode = 'error0209';
 							}else if (res.data.code == 400) {
@@ -1324,7 +1327,7 @@
 									}
 								});
 							}else if (res.data.code == 500) {
-								this.error.reason = '此Apple账号邮箱已注册，但未绑定账号。请登录账号前往密码安全绑定Apple即可登录。';
+								this.error.reason = this.$t('register.error02092');
 								this.modalName = 'loginerror';
 								this.error.reasoncode = 'error0209';
 							}else if (res.data.code == 400) {
@@ -1392,14 +1395,14 @@
 							let status = res.data.status;
 						}
 						if (res.data.code == 500) {
-							this.error.reason = '您的邮箱已经注册，但您未绑定Google账号，请登录你的邮箱并绑定再尝试登录吧。';
+							this.error.reason = this.$t('register.error0208');
 							this.modalName = 'loginerror';
 							this.error.reasoncode = 'error0208';
 							this.formsub = false;
 						} else if (res.data.code == 501) {
 							this.modalName = 'zhucename';
 						} else if (status == 1) {
-							this.error.reason = '您的账号被禁止登入';
+							this.error.reason = this.$t('register.error0102');
 							this.modalName = 'loginerror';
 							this.error.reasoncode = 'error0102';
 						} else if (res.data.code == 200) {
@@ -1443,7 +1446,7 @@
 				if(!this.checked){
 					this.error.reasoncode = 'error0300';
 					this.modalName = 'loginerror';
-					this.error.reason = '请阅读并同意用户协议及隐私政策后方可继续';
+					this.error.reason = this.$t('register.error0300');
 					this.formsub2 = false;
 					return;
 				}
@@ -1464,7 +1467,7 @@
 				if(!this.checked){
 					this.error.reasoncode = 'error0300';
 					this.modalName = 'loginerror';
-					this.error.reason = '请阅读并同意用户协议及隐私政策后方可继续';
+					this.error.reason = this.$t('register.error0300');
 					this.formsub2 = false;
 					return;
 				}
@@ -1498,7 +1501,7 @@
 				if (this.newpasswd.length < 7) {
 					this.error.reasoncode = 'error0214';
 					this.modalName = 'loginerror';
-					this.error.reason = '新密码少于7位，请重新输入';
+					this.error.reason = this.$t('register.error0214');
 					this.formsub4 = false;
 					this.phonenumber = '';
 					this.yanzhengma = '';
@@ -1509,7 +1512,7 @@
 				if (this.yanzhengma.length < 6) {
 					this.error.reasoncode = 'error0215';
 					this.modalName = 'loginerror';
-					this.error.reason = '验证码少于6位，请重新输入';
+					this.error.reason = this.$t('register.error0215');
 					this.formsub4 = false;
 					this.phonenumber = '';
 					this.yanzhengma = '';
@@ -1520,7 +1523,7 @@
 				if (this.phonenumber.length < 8) {
 					this.error.reasoncode = 'error0216';
 					this.modalName = 'loginerror';
-					this.error.reason = '手机号少于8位，请重新输入';
+					this.error.reason = this.$t('register.error0216');
 					this.formsub4 = false;
 					this.phonenumber = '';
 					this.yanzhengma = '';
@@ -1569,7 +1572,7 @@
 						} else if (res.data.code == 301) {
 							this.error.reasoncode = 'error0211';
 							this.modalName = 'loginerror';
-							this.error.reason = '修改后的密码与修改前一样，密码无变动';
+							this.error.reason = this.$t('register.error0211');
 							this.formsub4 = false;
 							this.phonenumber = '';
 							this.yanzhengma = '';
@@ -1577,7 +1580,7 @@
 						} else if (res.data.code == 403) {
 							this.error.reasoncode = 'error0212';
 							this.modalName = 'loginerror';
-							this.error.reason = '验证码验证错误，验证失败，请重新获取短信并重新输入';
+							this.error.reason = this.$t('register.error0212');
 							this.formsub4 = false;
 							this.phonenumber = '';
 							this.yanzhengma = '';
@@ -1585,7 +1588,7 @@
 						} else if (res.data.code == 404) {
 							this.error.reasoncode = 'error0212';
 							this.modalName = 'loginerror';
-							this.error.reason = '没有验证信息，你得先获取验证码';
+							this.error.reason = this.$t('register.error02122');
 							this.formsub4 = false;
 							this.phonenumber = '';
 							this.yanzhengma = '';
@@ -1593,7 +1596,7 @@
 						} else if (res.data.code == 500) {
 							this.error.reasoncode = 'error0213';
 							this.modalName = 'loginerror';
-							this.error.reason = '修改密码失败，无法获取数据库的值，你需要联系管理员';
+							this.error.reason = this.$t('register.error0213');
 							this.formsub4 = false;
 							this.phonenumber = '';
 							this.yanzhengma = '';

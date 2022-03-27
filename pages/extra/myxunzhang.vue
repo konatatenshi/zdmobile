@@ -10,20 +10,20 @@
 			</view>
 			<view class="padding-left-sm padding-right-sm radius flex9">
 				<text class="text-blue">{{item.mingcheng}}</text>
-				<text class='cu-tag padding-smx bg-green margin-left-xs' v-if="item.youxiaoqi==0">永久
+				<text class='cu-tag padding-smx bg-green margin-left-xs' v-if="item.youxiaoqi==0">{{$t('shop.perm')}}
 				</text>
-				<text class='cu-tag padding-smx bg-green margin-left-xs' v-else>期:{{item.youxiaoqi}}天
+				<text class='cu-tag padding-smx bg-green margin-left-xs' v-else>{{$t('shop.exp')}}:{{item.youxiaoqi}}{{$t('extra.days')}}
 				</text>
-				<text class='cu-tag padding-smx bg-yellow margin-left-xs' v-if="item.is_huishou==1" @tap="gmqr(item.mid,item.jifen_jiage,item.mingcheng)">{{Number(item.jifen_jiage)/2}}金回收
+				<text class='cu-tag padding-smx bg-yellow margin-left-xs' v-if="item.is_huishou==1" @tap="gmqr(item.mid,item.jifen_jiage,item.mingcheng)">{{Number(item.jifen_jiage)/2}}{{$t('shop.recy')}}
 				</text>
-				<text class='cu-tag padding-smx bg-cyan margin-left-xs' v-if="item.fatie!=''" @tap="fttx(item.fatie.jifen_jiage,item.fatie.jifen_leixing,item.fatie.jilv)">发
+				<text class='cu-tag padding-smx bg-cyan margin-left-xs' v-if="item.fatie!=''" @tap="fttx(item.fatie.jifen_jiage,item.fatie.jifen_leixing,item.fatie.jilv)">{{$t('shop.po')}}
 				</text>
-				<text class='cu-tag padding-smx bg-mauve margin-left-xs' v-if="item.huitie!=''" @tap="httx(item.huitie.jifen_jiage,item.huitie.jifen_leixing,item.huitie.jilv)">回
+				<text class='cu-tag padding-smx bg-mauve margin-left-xs' v-if="item.huitie!=''" @tap="httx(item.huitie.jifen_jiage,item.huitie.jifen_leixing,item.huitie.jilv)">{{$t('shop.re')}}
 				</text>
-				<text class="text-green text-widthd" @tap="paix(item.mid,item.paixu)"><text class="text-orange text-bold">【排序：{{item.paixu}}】</text>{{item.shuoming}}</text>
+				<text class="text-green text-widthd" @tap="paix(item.mid,item.paixu)"><text class="text-orange text-bold">【{{$t('shop.ord')}}：{{item.paixu}}】</text>{{item.shuoming}}</text>
 			</view>
-			<view class="bg-gray radius flex0 padding-left-xs padding-right-xs padding-top-sm padding-bottom-sm" v-if="item.kejian==1" @tap="quxia(item.mid)">取<br>下</view>
-			<view class="bg-red radius flex0 padding-left-xs padding-right-xs padding-top-sm padding-bottom-sm" v-else @tap="peidai(item.mid)">佩<br>戴</view>
+			<view class="bg-gray radius flex0 padding-left-xs padding-right-xs padding-top-sm padding-bottom-sm" v-if="item.kejian==1" @tap="quxia(item.mid)">{{$t('shop.rem')}}<br>{{$t('shop.ove')}}</view>
+			<view class="bg-red radius flex0 padding-left-xs padding-right-xs padding-top-sm padding-bottom-sm" v-else @tap="peidai(item.mid)">{{$t('shop.we')}}<br>{{$t('shop.ar')}}</view>
 		</view>
 		<view>
 			<block>
@@ -57,13 +57,13 @@
 		<view class="cu-modal" :class="modalName=='more'?'show':''" @tap = "hidemodal()">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
-					<view class="content">帮助</view>
+					<view class="content">{{$t('shop.help')}}</view>
 					<view class="action" @tap="hidemodal()">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl">
-					点击购买勋章即可通过消耗金币获取勋章。<br>获取的勋章要在我的勋章里面点击佩戴方可生效。<br>永久图标代表购买后永久生效。<br>期限勋章代表购买多少天后失效。<br>回字图标代表回帖有几率获得奖励，发字图标代表发帖有几率获得奖励。<br>具体奖励可以通过点击图标查看。
+					{{$t('shop.helptext1')}}<br>{{$t('shop.helptext2')}}<br>{{$t('shop.helptext3')}}<br>{{$t('shop.helptext4')}}<br>{{$t('shop.helptext5')}}<br>{{$t('shop.helptext6')}}
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
@@ -75,14 +75,14 @@
 		<view class="cu-modal" :class="modalName=='fatie'?'show':''" @tap = "hidemodal()">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
-					<view class="content">发帖特效</view>
+					<view class="content">{{$t('shop.tx1')}}</view>
 					<view class="action" @tap="hidemodal()">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl text-blue">
-					发帖： <text v-if="texiaojifen>0"> +{{texiaojifen}}</text><text v-else> {{texiaojifen}}</text>{{texiaoleixing}}<br>
-					触发几率：{{texiaogailv}}%
+					{{$t('shop.post')}}： <text v-if="texiaojifen>0"> +{{texiaojifen}}</text><text v-else> {{texiaojifen}}</text>{{texiaoleixing}}<br>
+					{{$t('shop.trigger')}}：{{texiaogailv}}%
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
@@ -94,14 +94,14 @@
 		<view class="cu-modal" :class="modalName=='huitie'?'show':''" @tap = "hidemodal()">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
-					<view class="content">回帖特效</view>
+					<view class="content">{{$t('shop.tx2')}}</view>
 					<view class="action" @tap="hidemodal()">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl text-blue">
-					发帖： <text v-if="texiaojifen>0"> +{{texiaojifen}}</text><text v-else> {{texiaojifen}}</text>{{texiaoleixing}}<br>
-					触发几率：{{texiaogailv}}%
+					{{$t('shop.post')}}： <text v-if="texiaojifen>0"> +{{texiaojifen}}</text><text v-else> {{texiaojifen}}</text>{{texiaoleixing}}<br>
+					{{$t('shop.trigger')}}：{{texiaogailv}}%
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
@@ -113,13 +113,13 @@
 		<view class="cu-modal" :class="modalName=='paixu'?'show':''" @tap = "hidemodal()">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
-					<view class="content">确认排序</view>
+					<view class="content">{{$t('shop.orderconfirm')}}</view>
 					<view class="action" @tap="hidemodal()">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl text-brown">
-					<text>输入排序序号，序号越小代表越靠前<br></text>
+					<text>{{$t('shop.orderconfirmtxt')}}<br></text>
 					<input class="solid-bottom text-red" type="number" v-model="paixu"></input>
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
@@ -133,13 +133,13 @@
 		<view class="cu-modal" :class="modalName=='goumai'?'show':''" @tap = "hidemodal()">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
-					<view class="content">回收确认</view>
+					<view class="content">{{$t('shop.recycling')}}</view>
 					<view class="action" @tap="hidemodal()">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl text-brown">
-					是否以<text class="text-red text-bold">{{goumaijiage}}</text>金币回收<text class="text-red text-bold">{{goumainame}}</text>？
+					{{$t('shop.recyclingt1')}}<text class="text-red text-bold">{{goumaijiage}}</text>{{$t('shop.recyclingt2')}}<text class="text-red text-bold">{{goumainame}}</text>？
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
@@ -192,7 +192,7 @@
 							that.fenleilist = res.data.list
 						} else {
 							uni.showToast({
-								title: '加载失败',
+								title: that.$t('shop.failed'),
 								icon: 'error'
 							})
 						}
@@ -217,12 +217,12 @@
 						console.log(res.data);
 						if (res.data.code == 200) {
 							uni.showToast({
-								title: '回收成功'
+								title: that.$t('shop.medalts1')
 							})
 							that.getxunzhang(that.fenlei);
 						}else {
 							uni.showToast({
-								title: '回收失败',
+								title: that.$t('shop.medalts2'),
 								icon: 'error'
 							})
 						};
@@ -249,12 +249,12 @@
 						console.log(res.data);
 						if (res.data.code == 200) {
 							uni.showToast({
-								title: '设置成功'
+								title: that.$t('shop.medalts3')
 							})
 							that.getxunzhang(that.fenlei);
 						}else {
 							uni.showToast({
-								title: '设置失败',
+								title: that.$t('shop.medalts4'),
 								icon: 'error'
 							})
 						};
@@ -280,12 +280,12 @@
 						console.log(res.data);
 						if (res.data.code == 200) {
 							uni.showToast({
-								title: '佩戴成功'
+								title: that.$t('shop.medalts5')
 							})
 							that.getxunzhang(that.fenlei);
 						}else {
 							uni.showToast({
-								title: '佩戴失败',
+								title: that.$t('shop.medalts6'),
 								icon: 'error'
 							})
 						};
@@ -311,12 +311,12 @@
 						console.log(res.data);
 						if (res.data.code == 200) {
 							uni.showToast({
-								title: '取下成功'
+								title: that.$t('shop.medalts7')
 							})
 							that.getxunzhang(that.fenlei);
 						}else {
 							uni.showToast({
-								title: '取下失败',
+								title: that.$t('shop.medalts8'),
 								icon: 'error'
 							})
 						};
@@ -332,11 +332,11 @@
 			},
 			fttx(jiage,leixing,jilv){
 				if(leixing==1){
-					this.texiaoleixing = '金币';
+					this.texiaoleixing = this.$t('credit.coins');
 				}else if(leixing==2){
-					this.texiaoleixing = '点币';
+					this.texiaoleixing = this.$t('credit.credits');
 				}else if(leixing==3){
-					this.texiaoleixing = '宠物经验';
+					this.texiaoleixing = this.$t('credit.exp');
 				}
 				this.texiaojifen = jiage;
 				this.texiaogailv = jilv;
@@ -344,11 +344,11 @@
 			},
 			httx(jiage,leixing,jilv){
 				if(leixing==1){
-					this.texiaoleixing = '金币';
+					this.texiaoleixing = this.$t('credit.coins');
 				}else if(leixing==2){
-					this.texiaoleixing = '点币';
+					this.texiaoleixing = this.$t('credit.credits');
 				}else if(leixing==3){
-					this.texiaoleixing = '宠物经验';
+					this.texiaoleixing = this.$t('credit.exp');
 				}
 				this.texiaojifen = jiage;
 				this.texiaogailv = jilv;

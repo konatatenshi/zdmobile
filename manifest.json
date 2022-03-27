@@ -2,8 +2,8 @@
     "name" : "%index.title%",
     "appid" : "__UNI__0D1E511",
     "description" : "",
-    "versionName" : "2.1.2",
-    "versionCode" : 67,
+    "versionName" : "2.1.3",
+    "versionCode" : 68,
     "transformPx" : false,
     "app-plus" : {
         /* 5+App特有相关 */

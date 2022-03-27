@@ -8,11 +8,11 @@
 		<scroll-view scroll-x class="nav">
 			<view class="cu-item padding-left-xl padding-right-xl"
 				:class="TabCur==0?'text-black text-bold cur':'text-black'" @tap="tabSelect(0)">
-				全部记录
+				{{$t('shop.alllog')}}
 			</view>
 			<view class="cu-item padding-left-xl padding-right-xl"
 				:class="TabCur==1?'text-black text-bold cur':'text-black'" @tap="tabSelect(1)">
-				我的记录
+				{{$t('shop.mylog')}}
 			</view>
 		</scroll-view>
 		<view v-for="(itemex,indexe1) in guanzhupost" :key="indexe1">

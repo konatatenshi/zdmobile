@@ -415,7 +415,7 @@
 							that.bangding = that.$t('my.unband');
 							that.lingpai = true;
 						} else {
-							that.zhuangtai = that.$t('my.bandtxt3');
+							that.zhuangtai = that.$t('my.bandtxt1');
 							that.bangding = that.$t('my.band');
 							that.lingpai = false;
 						}
