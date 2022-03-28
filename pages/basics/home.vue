@@ -1875,6 +1875,9 @@
 									console.log(that.olddate);
 								}
 							});
+						}else{
+							console.log(mya);
+							console.log(sev);
 						}
 				}
 			});

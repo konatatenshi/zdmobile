@@ -65,7 +65,7 @@
 		<view class="cu-modal" :class="modalName=='bdgoogle'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
-					<view class="content">{{bangding}}Google{{$t('my.eauth')}}</view>
+					<view class="content">{{bangding}}Google{{$t('my.auth')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>

@@ -30,8 +30,8 @@
 									<view @tap="topost(item.tid)">
 										<text class="text-black text-cut" style="width: 100%;" :style="geshihua(item.highlight,item.tid)">{{item.subject}}</text>
 									</view>
-									<view> <text class="text-sm text-red padding-sm">置顶</text> <text
-											class="text-sm text-gray padding-sm">{{item.author}}&nbsp&nbsp{{item.replies}}评</text>
+									<view> <text class="text-sm text-red padding-sm">{{$t('home.top')}}</text> <text
+											class="text-sm text-gray padding-sm">{{item.author}}&nbsp&nbsp{{item.replies}}{{$t('home.comment')}}</text>
 												<view class="chacha text-gray cuIcon-close" @tap="more2(item.author,item.tid)">
 												</view>
 									</view>
@@ -88,7 +88,7 @@
 												v-if="item.readperm>0" @tap="topost(item.tid)">
 												<view
 													style="overflow: hidden;border: 1px dashed #FF9A9A;margin: 8px 0;padding: 10px;zoom: 1;width: 100%;text-align: center;">
-													需要阅读权限：{{item.readperm}}</view>
+													{{$t('forum.readpermission')}}：{{item.readperm}}</view>
 											</view>
 											<view v-else class="text-content" @tap="topost(item.tid)">
 												{{item.summary}}
@@ -130,29 +130,29 @@
 											<view class="flex justify-between">
 												<view class="text-gray text-sm text-left padding-top2 padding-left">
 													<text v-if="item.icon==1"
-														class="cu-tag line-red padding-left-xs padding-right-xs">新人帖</text>
+														class="cu-tag line-red padding-left-xs padding-right-xs">{{$t('forum.newcomer')}}</text>
 													<text v-if="item.attachment>2"
-														class="cu-tag line-green padding-left-xs padding-right-xs">图文帖</text>
+														class="cu-tag line-green padding-left-xs padding-right-xs">{{$t('forum.photos')}}</text>
 													<text v-if="item.replycredit>999" 
-														class="cu-tag line-purple padding-left-xs padding-right-xs">回帖奖励:1k+</text>
+														class="cu-tag line-purple padding-left-xs padding-right-xs">{{$t('forum.reward')}}:1k+</text>
 													<text v-else-if="item.replycredit>0"
-														class="cu-tag line-pink padding-left-xs padding-right-xs">回帖奖励:{{item.heats}}</text>
+														class="cu-tag line-pink padding-left-xs padding-right-xs">{{$t('forum.reward')}}:{{item.heats}}</text>
 													<text v-else-if="item.heats>9999"
-														class="cu-tag line-purple padding-left-xs padding-right-xs">热度:1w+</text>
+														class="cu-tag line-purple padding-left-xs padding-right-xs">{{$t('forum.hot')}}:1w+</text>
 													<text v-else-if="item.heats>999"
-														class="cu-tag line-purple padding-left-xs padding-right-xs">热度:1k+</text>
+														class="cu-tag line-purple padding-left-xs padding-right-xs">{{$t('forum.hot')}}:1k+</text>
 													<text v-else-if="item.heats>200"
-														class="cu-tag line-purple padding-left-xs padding-right-xs">热度:{{item.heats}}</text>
+														class="cu-tag line-purple padding-left-xs padding-right-xs">{{$t('forum.hot')}}:{{item.heats}}</text>
 													<text v-else-if="item.heats>100"
-														class="cu-tag line-mauve padding-left-xs padding-right-xs">热度:{{item.heats}}</text>
+														class="cu-tag line-mauve padding-left-xs padding-right-xs">{{$t('forum.hot')}}:{{item.heats}}</text>
 													<text v-else-if="item.heats>50"
-														class="cu-tag line-pink padding-left-xs padding-right-xs">热度:{{item.heats}}</text>
+														class="cu-tag line-pink padding-left-xs padding-right-xs">{{$t('forum.hot')}}:{{item.heats}}</text>
 													<text v-else-if="item.rate==1"
-														class="cu-tag line-cyan padding-left-xs padding-right-xs">被赞赏</text>
+														class="cu-tag line-cyan padding-left-xs padding-right-xs">{{$t('forum.appreciated')}}</text>
 													<text v-else-if="item.rate==-1"
-														class="cu-tag line-yellow padding-left-xs padding-right-xs">被扣分</text>
+														class="cu-tag line-yellow padding-left-xs padding-right-xs">{{$t('forum.deducted')}}</text>
 													<text v-else-if="item.digest>0"
-														class="cu-tag line-blue padding-left-xs padding-right-xs">精华帖</text>
+														class="cu-tag line-blue padding-left-xs padding-right-xs">{{$t('forum.essence')}}</text>
 												</view>
 												<view class="text-gray text-sm text-right padding">
 													<text class="cuIcon-attentionfill margin-lr-xs"></text>
@@ -205,13 +205,13 @@
 		<view class="cu-modal" :class="modalName=='cantview'?'show':''">
 			<view class="cu-dialog">
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
-					<view class="content">权限不足</view>
+					<view class="content">{{$t('post.permissionsdenied')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl">
-					无法进入板块，错误提示：{{cantviewmessage}}
+					{{$t('post.permissionsdeniedtxt2')}}：{{cantviewmessage}}
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
 					<view class="action">
@@ -227,36 +227,36 @@
 				<view class="cu-list menu text-left solid-top">
 					<view class="cu-item" v-if="pingbiauthor==$username" :class="'bg-'+themeColor.name">
 						<view class="content">
-							<text class="text-gray"><text class="cuIcon-roundclose"></text>屏蔽自己</text>
+							<text class="text-gray"><text class="cuIcon-roundclose"></text>{{$t('home.blockself')}}</text>
 						</view>
 					</view>
 					<view class="cu-item" v-else-if="!ifpingbi(pingbiauthor)" @tap="pingbiadd(pingbiauthor)" :class="'bg-'+themeColor.name">
 						<view class="content noborder2">
-							<text class="text-grey"><text class="cuIcon-roundclose"></text>屏蔽作者：{{pingbiauthor}}</text>
-							<view class="text-gray text-sm noborder">屏蔽后，你将不会收到他的信息。</view>
+							<text class="text-grey"><text class="cuIcon-roundclose"></text>{{$t('home.blockauthor')}}：{{pingbiauthor}}</text>
+							<view class="text-gray text-sm noborder">{{$t('home.blocktxt')}}</view>
 						</view>
 					</view>
 					<view class="cu-item" v-else @tap="pingbiremove(pingbiauthor)" :class="'bg-'+themeColor.name">
 						<view class="content noborder2">
-							<text class="text-grey"><text class="cuIcon-roundclose"></text>取消屏蔽：{{pingbiauthor}}</text>
-							<view class="text-gray text-sm noborder">屏蔽后，你将不会收到他的信息。</view>
+							<text class="text-grey"><text class="cuIcon-roundclose"></text>{{$t('home.cancelblock')}}：{{pingbiauthor}}</text>
+							<view class="text-gray text-sm noborder">{{$t('home.blocktxt')}}</view>
 						</view>
 					</view>
 					<view class="cu-item" v-if="pingbiauthor==$username" :class="'bg-'+themeColor.name">
 						<view class="content">
-							<text class="text-gray"><text class="cuIcon-attentionforbid"></text>拉黑自己</text>
+							<text class="text-gray"><text class="cuIcon-attentionforbid"></text>{{$t('home.blockself2')}}</text>
 						</view>
 					</view>
 					<view class="cu-item" v-else @tap="lahei(pingbitid)" :class="'bg-'+themeColor.name">
 						<view class="content noborder2">
 							<text class="text-grey"><text class="cuIcon-attentionforbid"></text>{{laheitext}}：{{pingbiauthor}}</text>
-							<view class="text-gray text-sm noborder">拉黑后，他将不能回复和私聊你任何信息。</view>
+							<view class="text-gray text-sm noborder">{{$t('home.blocktxt2')}}</view>
 						</view>
 					</view>
 					<view class="cu-item" @tap="jubaota(pingbitid)" :class="'bg-'+themeColor.name">
 						<view class="content">
-							<text class="text-grey noborder2"><text class="cuIcon-info"></text>举报此内容</text>
-							<view class="text-gray text-sm noborder">标题夸张，内容质量差等。</view>
+							<text class="text-grey noborder2"><text class="cuIcon-info"></text>{{$t('home.reportmessage')}}</text>
+							<view class="text-gray text-sm noborder">{{$t('home.reporttxt')}}</view>
 						</view>
 					</view>
 				</view>
@@ -265,7 +265,7 @@
 		<view class="cu-modal" :class="modalName=='jubaoxinxi'?'show':''"  @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
-					<view class="content">请输入举报理由</view>
+					<view class="content">{{$t('home.reportreason')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
@@ -273,28 +273,28 @@
 				<view class="padding-sm">
 					<radio-group class="block" @change="RadioChange">
 						<view class="cu-form-group">
-							<view class="text-xl">广告垃圾</view>
+							<view class="text-xl">{{$t('home.ad')}}</view>
 							<radio :class="radio=='A'?'checked':''" :checked="radio=='A'?true:false" value="A"></radio>
 						</view>
 						<view class="cu-form-group">
-							<view class="text-xl">违规内容</view>
+							<view class="text-xl">{{$t('home.illegal')}}</view>
 							<radio :class="radio=='B'?'checked':''" :checked="radio=='B'?true:false" value="B"></radio>
 						</view>
 						<view class="cu-form-group">
-							<view class="text-xl">恶意灌水</view>
+							<view class="text-xl">{{$t('home.bump')}}</view>
 							<radio :class="radio=='C'?'checked':''" :checked="radio=='C'?true:false" value="C"></radio>
 						</view>
 						<view class="cu-form-group">
-							<view class="text-xl">重复内容</view>
+							<view class="text-xl">{{$t('home.dump')}}</view>
 							<radio :class="radio=='D'?'checked':''" :checked="radio=='D'?true:false" value="D"></radio>
 						</view>
 						<view class="cu-form-group">
-							<view class="text-xl">其他</view>
+							<view class="text-xl">{{$t('home.other')}}</view>
 							<radio :class="radio=='E'?'checked':''" :checked="radio=='E'?true:false" value="E"></radio>
 						</view>
 					</radio-group>
 					<view class="cu-form-group align-start" v-if="radio=='E'">
-						<textarea maxlength="-1" v-model="jubaomessage" placeholder="请在此输入想要说的话"></textarea>
+						<textarea maxlength="-1" v-model="jubaomessage" :placeholder="$t('home.reporttxt')"></textarea>
 					</view>
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
@@ -307,13 +307,13 @@
 		<view class="cu-modal" :class="modalName=='changepage'?'show':''" @tap = "hideModal()">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
-					<view class="content">跳页</view>
+					<view class="content">{{$t('forum.jumppage')}}</view>
 					<view class="action" @tap="hideModal()">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl text-brown">
-					<text>输入前往的页数，按确定转跳。<br></text>
+					<text>{{$t('forum.jumppagetxt')}}<br></text>
 					<input class="solid-bottom text-red" type="number" v-model="mainpage"></input>
 				</view>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
@@ -334,13 +334,13 @@
 		<view class="cu-modal" :class="modalName=='cantpost'?'show':''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop>
 				<view class="cu-bar justify-end" :class="'bg-'+themeColor.name">
-					<view class="content">举报错误</view>
+					<view class="content">{{$t('home.reporterror')}}</view>
 					<view class="action" @tap="hideModal">
 						<text class="cuIcon-close text-red"></text>
 					</view>
 				</view>
 				<view class="padding-xl">
-					无法举报，错误提示：{{cantpostmessage}}
+					{{$t('home.reporterrortxt')}}：{{cantpostmessage}}
 				</view>
 				<view class="cu-bar justify-end :class="'bg-'+themeColor.name"">
 					<view class="action">
@@ -363,7 +363,7 @@
 		data() {
 			return {
 				scrollLeft: 0,
-				forumname: "载入中……",
+				forumname: this.$t('api.loading'),
 				cantviewmessage: "unknown",
 				iStatusBarHeight: 0,
 				isImage: 1,
@@ -371,13 +371,13 @@
 				threadlist: [],
 				threadlisttitle: [],
 				pingbilist: [],
-				tabname: ["新帖", "全部", "热门", "精华"],
+				tabname: [this.$t('forum.tab1'), this.$t('forum.tab2'),this.$t('forum.tab3'),this.$t('forum.tab4')],
 				tabarray: [0, 1, 2, 3],
 				avatarimgLoaded: false,
 				iscard: false,
 				modalName: null,
 				laheivar: 0,
-				laheitext: '拉黑作者',
+				laheitext: this.$t('api.blockauthor2'),
 				loadwb: 0,
 				radio: 'A',
 				TabCur: 99,
@@ -393,7 +393,7 @@
 				closed: 0,
 				jubaomessage: '',
 				cantpostmessage: '',
-				loading: "上拉可加载更多帖子",
+				loading: this.$t('forum.notreply'),
 				jifencaozuo: 0,
 				jifenbiangeng: '积分名+1',
 				jifenshuoming: '积分变更',
@@ -775,7 +775,7 @@
 				if (page == 0) {
 					that.threadlist = [];
 				}
-				that.loading = '加载中';
+				that.loading = this.$t('api.loading');
 				that.loadwb = 0;
 				that.LoadProgresss();
 				uni.request({
@@ -809,10 +809,10 @@
 							} else {
 								for (let i = 0; i < res.data.post.length; ++i) {
 									that.threadlist.push(res.data.post[i]);
-									that.loading = '上拉可加载更多帖子';
+									that.loading = that.$t('forum.notreply');
 								}
 								if (res.data.post.length < 30) {
-									that.loading = '到底了。';
+									that.loading = that.$t('api.loadtoend');
 								}
 							}
 							console.log(that.$groupid);
@@ -1039,20 +1039,20 @@
 				console.log(that.jubaomessage.length);
 				if (that.jubaomessage.length < 2 && that.radio == 'E') {
 					that.modalName = "cantpost";
-					that.cantpostmessage = '请输入大于等于2个字的举报内容。';
+					that.cantpostmessage = that.$t('home.reportless');
 					this.floorfasong = false;
 					return;
 				}
 				if (!this.floorfasong) {
 					that.floorfasong = true;
 					if(that.radio=='A'){
-						var message = encodeURI('广告垃圾');
+						var message = encodeURI(that.$t('home.ad'));
 					}else if(that.radio=='B'){
-						var message = encodeURI('违规内容');
+						var message = encodeURI(that.$t('home.illegal'));
 					}else if(that.radio=='C'){
-						var message = encodeURI('恶意灌水');
+						var message = encodeURI(that.$t('home.bump'));
 					}else if(that.radio=='D'){
-						var message = encodeURI('重复发帖');
+						var message = encodeURI(that.$t('home.dump'));
 					}else if(that.radio=='E'){
 						var message = encodeURI(that.jubaomessage);
 					}
@@ -1078,11 +1078,11 @@
 								that.modalName = "needlogin";
 							} else if (res.data.code == 200) {
 								that.modalName = null;
-								that.jifenbiandong('举报成功','你的举报发送完毕。')
+								that.jifenbiandong(that.$t('home.reportsuccess'),that.$t('home.reportsuccesstxt'))
 								that.siliaotxt = '';
 							} else{
 								that.modalName = null;
-								that.jifenbiandong('举报失败',res.data.message);
+								that.jifenbiandong(that.$t('home.reportfailed'),res.data.message);
 							}
 							that.closed = 0;
 						}

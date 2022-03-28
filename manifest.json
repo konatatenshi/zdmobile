@@ -1,9 +1,9 @@
 {
-    "name" : "%index.title%",
+    "name" : "Zhongdian",
     "appid" : "__UNI__0D1E511",
     "description" : "",
-    "versionName" : "2.1.3",
-    "versionCode" : 68,
+    "versionName" : "2.1.5",
+    "versionCode" : 70,
     "transformPx" : false,
     "app-plus" : {
         /* 5+App特有相关 */
@@ -11,6 +11,76 @@
             "Push" : {},
             "OAuth" : {},
             "Payment" : {}
+        },
+        "locales" : {
+            "zh" : {
+                "name" : "终点论坛",
+                "android" : {
+                    "strings" : {
+                        "NSPhotoLibraryUsageDescription" : "应用需要读取您的相册，以便为您选择上传的图片",
+                        "NSPhotoLibraryAddUsageDescription" : "应用需要写入您的相册，以便将图片保存到本地手机",
+                        "NSCameraUsageDescription" : "应用需要使用您的相机，以便将拍摄图片用于发布信息或扫描二维码登录信息"
+                    }
+                },
+                "ios" : {
+                    "privacyDescription" : {
+                        "NSPhotoLibraryUsageDescription" : "应用需要读取您的相册，以便为您选择上传的图片",
+                        "NSPhotoLibraryAddUsageDescription" : "应用需要写入您的相册，以便将图片保存到本地手机",
+                        "NSCameraUsageDescription" : "应用需要使用您的相机，以便将拍摄图片用于发布信息或扫描二维码登录信息"
+                    }
+                }
+            },
+            "zh-TW" : {
+                "name" : "終點論壇",
+                "android" : {
+                    "strings" : {
+                        "NSPhotoLibraryUsageDescription" : "APP需要讀取您的相冊，以便為您選擇上傳的圖片",
+                        "NSPhotoLibraryAddUsageDescription" : "APP需要寫入您的相冊，以便將圖片保存到本地手機",
+                        "NSCameraUsageDescription" : "APP需要使用您的相機，以便將拍攝圖片用於發布信息或掃描QR-CODE登入信息"
+                    }
+                },
+                "ios" : {
+                    "privacyDescription" : {
+                        "NSPhotoLibraryUsageDescription" : "APP需要讀取您的相冊，以便為您選擇上傳的圖片",
+                        "NSPhotoLibraryAddUsageDescription" : "APP需要寫入您的相冊，以便將圖片保存到本地手機",
+                        "NSCameraUsageDescription" : "APP需要使用您的相機，以便將拍攝圖片用於發布信息或掃描QR-CODE登入信息"
+                    }
+                }
+            },
+            "zh-HK" : {
+                "name" : "終點論壇",
+                "android" : {
+                    "strings" : {
+                        "NSPhotoLibraryUsageDescription" : "APP需要讀取您的相冊，以便為您選擇上傳的圖片",
+                        "NSPhotoLibraryAddUsageDescription" : "APP需要寫入您的相冊，以便將圖片保存到本地手機",
+                        "NSCameraUsageDescription" : "APP需要使用您的相機，以便將拍攝圖片用於發布信息或掃描QR-CODE登入信息"
+                    }
+                },
+                "ios" : {
+                    "privacyDescription" : {
+                        "NSPhotoLibraryUsageDescription" : "APP需要讀取您的相冊，以便為您選擇上傳的圖片",
+                        "NSPhotoLibraryAddUsageDescription" : "APP需要寫入您的相冊，以便將圖片保存到本地手機",
+                        "NSCameraUsageDescription" : "APP需要使用您的相機，以便將拍攝圖片用於發布信息或掃描QR-CODE登入信息"
+                    }
+                }
+            },
+            "en" : {
+                "name" : "Zhongdian",
+                "android" : {
+                    "strings" : {
+                        "NSPhotoLibraryUsageDescription" : "The app needs to read your album in order to select the uploaded images for you",
+                        "NSPhotoLibraryAddUsageDescription" : "The app needs to write to your photo album in order to save pictures to your local phone",
+                        "NSCameraUsageDescription" : "The app needs to use your camera in order to take a picture for posting or scanning a QR code to log in"
+                    }
+                },
+                "ios" : {
+                    "privacyDescription" : {
+                        "NSPhotoLibraryUsageDescription" : "The app needs to read your album in order to select the uploaded images for you",
+                        "NSPhotoLibraryAddUsageDescription" : "The app needs to write to your photo album in order to save pictures to your local phone",
+                        "NSCameraUsageDescription" : "The app needs to use your camera in order to take a picture for posting or scanning a QR code to log in"
+                    }
+                }
+            }
         },
         /* 模块配置 */
         "distribute" : {
@@ -48,11 +118,6 @@
             "ios" : {
                 "screenOrientation" : [ "portrait-primary", "landscape-primary" ],
                 "idfa" : true,
-                "privacyDescription" : {
-                    "NSPhotoLibraryUsageDescription" : "应用需要读取您的相册，以便为您选择上传的图片",
-                    "NSPhotoLibraryAddUsageDescription" : "应用需要写入您的相册，以便将图片保存到本地手机",
-                    "NSCameraUsageDescription" : "应用需要使用您的相机，以便将拍摄图片用于发布信息或扫描二维码登录信息"
-                },
                 "urltypes" : "zhongdian"
             },
             /* ios打包配置 */
