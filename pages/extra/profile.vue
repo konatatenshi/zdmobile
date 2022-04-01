@@ -2,7 +2,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-pink" :isBack="true">
 			<block slot="backText">{{$t('api.back')}}</block>
-			<block slot="content">{{$t('profile.change')}}</block>
+			<block slot="content">{{$t('profile.changer')}}</block>
 		</cu-custom>
 		<form>
 			<view class="cu-form-group margin-top">
