@@ -2,7 +2,7 @@
 	<view>
 		<cu-custom class="statustop" bgColor="bg-gradual-pink" :isBack="true">
 			<block slot="backText">{{$t('api.back')}}</block>
-			<block slot="content">{{$t('userpage.pm')}}{{username}}{{$t('userpage.pms')}}</block>
+			<block slot="content">{{$t('userpage.pm')}}{{username}}{{$t('userpage.spm')}}</block>
 		</cu-custom>
 		<view class="cu-chat">
 			<view v-if="!loadingmore" class="cu-info round" @tap="receivemessage()">{{loading}}</view><view v-else class="cu-load text-gray loading"></view>

@@ -709,10 +709,11 @@
 			},
 			tomessage(e,f,g){
 				if(f!=g){
-					return this.$t('home.toother') + e + this.$t('home.say');
+					//return this.$t('home.toother') + e + this.$t('home.say');
 				}else{
-					return e + this.$t('home.toyou');
+					//return e + this.$t('home.toyou');
 				}
+				return this.$t('userpage.pm') + e + this.$t('userpage.spm');
 			},
 			shuaxinlist() {
 				uni.pageScrollTo({

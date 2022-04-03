@@ -301,7 +301,7 @@
 									<text class="text-grey"><text class="cuIcon-attention"></text>{{guanzhutext}}</text>
 								</view>
 							</view>
-							<view v-if="pm==1" class="cu-item" @tap="siliaozuozhe">
+							<view v-if="pm==1" class="cu-item" @tap="siliaozuozhe(authorid)">
 								<view class="content">
 									<text class="text-grey"><text class="cuIcon-mark"></text>{{$t('home.pmn')}}</text>
 								</view>
@@ -368,7 +368,7 @@
 									<view class="text-gray text-sm noborder">{{$t('home.blocktxt2')}}</view>
 								</view>
 							</view>
-							<view v-if="pm==1&&jubaopid!=pid" class="cu-item" @tap="siliaozuozhe2">
+							<view v-if="pm==1&&jubaopid!=pid" class="cu-item" @tap="siliaozuozhe2(authorid)">
 								<view class="content">
 									<text class="text-grey"><text class="cuIcon-mark"></text>{{$t('home.pmn')}}</text>
 								</view>
@@ -1430,11 +1430,13 @@
 				this.index = g;
 				this.modalName = 'floorpost';
 			},
-			siliaozuozhe() {
+			siliaozuozhe(e) {
 				this.modalName = 'siliao';
+				this.toUID = e;
 			},
-			siliaozuozhe2() {
+			siliaozuozhe2(e) {
 				this.modalName = 'siliao2';
+				this.toUID = e;
 			},
 			zanpo(f, g, h, i) {
 				console.log(f);

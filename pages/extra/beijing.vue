@@ -12,10 +12,10 @@
 						<image class="width100" :src="item.pic" @tap="more(item.pic,item.title,item.shengyu)"></image>
 						<view class="cu-tag bg-blue">{{$t('shop.sales')}}{{item.sales}},<text v-if="item.ifbuy==''">{{$t('shop.price')}}{{item.sale}}{{$t('credit.coins')}}/{{item.days}}{{$t('extra.days')}}</text><text v-else class="text-yellow">{{$t('shop.left')}}：{{item.shengyu}}{{$t('extra.days')}}</text></view>
 						<view class="cu-bar bg-shadeBottom"> <text class="text-cut text-center text-shadow2" :style="'color:' + item.fontcolor" v-if="item.shengyu==-1">{{item.title}}</text>
-						<button class="cu-btn bg-green margin-left" @tap="gmqr(item.sid,item.sale,item.title)" v-else>{{$t('extra.renew')}}</button>
+						<button class="cu-btn bg-green margin-left" @tap="gmqr(item.sid,item.sale,item.title)" v-else>{{$t('shop.renew')}}</button>
 						<button class="cu-btn bg-green margin-left" v-if="item.ifbuy==''" @tap="gmqr(item.sid,item.sale,item.title)">{{$t('shop.buyit')}}</button>
-						<button class="cu-btn bg-red margin-left" @tap="shiyong(item.sid)" v-else-if="item.ifused==''">{{$t('extra.use')}}</button>
-						<button class="cu-btn bg-yellow margin-left" @tap="xiexia(item.sid)" v-else>{{$t('extra.remove')}}</button>
+						<button class="cu-btn bg-red margin-left" @tap="shiyong(item.sid)" v-else-if="item.ifused==''">{{$t('shop.use')}}</button>
+						<button class="cu-btn bg-yellow margin-left" @tap="xiexia(item.sid)" v-else>{{$t('shop.remove')}}</button>
 					</view>
 					</view>
 				</view>
