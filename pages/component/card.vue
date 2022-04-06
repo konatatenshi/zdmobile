@@ -196,12 +196,15 @@
 							<mp-html v-if="item.status&1" class="text-content text-df float"
 								:class="isfloat[index]?'show':'hide'" :content="pingbi" @linktap="linktap"
 								selectable="true" />
+							<mp-html v-else-if="!isfloat[index]&&Letter(item.html).length<=90" class="text-content text-df float show"
+								 :content="(mphtmlis(1) + item.html + mphtmlis(2))"
+								@linktap="linktap" selectable="true" />
 							<mp-html v-else-if="!isfloat[index]" class="text-content text-df float"
 								:class="isfloat[index]?'show':'hide'" :content="(mphtmlis(1) + item.html.substr(0,140) + mphtmlis(2))"
 								@linktap="linktap" selectable="true" />
 							<mp-html v-else class="text-content text-df float" :class="isfloat[index]?'show':'hide'"
 								:content="(mphtmlis(1) + item.html + mphtmlis(2))" @linktap="linktap" selectable="true" />
-							<view class="text-blue" v-if="Letter(item.html).length>70&&isfloat[index]!= true"
+							<view class="text-blue" v-if="Letter(item.html).length>90&&isfloat[index]!= true"
 								@tap="loadmore(index)">{{$t('post.expand')}}</view>
 							<view v-if="item.luckypost.key>=0" class="text-center">
 								<view v-if="item.luckypost.key==1"
@@ -865,6 +868,9 @@
 					this.dashangvar = true;
 				}else{
 					this.dashangvar = arrayfid.includes(this.fid);
+				}
+				if(this.$adminid>0){
+					this.dashangvar = true;
 				}
 			},
 			more(e) {

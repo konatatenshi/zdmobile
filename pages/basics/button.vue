@@ -15,7 +15,7 @@
 		<view class="padding-xl">
 			<button class="cu-btn block bg-blue margin-tb-sm lg" @tap="queren">
 				<text class="cuIconfont-spin" :class="isloading?'cuIcon-loading2':''"></text>{{$t('extra.confirmlogin')}}</button>
-			<button class="cu-btn block bg-black margin-tb-sm lg" @tap="fanhui">{{$t('extra.cancellogin')}}</button>
+			<button class="cu-btn block bg-black margin-tb-sm lg" @tap="fanhui">{{$t('extra.Cancel')}}</button>
 		</view>
 	</view>
 </template>
