@@ -1,0 +1,502 @@
+<script>
+	import Vue from 'vue'
+	export default {
+		globalData: {
+			zdserverkey: 'hidden',
+			zddomain: 'https://bbs.zdfx.net/',
+			myusername:  '',
+			myadminid:  0,
+			mygroupid:  0,
+			mygroupexpiry:  0,
+			myregdate:  0,
+			mycredits:  0,
+			mynewpm:  0,
+			mynewprompt:  0,
+			myfreeze:  0,
+			myinfoprompt:  0
+		},
+		onLaunch: function() {
+			Vue.prototype.$chatid =0;
+			Vue.prototype.$chatuid = 0;
+			Vue.prototype.$auth = "";
+			Vue.prototype.$fontsize = uni.upx2px(28) + 'px';
+			Vue.prototype.$htauth = "";
+			Vue.prototype.$chatswitch = 0;
+			Vue.prototype.$token = '';
+			Vue.prototype.$cookies = '';
+			Vue.prototype.$uid = 0;
+			Vue.prototype.$groupid = 0;
+			Vue.prototype.$wifi = 0;
+			Vue.prototype.$adminid = 0;
+			Vue.prototype.$imageswitch = 0;
+			Vue.prototype.$floorswitch = 0;
+			Vue.prototype.$nowdate = 0;
+			Vue.prototype.$username = this.$t('index.guest');
+			Vue.prototype.$avatarsmall = 'https://zd.tiangal.com/uc_server/images/randuser/small/0.jpg';
+			Vue.prototype.$avatarsmalldefault = 'https://zd.tiangal.com/uc_server/images/randuser/small/0.jpg';
+			try {
+			    const loginvalue = uni.getStorageSync('userlogininfo');
+			    if (loginvalue) {
+					Vue.prototype.$token = loginvalue.token;
+					Vue.prototype.$uid = loginvalue.uid;
+					Vue.prototype.$username = loginvalue.username;
+					Vue.prototype.$adminid = loginvalue.adminid;
+					Vue.prototype.$groupid = loginvalue.groupid;
+					let avanum = (Array(9).join("0") + loginvalue.uid).slice(-9);
+					Vue.prototype.$avatarsmall = 'https://zd.tiangal.com/uc_server/data/avatar/' + avanum
+						.substr(0, 3) + '/' + avanum.substr(3, 2) + '/' + avanum.substr(5, 2) + '/' +
+						avanum.substr(7, 2) + '_avatar_small.jpg';
+					Vue.prototype.$avatarsmalldefault = 'https://zd.tiangal.com/uc_server/images/randuser/small/' + avanum.substr(-1) + '.jpg';
+			    }
+			} catch (e) {
+			    // error
+			}
+			uni.getStorage({
+				key: 'chatinfo',
+				success: function(res) {
+					Vue.prototype.$chatuid = res.data.uid;
+					Vue.prototype.$auth = res.data.auth;
+					Vue.prototype.$htauth = res.data.htauth;
+					//console.log(Vue.prototype.$auth);
+					//console.log(Vue.prototype.$chatuid);
+					if(Vue.prototype.$chatuid != Vue.prototype.$uid){
+						uni.request({
+							url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:ltauth', //获取用户基本信息。
+							method: 'GET',
+							timeout: 10000,
+							data: {
+								token: Vue.prototype.$token
+							},
+							header: {
+								'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+							},
+							success: (res) => {
+								//console.log(res.data);
+								var that = this;
+								uni.setStorage({
+									key: 'chatinfo',
+									data: res.data,
+									success: function() {
+										Vue.prototype.$chatuid = res.data.uid;
+										Vue.prototype.$auth = res.data.auth;
+										Vue.prototype.$htauth = res.data.htauth;
+										console.log(Vue.prototype.$chatuid);
+										console.log(Vue.prototype.$token);
+									}
+								});
+							}
+						});
+					}
+				},
+				fail:function(){
+					uni.request({
+						url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:ltauth', //获取用户基本信息。
+						method: 'GET',
+						timeout: 10000,
+						data: {
+							token: Vue.prototype.$token
+						},
+						header: {
+							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+						},
+						success: (res) => {
+							//console.log(res.data);
+							var that = this;
+							uni.setStorage({
+								key: 'chatinfo',
+								data: res.data,
+								success: function() {
+									Vue.prototype.$chatuid = res.data.uid;
+									Vue.prototype.$auth = res.data.auth;
+									console.log(Vue.prototype.$chatuid);
+								}
+							});
+						}
+					});
+				}
+			})
+			uni.getStorage({
+				key: 'chatswitch',
+				success: function(res) {
+					Vue.prototype.$switchbvalue = res.data;
+					//console.log(that.swiperList);
+				}
+			})
+			uni.getStorage({
+				key: 'weiduswitch',
+				success: function(res) {
+					Vue.prototype.$switchcvalue = res.data;
+					//console.log(that.swiperList);
+				}
+			})
+			uni.getStorage({
+				key: 'chatchannel',
+				success: function(res) {
+					Vue.prototype.$chatid = res.data;
+					//console.log(that.swiperList);
+				}
+			})
+			uni.getStorage({
+				key: 'imageswitch',
+				success: function(res) {
+					Vue.prototype.$imageswitch = res.data;
+					//console.log(that.swiperList);
+				}
+			})
+			uni.getStorage({
+				key: 'floorswitch',
+				success: function(res) {
+					Vue.prototype.$floorswitch = res.data;
+					//console.log(that.swiperList);
+				}
+			})
+			uni.getStorage({
+				key: 'nowdata',
+				success: function(res) {
+					Vue.prototype.$nowdate = res.data;
+					//console.log(that.swiperList);
+				}
+			})
+			var that = this;
+			uni.getStorage({
+				key: 'style',
+				success: function(res) {
+					that.$store.commit('setThemeColor', res.data);
+					//console.log(that.swiperList);
+				}
+			})
+			uni.getStorage({
+				key: 'fontsize',
+				complete: function(res) {
+					if(res.data == 'sm'){
+						Vue.prototype.$fontsize = uni.upx2px(26) + 'px';
+					}else if(res.data == 'lg'){
+						Vue.prototype.$fontsize = uni.upx2px(30) + 'px';
+					}else if(res.data == 'ex'){
+						Vue.prototype.$fontsize = uni.upx2px(40) + 'px';
+					}else{
+						Vue.prototype.$fontsize = uni.upx2px(28) + 'px';
+					}
+					//console.log(that.swiperList);
+				}
+			});
+			//获取cookies
+			if (Vue.prototype.$token != '') {
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:tourl&action=send_url&jump=cookies&url=https://bbs.zdfx.net', //获取置顶帖子
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: Vue.prototype.$token
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						Vue.prototype.$cookies = res.header['Set-Cookie'];
+						//console.log(res.header['Set-Cookie']);
+					}
+				});
+			}
+			
+			//横屏
+			//#ifdef APP-PLUS
+			let hengping = plus.navigator.getOrientation();
+			if(hengping == 0){
+				plus.screen.lockOrientation('portrait-primary');
+			}else{
+				plus.screen.lockOrientation('landscape-primary');
+			}
+			//#endif
+			
+			// uni.getStorage({
+			// 	key: 'userlogininfo',
+			// 	success: function(res) {
+			// 		Vue.prototype.$token = res.data.token;
+			// 		Vue.prototype.$uid = res.data.uid;
+			// 		let avanum = (Array(9).join("0") + res.data.uid).slice(-9);
+			// 		Vue.prototype.$avatarsmall = 'https://zd.tiangal.com/uc_server/data/avatar/' + avanum
+			// 			.substr(0, 3) + '/' + avanum.substr(3, 2) + '/' + avanum.substr(5, 2) + '/' +
+			// 			avanum.substr(7, 2) + '_avatar_small.jpg';
+			// 		Vue.prototype.$avatarsmalldefault = 'https://zd.tiangal.com/uc_server/images/randuser/small/' + avanum.substr(-1) + '.jpg';
+			// 	},
+			// });
+			uni.getSystemInfo({
+				success: function(e) {
+					// #ifndef MP
+					Vue.prototype.StatusBar = e.statusBarHeight;
+					if (e.platform == 'android') {
+						Vue.prototype.CustomBar = e.statusBarHeight + uni.upx2px(71);//34
+					} else {
+						Vue.prototype.CustomBar = e.statusBarHeight + uni.upx2px(71);//40
+					};
+					// #endif
+
+					// #ifdef MP-WEIXIN
+					Vue.prototype.StatusBar = e.statusBarHeight;
+					let custom = wx.getMenuButtonBoundingClientRect();
+					Vue.prototype.Custom = custom;
+					Vue.prototype.CustomBar = custom.bottom + custom.top - e.statusBarHeight;
+					// #endif		
+
+					// #ifdef MP-ALIPAY
+					Vue.prototype.StatusBar = e.statusBarHeight;
+					Vue.prototype.CustomBar = e.statusBarHeight + e.titleBarHeight;
+					// #endif
+				}
+			})
+
+			Vue.prototype.ColorList = [{
+					title: '嫣红',
+					name: 'red',
+					color: '#e54d42'
+				},
+				{
+					title: '桔橙',
+					name: 'orange',
+					color: '#f37b1d'
+				},
+				{
+					title: '明黄',
+					name: 'yellow',
+					color: '#fbbd08'
+				},
+				{
+					title: '橄榄',
+					name: 'olive',
+					color: '#8dc63f'
+				},
+				{
+					title: '森绿',
+					name: 'green',
+					color: '#39b54a'
+				},
+				{
+					title: '天青',
+					name: 'cyan',
+					color: '#1cbbb4'
+				},
+				{
+					title: '海蓝',
+					name: 'blue',
+					color: '#0081ff'
+				},
+				{
+					title: '姹紫',
+					name: 'purple',
+					color: '#6739b6'
+				},
+				{
+					title: '木槿',
+					name: 'mauve',
+					color: '#9c26b0'
+				},
+				{
+					title: '桃粉',
+					name: 'pink',
+					color: '#e03997'
+				},
+				{
+					title: '棕褐',
+					name: 'brown',
+					color: '#a5673f'
+				},
+				{
+					title: '玄灰',
+					name: 'grey',
+					color: '#8799a3'
+				},
+				{
+					title: '草灰',
+					name: 'gray',
+					color: '#aaaaaa'
+				},
+				{
+					title: '墨黑',
+					name: 'black',
+					color: '#333333'
+				},
+				{
+					title: '雅白',
+					name: 'white',
+					color: '#ffffff'
+				},
+			]
+
+		},
+		onShow: function() {
+			console.log('App Show');
+			uni.getNetworkType({
+			    success: function (res) {
+			        if(res.networkType=='wifi'){
+						Vue.prototype.$wifi = 1
+					}
+			    }
+			})
+			//#ifdef APP-PLUS
+			setTimeout(function(){   
+				var args= plus.runtime.arguments;  
+				console.log(args);
+				if(args){  // 处理args参数，如直达到某新页面等  
+					var retid = /tid\/(\d*)*/i;
+					var foundtid = args.match(retid);
+					if (foundtid) {
+						uni.navigateTo({
+							url: '../component/card?tid=' + foundtid[1],
+							animationType: 'pop-in',
+							animationDuration: 200
+						});
+					}
+					var refid = /fid\/(\d*)*/i;
+					var foundfid = args.match(refid);
+					if (foundfid) {
+						uni.navigateTo({
+							url: '../basics/forum?forumid=' + foundfid[1],
+							animationType: 'pop-in',
+							animationDuration: 200
+						});
+					}
+				}  
+		   },100);   
+			//#endif
+		},
+		onHide: function() {
+			console.log('App Hide')
+		}
+
+	}
+</script>
+
+<style>
+	@import "colorui/main.css";
+	@import "colorui/icon.css";
+
+	.nav-list {
+		display: flex;
+		flex-wrap: wrap;
+		padding: 0px 40upx 0px;
+		justify-content: space-between;
+	}
+
+	.nav-li {
+		padding: 30upx;
+		border-radius: 12upx;
+		width: 45%;
+		margin: 0 2.5% 40upx;
+		background-image: url(https://cdn.nlark.com/yuque/0/2019/png/280374/1552996358352-assets/web-upload/cc3b1807-c684-4b83-8f80-80e5b8a6b975.png);
+		background-size: cover;
+		background-position: center;
+		position: relative;
+		z-index: 1;
+	}
+
+	.nav-li::after {
+		content: "";
+		position: absolute;
+		z-index: -1;
+		background-color: inherit;
+		width: 100%;
+		height: 100%;
+		left: 0;
+		bottom: -10%;
+		border-radius: 10upx;
+		opacity: 0.2;
+		transform: scale(0.9, 0.9);
+	}
+
+	.nav-li.cur {
+		color: #fff;
+		background: rgb(94, 185, 94);
+		box-shadow: 4upx 4upx 6upx rgba(94, 185, 94, 0.4);
+	}
+
+	.nav-title {
+		font-size: 1.1rem;
+		font-weight: 300;
+	}
+
+	.nav-title::first-letter {
+		font-size: 1.4rem;
+		margin-right: 4upx;
+	}
+
+	.nav-name {
+		font-size: 1.68rem;
+		text-transform: Capitalize;
+		margin-top: 20upx;
+		position: relative;
+	}
+
+	.nav-name::before {
+		content: "";
+		position: absolute;
+		display: block;
+		width: 40upx;
+		height: 6upx;
+		background: #fff;
+		bottom: 0;
+		right: 0;
+		opacity: 0.5;
+	}
+
+	.nav-name::after {
+		content: "";
+		position: absolute;
+		display: block;
+		width: 100upx;
+		height: 1px;
+		background: #fff;
+		bottom: 0;
+		right: 40upx;
+		opacity: 0.3;
+	}
+
+	.nav-name::first-letter {
+		font-weight: bold;
+		font-size: 1.25rem;
+		margin-right: 1px;
+	}
+
+	.nav-li text {
+		position: absolute;
+		right: 30upx;
+		top: 30upx;
+		font-size: 1.8rem;
+		width: 60upx;
+		height: 60upx;
+		text-align: center;
+		line-height: 60upx;
+	}
+
+	.text-light {
+		font-weight: 300;
+	}
+
+	@keyframes show {
+		0% {
+			transform: translateY(-50px);
+		}
+
+		60% {
+			transform: translateY(40upx);
+		}
+
+		100% {
+			transform: translateY(0px);
+		}
+	}
+
+	@-webkit-keyframes show {
+		0% {
+			transform: translateY(-50px);
+		}
+
+		60% {
+			transform: translateY(40upx);
+		}
+
+		100% {
+			transform: translateY(0px);
+		}
+	}
+</style>

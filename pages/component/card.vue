@@ -661,7 +661,7 @@
 							<view class="list">
 								<view class="item" @tap="floorhuif(item)" v-for="(item, index) in emojis" :key="index">
 									<img-cache class="icon"
-										:src="'https://bbs.zdfx.net/static/image/smiley/tieba/' + index + '.png'">
+										:src="'https://zd.tiangal.com/static/image/smiley/tieba/' + index + '.png'">
 									</img-cache>
 								</view>
 							</view>
@@ -870,7 +870,7 @@
 					this.dashangvar = arrayfid.includes(this.fid);
 				}
 				if(this.$adminid>0){
-					this.dashangvar = true;
+					this.dashangvar = false;
 				}
 			},
 			more(e) {

@@ -41,7 +41,7 @@
 		<view v-show="showEmoji" class="emoji" @tap.prevent.stop="">
 			<view class="list">
 				<view class="item" @tap="content += item" v-for="(item, index) in emojis" :key="index">
-					<img-cache class="icon" :src="'https://bbs.zdfx.net/source/plugin/heart_im/layui/images/face/' + index + '.gif'"></img-cache>
+					<img-cache class="icon" :src="'https://zd.tiangal.com/source/plugin/heart_im/layui/images/face/' + index + '.gif'"></img-cache>
 				</view>
 			</view>
 		</view>

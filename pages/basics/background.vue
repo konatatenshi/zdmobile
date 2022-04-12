@@ -3,7 +3,7 @@
 	<view>
 		<cu-custom bgColor="bg-gradual-blue" :isBack="true">
 			<block slot="backText">{{$t('api.back')}}</block>
-			<block slot="content">发帖</block>
+			<block slot="content">{{$t('index.post')}}</block>
 		</cu-custom>
 		<web-view :src="url"></web-view>
 	</view>
@@ -68,7 +68,7 @@
 				this.platform = 2;
 			}
 			var urlon = encodeURIComponent(getApp().globalData.zddomain + 'forum.php?mod=post&action=newthread&fid=' + e
-				.url + '&app=' + this.platform + '&mobile=2');
+				.url + '&app=' + this.platform);
 			this.url = getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:tourl&token=' + this.$token +
 				'&action=send_url&url=' + urlon;
 			console.log(this.url)
