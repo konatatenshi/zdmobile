@@ -118,6 +118,12 @@
 					<text class="text-red">{{$t('home.annualreview')}}</text>
 				</button>
 			</view>
+			<view v-if="card==1" class="cu-item" :class="menuArrow?'arrow':''" @tap="cardgame()">
+				<button class="cu-btn content" open-type="contact">
+					<text class="cuIcon-game text-red"></text>
+					<text class="text-red">{{$t('home.cardgame')}}</text>
+				</button>
+			</view>
 			<view class="cu-item" :class="menuArrow?'arrow':''" @tap="tostyle()">
 				<button class="cu-btn content" open-type="contact">
 					<text class="cuIcon-discoverfill text-olive"></text>
@@ -409,6 +415,7 @@
 				cancel: 0,
 				isupdate: 0,
 				update: '',
+				card: 0,
 				websocketmessage: [],
 				listTouchDirection: null,
 			};
@@ -479,6 +486,11 @@
 			verti() {
 				uni.navigateTo({
 					url: '../plugin/verticalnav'
+				})
+			},
+			cardgame(){
+				uni.navigateTo({
+					url: '../extra/cardgame'
 				})
 			},
 			tostyle() {
@@ -1255,7 +1267,12 @@
 			} else {
 				this.platform = 2;
 			}
-			var urlon
+			const sysInfo = uni.getSystemInfoSync()
+			const wid = Number(sysInfo.screenWidth);
+			const hei = Number(sysInfo.screenHeight);
+			if (wid>hei&&this.$groupid>=35&&this.$adminid>0){
+				this.card = 1;
+			}
 			var date = new Date();
 			that.month = date.getMonth() + 1;
 			void plus.runtime.setBadgeNumber(0); //桌面角标设置为0

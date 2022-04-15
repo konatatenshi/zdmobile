@@ -437,6 +437,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/extra/cardgame",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"mp-alipay": {

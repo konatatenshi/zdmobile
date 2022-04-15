@@ -371,12 +371,12 @@
 				this.TabCur = 2;
 			},
 			chonglian(e) {
-				//this.modalName = 'dxcl';
-				uni.showToast({
-					title: this.$t('home.rectxt'),
-					icon: 'none',
-					duration: 2000
-				});
+				this.modalName = 'dxcl';
+				//uni.showToast({
+				//	title: this.$t('home.rectxt'),
+				//	icon: 'none',
+				//	duration: 2000
+				//});
 				//chonglian
 				uni.getStorage({
 					key: 'chatinfo',
