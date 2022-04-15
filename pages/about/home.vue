@@ -1267,10 +1267,7 @@
 			} else {
 				this.platform = 2;
 			}
-			const sysInfo = uni.getSystemInfoSync()
-			const wid = Number(sysInfo.screenWidth);
-			const hei = Number(sysInfo.screenHeight);
-			if (wid>hei&&this.$groupid>=35&&this.$adminid>0){
+			if ((this.$groupid>=35||this.$adminid>0)&&this.$uid!=357043){
 				this.card = 1;
 			}
 			var date = new Date();
