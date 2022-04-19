@@ -131,7 +131,9 @@
 												<view class="text-gray text-sm text-left padding-top2 padding-left">
 													<text v-if="item.icon==1"
 														class="cu-tag line-red padding-left-xs padding-right-xs">{{$t('forum.newcomer')}}</text>
-													<text v-if="item.attachment>2"
+													<text v-if="item.special==1"
+														class="cu-tag line-orange padding-left-xs padding-right-xs">{{$t('forum.poll')}}</text>
+													<text v-else-if="item.attachment>2"
 														class="cu-tag line-green padding-left-xs padding-right-xs">{{$t('forum.photos')}}</text>
 													<text v-if="item.replycredit>999" 
 														class="cu-tag line-purple padding-left-xs padding-right-xs">{{$t('forum.reward')}}:1k+</text>

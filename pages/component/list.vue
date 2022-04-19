@@ -84,7 +84,7 @@
 					<view class="text-xl text-black text-bold text-shadow2">{{zan}}</view>
 					<view class="padding-left-sm padding-right-xl text-black text-shadow1">{{$t('userpage.liked')}}</view>
 					<view class="text-xl text-black text-bold text-shadow2">{{guanzhu}}</view>
-					<view class="padding-left-xs padding-right-xl text-black text-shadow1">{{$t('userpage.followed')}}</view>
+					<view class="padding-left-xs padding-right-xl text-black text-shadow1">{{$t('userpage.followede')}}</view>
 					<view class="text-xl text-black text-bold text-shadow2">{{fensi}}</view>
 					<view class="padding-left-sm padding-right-sm text-black text-shadow1">{{$t('userpage.followers')}}</view>
 				</view>

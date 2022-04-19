@@ -105,6 +105,37 @@
 						<view v-else class="padding-xs radius shadow shadow-lg bg-red margin-top text-xs ltsp">
 							{{$t('post.luckypost')}}：{{luckymessage}}</view>
 					</view>
+					<!-- 下面是投票 -->
+					<view v-if="poll.length>0" class="shbj">
+						<view class="voteitem">
+							<view class="voteleft">
+								<view class="questiontit">{{$t('post.pleasepoll')}}</view>
+								<view class="questionbtm">
+									<text class="role"><a>{{postup}}</a>{{$t('post.initiate')}}</text>
+									<text class="state" v-if="pollinfo.expiration==0">{{$t('post.inprogress')}}</text>
+									<text class="state" v-else>{{$t('post.voteclosed')}}</text>
+								</view>
+							</view>
+							<view class="voteright">
+								<text class="joinnums">{{pollinfo.number}}</text>
+								<text class="jointxt">{{$t('post.participants')}}</text>
+							</view>
+						</view>
+						<view class="flex solid-bottom justify-between">
+						<view class="ctitle" v-if="pollinfo.maxchoices==1" style="">{{$t('post.votingoptions1')}}</view>
+						<view class="ctitle" v-else style="">{{$t('post.votingoptions2')}}{{pollinfo.maxchoices}}{{$t('post.votingoptions22')}}</view>
+						<view><button class="cu-btn bg-green margin-right" :disabled="pollinfo.isvote==1||pollinfo.expiration==1?true:false" @tap="voteit()">{{$t('post.voteit')}}</button></view>
+						</view>
+						<view style="margin: 20rpx 20rpx 0 20rpx;">
+							<radio-group class="block" v-for="(pitem,pindex) in poll" :key="pindex" :data-id="pindex">
+								<view class="margin-top-xs">
+									<switch class='cyan radius' @change="PollboxChange(pindex,pitem.polloptionid)" :class="pollbox[pindex].selected?'checked':''" :checked="pollbox[pindex].selected?true:false"></switch><text>{{pindex+1}}.  {{pitem.polloption}}</text><text class="text-blue" v-show="pitem.imgurl!=''" @tap="imgMap(pitem.imgurl)">[{{$t('post.isimage')}}]</text><text v-show="pitem.voterids==1">{{$t('post.youvote')}}</text><text v-show="pollinfo.visible==1||pollinfo.isvote==1||pollinfo.expiration==1">({{pitem.votes}})</text>
+									<view class="cu-progress" v-if="pollinfo.visible==0&&pollinfo.isvote==0&&pollinfo.expiration==0"><view :class="'bg-' + colorlistv(pindex)" style="width: 100%;">{{$t('post.voteviewit')}}</view></view>
+									<view class="cu-progress" v-else><view :class="'bg-' + colorlistv(pindex)" :style="'width: ' + PollJS(pitem.votes) + '%;'">{{PollJS(pitem.votes)}}%</view></view>
+								</view>
+							</radio-group>
+						</view>
+					</view>
 					<view class="padding flex p-xs mb-sm text-center">
 						<view class="cu-capsule flex-sub">
 							<view class='cu-tag bg-pink padding-sm' @tap="dianzan()">
@@ -758,6 +789,8 @@
 				touxiangkuanglist: '',
 				bgimg: '',
 				radio: 'A',
+				poll: '',
+				pollinfo: [],
 				lucky: -1,
 				yzm: 0,
 				TabCur: 0,
@@ -802,7 +835,7 @@
 				floorpage: [],
 				jiazai: 0,
 				pm: 0,
-				fresh: 0,
+				special: 0,
 				laheivar: 0,
 				laheitext: this.$t('home.blockauthor2'),
 				jiazaiwanbi: [],
@@ -818,6 +851,8 @@
 				pingbilist: [],
 				rplist: [],
 				isfloat: [],
+				pollradio: [],
+				pollbox: [{selected:false},{selected:false},{selected:false},{selected:false},{selected:false},{selected:false},{selected:false},{selected:false},{selected:false},{selected:false},{selected:false},{selected:false},{selected:false},{selected:false},{selected:false},{selected:false},{selected:false},{selected:false},{selected:false},{selected:false}],
 				xunzhanglist: [],
 				isfloats: false,
 				modalName: null,
@@ -825,6 +860,7 @@
 				loading: this.$t('api.loadmore'),
 				animation: [],
 				dianzannumber: [],
+				max: 0,
 				avatarlist: '../../static/avatar.jpg',
 				emojis: ["{:4_91:}", "{:4_107:}", "{:4_100:}", "{:4_115:}", "{:4_104:}", "{:4_98:}", "{:4_114:}",
 					"{:4_88:}",
@@ -1247,6 +1283,67 @@
 				    }
 				});
 				this.modalName = null;
+			},
+			PollChange(e) {
+				this.pollradio = e.detail.value
+			},
+			PollboxChange(e,f) {
+				let that = this;
+				console.log(e);
+				console.log(f);
+				if(this.pollbox[e].selected){
+					this.pollbox[e].selected = false;
+					this.pollradio.splice(this.pollradio.indexOf(f), 1);
+					console.log(this.pollradio);
+					this.max--;
+				}else{
+					if(this.max>=this.pollinfo.maxchoices){
+						that.jifenbiandong(that.$t('post.max'), that.$t('post.maxtxt'));
+						return;
+					}
+					this.pollradio.push(f);
+					console.log(this.pollradio);
+					this.pollbox[e].selected = true;
+					this.max++;
+				}
+				console.log(this.pollbox)
+			},
+			voteit(){
+				let that = this;
+				this.pollinfo.isvote = 1;
+				console.log(this.pollradio);
+				if(this.pollradio.length<=0){
+					that.jifenbiandong(that.$t('post.voted1'), that.$t('post.voted1txt'));
+					this.pollinfo.isvote = 0;
+					return;
+				}
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:vote', //获取置顶帖子
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token,
+						tid: that.tid,
+						vote: that.pollradio
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data)
+						if (res.data.code == 200) {
+							that.jifenbiandong(that.$t('post.voted'), that.$t('post.votedtxt'));
+							that.loadthread(that.tid);
+						} else {
+							that.jifenbiandong(that.$t('post.voted1'), res.data.text);
+							that.loadthread(that.tid);
+							that.pollinfo.isvote = 0;
+						}
+					}
+				});
+			},
+			PollJS(e){
+				return (Number(e)/Number(this.pollinfo.number)*100).toFixed(1);
 			},
 			dianzan() {
 				if (this.loadModal2 == true) {
@@ -2341,6 +2438,8 @@
 							that.dashang = res.data.rate;
 							that.yzm = res.data.yzm;
 							that.daoxu = res.data.daoxu;
+							that.poll = res.data.poll;
+							that.pollinfo = res.data.pollinfo;
 							if(that.daoxu==1){
 								that.TabCur = 4;
 							}else{
@@ -2364,6 +2463,7 @@
 								that.contenthuifu = that.$t('post.rclosed');
 								that.closed = 1;
 							}
+							console.log(that.poll);
 						}
 					}
 				});
@@ -2473,10 +2573,17 @@
 					}
 				});
 			},
+			colorlistv(e) {
+				let colorindex = e % 13;
+				if (colorindex == 12) {
+					colorindex = 13;
+				}
+				return this.ColorList[colorindex].name;
+			},
 		},
 		onLoad: function(option) { //option为object类型，会序列化上个页面传递的参数 
 			this.tid = option.tid;
-			this.fresh = option.fresh;
+			this.special = option.special;
 			var that = this;
 			console.log(option.tid); //打印出上个页面传递的参数。
 			this.loadthread(this.tid);
@@ -2744,5 +2851,65 @@
 	.cu-bar.input.bt-black{
 		background-color: #484848!important;
 		color: #fff!important;
+	}
+	.voteitem{
+		padding: 30rpx;
+		display: flex;
+	}
+	.voteleft{
+		float: left;
+		width: 80%;
+		position: relative;
+	}
+	.voteright{
+		float: right;
+		width: 20%;
+		text-align: center;
+		padding: 10rpx 0;
+		border-radius: 10rpx;
+		position: relative;
+		min-height: 100upx;
+	}
+	.questiontit{
+		font-size: 36upx;
+		margin-bottom: 48rpx;
+	}
+	.questionbtm{
+		font-size: 24upx;
+		color: #b0b0b0;
+		width: 100%;
+		bottom: 16rpx;
+		display: inline-block;
+		position: absolute;
+	}
+	.role{
+		margin-right: 10rpx;
+	}
+	.role a{
+		color: #006EFF;
+	}
+	.joinnums{
+		display: block;
+		font-size: 40upx;
+	}
+	.jointxt{
+		display: block;
+		width: 100%;
+		font-size: 20uxp;
+		color: #435257;
+		position: absolute;
+		bottom: 10rpx;
+		text-align: center;
+	}
+	.shbj{
+		background-color: rgba(208, 253, 255, 0.2);
+	}
+	.ctitle{
+		width:100%;
+		height:80upx;
+		color:#B0B0B0;
+		line-height: 80upx;
+		padding-left: 32upx;
+		font-size: 28upx;
 	}
 </style>
