@@ -1676,6 +1676,12 @@
 						animationType: 'pop-in',
 						animationDuration: 200
 					});
+				} else if (e.target == 'uid') {
+					uni.navigateTo({
+						url: '../component/list?uid=' + e.apphref,
+						animationType: 'pop-in',
+						animationDuration: 200
+					});
 				} else if (e.target == 'down') {
 					uni.downloadFile({
 						url: e.apphref,
