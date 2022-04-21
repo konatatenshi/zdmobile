@@ -60,13 +60,10 @@
 				</view>
 				<text>{{$t('home.message')}}</text>
 			</view>
-			<view class="cu-item" @click="tonotifi">
-				<view class="cuIcon-noticefill text-orange">
-					<view class="cu-tag badge" v-if="this.mynewprompt!=0">
-						<block v-if="this.mynewprompt!=1">{{this.mynewprompt>99?'99+':this.mynewprompt}}</block>
-					</view>
+			<view class="cu-item" @click="tohistory">
+				<view class="cuIcon-timefill text-orange">
 				</view>
-				<text>{{$t('home.notification')}}</text>
+				<text>{{$t('home.history')}}</text>
 			</view>
 			<view class="cu-item" @click="toqiandao">
 				<view class="cuIcon-squarecheckfill text-yellow">
@@ -463,6 +460,12 @@
 				uni.navigateTo({
 					//url: '../basics/icon'
 					url: '../extra/qiandao'
+				})
+			},
+			tohistory(){
+				uni.navigateTo({
+					//url: '../basics/icon'
+					url: '../extra/history'
 				})
 			},
 			mycredit() {

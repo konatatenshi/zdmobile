@@ -14,7 +14,7 @@
 		<view class="cu-card dynamic no-card" :style="'margin-top: -' + iStatusBarHeight +'px;'">
 			<view class="cu-item shadow">
 				<view class="title" :class="'bt-'+themeColor.name">
-					<view class="text-cu">{{postname}}</view>
+					<view class="text-cu"><text :selectable="true">{{postname}}</text></view>
 				</view>
 				<view class="cu-list menu-avatar" @tap="totheuid(authorid)">
 					<view class="cu-item" :class="'bt-'+themeColor.name">
@@ -188,7 +188,10 @@
 				</scroll-view>
 				<view class="cu-list menu-avatar comment solids-top" v-for="(item,index) in huifulist" :key="index"
 					:data-id="index">
-					<view class="cu-item" :class="'bt-'+themeColor.name" v-if="!(ifpingbi(item.author)&&$adminid<=0)">
+					<view class="cu-item" :class="'bt-'+themeColor.name" v-if="!item">
+						{{$t('post.deletedreply')}}
+					</view>
+					<view class="cu-item" :class="'bt-'+themeColor.name" v-else-if="!(ifpingbi(item.author)&&$adminid<=0)">
 						<view class="cu-avatar round" :style="[{ backgroundImage:'url(' + item.avatarlist + ')' }]"
 							@tap="totheuid(item.authorid)">
 						</view>
@@ -266,7 +269,7 @@
 								</view>
 								<view>
 									<text class="cuIcon-close text-gray margin-right-sm"
-										@tap="more2(item.authorid,item.author,item.pid)"></text>
+										@tap="more2(item.authorid,item.author,item.pid,index)"></text>
 								</view>
 							</view>
 							<view v-if="item.reply>0" class="bg-gray padding-sm radius margin-top-sm  text-sm text-content3" :class="' bt-'+themeColor.name">
@@ -335,7 +338,12 @@
 									<text class="text-grey"><text class="cuIcon-attention"></text>{{guanzhutext}}</text>
 								</view>
 							</view>
-							<view v-if="pm==1" class="cu-item" @tap="siliaozuozhe(authorid)">
+							<view class="cu-item" v-if="authorid==$uid" @tap="deletepost()">
+								<view class="content noborder2">
+									<text class="text-grey"><text class="cuIcon-attention"></text>{{$t('post.deletepost')}}</text>
+								</view>
+							</view>
+							<view v-else-if="pm==1" class="cu-item" @tap="siliaozuozhe(authorid)">
 								<view class="content">
 									<text class="text-grey"><text class="cuIcon-mark"></text>{{$t('home.pmn')}}</text>
 								</view>
@@ -390,9 +398,9 @@
 									<view class="text-gray text-sm noborder">{{$t('home.blocktxt')}}</view>
 								</view>
 							</view>
-							<view class="cu-item" v-if="pingbiauthor==$username">
+							<view class="cu-item" v-if="pingbiauthor==$username" @tap="deletepost1(jubaopid)">
 								<view class="content">
-									<text class="text-gray"><text class="cuIcon-attentionforbid"></text>{{$t('home.blockself2')}}</text>
+									<text class="text-grey"><text class="cuIcon-attentionforbid"></text>{{$t('post.deletepost1')}}</text>
 								</view>
 							</view>
 							<view class="cu-item" v-else @tap="lahei()">
@@ -810,6 +818,7 @@
 				favorite: 0,
 				dashang: 0,
 				daoxu: 0,
+				addhis: 0,
 				replies: 0,
 				loadProgress: 0,
 				jifencaozuo: 0,
@@ -847,8 +856,10 @@
 				guanzhutext: this.$t('home.follow'),
 				jubaomessage: '',
 				guanzhuvar: 1,
+				indexs: 0,
 				huifulist: [],
 				pingbilist: [],
+				historylist: [],
 				rplist: [],
 				isfloat: [],
 				pollradio: [],
@@ -978,6 +989,37 @@
 					this.modalName = null;
 				}, 200)
 			},
+			historyadd(){
+				if(this.addhis!=2){
+					return;
+				}
+				var that = this;
+				console.log(this.historylist);
+				for (var i = 0 ; i < this.historylist.length;i++) {
+				    if (this.historylist[i][0]==this.tid) {
+				        this.historylist.splice(i,1);
+				        i--;
+				    }
+				}
+				//var b = JSON.stringify(this.historylist);
+				//if (b.search(this.postname) != -1){
+				//	return;
+				//}
+				var e = new Array(this.tid,this.postname);
+				console.log(e);
+				if(this.historylist.length>0){
+					this.historylist.unshift(e);
+				}else{
+					this.historylist.push(e);
+				}
+				uni.setStorage({
+					key: 'historylist',
+					data: that.historylist,
+					success: function() {
+						console.log(that.historylist);
+					}
+				});
+			},
 			ifpingbi(e) {
 				if (this.pingbilist.indexOf(e) >= 0) {
 					//console.log(e);
@@ -986,8 +1028,9 @@
 					return false;
 				}
 			},
-			more2(e, f, g) {
+			more2(e, f, g, index) {
 				let that = this;
+				this.indexs = index;
 				this.pingbiuid = e;
 				this.pingbiauthor = f;
 				this.jubaopid = g;
@@ -2464,6 +2507,8 @@
 								that.closed = 1;
 							}
 							console.log(that.poll);
+							that.addhis++;
+							that.historyadd();
 						}
 					}
 				});
@@ -2573,6 +2618,92 @@
 					}
 				});
 			},
+			deletepost() {
+				let that = this;
+				//this.modalName = 'bottomModal';
+				uni.showModal({
+					title: that.$t('post.deleteit'),
+					content: that.$t('post.confirmdelete'),
+					success: function(res) {
+						if (res.confirm) {
+							that.deleteconfirm();
+						} else if (res.cancel) {
+							console.log('用户点击取消');
+						}
+						that.modalName = 'null';
+					}
+				})
+			},
+			deletepost1(e) {
+				let that = this;
+				//this.modalName = 'bottomModal';
+				uni.showModal({
+					title: that.$t('post.deleteit1'),
+					content: that.$t('post.confirmdelete1'),
+					success: function(res) {
+						if (res.confirm) {
+							that.deleteconfirm1(e);
+						} else if (res.cancel) {
+							console.log('用户点击取消');
+						}
+						that.modalName = 'null';
+					}
+				})
+			},
+			deleteconfirm(){
+				let that = this;
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:deletepost', //获取置顶帖子
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token,
+						tid: that.tid
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data)
+						if (res.data.code == 200) {
+							that.jifenbiandong(that.$t('post.deleted'), that.$t('post.deletedtxt'));
+							that.loadthread(that.tid);
+							uni.navigateBack();
+						} else {
+							that.jifenbiandong(that.$t('post.deleted1'), res.data.text);
+							that.loadthread(that.tid);
+							that.pollinfo.isvote = 0;
+						}
+					}
+				});
+			},
+			deleteconfirm1(e){
+				console.log(e);
+				let that = this;
+				uni.request({
+					url: getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:deletepost', //获取置顶帖子
+					method: 'GET',
+					timeout: 10000,
+					data: {
+						token: that.$token,
+						pid: e
+					},
+					header: {
+						'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data)
+						if (res.data.code == 200) {
+							that.jifenbiandong(that.$t('post.deleted'), that.$t('post.deletedtxt'));
+							that.loadthread(that.tid);
+							Vue.set(that.huifulist, that.indexs, false);
+						} else {
+							that.jifenbiandong(that.$t('post.deleted1'), res.data.text);
+							that.loadthread(that.tid);
+						}
+					}
+				});
+			},
 			colorlistv(e) {
 				let colorindex = e % 13;
 				if (colorindex == 12) {
@@ -2603,6 +2734,18 @@
 				success: function(res) {
 					console.log(res.data);
 					that.pingbilist = res.data;
+				}
+			})
+			uni.getStorage({
+				key: 'historylist',
+				fail: function(res) {
+					that.addhis++;
+					that.historyadd();
+				},success: function(res) {
+					console.log(res.data);
+					that.historylist = res.data;
+					that.addhis++;
+					that.historyadd();
 				}
 			})
 		},

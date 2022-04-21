@@ -455,6 +455,15 @@
             }
             
         }
+        ,{
+            "path" : "pages/extra/history",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"mp-alipay": {
