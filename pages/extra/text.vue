@@ -41,6 +41,8 @@
 				modal: null,
 				thread: '',
 				title: '',
+				brand1: '',
+				brand2: '',
 				platform: 0,
 				picker: [this.$t('post.picker1'),this.$t('post.picker2'),this.$t('post.picker3'),this.$t('post.picker4'),this.$t('post.picker5')],
 				picker2: [this.$t('post.picker1'),this.$t('post.picker3')],
@@ -60,6 +62,13 @@
 			if(this.$groupid == 10){
 				this.picker = this.picker2;
 			}
+			let that = this;
+			uni.getSystemInfo({
+				success(res) {
+					that.brand1 = res.brand; //手机牌子
+					that.brand2 = res.model; //手机型号
+				}
+			});
 		},
 		methods: {
 			PickerChange(e) {
@@ -110,7 +119,9 @@
 							tid: that.index,
 							title: title,
 							content: postm,
-							platform: that.platform
+							platform: that.platform,
+							brand1: that.brand1,
+							brand2: that.brand2
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息

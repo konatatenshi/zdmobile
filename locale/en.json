@@ -301,6 +301,7 @@
 	"setting.lg": "LG",
 	"setting.exmode": "Ex-large mode",
 	"setting.turnoffjiyu": "Turn off post bonuses",
+	"setting.turnonmodal": "Turn off display mobile phone model",
 	"setting.deletecache": "Clear application cache",
 	"setting.mignore": "Manage ignore lists",
 	"setting.ignorelist": "Ignore lists",

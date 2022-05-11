@@ -15,6 +15,8 @@
 			return {
 				url: '',
 				platform: 0,
+				brand1: '',
+				brand2: '',
 				title: "发帖"
 			};
 		},
@@ -37,7 +39,9 @@
 						data: {
 							token: that.$token,
 							platform: that.platform,
-							tid: found[1]
+							tid: found[1],
+							brand1: that.brand1,
+							brand2: that.brand2
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
@@ -67,6 +71,13 @@
 			} else {
 				this.platform = 2;
 			}
+			let that = this;
+			uni.getSystemInfo({
+				success(res) {
+					that.brand1 = res.brand; //手机牌子
+					that.brand2 = res.model; //手机型号
+				}
+			});
 			var urlon = encodeURIComponent(getApp().globalData.zddomain + 'forum.php?mod=post&action=newthread&fid=' + e
 				.url + '&app=' + this.platform);
 			this.url = getApp().globalData.zddomain + 'plugin.php?id=ts2t_qqavatar:tourl&token=' + this.$token +

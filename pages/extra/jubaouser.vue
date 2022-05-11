@@ -45,6 +45,8 @@
 				index: -1,
 				content: [],
 				modal: null,
+				brand1: '',
+				brand2: '',
 				thread: '',
 				title: '',
 				platform: 0,
@@ -65,6 +67,13 @@
 		},
 		onLoad: function(option) { //option为object类型，会序列化上个页面传递的参数 
 			this.title = option.username;
+			let that = this;
+			uni.getSystemInfo({
+				success(res) {
+					that.brand1 = res.brand; //手机牌子
+					that.brand2 = res.model; //手机型号
+				}
+			});
 		},
 		methods: {
 			PickerChange(e) {
@@ -107,7 +116,9 @@
 							jubao: that.index,
 							title: title,
 							content: postm,
-							platform: that.platform
+							platform: that.platform,
+							brand1: that.brand1,
+							brand2: that.brand2
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息

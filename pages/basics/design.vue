@@ -43,6 +43,11 @@
 			<switch class="blue" @change="jiyuset" :class="jiyu=='1'?'checked':''" :checked="jiyu=='1'?true:false">
 			</switch>
 		</view>
+		<view class="cu-form-group">
+			<view class="title">{{$t('setting.turnonmodal')}}</view>
+			<switch class="blue" @change="modalset" :class="modal=='1'?'checked':''" :checked="modal=='1'?true:false">
+			</switch>
+		</view>
 		<view class="cu-form-group" @tap="bottommod()">
 			<view class="title">{{$t('setting.deletecache')}}</view>
 			<view class="cu-item">
@@ -163,6 +168,7 @@
 				cacheSize: '',
 				fontsize: '',
 				jiyu: 0,
+				modal: 0,
 				language: 0,
 				daziswitch: this.$t('setting.turnon')
 			};
@@ -188,6 +194,16 @@
 				} else {
 					this.jiyu = 0;
 					this.setting('jiyu', 0);
+				}
+			},
+			modalset(e) {
+				console.log(e.detail.value);
+				if (e.detail.value) {
+					this.modal = 1;
+					this.setting('modal', 1);
+				} else {
+					this.modal = 0;
+					this.setting('modal', 0);
 				}
 			},
 			Setfloor(e) {
@@ -240,6 +256,7 @@
 					success: (res) => {
 						console.log(res.data);
 						that.jiyu = res.data.jiyu;
+						that.modal = res.data.modal;
 					}
 				});
 			},

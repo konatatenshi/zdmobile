@@ -46,10 +46,11 @@
 								</span></view>
 							<view class="text-gray text-sm flex justify-start">
 								{{nowdate}}
-								<view v-if="status&128&&status&8" class="text-xs text-blue cuIcon-mobile">{{$t('post.fromiphone')}}
+								<view v-if="status&128&&status&8" class="text-xs text-blue cuIcon-mobile"><text v-if="status&2048">{{modal}}</text><text v-else>{{$t('post.fromiphone')}}</text>
 								</view>
 								<view v-else-if="status&256&&status&8" class="text-xs text-green cuIcon-mobile">
-									{{$t('post.fromandroid')}}</view>
+									<text v-if="status&2048">{{modal}}</text><text v-else>{{$t('post.fromandroid')}}</text>
+								</view>
 								<view v-else-if="status&8" class="text-xs text-gray cuIcon-mobile">{{$t('post.frommobile')}}</view>
 							</view>
 						</view>
@@ -219,9 +220,9 @@
 							<view class="flex justify-start">
 								<view class="text-gray text-sm">{{item.dateline}}</view>
 								<view v-if="item.status&128&&item.status&8" class="text-xs text-blue cuIcon-mobile">
-									{{$t('post.fromiphone')}}</view>
+									<text v-if="item.status&2048">{{item.modal}}</text><text v-else>{{$t('post.fromiphone')}}</text></view>
 								<view v-else-if="item.status&256&&item.status&8"
-									class="text-xs text-green cuIcon-mobile">{{$t('post.fromandroid')}}</view>
+									class="text-xs text-green cuIcon-mobile"><text v-if="item.status&2048">{{item.modal}}</text><text v-else>{{$t('post.fromandroid')}}</text></view>
 								<view v-else-if="item.status&8" class="text-xs text-gray cuIcon-mobile">{{$t('post.frommobile')}}</view>
 							</view>
 							<view v-if="item.replycredit>0"
@@ -804,6 +805,7 @@
 				TabCur: 0,
 				luckymessage: '',
 				pingfenliyou: '',
+				modal: '',
 				luckyme: [],
 				jiance: [],
 				iStatusBarHeight: 0,
@@ -872,6 +874,8 @@
 				animation: [],
 				dianzannumber: [],
 				max: 0,
+				brand1: '',
+				brand2: '',
 				avatarlist: '../../static/avatar.jpg',
 				emojis: ["{:4_91:}", "{:4_107:}", "{:4_100:}", "{:4_115:}", "{:4_104:}", "{:4_98:}", "{:4_114:}",
 					"{:4_88:}",
@@ -2110,7 +2114,9 @@
 							tid: that.tid,
 							message: message,
 							platform: that.platform,
-							replykey: that.replykey
+							replykey: that.replykey,
+							brand1: that.brand1,
+							brand2: that.brand2
 						},
 						header: {
 							'content-type': 'application/x-www-form-urlencoded' //自定义请求头信息
@@ -2481,6 +2487,7 @@
 							that.lucky = res.data.luckypost.key;
 							that.luckymessage = res.data.luckypost.msg;
 							that.status = res.data.status;
+							that.modal = res.data.modal;
 							that.jiance = res.data.jiance;
 							that.ding = res.data.ding;
 							that.favorite = res.data.favorite;
@@ -2754,6 +2761,12 @@
 					that.historyadd();
 				}
 			})
+			uni.getSystemInfo({
+				success(res) {
+					that.brand1 = res.brand; //手机牌子
+					that.brand2 = res.model; //手机型号
+				}
+			});
 		},
 		onShow: function() {},
 		onPageScroll() {
