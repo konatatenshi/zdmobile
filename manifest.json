@@ -123,8 +123,7 @@
             /* ios打包配置 */
             "sdkConfigs" : {
                 "ad" : {
-                    "sigmob" : {},
-                    "bd" : {}
+                    "sigmob" : {}
                 },
                 "push" : {
                     "unipush" : {}
@@ -195,27 +194,27 @@
                     "parameters" : {}
                 }
             },
-            "HXR-GoogleMobileAD" : {
-                "appid-android" : "ca-app-pub-9890309082716404~8229926380",
-                "appid-ios" : "ca-app-pub-9890309082716404~9094341525",
+            "JY-GoogleAdMob" : {
+                "android_appid" : "ca-app-pub-9890309082716404~8229926380",
+                "ios_appid" : "ca-app-pub-9890309082716404~9094341525",
                 "__plugin_info__" : {
-                    "name" : "谷歌广告，限时特惠，原价666，国内可用！长期维护，先试用再购买，有问题联系",
-                    "description" : "谷歌广告，AdMob，谷歌广告手机端，adsense下的AdMob，稳定收益高 ",
+                    "name" : "JYGoogle谷歌广告AdMob - 首发支持安卓+iOS",
+                    "description" : "谷歌AdMob 支持安卓+iOS",
                     "platforms" : "Android,iOS",
-                    "url" : "https://ext.dcloud.net.cn/plugin?id=2506",
+                    "url" : "https://ext.dcloud.net.cn/plugin?id=2593",
                     "android_package_name" : "bbs.zdfx.net",
                     "ios_bundle_id" : "bbs.zdfx.net",
                     "isCloud" : true,
                     "bought" : 1,
-                    "pid" : "2506",
+                    "pid" : "2593",
                     "parameters" : {
-                        "appid-android" : {
-                            "des" : "请填写AdMob App ID",
+                        "android_appid" : {
+                            "des" : "安卓 - 谷歌AdMob的APPID(兼容)",
                             "key" : "com.google.android.gms.ads.APPLICATION_ID",
                             "value" : ""
                         },
-                        "appid-ios" : {
-                            "des" : "请填写AdMob App ID",
+                        "ios_appid" : {
+                            "des" : "iOS - 谷歌AdMob的APPID(兼容)",
                             "key" : "GADApplicationIdentifier",
                             "value" : ""
                         }
